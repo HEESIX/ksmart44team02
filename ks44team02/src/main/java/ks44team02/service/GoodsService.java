@@ -6,9 +6,17 @@ import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.Menus;
+import ks44team02.mapper.GoodsMapper;
 
 @Service
 public class GoodsService {
+	
+	private final GoodsMapper goodsMapper;
+	
+	public GoodsService(GoodsMapper goodsMapper) {
+		this.goodsMapper = goodsMapper;
+	}
 	
 	//상품 카테고리 등록
 	public int addGoodsCategory() {
@@ -95,5 +103,75 @@ public class GoodsService {
 	public int removeGoodsDiscount() {
 		return 0;
 	}
-
+	
+	//상품 등록 신청
+	public int applyGoodsRegister() {
+		return 0;
+	}
+	
+	//상품 리스트(판매자)
+	public List<Goods> getSellerGoodsList(){
+		return null;
+	}
+	
+	//기존 데이터 조회(상품 수정화면 판매자)
+	public Goods getSellerGoodsInfo() {
+		return null;
+	}
+	
+	//상품 수정
+	public int modifySellerGoods() {
+		return 0;
+	}
+	
+	//상품 삭제
+	public int removeSellerGoods() {
+		return 0;
+	}
+	
+	//개인 맞춤 식단 생성
+	public int addBuyerMenu() {
+		return 0;
+	}
+	
+	//개인 맞춤 식단 목록 조회
+	public List<Menus> getBuyerMenuList(){
+		return null;
+	}
+	
+	//개인 맞춤 식단 수정
+	public int modifyBuyerMenu() {
+		return 0;
+	}
+	
+	//개인 맞춤 식단 삭제
+	public int removeBuyerMenu() {
+		return 0;
+	}
+	
+	//개인 맞춤 식단 정보
+	public Menus getBuyerMenuInfo() {
+		return null;
+	}
+	
+	//식단 목록
+	public List<Menus> getMenuList(){
+		return null;
+	}
+	
+	//상품 목록
+	public List<Goods> getGoodsList(){
+		return null;
+	}
+	
+	//개별 식단 정보
+	/*
+	 * public Menus getMenuInfo() { return null; }
+	 */
+	
+	//개별 상품 정보
+	/*
+	 * public Goods getGoodsInfo() { return null; }
+	 */
+	
 }
