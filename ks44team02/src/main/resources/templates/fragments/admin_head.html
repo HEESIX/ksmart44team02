@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<!-- admin head 조각  -->	  
+	<head th:fragment="adminHeadFragment">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<!-- Favicon icon -->
+	<link rel="shortcut icon" th:href="@{/admin/assets/images/favicon.png}"
+		type="image/x-icon">
+	<link rel="icon" th:href="@{/admin/assets/images/favicon.ico}" type="image/x-icon">
+	
+	<!-- Google font-->
+	<link th:href="@{https://fonts.googleapis.com/css?family=Ubuntu:400,500,700}"
+		rel="stylesheet">
+	
+	<!-- themify -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/icon/themify-icons/themify-icons.css}">
+	
+	<!-- iconfont -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/icon/icofont/css/icofont.css}">
+	
+	<!-- simple line icon -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/icon/simple-line-icons/css/simple-line-icons.css}">
+	
+	<!-- Required Fremwork -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/bootstrap/css/bootstrap.min.css}">
+	
+	<!-- Chartlist chart css -->
+	<link rel="stylesheet" th:href="@{/admin/assets/plugins/chartist/dist/chartist.css}"
+		type="text/css" media="all">
+	
+	<!-- Weather css -->
+	<link th:href="@{/admin/assets/css/svg-weather.css}" rel="stylesheet">
+	
+	
+	<!-- Style.css -->
+	<link rel="stylesheet" type="text/css" th:href="@{/admin/assets/css/main.css}">
+	
+	<!-- Responsive.css-->
+	<link rel="stylesheet" type="text/css" th:href="@{/admin/assets/css/responsive.css}">
+
+	
+	<!-- 사용자 정의 css  -->
+	<th:block layout:fragment="customCss"></th:block>
+	
+	<!-- 사용자 정의 title 설정  -->
+	<th:block layout:fragment="customTitle"></th:block>
+	
+	<!-- 사용자 정의 js file  -->
+	<th:block layout:fragment="customTopJs"></th:block>
+	
+	</head>
+
+</html>
