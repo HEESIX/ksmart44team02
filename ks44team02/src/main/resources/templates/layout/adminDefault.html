@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      
+<head th:replace="fragments/admin_head :: adminHeadFragment"></head>
+
+<body class="sidebar-mini fixed">
+	<div id="wrapper">
+		<!-- start header  -->
+		<div th:replace="fragments/admin_header :: adminHeaderFragment"></div>		
+		<!-- end header  -->
+		
+		<!-- start aside  -->
+		<div th:replace="fragments/admin_aside :: adminAsideFragment"></div>
+		<!-- end aside  -->		
+		
+		<!-- start contents  -->
+		<div class="content-wrapper">
+			<!-- 사용자 정의 contents  -->
+			<th:block layout:fragment="customContents"></th:block>
+		</div>
+		<!-- end contents  -->
+		
+	</div>
+	
+	<!-- Required Jqurey -->
+	<script th:src="@{/admin/assets/plugins/Jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{/admin/assets/plugins/jquery-ui/jquery-ui.min.js}"></script>
+	<script th:src="@{/admin/assets/plugins/tether/dist/js/tether.min.js}"></script>
+
+	<!-- Required Fremwork -->
+	<script th:src="@{/admin/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!-- Scrollbar JS-->
+	<script th:src="@{/admin/assets/plugins/jquery-slimscroll/jquery.slimscroll.js}"></script>
+	<script th:src="@{/admin/assets/plugins/jquery.nicescroll/jquery.nicescroll.min.js}"></script>
+
+	<!--classic JS-->
+	<script th:src="@{/admin/assets/plugins/classie/classie.js}"></script>
+
+	<!-- notification -->
+	<script th:src="@{/admin/assets/plugins/notification/js/bootstrap-growl.min.js}"></script>
+
+	<!-- Sparkline charts -->
+	<script th:src="@{/admin/assets/plugins/jquery-sparkline/dist/jquery.sparkline.js}"></script>
+
+	<!-- Counter js  -->
+	<script th:src="@{/admin/assets/plugins/waypoints/jquery.waypoints.min.js}"></script>
+	<script th:src="@{/admin/assets/plugins/countdown/js/jquery.counterup.js}"></script>
+
+	<!-- Echart js -->
+	<script th:src="@{/admin/assets/plugins/charts/echarts/js/echarts-all.js}"></script>
+
+	<script th:src="@{https://code.highcharts.com/highcharts.js}"></script>
+	<script th:src="@{https://code.highcharts.com/modules/exporting.js}"></script>
+	<script th:src="@{https://code.highcharts.com/highcharts-3d.js}"></script>
+
+	<!-- custom js -->
+	<script type="text/javascript" th:src="@{/admin/assets/js/main.min.js}"></script>
+	<script type="text/javascript" th:src="@{/admin/assets/pages/dashboard.js}"></script>
+	<script type="text/javascript" th:src="@{/admin/assets/pages/elements.js}"></script>
+	<script th:src="@{/admin/assets/js/menu.min.js}"></script>
+	<script>
+		var $window = $(window);
+		var nav = $('.fixed-button');
+		$window.scroll(function() {
+			if ($window.scrollTop() >= 200) {
+				nav.addClass('active');
+			} else {
+				nav.removeClass('active');
+			}
+		});
+	</script>
+	
+	<!-- 사용자 정의 js 하단  -->
+	<th:block layout:fragment="customFootJs">
+		
+	</th:block>	
+</body>
+
+</html>
