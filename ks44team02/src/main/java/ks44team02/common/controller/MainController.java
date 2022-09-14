@@ -1,4 +1,4 @@
-package ksmart.ks44team02.common.controller;
+package ks44team02.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -8,7 +8,6 @@
 		<version>2.7.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ksmart</groupId>
 	<artifactId>ks44team02</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
