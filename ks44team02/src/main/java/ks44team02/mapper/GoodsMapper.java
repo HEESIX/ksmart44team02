@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.Menus;
 
 @Mapper
 public interface GoodsMapper {
@@ -63,5 +64,47 @@ public interface GoodsMapper {
 	
 	//상품별 할인 혜택 삭제
 	public int removeGoodsDiscount();
+	
+	//상품 등록 신청
+	public int applyGoodsRegister();
+	
+	//상품 리스트(판매자) - 다른 권한이랑 합치는 방안 고민
+	public List<Goods> getSellerGoodsList();
+	
+	//기존 데이터 조회(판매자 상품 수정화면)
+	public Goods getSellerGoodsInfo();
+	
+	//상품 수정
+	public int modifySellerGoods();
+	
+	//상품 삭제
+	public int removeSellerGoods();
+	
+	//개인 맞춤 식단 생성
+	public int addBuyerMenu();
+	
+	//개인 맞춤 식단 목록 조회
+	public List<Menus> getBuyerMenuList();
+	
+	//개인 맞춤 식단 수정
+	public int modifyBuyerMenu();
+	
+	//개인 맞춤 식단 삭제
+	public int removeBuyerMenu();
+	
+	//개인 맞춤 식단 정보
+	public Menus getBuyerMenuInfo();
+	
+	//식단 목록
+	public List<Menus> getMenuList();
+	
+	//상품 목록
+	public List<Goods> getGoodsList();
+	
+	//개별 식단 정보
+	/* public Menus getMenuInfo(); */
+	
+	//개별 상품 정보
+	/* public Goods getGoodsInfo(); */
 	
 }
