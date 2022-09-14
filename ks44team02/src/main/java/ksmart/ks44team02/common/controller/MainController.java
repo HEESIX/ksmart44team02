@@ -9,6 +9,6 @@ public class MainController {
 
 	@GetMapping("/")
 	public String main(Model model) {
-		return "buyer/main";
+		return "buyer/buyerMain";
 	}
 }
