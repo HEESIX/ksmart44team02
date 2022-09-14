@@ -1,9 +1,28 @@
 package ks44team02.admin.controller;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+
+import ks44team02.service.GoodsService;
 
 @Controller
 public class AdminGoodsController {
+	
+	private static final Logger log = LoggerFactory.getLogger(AdminGoodsController.class);
+	
+	private final GoodsService goodsService;
+	
+	public AdminGoodsController(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+	
+	@PostConstruct
+	public void adminGoodsControllerInit() {
+		log.info("AdminGoodsController bean 생성");
+	}
 	
 	//상품 카테고리 등록
 	public String addGoodsCategory() {
@@ -87,6 +106,11 @@ public class AdminGoodsController {
 	
 	//상품별 할인 혜택 수정
 	public String modifyGoodsDiscount() {
+		return null;
+	}
+	
+	//상품별 할인 혜택 삭제
+	public String removeGoodsDiscount() {
 		return null;
 	}
 }
