@@ -1,4 +1,4 @@
-package ksmart.ks44team02;
+package ks44team02;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
