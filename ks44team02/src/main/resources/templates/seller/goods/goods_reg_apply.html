@@ -11,10 +11,40 @@
 <!-- 사용자 정의 css  -->
 <th:block layout:fragment="customCss">
 	<style>
-		.nice-select {
-			margin-bottom: 24px;
-		}
-	</style>
+.nice-select {
+	margin-bottom: 24px;
+}
+
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+</style>
 </th:block>
 
 <!-- start breadcrum section -->
@@ -91,14 +121,27 @@
 										</p>
 										<input type="text">
 									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
 									<div class="checkout__input">
-										<p>
-											제조일자<span>*</span>
-										</p>
+										<p>제조일자</p>
 										<select>
 											<option>컨텐츠 포함</option>
 											<option>직접 작성하기</option>
 										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>상품 소개 이미지 업로드</p>
+										<div class="filebox">
+											<input class="upload-name" placeholder="첨부파일">
+											<label for="goodsInfoImage" style="margin-top: 8px;">파일찾기</label> <input type="file" id="goodsInfoImage">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -116,34 +159,15 @@
 										<p>
 											배송비<span>*</span>
 										</p>
-										<input type="text">
+										<input type="number">
 									</div>
 								</div>
 							</div>
-							<div class="checkout__input__checkbox">
-								<label for="acc"> Create an account? <input
-									type="checkbox" id="acc"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<p>Create an account by entering the information below. If
-								you are a returning customer please login at the top of the page</p>
 							<div class="checkout__input">
 								<p>
-									Account Password<span>*</span>
+									영양 정보 데이터<span>*</span>
 								</p>
 								<input type="text">
-							</div>
-							<div class="checkout__input__checkbox">
-								<label for="diff-acc"> Ship to a different address? <input
-									type="checkbox" id="diff-acc"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<div class="checkout__input">
-								<p>
-									Order notes<span>*</span>
-								</p>
-								<input type="text"
-									placeholder="Notes about your order, e.g. special notes for delivery.">
 							</div>
 						</div>
 					</div>
