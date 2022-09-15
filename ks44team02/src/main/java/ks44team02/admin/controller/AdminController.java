@@ -1,5 +1,8 @@
 package ks44team02.admin.controller;
 
-public class AdminController {
+import org.springframework.stereotype.Controller;
 
+@Controller
+public class AdminController {
+	
 }
