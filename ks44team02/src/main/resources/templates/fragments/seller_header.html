@@ -33,26 +33,31 @@
 				</ul>
 			</div>
 			<div class="header__top__right__auth">
+				<ul>
+				<li>
 				<a href="#"><i class="fa fa-user"></i> Login</a>
+				
+				</li>
+				</ul>
 			</div>
 		</div>
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li><a href="#">상품관리</a>
+				<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="#">신규등록</a></li>
-						<li><a href="#">상품조회</a></li>
+						<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
+						<li><a th:href="@{/seller/goods/goods_list_seller}">#상품조회</a></li>
 					</ul></li>
-				<li><a href="#">주문/배송 관리</a>
+				<li><a href="#">#주문/배송 관리</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="#">신규주문</a></li>
-						<li><a href="#">결제 전</a></li>
+						<li><a href="#">#신규주문</a></li>
+						<li><a href="#">#결제 전</a></li>
 					</ul></li>
-				<li><a href="#">정산내역</a></li>
-				<li><a href="#">고객관리</a>
+				<li><a href="#">#정산내역</a></li>
+				<li><a href="#">#고객관리</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="#">문의</a></li>
-						<li><a href="#">배송현황</a></li>
+						<li><a href="#">#문의</a></li>
+						<li><a href="#">#배송현황</a></li>
 					</ul></li>
 			</ul>
 		</nav>
@@ -82,7 +87,16 @@
 					<div class="col-lg-6">
 						<div class="header__top__right">
 							<div class="header__top__right__auth">
-								<a href="#"><i class="fa fa-user"></i> Login</a>
+							<nav class="header__menu">	
+							<ul>
+							<li><a href="#"><i class="fa fa-user"></i> Login</a>
+								<ul class="header__menu__dropdown">
+									<li><a href="#">#입점 신청 </a></li>
+									<li><a th:href="@{/seller/login/seller_login_list}">#회원정보</a></li>
+									<li><a href="#">#탈퇴 신청</a></li>
+								</ul></li>	
+							</ul>	
+							</nav>
 							</div>
 						</div>
 					</div>
@@ -99,21 +113,21 @@
 				<div class="col-lg-8" style="text-align: center;">
 					<nav class="header__menu">
 						<ul>
-							<li><a href="#">상품관리</a>
+							<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
 								<ul class="header__menu__dropdown">
-									<li><a href="#">신규등록</a></li>
-									<li><a href="#">상품조회</a></li>
+									<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
+									<li><a th:href="@{/seller/goods/goods_list_seller}">#상품조회</a></li>
 								</ul></li>
-							<li><a href="#">주문/배송 관리</a>
+							<li><a href="#">#주문/배송 관리</a>
 								<ul class="header__menu__dropdown">
-									<li><a href="#">신규주문</a></li>
-									<li><a href="#">결제 전</a></li>
+									<li><a href="#">#신규주문</a></li>
+									<li><a href="#">#결제 전</a></li>
 								</ul></li>
-							<li><a href="#">정산내역</a></li>
-							<li><a href="#">고객관리</a>
+							<li><a href="#">#정산내역</a></li>
+							<li><a href="#">#고객관리</a>
 								<ul class="header__menu__dropdown" style="text-align: left;">
-									<li><a href="#">문의</a></li>
-									<li><a href="#">배송현황</a></li>
+									<li><a href="#">#문의</a></li>
+									<li><a href="#">#배송현황</a></li>
 								</ul></li>
 						</ul>
 					</nav>

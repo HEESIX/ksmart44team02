@@ -1,10 +1,13 @@
 package ks44team02.buyer.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.service.GoodsService;
 
 @Controller
+@RequestMapping(value = "/buyer/goods")
 public class BuyerGoodsController {
 	
 	private final GoodsService goodsService;
@@ -39,13 +42,15 @@ public class BuyerGoodsController {
 	}
 	
 	//판매 식단 목록 조회
+	@GetMapping("/menu/menu_list")
 	public String getMenuList() {
-		return null;
+		return "buyer/goods/menu/menu_list";
 	}
 	
 	//판매 상품 목록 조회
+	@GetMapping("/goods_list_buyer")
 	public String getGoodsList() {
-		return null;
+		return "buyer/goods/goods_list_buyer";
 	}
 	
 	//개별 식단 정보
