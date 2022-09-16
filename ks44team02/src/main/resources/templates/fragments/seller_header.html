@@ -33,11 +33,11 @@
 				</ul>
 			</div>
 			<div class="header__top__right__auth">
+				<ul>
+				<li>
 				<a href="#"><i class="fa fa-user"></i> Login</a>
-				<ul class="header__menu__dropdown">
-						<li><a th:href="#">#입점신청</a></li>
-						<li><a th:href="@{/seller/ㅣlogin/seller_login_list}">#회원정보</a></li>
-						<li><a th:href="#">#탈퇴신청</a></li>
+				
+				</li>
 				</ul>
 			</div>
 		</div>
@@ -87,7 +87,16 @@
 					<div class="col-lg-6">
 						<div class="header__top__right">
 							<div class="header__top__right__auth">
-								<a href="#"><i class="fa fa-user"></i> Login</a>
+							<nav class="header__menu">	
+							<ul>
+							<li><a href="#"><i class="fa fa-user"></i> Login</a>
+								<ul class="header__menu__dropdown">
+									<li><a href="#">#입점 신청 </a></li>
+									<li><a th:href="@{/seller/login/seller_login_list}">#회원정보</a></li>
+									<li><a href="#">#탈퇴 신청</a></li>
+								</ul></li>	
+							</ul>	
+							</nav>
 							</div>
 						</div>
 					</div>
