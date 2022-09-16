@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SellerController {
 	
-	@GetMapping("/vendor")
-	public String vendorMain() {
-		return "vendor/vendorMain";
+	@GetMapping("/seller")
+	public String sellerMain() {
+		return "seller/sellerMain";
 	}
 
 }
