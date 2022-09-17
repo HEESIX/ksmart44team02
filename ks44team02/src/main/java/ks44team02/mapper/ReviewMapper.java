@@ -1,5 +1,8 @@
 package ks44team02.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface ReviewMapper {
 	
 	//회원 리뷰 조회
