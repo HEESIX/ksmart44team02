@@ -7,4 +7,9 @@ public interface PenaltyMapper {
 	
 	//패널티 부여
 	public int givePenalty();
+	
+	//판매자 패널티 조회
+	public String getPenaltyList();
+	
+			
 }
