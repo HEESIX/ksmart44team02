@@ -13,9 +13,14 @@ public class PenaltyService {
 		this.penaltyMapper = penaltyMapper;
 	}
 	
-	//회원 QnA 데이터 조회(QnA내역 조회)
-	public String getqnaList() {
-		return null;
+	//판매자 패널티 조회
+	public String getPenaltyList() {
+		  return null;
+		}
+	
+	//관리자 패널티 부여
+	public int givePenalty() {
+		return 0;
 	}
 
 }
