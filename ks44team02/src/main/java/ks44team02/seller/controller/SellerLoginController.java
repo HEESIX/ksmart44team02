@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "seller/login")
+@RequestMapping(value = "/seller/login")
 public class SellerLoginController {
 	
 	//판매자 로그인
-	@GetMapping("/seller_login_list")
+	@GetMapping("/seller_login_lis")
 	public String sellerLogin() {
 		return "seller/login/seller_login_list";
 	}
