@@ -28,6 +28,12 @@ public class AdminGoodsController {
 	public void adminGoodsControllerInit() {
 		log.info("AdminGoodsController bean 생성");
 	}
+	
+	//상품 등록 신청 리스트
+	@GetMapping("/goods_reg_apply_list")
+	public String getGoodsRegApplyList() {
+		return "admin/goods/goods_reg_apply_list";
+	}
 
 	// 상품 카테고리 등록 폼
 	@GetMapping("/category/goodscate_reg")
@@ -108,8 +114,8 @@ public class AdminGoodsController {
 	}
 
 	// 상품 삭제 처리
-	@PostMapping("/goods_remove_form/{g_code}")
-	public String removeAdminGoodsForm(@PathVariable(value = "g_code") String g_code) {
+	@PostMapping("/goods_remove/{g_code}")
+	public String removeAdminGoods(@PathVariable(value = "g_code") String g_code) {
 
 		return "redirect:/admin/goods/goods_list_admin";
 	}
@@ -147,7 +153,7 @@ public class AdminGoodsController {
 	}
 
 	// 식단 삭제 처리
-	@PostMapping("menu/menu_remove_form/{menu_code}")
+	@PostMapping("menu/menu_remove/{menu_code}")
 	public String removeAdminMenu(@PathVariable(value = "menu_code") String menu_code) {
 
 		return "redirect:/admin/goods/menu/menu_list";
@@ -193,7 +199,7 @@ public class AdminGoodsController {
 	}
 
 	// 상품별 할인 혜택 삭제 처리
-	@PostMapping("discount/goods_discount_remove_form/{g_discount_code}")
+	@PostMapping("discount/goods_discount_remove/{g_discount_code}")
 	public String removeGoodsDiscount(@PathVariable(value = "g_discount_code") String g_discount_code) {
 
 		return "redirect:/admin/goods/discount/goods_discount_list";
