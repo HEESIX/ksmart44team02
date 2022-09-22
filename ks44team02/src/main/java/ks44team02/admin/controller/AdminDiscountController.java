@@ -10,31 +10,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.service.OrderDiscountService;
+import ks44team02.service.DiscountService;
 
 @Controller
 @RequestMapping(value = "/admin/orderDiscount")
-public class AdminOrderDiscountController {
+public class AdminDiscountController {
 	
 	
-	private static final Logger log = LoggerFactory.getLogger(AdminOrderDiscountController.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminDiscountController.class);
 
-	private final OrderDiscountService orderDiscountService;
+	private final DiscountService DiscountService;
 	
-	public AdminOrderDiscountController(OrderDiscountService orderDiscountService) {
-		this.orderDiscountService = orderDiscountService;
+	public AdminDiscountController(DiscountService DiscountService) {
+		this.DiscountService = DiscountService;
 	}
 	
 	@PostConstruct
-	public void adminOrderDiscountControllerInit() {
-		log.info("AdminOrderDiscountController bean 생성");
+	public void adminDiscountControllerInit() {
+		log.info("AdminDiscountController bean 생성");
 	}
-	//주문별 할인혜택 목록 조회
+	//주문서별 할인혜택 목록 조회
 	@GetMapping("/order_discount_list")
-	public String getOrderdiscountList() {
+	public String getOrderDiscountList() {
 		return null;
 	}
-	//주문별 할인혜택 등록
+	//주문서별 할인혜택 등록
 	@GetMapping("/add_order_discount")
 	public String addOrderDiscount(Model model) {
 		return null;
@@ -43,7 +43,7 @@ public class AdminOrderDiscountController {
 	public String addOrderDiscount() {
 		return null;
 	}
-	//주문별 할인혜택 수정
+	//주문서별 할인혜택 수정
 	@GetMapping("/modify_order_discount")
 	public String modifyOrderDiscount(Model model) {
 		return null;
@@ -52,7 +52,7 @@ public class AdminOrderDiscountController {
 	public String modifyOrderDiscount() {
 		return null;
 	}
-	//주문별 할인혜택 삭제
+	//주문서별 할인혜택 삭제
 	@PostMapping("/remove_order_discount")
 	public String removeOrderDiscount() {
 		return null;
