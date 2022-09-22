@@ -13,4 +13,7 @@ public interface MileageMapper {
 		
 		//회원 적립금 소멸
 		public int MileageExtinction();
+		
+		//buyer적립금 조회
+		public String getBuyerMileageList();
 }

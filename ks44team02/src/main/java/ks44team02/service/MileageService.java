@@ -13,7 +13,7 @@ public class MileageService {
 		this.mileageMapper = mileageMapper;
 	}
 	
-	//회원 적립금 조회
+	   //회원 적립금 조회
 		public String getMileageList() {
 			return null;
 		}
@@ -26,6 +26,9 @@ public class MileageService {
 		public int MileageExtinction() {
 			return 0;
 		}
-	
+		//buyer 적립금 조회
+		public String getBuyerMileageList() {
+			return null;
+		}
 
 }

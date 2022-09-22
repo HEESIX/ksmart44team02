@@ -31,5 +31,19 @@ public class ReviewService {
 			return 0;
 		}
 		
+		//구매자 리뷰 등록
+		public String regBuyerReview() {
+			return null;
+		}
+		
+		//구매자 리뷰 수정
+		public int buyerReviewModify() {
+			return 0;
+		}
+	
+		// 구매자 리뷰 삭제
+		public int buyerReviewDelete() {
+			return 0;
+		}
 
 }
