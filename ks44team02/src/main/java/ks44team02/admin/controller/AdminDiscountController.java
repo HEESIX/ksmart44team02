@@ -29,30 +29,32 @@ public class AdminDiscountController {
 	public void adminDiscountControllerInit() {
 		log.info("AdminDiscountController bean 생성");
 	}
-	//주문서별 할인혜택 목록 조회
+	//주문서별 할인혜택 목록 조회 폼
 	@GetMapping("/order_discount_list")
 	public String getOrderDiscountList() {
-		return null;
+		return "admin/orderDiscount/order_discount_list";
 	}
-	//주문서별 할인혜택 등록
+	//주문서별 할인혜택 등록 폼
 	@GetMapping("/add_order_discount")
 	public String addOrderDiscount(Model model) {
 		return null;
 	}
+	//주문서별 할인혜택 등록 처리
 	@PostMapping("/add_order_discount")
 	public String addOrderDiscount() {
 		return null;
 	}
-	//주문서별 할인혜택 수정
+	//주문서별 할인혜택 수정 폼
 	@GetMapping("/modify_order_discount")
 	public String modifyOrderDiscount(Model model) {
 		return null;
 	}
+	//주문서별 할인혜택 수정 처리
 	@PostMapping("/modify_order_discount")
 	public String modifyOrderDiscount() {
 		return null;
 	}
-	//주문서별 할인혜택 삭제
+	//주문서별 할인혜택 삭제 처리
 	@PostMapping("/remove_order_discount")
 	public String removeOrderDiscount() {
 		return null;
