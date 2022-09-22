@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "seller/login")
 public class SellerLoginController {
 	
+	//판매자 로그인
 	@GetMapping("/seller_login_list")
 	public String sellerLogin() {
+		return "seller/login/seller_login_list";
+	}
+	//판매자 로그아웃
+	public String sellerlogout() {
 		return "seller/login/seller_login_list";
 	}
 }
