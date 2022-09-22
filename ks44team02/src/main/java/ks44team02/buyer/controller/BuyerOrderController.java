@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.service.OrderService;
+
 @Controller
 @RequestMapping(value = "/buyer")
 public class BuyerOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BuyerOrderController.class);
 
-	private final OrderService OrderService;
+	private final OrderService orderService;
 	
 	public BuyerOrderController(OrderService OrderService) {
-		this.OrderService = OrderService;
+		this.orderService = OrderService;
 	}
 	
 	@PostConstruct
@@ -28,8 +30,7 @@ public class BuyerOrderController {
 		log.info("BuyerOrderController bean 생성");
 	}
 	//주문 화면
-	@GetMapping("/order/order")
-	public String order
+
 	//주문 성공 화면
 	@GetMapping("/mypage/orderStatus/order_success")
 	public String orderSuccess(Model model) {
