@@ -8,6 +8,18 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+		});
+	</script>
+</th:block>
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
@@ -34,8 +46,8 @@
 										th:each="gcl : ${goodsCategoryList}">
 										<td th:text="${gcl.goodsCategoryName}"></td>
 										<td th:text="${gcl.goodsCategoryRegDate}"></td>
-										<td th:if="${gcl.goodsCategoryStatus} == 'Y'">사용중</td>
-										<td th:unless="${gcl.goodsCategoryStatus} == 'Y'">사용정지</td>
+										<td th:if="${gcl.goodsCategoryStatus} == 1">사용중</td>
+										<td th:unless="${gcl.goodsCategoryStatus} == 1">사용정지</td>
 										<td><a
 											th:href="@{|/admin/goods/category/goodscate_update/${gcl.goodsCategoryCode}|}">수정</a></td>
 										<td><a
