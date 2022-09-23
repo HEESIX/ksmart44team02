@@ -21,10 +21,10 @@ public interface GoodsMapper {
 	public List<GoodsCategory> getGoodsCategoryListBuyer();
 	
 	//기존 데이터 조회(상품 카테고리 수정화면)
-	public String getGoodsCategoryInfo();
+	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode);
 	
 	//상품 카테고리 수정
-	public int modifyGoodsCategory();
+	public boolean modifyGoodsCategory(GoodsCategory goodsCategory);
 	
 	//상품 카테고리 삭제
 	public int removeGoodsCategory();

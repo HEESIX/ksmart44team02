@@ -41,13 +41,15 @@ public class GoodsService {
 	}
 	
 	//기존 데이터 조회(상품 카테고리 수정 화면)
-	public String getGoodsCategoryInfo() {
-		return null;
+	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode) {
+		GoodsCategory goodsCategoryInfo = goodsMapper.getGoodsCategoryInfo(goodsCategoryCode);
+		return goodsCategoryInfo;
 	}
 	
-	//상품 카테고리 수정
-	public int modifyGoodsCategory() {
-		return 0;
+	//상품 카테고리 수정 처리
+	public boolean modifyGoodsCategory(GoodsCategory goodsCategory) {
+		boolean result = goodsMapper.modifyGoodsCategory(goodsCategory);
+		return result;
 	}
 	
 	//상품 카테고리 삭제

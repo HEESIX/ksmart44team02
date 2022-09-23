@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.GoodsCategory;
 import ks44team02.service.GoodsService;
@@ -53,27 +55,46 @@ public class AdminGoodsController {
 
 	// 상품 카테고리 리스트
 	@GetMapping("/category/goodscate_list")
-	public String getGoodsCategoryList(Model model) {
+	public String getGoodsCategoryList(Model model
+									  ,@RequestParam(value = "msg", required = false) String msg) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
 		
+		model.addAttribute("title", "상품 카테고리 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		if(msg!=null) model.addAttribute("msg", msg);
 		
 		return "admin/goods/category/goodscate_list";
 	}
 
 	// 상품 카테고리 수정 폼
 	@GetMapping("/category/goodscate_update/{goodsCategoryCode}")
-	public String modifyGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode) {
+	public String modifyGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode
+										 ,Model model) {
+		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
+		
+		model.addAttribute("title", "상품 카테고리 수정");
+		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
 		return "admin/goods/category/goodscate_update";
 	}
 
 	// 상품 카테고리 수정 처리
 	@PostMapping("/category/goodscate_update")
-	public String modifyGoodsCategory() {
+	public String modifyGoodsCategory(GoodsCategory goodsCategory
+									 ,RedirectAttributes reAttr) {
+		
+		boolean result = goodsService.modifyGoodsCategory(goodsCategory);
+		
+		if(result) {
+			reAttr.addAttribute("msg", "수정 완료");
+		}else {
+			reAttr.addAttribute("msg", "수정 실패");
+		}
+		
 		return "redirect:/admin/goods/category/goodscate_list";
 	}
 
 	// 상품 카테고리 삭제 처리(세션과 비밀번호 입력받아서?, 아니면 ajax?)
+	//로그인된 값: 세션 아이디 값을 가져와서 비밀번호와 일치하는지 처리하는 과정 필요
 	@PostMapping("/category/goodscate_remove/{g_cate_code}")
 	public String removeGoodsCategory(@PathVariable(value = "g_cate_code") String g_cate_code) {
 		return "redirect:/admin/goods/category/goodscate_list";
