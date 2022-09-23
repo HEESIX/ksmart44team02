@@ -8,12 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.service.DeliveryService;
+
 @Controller
-@RequestMapping(value = "buyer/mypage/order")
+@RequestMapping(value = "buyer/mypage/orderStatus")
 public class BuyerDeliveryController {
 		
 		
 		private static final Logger log = LoggerFactory.getLogger(BuyerDeliveryController.class);
+
+		private final DeliveryService deliveryservice;
+		
+		public BuyerDeliveryController(DeliveryService deliveryservice) {
+			this.deliveryservice = deliveryservice;
+		}
 
 	
 		// 주문 목록 조회
