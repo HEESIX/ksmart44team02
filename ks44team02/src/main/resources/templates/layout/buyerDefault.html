@@ -8,11 +8,16 @@
 	<!-- start header  -->
 	<div th:replace="fragments/buyer_header :: buyerHeaderFragment"></div>
 	<!-- end header  -->
-
+	
+	<!-- start breadcrum section -->
+	<th:block layout:fragment="customBreadCrum">
+	</th:block>
+	<!-- end breadcrum section -->
+	
 	<!-- start contents  -->
 	<section class="product spad">
-		<!-- 사용자 정의 contents  -->
 		<div class="container">
+			<!-- 사용자 정의 contents  -->
 			<th:block layout:fragment="customContents">
 			</th:block>
 		</div>

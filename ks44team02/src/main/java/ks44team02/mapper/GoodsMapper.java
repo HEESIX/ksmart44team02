@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.Menus;
 
 @Mapper
@@ -15,7 +16,7 @@ public interface GoodsMapper {
 	
 	//상품 카테고리 리스트
 	//Goods아님 변경 필요
-	public List<Goods> getGoodsCategoryList();
+	public List<GoodsCategory> getGoodsCategoryList();
 	
 	//기존 데이터 조회(상품 카테고리 수정화면)
 	public String getModifyGoodsCategoryCode();
