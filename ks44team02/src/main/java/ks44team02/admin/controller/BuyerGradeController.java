@@ -17,25 +17,25 @@ public class BuyerGradeController {
 	}
 	
 	//구매자 등급 정의 등록 
-	@GetMapping("/addgradelist")
+	@GetMapping("/buyer_gradelist")
 	public String addbuyerGrade() {
-		return "admin/gradeDetails/addgradelist";
+		return "admin/gradeDetails/buyer_gradelist";
 	}
 	
 	//구매자 등급 정의 조회
-	@GetMapping("/gradelist")
+	@GetMapping("/buyer_addgradelist")
 	public String getbuyerGradeList() {
-		return "admin/gradeDetails/gradelist";
+		return "admin/gradeDetails/buyer_addgradelist";
 		}
 	//구매자 등급 정의 수정
-	@GetMapping("/modifylist")
+	@GetMapping("/buyer_modifylist")
 	public String ModifybuyerGrade() {
-		return "admin/gradeDetails/modifylist";
+		return "admin/gradeDetails/buyer_modifylist";
 		}
 	//구매자 등급 정의 삭제
-	@GetMapping("/removelist")
+	@GetMapping("/buyer_removelist")
 	public String RemovebuyerGrade() {
-		return "admin/gradeDetails/removelist";
+		return "admin/gradeDetails/buyer_removelist";
 			}
 		
 		

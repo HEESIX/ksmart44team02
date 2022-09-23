@@ -19,9 +19,9 @@ public class BuyerLoginController {
 	
 	
 	//구매자 로그인
-	@GetMapping("/buer_login_list")
+	@GetMapping("/buer_login")
 	public String buyerLogin() {
-		return "buyer/login/buer_login_list";
+		return "buyer/login/buer_login";
 	}
 	//구매자 로그아웃
 	public String buyelogout() {
