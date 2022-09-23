@@ -36,6 +36,7 @@ public class SellerGradeController {
 		@GetMapping("/seller_modifylist")
 		public String RemoveVenderGrade () {
 			return "admin/gradeDetails/seller_modifylist";
+
 				}
 
 }
