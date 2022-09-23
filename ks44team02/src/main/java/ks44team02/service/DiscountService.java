@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ks44team02.dto.Discount;
+import ks44team02.dto.OrderDiscount;
 import ks44team02.mapper.DiscountMapper;
 
 @Service
@@ -17,7 +17,7 @@ public class DiscountService {
 	}
 	
 	//주문서별 할인혜택 목록 조회
-	public List<Discount> getOrderDiscountList(){
+	public List<OrderDiscount> getOrderDiscountList(){
 		return null;
 	}
 	
