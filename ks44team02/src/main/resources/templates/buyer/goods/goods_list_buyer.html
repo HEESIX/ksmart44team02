@@ -35,18 +35,9 @@
 		<div class="col-lg-3 col-md-5">
 			<div class="sidebar">
 				<div class="sidebar__item">
-					<h4>Department</h4>
-					<ul>
-						<li><a href="#">Fresh Meat</a></li>
-						<li><a href="#">Vegetables</a></li>
-						<li><a href="#">Fruit & Nut Gifts</a></li>
-						<li><a href="#">Fresh Berries</a></li>
-						<li><a href="#">Ocean Foods</a></li>
-						<li><a href="#">Butter & Eggs</a></li>
-						<li><a href="#">Fastfood</a></li>
-						<li><a href="#">Fresh Onion</a></li>
-						<li><a href="#">Papayaya & Crisps</a></li>
-						<li><a href="#">Oatmeal</a></li>
+					<h4>Categories</h4>
+					<ul th:if="${not #lists.isEmpty(goodsCategoryList)}" th:each="gcl : ${goodsCategoryList}">
+						<li><a th:text="${gcl.goodsCategoryName}" th:href="@{|/buyer/goods/goods_list_buyer/${gcl.goodsCategoryCode}|}"></a></li>
 					</ul>
 				</div>
 				<div class="sidebar__item">
@@ -54,7 +45,7 @@
 					<div class="price-range-wrap">
 						<div
 							class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-							data-min="10" data-max="540">
+							data-min="1000" data-max="100000">
 							<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
 							<span tabindex="0"
 								class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -63,8 +54,8 @@
 						</div>
 						<div class="range-slider">
 							<div class="price-input">
-								<input type="text" id="minamount"> <input type="text"
-									id="maxamount">
+								<input type="text" id="minamount" style="width: 20%;"> 
+								<input type="text" id="maxamount" style="width: 70%; padding-left: 10px;">
 							</div>
 						</div>
 					</div>

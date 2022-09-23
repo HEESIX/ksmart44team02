@@ -14,12 +14,14 @@ public interface GoodsMapper {
 	//상품 카테고리 등록
 	public int addGoodsCategory();
 	
-	//상품 카테고리 리스트
-	//Goods아님 변경 필요
+	//상품 카테고리 리스트 : 사용 중지중인 것까지 포함
 	public List<GoodsCategory> getGoodsCategoryList();
 	
+	//상품 카테고리 리스트(사용중인 것만)
+	public List<GoodsCategory> getGoodsCategoryListBuyer();
+	
 	//기존 데이터 조회(상품 카테고리 수정화면)
-	public String getModifyGoodsCategoryCode();
+	public String getGoodsCategoryInfo();
 	
 	//상품 카테고리 수정
 	public int modifyGoodsCategory();

@@ -78,7 +78,7 @@ public class BuyerGoodsController {
 	// 판매 상품 목록 조회
 	@GetMapping("/goods_list_buyer")
 	public String getGoodsList(Model model) {
-		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListBuyer();
 		
 		model.addAttribute("title", "상품 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);

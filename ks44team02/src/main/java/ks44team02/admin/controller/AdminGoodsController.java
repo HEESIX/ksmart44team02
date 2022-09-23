@@ -1,15 +1,19 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.GoodsCategory;
 import ks44team02.service.GoodsService;
 
 @Controller
@@ -49,13 +53,17 @@ public class AdminGoodsController {
 
 	// 상품 카테고리 리스트
 	@GetMapping("/category/goodscate_list")
-	public String getGoodsCategoryList() {
+	public String getGoodsCategoryList(Model model) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		
 		return "admin/goods/category/goodscate_list";
 	}
 
 	// 상품 카테고리 수정 폼
-	@GetMapping("/category/goodscate_update")
-	public String modifyGoodsCategoryForm() {
+	@GetMapping("/category/goodscate_update/{goodsCategoryCode}")
+	public String modifyGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode) {
 		return "admin/goods/category/goodscate_update";
 	}
 
@@ -66,7 +74,7 @@ public class AdminGoodsController {
 	}
 
 	// 상품 카테고리 삭제 처리(세션과 비밀번호 입력받아서?, 아니면 ajax?)
-	@PostMapping("category/goodscate_remove/{g_cate_code}")
+	@PostMapping("/category/goodscate_remove/{g_cate_code}")
 	public String removeGoodsCategory(@PathVariable(value = "g_cate_code") String g_cate_code) {
 		return "redirect:/admin/goods/category/goodscate_list";
 	}

@@ -24,8 +24,7 @@ public class GoodsService {
 		return 0;
 	}
 	
-	//상품 카테고리 리스트
-	//Goods아님 변경 필요
+	//상품 카테고리 리스트: 사용 중지된 것도 포함
 	public List<GoodsCategory> getGoodsCategoryList(){
 		
 		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryList();
@@ -33,8 +32,16 @@ public class GoodsService {
 		return goodsCategoryList;
 	}
 	
+	//상품 카테고리 리스트: 사용중인 것만
+	public List<GoodsCategory> getGoodsCategoryListBuyer(){
+		
+		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryListBuyer();
+		
+		return goodsCategoryList;
+	}
+	
 	//기존 데이터 조회(상품 카테고리 수정 화면)
-	public String getModifyGoodsCategoryCode() {
+	public String getGoodsCategoryInfo() {
 		return null;
 	}
 	
