@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,8 +46,8 @@ public class AdminDiscountController {
 		return null;
 	}
 	//주문서별 할인혜택 수정 폼
-	@GetMapping("/modify_order_discount")
-	public String modifyOrderDiscount(Model model) {
+	@GetMapping("/modify_order_discount/{order_discount_code}")
+	public String modifyOrderDiscount(@PathVariable(value = "order_discount_code") String order_discount_code) {
 		return null;
 	}
 	//주문서별 할인혜택 수정 처리
