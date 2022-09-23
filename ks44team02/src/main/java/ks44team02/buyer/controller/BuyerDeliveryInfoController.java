@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.service.DeliveryInfoService;
+
 @Controller
 @RequestMapping(value = "/buyer/mypage/delivery_info")
 public class BuyerDeliveryInfoController {
@@ -15,6 +17,11 @@ public class BuyerDeliveryInfoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BuyerDeliveryInfoController.class);
 
+	private final DeliveryInfoService deliveryInfoService;
+	
+	public BuyerDeliveryInfoController(DeliveryInfoService deliveryInfoService) {
+		this.deliveryInfoService = deliveryInfoService;
+	}
 	
 	
 	// 등록한 배송지 리스트 조회
