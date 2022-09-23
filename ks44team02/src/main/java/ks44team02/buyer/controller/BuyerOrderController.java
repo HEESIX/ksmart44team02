@@ -30,6 +30,10 @@ public class BuyerOrderController {
 		log.info("BuyerOrderController bean 생성");
 	}
 	//주문 화면
+	@GetMapping("/order/order")
+	public String order(Model model) {
+		return "buyer/order/order";
+	}
 
 	//주문 성공 화면
 	@GetMapping("/mypage/orderStatus/order_success")
@@ -41,6 +45,25 @@ public class BuyerOrderController {
 	public String orderSuccess() {
 		return "buyer/mypage/orderStatus/order_success";
 	}
-	
-	
+	//결제 성공 화면
+	@GetMapping("/order/payment_success")
+	public String paymentSuccess(Model model) {
+		return "buyer/order/payment_success";
+	}
+	//결제 성공 처리
+	@PostMapping("/order/payment_success")
+	public String paymentSuccess() {
+		return "buyer/order/payment_success";
+	}
+	//주문 취소 화면
+	@GetMapping("/mypage/orderStatus/order_cancel")
+	public String orderCancel(Model model) {
+		return "buyer/mypage/orderStatus/order_cancel";
+	}
+	//주문 취소 처리
+	@PostMapping("/mypage/orderStatus/order_cancel")
+	public String orderCancel() {
+		return "redirect:/buyer/mypage/orderStatus/myorder_status_list";
+	}
 }
+
