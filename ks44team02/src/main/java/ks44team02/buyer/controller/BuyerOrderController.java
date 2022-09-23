@@ -36,7 +36,7 @@ public class BuyerOrderController {
 	}
 
 	//주문 성공 화면
-	@GetMapping("/mypage/orderStatus/order_success")
+	@GetMapping("/order/order_success")
 	public String orderSuccess(Model model) {
 		return "buyer/mypage/orderStatus/order_success";
 	}
