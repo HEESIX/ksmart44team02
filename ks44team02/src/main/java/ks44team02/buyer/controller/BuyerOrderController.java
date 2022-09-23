@@ -55,4 +55,15 @@ public class BuyerOrderController {
 	public String paymentSuccess() {
 		return "buyer/order/payment_success";
 	}
+	//주문 취소 화면
+	@GetMapping("/mypage/orderStatus/order_cancel")
+	public String orderCancel(Model model) {
+		return "buyer/mypage/orderStatus/order_cancel";
+	}
+	//주문 취소 처리
+	@PostMapping("/mypage/orderStatus/order_cancel")
+	public String orderCancel() {
+		return "redirect:/buyer/mypage/orderStatus/myorder_status_list";
+	}
 }
+
