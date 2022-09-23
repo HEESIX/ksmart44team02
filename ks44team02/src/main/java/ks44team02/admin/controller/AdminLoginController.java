@@ -15,11 +15,13 @@ public class AdminLoginController {
 	public AdminLoginController (Loginservice loginservice) {
 			this.loginservice = loginservice;
 	}
-	
-	@GetMapping("admin_login_list")
+	// 판매자 로그인
+	@GetMapping("admin_login")
 	public String adminLogin() {
-		return "admin/login/admin_login_list";
+		return "admin/login/admin_login";
 	}
+	
+	//판매자 로그아웃
 	public String adminlogout() {
 		return "admin/login/admin_login_list";
 	}

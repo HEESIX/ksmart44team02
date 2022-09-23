@@ -15,7 +15,7 @@ public class AdminRegController {
 	public AdminRegController (MemberInfoservice memberInfoservice) {
 		this.memberInfoservice = memberInfoservice;
 	}
-	
+	// 관리자 등록
 	@GetMapping("/admin_login_reg")
 	public String addAdminInsert() {
 		return "admin/login/admin_login_reg";

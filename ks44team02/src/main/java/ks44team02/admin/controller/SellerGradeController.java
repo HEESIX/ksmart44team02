@@ -18,25 +18,25 @@ public class SellerGradeController {
 	}
 	
 	//판매자 등급 정의 등록
-	//아래 주소 변환
-	@GetMapping("/addgradelis")
+	@GetMapping("/seller_addgradelist")
 	public String addVenderGrade () {
-		return "admin/gradeDetails/addgradelist";
+		return "admin/gradeDetails/seller_addgradelist";
 	}
 	//판매자 등급 정의 조회
-		@GetMapping("/gradelis")
+		@GetMapping("/seller_gradelist")
 		public String getVendeGradeList () {
-			return "admin/gradeDetails/gradelist";
+			return "admin/gradeDetails/seller_gradelist";
 		}
 	//판매자 등급 정의 수정
-		@GetMapping("/modifylis")
+		@GetMapping("/seller_removelist")
 		public String ModifyVendeGrade () {
-			return "admin/gradeDetails/modifylist";
+			return "admin/gradeDetails/seller_removelist";
 				}
 	//판매자 등급 정의 삭제
-		@GetMapping("/removelis")
+		@GetMapping("/seller_modifylist")
 		public String RemoveVenderGrade () {
-			return "admin/gradeDetails/removelist";
+			return "admin/gradeDetails/seller_modifylist";
+
 				}
 
 }
