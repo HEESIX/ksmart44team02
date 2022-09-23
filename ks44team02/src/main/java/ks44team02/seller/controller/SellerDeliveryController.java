@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.service.DeliveryService;
+
 @Controller
 @RequestMapping(value = "seller/order")
 public class SellerDeliveryController {
 	
 	
 	private static final Logger log = LoggerFactory.getLogger(SellerDeliveryController.class);
-
+	private final DeliveryService deliveryservice;
 	
-	
+	public SellerDeliveryController(DeliveryService deliveryservice) {
+		this.deliveryservice = deliveryservice;
+	}
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 	@GetMapping("/seller_order_delivery_all_list")
