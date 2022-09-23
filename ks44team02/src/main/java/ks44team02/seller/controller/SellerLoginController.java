@@ -20,8 +20,6 @@ public class SellerLoginController {
 		this.loginService = loginService;
 	}
 	
-	
-	
 	//판매자 로그인
 	@GetMapping("/seller_login")
 	public String sellerLogin() {
