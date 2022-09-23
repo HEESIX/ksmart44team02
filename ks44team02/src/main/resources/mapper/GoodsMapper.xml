@@ -3,5 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.GoodsMapper">
-
+	<select id="getGoodsCategoryList" resultType="GoodsCategory">
+		SELECT
+			g_cate_code 	as goodsCategoryCode
+			,cate_name 		as goodsCategoryName
+			,cate_reg_date 	as goodsCategoryRegDate
+			,member_id 		as goodsCategoryRegId
+			,cate_status 	as goodsCategoryStatus
+		FROM
+			tb_goods_cate;
+	</select>
+	<select id="getGoodsCategoryListBuyer" resultType="GoodsCategory">
+		SELECT
+			g_cate_code 	as goodsCategoryCode
+			,cate_name 		as goodsCategoryName
+		FROM
+			tb_goods_cate
+		WHERE
+			cate_status = 'Y';
+	</select>
 </mapper>

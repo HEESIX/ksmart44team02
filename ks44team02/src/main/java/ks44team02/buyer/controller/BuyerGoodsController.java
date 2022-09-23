@@ -1,11 +1,16 @@
 package ks44team02.buyer.controller;
 
+
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.GoodsCategory;
 import ks44team02.service.GoodsService;
 
 @Controller
@@ -13,7 +18,7 @@ import ks44team02.service.GoodsService;
 public class BuyerGoodsController {
 
 	private final GoodsService goodsService;
-
+	
 	public BuyerGoodsController(GoodsService goodsService) {
 		this.goodsService = goodsService;
 	}
@@ -65,13 +70,19 @@ public class BuyerGoodsController {
 
 	// 판매 식단 목록 조회
 	@GetMapping("/menu/menu_list")
-	public String getMenuList() {
+	public String getMenuList(Model model) {
+		
 		return "buyer/goods/menu/menu_list";
 	}
 
 	// 판매 상품 목록 조회
 	@GetMapping("/goods_list_buyer")
-	public String getGoodsList() {
+	public String getGoodsList(Model model) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListBuyer();
+		
+		model.addAttribute("title", "상품 목록");
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		
 		return "buyer/goods/goods_list_buyer";
 	}
 
