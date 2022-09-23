@@ -40,7 +40,7 @@ public class BuyerCartController {
 		return "buyer/mypage/cart/cart_list";
 	}
 	//장바구니에 담긴 상품 주문화면으로 선택 이동
-	@PostMapping("/cart_list")
+	@PostMapping("/cart_move")
 	public String moveCartGoods() {
 		return "buyer/mypage/cart/cart_list";
 	}
