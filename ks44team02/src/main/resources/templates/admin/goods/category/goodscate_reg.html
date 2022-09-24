@@ -17,7 +17,7 @@
 					<div class="card-header" style="text-align: center;">
 						<h3>카테고리 등록</h3>
 					</div>
-					<form action="" method="post">
+					<form th:action="@{/admin/goods/category/goodscate_reg}" method="post">
 						<div class="card-block">
 							<div class="form-group row">
 								<label for="goodsCategoryName"
@@ -50,7 +50,7 @@
 										name="memberPw">
 								</div>
 							</div>
-							<button type="button"
+							<button type="submit"
 								class="btn btn-info waves-effect waves-light"
 								style="float: right;">등록</button>
 						</div>

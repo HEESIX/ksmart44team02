@@ -43,14 +43,17 @@ public class AdminGoodsController {
 
 	// 상품 카테고리 등록 폼
 	@GetMapping("/category/goodscate_reg")
-	public String addGoodsCategoryForm() {
+	public String addGoodsCategoryForm(Model model) {
+		
+		model.addAttribute("title", "상품 카테고리 등록");
 		return "admin/goods/category/goodscate_reg";
 	}
 
 	// 상품 카테고리 등록 처리
 	@PostMapping("/category/goodscate_reg")
-	public String addGoodsCategory() {
-		return null;
+	public String addGoodsCategory(GoodsCategory goodsCategory) {
+		System.out.println(goodsCategory.toString());
+		return "redirect:/admin/goods/category/goodscate_list";
 	}
 
 	// 상품 카테고리 리스트
