@@ -1,5 +1,5 @@
 package ks44team02.dto;
-
+//환불내역 객체
 public class OrderRefund {
 	private String orderRefundCode;
 	private String refundExchangeInCode;
