@@ -3,6 +3,7 @@ package ks44team02.admin.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.GoodsCategory;
+import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
 
 @Controller
@@ -25,17 +27,19 @@ public class AdminGoodsController {
 	private static final Logger log = LoggerFactory.getLogger(AdminGoodsController.class);
 
 	private final GoodsService goodsService;
+	private final CommonService commonService;
 
-	public AdminGoodsController(GoodsService goodsService) {
+	public AdminGoodsController(GoodsService goodsService, CommonService commonService) {
 		this.goodsService = goodsService;
+		this.commonService = commonService;
 	}
 
 	@PostConstruct
 	public void adminGoodsControllerInit() {
 		log.info("AdminGoodsController bean 생성");
 	}
-	
-	//상품 등록 신청 리스트
+
+	// 상품 등록 신청 리스트
 	@GetMapping("/goods_reg_apply_list")
 	public String getGoodsRegApplyList() {
 		return "admin/goods/goods_reg_apply_list";
@@ -44,15 +48,23 @@ public class AdminGoodsController {
 	// 상품 카테고리 등록 폼
 	@GetMapping("/category/goodscate_reg")
 	public String addGoodsCategoryForm(Model model) {
-		
+
 		model.addAttribute("title", "상품 카테고리 등록");
 		return "admin/goods/category/goodscate_reg";
 	}
 
 	// 상품 카테고리 등록 처리
 	@PostMapping("/category/goodscate_reg")
-	public String addGoodsCategory(GoodsCategory goodsCategory) {
-		System.out.println(goodsCategory.toString());
+	public String addGoodsCategory(GoodsCategory goodsCategory
+								  ,RedirectAttributes reAttr) {
+		boolean result = goodsService.addGoodsCategory(goodsCategory);
+		String msg = "";
+		if (result) {
+			msg = "등록 성공";
+		} else {
+			msg = "등록 실패";
+		}
+		reAttr.addAttribute("msg", msg);
 		return "redirect:/admin/goods/category/goodscate_list";
 	}
 
@@ -61,11 +73,12 @@ public class AdminGoodsController {
 	public String getGoodsCategoryList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
-		
+
 		model.addAttribute("title", "상품 카테고리 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
-		if(msg!=null) model.addAttribute("msg", msg);
-		
+		if (msg != null)
+			model.addAttribute("msg", msg);
+
 		return "admin/goods/category/goodscate_list";
 	}
 
@@ -74,7 +87,7 @@ public class AdminGoodsController {
 	public String modifyGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode
 										 ,Model model) {
 		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
-		
+
 		model.addAttribute("title", "상품 카테고리 수정");
 		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
 		return "admin/goods/category/goodscate_update";
@@ -84,22 +97,50 @@ public class AdminGoodsController {
 	@PostMapping("/category/goodscate_update")
 	public String modifyGoodsCategory(GoodsCategory goodsCategory
 									 ,RedirectAttributes reAttr) {
-		
+
 		boolean result = goodsService.modifyGoodsCategory(goodsCategory);
-		
-		if(result) {
+
+		if (result) {
 			reAttr.addAttribute("msg", "수정 완료");
-		}else {
+		} else {
 			reAttr.addAttribute("msg", "수정 실패");
 		}
-		
+
 		return "redirect:/admin/goods/category/goodscate_list";
 	}
 
-	// 상품 카테고리 삭제 처리(세션과 비밀번호 입력받아서?, 아니면 ajax?)
-	//로그인된 값: 세션 아이디 값을 가져와서 비밀번호와 일치하는지 처리하는 과정 필요
-	@PostMapping("/category/goodscate_remove/{g_cate_code}")
-	public String removeGoodsCategory(@PathVariable(value = "g_cate_code") String g_cate_code) {
+	// 상품 카테고리 삭제 폼
+	@GetMapping("/category/goodscate_remove/{goodsCategoryCode}")
+	public String removeGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode
+									 	 ,Model model) {
+		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
+		System.out.println(goodsCategoryInfo.toString());
+		model.addAttribute("title", "상품 카테고리 삭제");
+		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
+		
+		return "admin/goods/category/goodscate_remove";
+	}
+	
+	// 상품 카테고리 삭제 처리
+	@PostMapping("/category/goodscate_remove")
+	public String removeGoodsCategory(@RequestParam(value = "goodsCategoryCode") String goodsCategoryCode
+									 ,@RequestParam(value = "memberPw") String memberPw
+									 ,HttpSession session
+									 ,RedirectAttributes reAttr) {
+		//session 저장하는 로그인 완성되면 이 부분 session 아이디 가져오게 교체
+		//String memberId = session.getAttribute("SID");
+		//null일 경우 체크(비정상적인 접근)
+		//현재 없으므로 픽스된 값 입력
+		String memberId = "id001";
+		boolean idCheckResult = commonService.sessionIdPwCheck(memberId, memberPw);
+		if(idCheckResult) {
+			//아이디 비번 일치
+			goodsService.removeGoodsCategory(goodsCategoryCode);
+			reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다.");
+		}else {
+			//아이디 비번 불일치
+			reAttr.addAttribute("msg", "삭제 실패: 비밀번호가 일치하지 않습니다.");
+		}
 		return "redirect:/admin/goods/category/goodscate_list";
 	}
 
