@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.GoodsDiscount;
 import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
 
@@ -146,13 +148,20 @@ public class AdminGoodsController {
 
 	// 상품 등록 폼
 	@GetMapping("/goods_reg_form")
-	public String addGoodsForm() {
+	public String addGoodsForm(Model model) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListAdmin();
+		
+		model.addAttribute("title", "상품 등록");
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
 		return "admin/goods/goods_reg_form";
 	}
 
 	// 상품 등록 처리
 	@PostMapping("/goods_reg_form")
-	public String addGoods() {
+	public String addGoods(@RequestParam MultipartFile[] uploadfile) {
+		log.info(uploadfile.toString());
 		return "redirect:/admin/goods/goods_list_admin";
 	}
 
