@@ -8,7 +8,8 @@ public class OrderDiscount {
 	private String discountExpirationDate;
 	private int minOrderPrice;
 	private int maxDiscountPrice;
-	private int gProductionRegDateTime;
+	private String gProductionRegDateTime;
+	
 	public String getOrderDiscountCode() {
 		return orderDiscountCode;
 	}
@@ -51,10 +52,10 @@ public class OrderDiscount {
 	public void setMaxDiscountPrice(int maxDiscountPrice) {
 		this.maxDiscountPrice = maxDiscountPrice;
 	}
-	public int getgProductionRegDateTime() {
+	public String getgProductionRegDateTime() {
 		return gProductionRegDateTime;
 	}
-	public void setgProductionRegDateTime(int gProductionRegDateTime) {
+	public void setgProductionRegDateTime(String gProductionRegDateTime) {
 		this.gProductionRegDateTime = gProductionRegDateTime;
 	}
 	@Override
