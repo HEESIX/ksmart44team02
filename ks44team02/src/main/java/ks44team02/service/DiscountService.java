@@ -29,13 +29,14 @@ public class DiscountService {
 		return null;
 	}
 	//특정 주문서별 할인혜택 조회
-	public OrderDiscount getOrderDiscountInfo() {
+	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode) {
 		OrderDiscount orderDiscount = discountMapper.getOrderDiscountInfo();
 		return orderDiscount;
 	}
 	//주문서별 할인혜택 수정
-	public void modifyOrderDiscount(OrderDiscount orderDiscount) {
-		discountMapper.modifyOrderDiscount(orderDiscount);
+	public boolean modifyOrderDiscount(OrderDiscount orderDiscount) {
+		boolean result = discountMapper.modifyOrderDiscount(orderDiscount);
+		return result;
 	}
 	//주문서별 할인혜택 등록
 	public void addOrderDiscount(OrderDiscount orderDiscount) {
