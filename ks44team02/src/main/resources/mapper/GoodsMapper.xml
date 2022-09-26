@@ -19,7 +19,7 @@
 			,member_id
 			,cate_status
 		)VALUES(
-			new_goods_cate_code()
+			sf_new_goods_cate_code()
 			,#{goodsCategoryName}
 			,NOW()
 			,'id001'
