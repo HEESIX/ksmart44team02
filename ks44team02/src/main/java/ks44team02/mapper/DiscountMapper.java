@@ -16,7 +16,7 @@ public interface DiscountMapper {
 	public OrderDiscount getOrderDiscountInfo();
 		
 	//주문서별 할인혜택 수정
-	public void modifyOrderDiscount(OrderDiscount orderDiscount);
+	public boolean modifyOrderDiscount(OrderDiscount orderDiscount);
 	
 	//주문서별 할인혜택 등록
 	public void addOrderDiscount(OrderDiscount orderDiscount);
