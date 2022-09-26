@@ -2,6 +2,8 @@ package ks44team02.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Goods;
@@ -34,9 +36,9 @@ public class GoodsService {
 	}
 	
 	//상품 카테고리 리스트: 사용중인 것만
-	public List<GoodsCategory> getGoodsCategoryListBuyer(){
+	public List<GoodsCategory> getGoodsCategoryListUser(){
 		
-		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryListBuyer();
+		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryListUser();
 		
 		return goodsCategoryList;
 	}
@@ -104,9 +106,20 @@ public class GoodsService {
 		return 0;
 	}
 	
-	//상품별 할인 혜택 리스트
-	public List<GoodsDiscount> getGoodsDiscountList(){
-		return null;
+	//상품별 할인 혜택 리스트(admin: admin이 등록한 할인혜택만)
+	public List<GoodsDiscount> getGoodsDiscountListAdmin(){
+		List<GoodsDiscount> goodsDiscountAdmin = goodsMapper.getGoodsDiscountListAdmin();
+		return goodsDiscountAdmin;
+	}
+	
+	//상품별 할인 혜택 리스트(seller: seller가 접속한 session id와 일치하는 목록 출력)
+	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session){
+		//세션의 아이디 조회
+		//현재 없으므로 fix된 값 사용
+		//String memberId = session.getAttribute("SID");
+		String memberId = "id010";
+		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
+		return goodsDiscountListSeller;
 	}
 	
 	//상품별 할인 혜택 수정

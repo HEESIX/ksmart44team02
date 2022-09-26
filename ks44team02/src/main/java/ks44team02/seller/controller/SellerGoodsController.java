@@ -1,17 +1,30 @@
 package ks44team02.seller.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.GoodsDiscount;
 import ks44team02.service.GoodsService;
 
 @Controller
 @RequestMapping(value = "/seller/goods")
 public class SellerGoodsController {
 	
+	private static final Logger log = LoggerFactory.getLogger(SellerGoodsController.class);
+
 	private final GoodsService goodsService;
 	
 	public SellerGoodsController(GoodsService goodsService) {
@@ -20,13 +33,21 @@ public class SellerGoodsController {
 	
 	//상품 등록 신청 폼
 	@GetMapping("/goods_reg_apply")
-	public String applyGoodsRegisterForm() {
+	public String applyGoodsRegisterForm(Model model
+										,HttpSession session) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListUser();
+		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountListSeller(session);
+		
+		model.addAttribute("title", "상품 등록 신청");
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goodsDiscountList", goodsDiscountList);
 		return "seller/goods/goods_reg_apply";
 	}
 	
 	//상품 등록 신청 처리
 	@PostMapping("/goods_reg_apply")
-	public String applyGoodsRegister() {
+	public String applyGoodsRegister(@RequestParam MultipartFile[] uploadfile) {
+		log.info(uploadfile.toString());
 		return "redirect:/seller/goods/goods_list_apply";
 	}
 	

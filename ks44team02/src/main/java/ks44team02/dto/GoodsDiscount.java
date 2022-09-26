@@ -7,7 +7,6 @@ public class GoodsDiscount {
 	private int goodsDiscountRate;
 	private String goodsDiscountName;
 	private String goodsDiscountExpirationDate;
-	private String goodsDiscountConstraint;
 	private String goodsDiscountRegistrant;
 	private String goodsDiscountRegDatetime;
 	private String enterCode;
@@ -52,14 +51,6 @@ public class GoodsDiscount {
 		this.goodsDiscountExpirationDate = goodsDiscountExpirationDate;
 	}
 
-	public String getGoodsDiscountConstraint() {
-		return goodsDiscountConstraint;
-	}
-
-	public void setGoodsDiscountConstraint(String goodsDiscountConstraint) {
-		this.goodsDiscountConstraint = goodsDiscountConstraint;
-	}
-
 	public String getGoodsDiscountRegistrant() {
 		return goodsDiscountRegistrant;
 	}
@@ -97,8 +88,6 @@ public class GoodsDiscount {
 		builder.append(goodsDiscountName);
 		builder.append(", goodsDiscountExpirationDate=");
 		builder.append(goodsDiscountExpirationDate);
-		builder.append(", goodsDiscountConstraint=");
-		builder.append(goodsDiscountConstraint);
 		builder.append(", goodsDiscountRegistrant=");
 		builder.append(goodsDiscountRegistrant);
 		builder.append(", goodsDiscountRegDatetime=");
