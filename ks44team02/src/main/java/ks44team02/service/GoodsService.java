@@ -20,8 +20,9 @@ public class GoodsService {
 	}
 	
 	//상품 카테고리 등록
-	public int addGoodsCategory() {
-		return 0;
+	public boolean addGoodsCategory(GoodsCategory goodsCategory) {
+		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
+		return result;
 	}
 	
 	//상품 카테고리 리스트: 사용 중지된 것도 포함
@@ -53,8 +54,9 @@ public class GoodsService {
 	}
 	
 	//상품 카테고리 삭제
-	public int removeGoodsCategory() {
-		return 0;
+	public boolean removeGoodsCategory(String goodsCategoryCode) {
+		boolean resultRemove = goodsMapper.removeGoodsCategory(goodsCategoryCode);
+		return resultRemove;
 	}
 	
 	//상품 리스트
