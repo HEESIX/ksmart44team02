@@ -6,7 +6,7 @@ public class GoodsCategory {
 	private String goodsCategoryName;
 	private String goodsCategoryRegDate;
 	private String goodsCategoryRegId;
-	private char goodsCategoryStatus;
+	private int goodsCategoryStatus;
 
 	public String getGoodsCategoryCode() {
 		return goodsCategoryCode;
@@ -40,11 +40,11 @@ public class GoodsCategory {
 		this.goodsCategoryRegId = goodsCategoryRegId;
 	}
 
-	public char getGoodsCategoryStatus() {
+	public int getGoodsCategoryStatus() {
 		return goodsCategoryStatus;
 	}
 
-	public void setGoodsCategoryStatus(char goodsCategoryStatus) {
+	public void setGoodsCategoryStatus(int goodsCategoryStatus) {
 		this.goodsCategoryStatus = goodsCategoryStatus;
 	}
 

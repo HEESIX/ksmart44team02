@@ -20,8 +20,9 @@ public class GoodsService {
 	}
 	
 	//상품 카테고리 등록
-	public int addGoodsCategory() {
-		return 0;
+	public boolean addGoodsCategory(GoodsCategory goodsCategory) {
+		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
+		return result;
 	}
 	
 	//상품 카테고리 리스트: 사용 중지된 것도 포함
@@ -41,18 +42,21 @@ public class GoodsService {
 	}
 	
 	//기존 데이터 조회(상품 카테고리 수정 화면)
-	public String getGoodsCategoryInfo() {
-		return null;
+	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode) {
+		GoodsCategory goodsCategoryInfo = goodsMapper.getGoodsCategoryInfo(goodsCategoryCode);
+		return goodsCategoryInfo;
 	}
 	
-	//상품 카테고리 수정
-	public int modifyGoodsCategory() {
-		return 0;
+	//상품 카테고리 수정 처리
+	public boolean modifyGoodsCategory(GoodsCategory goodsCategory) {
+		boolean result = goodsMapper.modifyGoodsCategory(goodsCategory);
+		return result;
 	}
 	
 	//상품 카테고리 삭제
-	public int removeGoodsCategory() {
-		return 0;
+	public boolean removeGoodsCategory(String goodsCategoryCode) {
+		boolean resultRemove = goodsMapper.removeGoodsCategory(goodsCategoryCode);
+		return resultRemove;
 	}
 	
 	//상품 리스트
