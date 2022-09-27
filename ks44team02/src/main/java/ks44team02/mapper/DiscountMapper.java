@@ -19,7 +19,7 @@ public interface DiscountMapper {
 	public boolean modifyOrderDiscount(OrderDiscount orderDiscount);
 	
 	//주문서별 할인혜택 등록
-	public void addOrderDiscount(OrderDiscount orderDiscount);
+	public boolean addOrderDiscount(OrderDiscount orderDiscount);
 		
 	//주문서별 할인혜택 삭제
 	public void removeOrderDiscount(OrderDiscount orderDiscount);
