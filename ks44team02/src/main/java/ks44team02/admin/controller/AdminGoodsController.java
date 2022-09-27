@@ -59,6 +59,8 @@ public class AdminGoodsController {
 	@PostMapping("/category/goodscate_reg")
 	public String addGoodsCategory(GoodsCategory goodsCategory
 								  ,RedirectAttributes reAttr) {
+		String goodsCateCode = commonService.getNewCode("tb_goods_cate");
+		goodsCategory.setGoodsCategoryCode(goodsCateCode);
 		boolean result = goodsService.addGoodsCategory(goodsCategory);
 		String msg = "";
 		if (result) {
@@ -75,8 +77,6 @@ public class AdminGoodsController {
 	public String getGoodsCategoryList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
-		String code = commonService.getNewCode("tb_goods_cate");
-		System.out.println(code);
 		model.addAttribute("title", "상품 카테고리 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		if (msg != null)
