@@ -1,34 +1,20 @@
 package ks44team02.mapper;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.ibatis.annotations.Mapper;
 
-@Controller
-@RequestMapping
-public class AdminCalculateMapper {
+@Mapper
+public interface AdminCalculateMapper {
 	
 	//판매자 일일 정산금 확인
-	@GetMapping("/admin_seller_daily_calculate")
-	public String sellerTodayCalculate() {
-		return "admin/calculatepage/admin_seller_daily_calculate";
-	}
+	public String sellerTodayCalculate();
 			
 	//관리자 수수료 확인
-	@GetMapping("/admin_fee_check")
-	public String adminFeeCheck() {
-		return "admin/calculatepage/admin_fee_check";
-	}
+	public String adminFeeCheck();
 			
 	//관리자 수수료 정산
-	@GetMapping("/adminFeeCalculate")
-	public String admin_fee_calculate() {
-		return "admin/calculatepage/adminFeeCalculate";
-	}
+	public String adminFeeCalculate();
 			
 	//판매자 정산금 정산
-	@GetMapping("/admin_fee_calculate")
-	public String sellerCalculateSuccess() {
-		return "admin/calculatepage/admin_fee_calculate";
-	}
+	public String sellerCalculateSuccess();
+
 }
