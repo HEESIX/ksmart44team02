@@ -1,7 +1,12 @@
 package ks44team02.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.OrderRecordList;
+import ks44team02.dto.OrderRefund;
 import ks44team02.mapper.DeliveryMapper;
 
 @Service
@@ -24,12 +29,13 @@ public class DeliveryService {
 		return null;
 	}
 			
-	// 주문 목록 조회 list<>
-	public String getOrderList() {
-		return null;
+	// 주문 리스트 list<>
+	public List<Map<String, Object>> getOrderList() {
+		List<Map<String, Object>> orderRecordList = deliveryMapper.getOrderList();
+		return orderRecordList;
 	}
 	
-	// 상세주문현황 조회
+	// 상세주문현황
 	public String getOrderStatus() {
 		return null;
 	}
