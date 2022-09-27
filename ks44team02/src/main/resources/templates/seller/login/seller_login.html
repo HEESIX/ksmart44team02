@@ -44,253 +44,390 @@
 	overflow: hidden;
 	border: 0;
 }
+:root{
+	--body-background-color: #f5f6f7;
+	--font-color: #4e4e4e;
+	--border-gray-color : #dadada;
+	--naver-green-color: #04c75a;
+	--naver-green-border-color: #06b350;
+}
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+body{
+	background:var(--body-background-color);
+}
+
+.main-container{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-top: 21px;
+}
+.main-container .main-wrap{
+	width:768px;
+
+}
+.main-container .main-wrap .sel-lang-wrap .lang-select
+{
+	width: 96px;
+	height: 30px;
+	color: var(--font-color);
+	border: solid 1px var(--border-gray-color);
+}
+.main-container .main-wrap .logo-wrap{
+	padding-top:55px;
+}
+.main-container .main-wrap .logo-wrap img
+{
+	width: 231px;
+	height: 44px;
+}
+
+.main-container .main-wrap header .sel-lang-wrap{
+	display:flex;
+	justify-content:flex-end;
+}
+
+.main-container .main-wrap header .logo-wrap{
+	display:flex;	
+	flex-direction: column;
+	align-items: center;
+}
+.login-input-section-wrap{
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-input-wrap{
+	width: 465px;
+	height :48px;
+	border: solid 1px var(	--border-gray-color );
+	background: white;
+}
+.password-wrap{
+	margin-top: 13px;
+}
+.login-input-wrap input{
+	border: none;
+	width:430px;
+	margin-top: 10px;
+	font-size: 14px;
+	margin-left: 10px;
+	height:30px;
+}
+.login-button-wrap {
+	padding-top: 13px;
+}
+.login-button-wrap button{
+	width: 465px;
+	height :48px;
+	font-size: 18px;
+	background: var(--naver-green-color);
+	color: white;
+	border: solid 1px var(--naver-green-border-color);
+}
+.login-stay-sign-in{
+	width: 465px;
+	height: 52px;
+	
+	display: flex;
+	font-size: 15px;
+	color: #4e4e4e;
+	align-items: center;
+	justify-content: flex-start;
+	border-bottom: solid 1px var(--border-gray-color);
+}
+.login-stay-sign-in i{
+	font-size: 25px;
+	color: #9ba1a3;
+}
+.login-stay-sign-in span{
+	padding-left: 5px;
+	line-height: 25px;
+}
+
+.Easy-sgin-in-wrap{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 40px;
+
+}
+.Easy-sgin-in-wrap h2{
+	font-size: 20px;
+}
+.Easy-sgin-in-wrap .sign-button-list
+{
+	padding-top:25px;
+	list-style: none;
+	width: 465px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.Easy-sgin-in-wrap .sign-button-list li{
+	padding-bottom: 10px;
+}
+.Easy-sgin-in-wrap .sign-button-list li button{
+	width: 465px;
+	height: 56px;
+	border: solid 1px var(--border-gray-color);
+	text-align: left;
+	background: white;
+}
+.Easy-sgin-in-wrap .sign-button-list li button i{
+	padding-left: 15px;
+	font-size: 20px;
+}
+.fa-qrcode
+{
+	color:var(--naver-green-color);
+}
+.fa-line{
+	color:var(--naver-green-color);
+}
+.fa-facebook-square
+{
+	color:#4064ac;
+}
+.Easy-sgin-in-wrap .sign-button-list li button span{
+	padding-left: 20px;
+	font-size: 18px;
+}
+.Easy-sgin-in-wrap .forget-msg{
+	color:var(--font-color);
+	font-size: 14px;
+	padding-top: 10px;
+
+}
+footer{
+   
+	padding-top: 95px;
+	padding-bottom: 15px;
+
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	width:768px;
+
+
+
+}
+.copyright-wrap{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 15px;
+
+
+}
+footer .copyright-wrap span img{
+	width: 59px;
+	
+	height: 11px;
+}
+footer .copyright-wrap span{
+	font-size: 13px;
+	line-height: 15px;
+}
+.main-container{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-top: 21px;
+}
+.main-container .main-wrap{
+	width:768px;
+
+}
+.main-container .main-wrap .sel-lang-wrap .lang-select
+{
+	width: 96px;
+	height: 30px;
+	color: var(--font-color);
+	border: solid 1px var(--border-gray-color);
+}
+.main-container .main-wrap .logo-wrap{
+	padding-top:55px;
+}
+.main-container .main-wrap .logo-wrap img
+{
+	width: 231px;
+	height: 44px;
+}
+
+.main-container .main-wrap header .sel-lang-wrap{
+	display:flex;
+	justify-content:flex-end;
+}
+
+.main-container .main-wrap header .logo-wrap{
+	display:flex;	
+	flex-direction: column;
+	align-items: center;
+}
+.login-input-section-wrap{
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-input-wrap{
+	width: 465px;
+	height :48px;
+	border: solid 1px var(	--border-gray-color );
+	background: white;
+}
+.password-wrap{
+	margin-top: 13px;
+}
+.login-input-wrap input{
+	border: none;
+	width:430px;
+	margin-top: 10px;
+	font-size: 14px;
+	margin-left: 10px;
+	height:30px;
+}
+.login-button-wrap {
+	padding-top: 13px;
+}
+.login-button-wrap button{
+	width: 465px;
+	height :48px;
+	font-size: 18px;
+	background: var(--naver-green-color);
+	color: white;
+	border: solid 1px var(--naver-green-border-color);
+}
+.login-stay-sign-in{
+	width: 465px;
+	height: 52px;
+	
+	display: flex;
+	font-size: 15px;
+	color: #4e4e4e;
+	align-items: center;
+	justify-content: flex-start;
+	border-bottom: solid 1px var(--border-gray-color);
+}
+.login-stay-sign-in i{
+	font-size: 25px;
+	color: #9ba1a3;
+}
+.login-stay-sign-in span{
+	padding-left: 5px;
+	line-height: 25px;
+}
+
+.Easy-sgin-in-wrap{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 40px;
+
+}
+.Easy-sgin-in-wrap h2{
+	font-size: 20px;
+}
+.Easy-sgin-in-wrap .sign-button-list
+{
+	padding-top:25px;
+	list-style: none;
+	width: 465px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.Easy-sgin-in-wrap .sign-button-list li{
+	padding-bottom: 10px;
+}
+.Easy-sgin-in-wrap .sign-button-list li button{
+	width: 465px;
+	height: 56px;
+	border: solid 1px var(--border-gray-color);
+	text-align: left;
+	background: white;
+}
+.Easy-sgin-in-wrap .sign-button-list li button i{
+	padding-left: 15px;
+	font-size: 20px;
+}
+.fa-qrcode
+{
+	color:var(--naver-green-color);
+}
+.fa-line{
+	color:var(--naver-green-color);
+}
+.fa-facebook-square
+{
+	color:#4064ac;
+}
+.Easy-sgin-in-wrap .sign-button-list li button span{
+	padding-left: 20px;
+	font-size: 18px;
+}
+.Easy-sgin-in-wrap .forget-msg{
+	color:var(--font-color);
+	font-size: 14px;
+	padding-top: 10px;
+
+}
+.hc { width:800px; left:0; right:0; margin-left:auto; margin-right:auto; }
+.hcc {width:200px; left:0; right:0; margin-left:auto; margin-right:auto; }
+.loginbut {width:200px; left:0; right:0; margin-left:auto; margin-right:auto;}
 </style>
 </th:block>
-
-<!-- start breadcrum section -->
-<th:block layout:fragment="customBreadCrum">
-	<section class="breadcrumb-section set-bg"
-		data-setbg="/user/img/breadcrumb.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="breadcrumb__text">
-						<h2>판매자 회원 등록</h2>
-						<div class="breadcrumb__option">
-							<a th:href="@{/seller}">Home</a><span>Shop</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</th:block>
-<!-- end breadcrum section -->
-
 
 
 <th:block layout:fragment="customContents">
 	<section class="checkout spad">
 		<div class="container">
 			<form action="#" method="post">
-				<div class="checkout__form">
-					<h4>상품 등록</h4>
-					<div class="row">
-						<div class="col-lg-8 col-md-6">
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="checkout__input">
-										<p>
-											상품 카테고리<span>*</span>
-										</p>
-										<select>
-											<option>상품 카테고리를 선택해주세요.</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="checkout__input">
-										<p>상품 썸네일 이미지 업로드</p>
-										<div class="filebox">
-											<input class="upload-name" id="goodsMainImageName" placeholder="상품 썸네일 이미지(*.gif, *.jpg, *.png)" > <label
-												for="goodsMainImage" style="margin-top: 8px;">파일찾기</label> <input
-												type="file" id="goodsMainImage" class="imageUpload" accept=".gif, .jpg, .png">
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="checkout__input">
-								<p>
-									상품명<span>*</span>
-								</p>
-								<input type="text">
-							</div>
-							<div class="checkout__input">
-								<p>
-									상품 가격<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="checkout__input">
-										<p>
-											적용 할인 혜택<span>*</span>
-										</p>
-										<select>
-											<option>적용할 할인 혜택을 선택해주세요.</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12 mt10">
-									<div class="checkout__input">
-										<p>
-											원산지<span>*</span>
-										</p>
-										<input type="text">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="checkout__input col-lg-3">
-									<p>제조일자</p>
-									<select>
-										<option value="manuImage">컨텐츠 포함</option>
-										<option value="manuText">직접 작성하기</option>
-									</select>
-								</div>
-								<div id="manuText" class="checkout__input col-lg-9"
-									style="margin-top: 46px; display: none; padding-left: 0;">
-									<input type="date" placeholder="제조일자" style="height: 42px;">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="checkout__input">
-										<p>상품 소개 이미지 업로드</p>
-										<div class="filebox">
-											<input class="upload-name" id="goodsInfoImageName" placeholder="상품 소개 이미지(*.gif, *.jpg, *.png)"> <label
-												for="goodsInfoImage" style="margin-top: 8px;">파일찾기</label> <input
-												type="file" id="goodsInfoImage" class="imageUpload" accept=".gif, .jpg, .png">
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="checkout__input">
-										<p>
-											재고<span>*</span>
-										</p>
-										<input type="number">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="checkout__input">
-										<p>
-											배송비<span>*</span>
-										</p>
-										<input type="number">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="checkout__input">
-										<p>
-											영양 성분 표시<span>*</span>
-										</p>
-										<select id="goodsIngredientSelect">
-											<option value="giText">직접 작성</option>
-											<option value="giImage" selected="selected">컨텐츠 포함 및
-												표시 대상 아님</option>
-										</select>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div id="goodsIngredient" class="checkout__form"
-					style="margin-top: 15px; display: none;">
-					<h4>상품 영양 정보</h4>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									열량<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									탄수화물<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									당류<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									단백질<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									지방<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									포화 지방<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									트랜스 지방<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									콜레스테롤<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									나트륨<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="checkout__input">
-								<p>
-									칼슘<span>*</span>
-								</p>
-								<input type="number">
-							</div>
-						</div>
-					</div>
-				</div>
+				
+				<div class="hcc">
+					<h4>판매자 로그인</h4>
+					<br><br><br>
+				</div>	
+		
+			  <div class="hc">
+				  <div class="form-group row">
+				    <label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
+				    <div class="col-lg-8">
+				      <input type="password" class="form-control" id="inputPassword">
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+				    <div class="col-lg-8">
+				      <input type="password" class="form-control" id="inputPassword">
+				    </div>
+				  </div>
+			  </div>	
+			  <br><br>
+			  <div class="hcc">
+				   <div class="form-group form-check">
+					    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+					    <label class="form-check-label" for="exampleCheck1">로그인정보저장</label>
+	  			 	</div>
+  			 </div>	
+  			<div class="loginbut">
+  			<button type="button" class="site-btn">로그인</button>
+  			</div>
 			</form>
 		</div>
 	</section>

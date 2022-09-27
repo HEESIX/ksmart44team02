@@ -22,9 +22,26 @@
 			,discount_name
 			,discount_expiration_date
 			,min_order_price
-			,max_discount_price
+			,ifnull(max_discount_price,0)
 			,g_production_reg_datetime
 		FROM
 			tb_order_discount_management;
 	</select>
+	<!-- 특정 주문서별 할인혜택 조회 -->
+	<select id="getOrderDiscountInfo" resultMap="listResultMap">
+		SELECT
+			order_discount_code
+			,discount_rate
+			,discount_price
+			,discount_name
+			,discount_expiration_date
+			,min_order_price
+			,ifnull(max_discount_price,0)
+			,g_production_reg_datetime
+		FROM
+			tb_order_discount_management
+		WHERE
+			order_discount_code = #{orderDiscountCode};
+	</select>
+	
 </mapper>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.nice-select {
+	margin-bottom: 24px;
+}
+
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: middle;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #999999;
+	cursor: pointer;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+}
+</style>
+
+
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<section class="checkout spad">
+		<div class="container">
+			<form>
+			
+			<h4>수정중....</h4>
+			<h4>관리자 등록</h4>
+				<div class="form-row">  
+					<div class="form-group col-md-6">
+		            	 <label for="inputEmail4">아이디</label>
+		                 <input type="email" class="form-control" id="inputEmail4">
+				   		 </div>
+		            <div class="col-md-2">
+		                 <button type="button" class="btn btn-secondary col-md-12 h-100">중복확인</button>
+		            </div>
+				</div>
+			
+				  <div class="form-row">
+				    <div class="form-group col-md-5">
+				      <label for="inputEmail4">비밀번호</label>
+				      <input type="text" class="form-control" id="inputEmail4">
+				    </div>
+				    <div class="form-group col-md-5">
+				      <label for="inputPassword4">비밀번호확인</label>
+				      <input type="text" class="form-control" id="inputPassword4">
+				    </div>
+				  </div>
+				  
+				  <div class="form-row">
+					  <div class="form-group col-md-12">
+					    <label for="inputAddress">Address</label>
+					    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+					  </div>
+				  </div>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputCity">City</label>
+				      <input type="text" class="form-control" id="inputCity">
+				    </div>
+				    <div class="form-group col-md-4">
+				      <label for="inputState">State</label>
+				      <select id="inputState" class="form-control">
+				        <option selected>Choose...</option>
+				        <option>...</option>
+				      </select>
+				    </div>
+				    <div class="form-group col-md-2">
+				      <label for="inputZip">Zip</label>
+				      <input type="text" class="form-control" id="inputZip">
+				    </div>
+				  </div>
+				 
+				<div class="form-group row">
+				    <div class="col-sm-10">
+
+				  	<button type="submit" class="btn btn-primary">Sign in</button>
+				    </div>
+				  </div>
+				</form>
+			<form action="#" method="post">
+				<div class="checkout__form">
+					
+					
+		 			<div class="checkout__input">  
+		             			<p>아이디<span>*</span></p>
+		                    	<div class="col-md-3">
+		                        	<input type="text" class="form-control">
+		                        </div>
+		                             <div class="col-md-2">
+		                             	<button type="button" class="btn btn-secondary col-md-12 h-100">중복확인</button>
+		                             </div>
+		      
+		     					<br><br><br>
+			                	<p>비밀번호<span>*</span>
+								
+								비밀번호확인<span>*</span></p>
+								<div class="col-md-3">
+			                   		<input type="text" class="form-control">
+								</div>
+								<div class="col-md-3">
+		                            <input type="text" class="form-control">
+		                   		</div>
+		
+		          				<br><br><br>
+			                	<p>이름<span>*</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								성별<span>*</span></p>
+				            		<div class="col-md-3">
+			                            <input type="text" class="form-control">
+			                   		</div>
+									<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<select class="custom-select" required>
+										<option selected disabled value="">--성별--</option>
+										<option>여성</option>
+										<option>남성</option>
+									</select>
+									
+								<br>
+			        			<p>이메일<span>*</span>		
+			            		<div class="col-md-3">
+		                            <input type="text" class="form-control">
+		                   		</div>
+		
+								<br><br><br>
+			        			<p>생년월일<span>*</span></p>
+			                    <div class="col-md-2">
+			                         <input type="text" class="form-control" placeholder="년(4자)">
+			                    </div>
+								<p>년
+		                        <div class="col-md-3">
+							
+			                        <select class="custom-select" required>
+			                            <option selected disabled value="">--월--</option>
+			                            <option>1월</option>
+			                            <option>2월</option>
+			                            <option>3월</option>
+			                            <option>4월</option>
+			                            <option>5월</option>
+			                            <option>6월</option>
+			                            <option>7월</option>
+			                            <option>8월</option>
+			                            <option>9월</option>
+			                            <option>10월</option>
+			                            <option>11월</option>
+			                            <option>12월</option>
+			                        </select>
+							
+		                        </div>
+		                        <div class="col-md-2"> 
+		                            <input type="text" class="form-control" placeholder="일">
+		                        </div>
+								<p>일</p>
+							
+		       
+							
+								
+						</div>
+
+
+
+				</div> 
+			</form>			
+		</div>  
+	</section>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs}">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			
+			$('.imageUpload').change(function(){
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+			
+			$('.nice-select li').click(function() {
+				var selectValue = $(this).attr('data-value');
+
+				if (selectValue == 'giText') {
+					$('#goodsIngredient').css('display', 'block');
+				} else {
+					$('#goodsIngredient').css('display', 'none');
+				}
+
+				if (selectValue == 'manuText') {
+					$('#manuText').css('display', 'block');
+				} else {
+					$('#manuText').css('display', 'none');
+				}
+			});
+		});
+	</script>
+</th:block>
+
+</html>
