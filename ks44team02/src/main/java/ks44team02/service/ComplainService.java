@@ -22,5 +22,16 @@ public class ComplainService {
 	public int ComplainDelete() {
 		return 0;
 	}
+	
+	//판매자 신고내역 조회
+	public String getSellerComplainList() {
+		return null;
+	}
+		
+	// 구매자 신고 등록
+	public int regBuyerComplain() {
+		return 0;
+
+	}
 
 }
