@@ -11,14 +11,7 @@ public interface ComplainMapper {
 	
   // 회원 Complain 삭제
   public int ComplainDelete();
-  
-  //판매자 신고내역 조회
-  public String getSellerComplainList();
-	
 
-  //구매자 신고 등록
-  public int regBuyerComplain();
-		
-	
+
 
 }
