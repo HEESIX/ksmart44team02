@@ -1,5 +1,8 @@
 package ks44team02.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,7 @@ public interface DeliveryMapper {
 	public String OrderDeal();
 			
 	// 주문 목록 조회 list<>
-	public String getOrderList();
+	public List<Map<String, Object>> getOrderList();
 	
 	
 	// 상세주문현황 조회
