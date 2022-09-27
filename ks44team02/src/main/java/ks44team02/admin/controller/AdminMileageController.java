@@ -1,19 +1,12 @@
 package ks44team02.admin.controller;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.dto.Mileage;
 import ks44team02.service.MileageService;
 
 @Controller
@@ -33,25 +26,18 @@ public class AdminMileageController {
 		log.info("adminMileageControllerInit bean 생성");
 	}
 	
-	//회원 적립금 조회 
-	@GetMapping("/mileageManage/mileage_management")
-	public String getMileageList(Model model) {
-		List<Mileage> mileageList = mileageService.getMileageList();
-		model.addAttribute("title", "회원 적립금 현황");
-		model.addAttribute("mileageList", mileageList);
-		return "admin/mileageManage/mileage_management";
+	//회원 적립금 조회
+	public String getMileageList() {
+		return null;
 	}
-	
-	//적립금 적립 폼
-	@PostMapping("/mileageManage/mileage_give")
-	public String giveMileage() {
-		return "admin/mileageManage/mileage_give";
+
+	//회원 적립금 적립
+	public int giveMileage() {
+		return 0;
 	}
-	
-	//적립금 소멸 폼
-	@PostMapping("/mileageManage/mileage_extinct")
-	public String MileageExtinction() {
-		return "admin/mileageManage/mileage_extinct";
+	//회원 적립금 소멸
+	public int MileageExtinction() {
+		return 0;
 	}
 	
 

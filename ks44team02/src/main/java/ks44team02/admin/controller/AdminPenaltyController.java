@@ -26,7 +26,7 @@ public class AdminPenaltyController {
 		log.info("adminqnaControllerInit bean 생성");
 	}
 	
-	//패널티 부여 폼
+	//패널티 부여
 	public int givePenalty() {
 		return 0;
 	}
