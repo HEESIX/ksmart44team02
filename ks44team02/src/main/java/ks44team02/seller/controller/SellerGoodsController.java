@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.Ingredient;
 import ks44team02.service.GoodsService;
 
 @Controller
@@ -46,8 +48,13 @@ public class SellerGoodsController {
 	
 	//상품 등록 신청 처리
 	@PostMapping("/goods_reg_apply")
-	public String applyGoodsRegister(@RequestParam MultipartFile[] uploadfile) {
-		log.info(uploadfile.toString());
+	public String applyGoodsRegister(@RequestParam MultipartFile[] goodsMainImage
+									,@RequestParam MultipartFile[] goodsInfoImage
+									,Goods goods
+									,Ingredient ingredient) {
+		//log.info(uploadfile.toString());
+		log.info(goods.toString());
+		log.info(ingredient.toString());
 		return "redirect:/seller/goods/goods_list_apply";
 	}
 	

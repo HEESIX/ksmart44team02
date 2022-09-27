@@ -26,7 +26,7 @@ public class DiscountService {
 	//주문서별 할인혜택 목록 조회
 	public List<OrderDiscount> getOrderDiscountList(){
 		List<OrderDiscount> orderDiscount = discountMapper.getOrderDiscountList();
-		return null;
+		return orderDiscount;
 	}
 	//특정 주문서별 할인혜택 조회
 	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode) {
@@ -39,7 +39,9 @@ public class DiscountService {
 		return result;
 	}
 	//주문서별 할인혜택 등록
-	public void addOrderDiscount(OrderDiscount orderDiscount) {
+	public boolean addOrderDiscount(OrderDiscount orderDiscount) {
+		boolean result = discountMapper.addOrderDiscount(orderDiscount);
+		return result;
 	}
 	//주문서별 할인혜택 삭제
 	public void removeOrderDiscount(OrderDiscount orderDiscount) {
