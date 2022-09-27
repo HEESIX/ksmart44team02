@@ -1,7 +1,10 @@
 package ks44team02.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.Review;
 import ks44team02.mapper.ReviewMapper;
 
 @Service
@@ -13,8 +16,18 @@ public class ReviewService {
 		this.reviewMapper = reviewMapper;
 	}
 	
-	//회원 리뷰 조회
-		public String getReviewList() {
+	//특정회원 리뷰 조회
+	public Review getReviewInfo(String reviewContents) {
+		Review reviewInfo = reviewMapper.getReviewInfo(reviewContents);
+		
+		return reviewInfo;
+		
+		
+		
+	}
+	
+	//회원 리뷰 목록 조회
+		public List<Review> getReviewList() {
 			return null;
 		}
 

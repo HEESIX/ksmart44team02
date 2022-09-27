@@ -1,8 +1,11 @@
 package ks44team02.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import ks44team02.mapper.MileageMapper;
+import ks44team02.dto.Mileage;
 
 @Service
 public class MileageService {
@@ -14,7 +17,8 @@ public class MileageService {
 	}
 	
 	   //회원 적립금 조회
-		public String getMileageList() {
+		public List<Mileage> getMileageList() {
+			List<Mileage> mileage = mileageMapper.getMileageList();
 			return null;
 		}
 
