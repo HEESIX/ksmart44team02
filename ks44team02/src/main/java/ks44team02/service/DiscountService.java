@@ -39,7 +39,9 @@ public class DiscountService {
 		return result;
 	}
 	//주문서별 할인혜택 등록
-	public void addOrderDiscount(OrderDiscount orderDiscount) {
+	public boolean addOrderDiscount(OrderDiscount orderDiscount) {
+		boolean result = discountMapper.addOrderDiscount(orderDiscount);
+		return result;
 	}
 	//주문서별 할인혜택 삭제
 	public void removeOrderDiscount(OrderDiscount orderDiscount) {
