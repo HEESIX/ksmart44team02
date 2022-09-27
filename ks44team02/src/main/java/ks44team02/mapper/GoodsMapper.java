@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.Menus;
 
 @Mapper
@@ -18,7 +19,7 @@ public interface GoodsMapper {
 	public List<GoodsCategory> getGoodsCategoryList();
 	
 	//상품 카테고리 리스트(사용중인 것만)
-	public List<GoodsCategory> getGoodsCategoryListBuyer();
+	public List<GoodsCategory> getGoodsCategoryListUser();
 	
 	//기존 데이터 조회(상품 카테고리 수정화면)
 	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode);
@@ -58,9 +59,11 @@ public interface GoodsMapper {
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
 	
-	//상품별 할인혜택 리스트
-	//Goods 아님 변경 필요
-	public List<Goods> getGoodsDiscount();
+	//상품별 할인혜택 리스트(admin: admin이 등록한 할인혜택만)
+	public List<GoodsDiscount> getGoodsDiscountListAdmin();
+	
+	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
+	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
 	//상품별 할인 혜택 수정
 	public int modifyGoodsDiscount();

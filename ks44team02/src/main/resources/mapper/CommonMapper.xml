@@ -13,5 +13,8 @@
 			AND
 			m.member_pw = #{memberPw};
 	</select>
-
+	<select id="getNewCode" parameterType="String" resultType="String">
+		SELECT 
+			CONCAT(SUBSTRING_INDEX(#{tableName},'tb_',-1), DATE_FORMAT(NOW(6), '%Y%m%d%H%i%s%f'));
+	</select>
 </mapper>

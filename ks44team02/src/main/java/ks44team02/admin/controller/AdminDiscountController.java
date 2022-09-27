@@ -35,33 +35,53 @@ public class AdminDiscountController {
 		log.info("AdminDiscountController bean 생성");
 	}
 	//주문서별 할인혜택 목록 조회 폼
-	@GetMapping("/order_discount_list")
+	@GetMapping("/orderDiscountList")
 	public String getOrderDiscountList(Model model) {
 		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList();
+		
 		model.addAttribute("title", "주문서별 할인혜택 목록");
 		model.addAttribute("orderDiscountList", orderDiscountList);
-		return "admin/orderDiscount/order_discount_list";
+		
+		return "admin/orderDiscount/orderDiscountList";
 	}
 	//주문서별 할인혜택 등록 폼
-	@GetMapping("/add_order_discount")
+	@GetMapping("/addOrderDiscount")
 	public String addOrderDiscount(Model model) {
+		
+		model.addAttribute("title", "주문서별 할인혜택 등록");
 
-		return "admin/orderDiscount/add_order_discount";
+		return "admin/orderDiscount/addOrderDiscount";
 	}
 	//주문서별 할인혜택 등록 처리
-	@PostMapping("/add_order_discount")
-	public String addOrderDiscount() {
-		return "redirect:/admin/orderDiscont/order_discount_list";
+	@PostMapping("/addOrderDiscount")
+	public String addOrderDiscount(OrderDiscount orderDiscount
+								  ,RedirectAttributes reAttr) {
+		
+		boolean result = discountService.addOrderDiscount(orderDiscount);
+		String msg = "";
+		if (result) {
+			msg = "등록 성공";
+		} else {
+			msg = "등록 실패";
+		}
+		reAttr.addAttribute("msg", msg);
+		
+		return "redirect:/admin/orderDiscont/addOrderDiscount";
 	}
 	//주문서별 할인혜택 수정 폼
-	@GetMapping("/modify_order_discount/{orderDiscountCode}")
+	@GetMapping("/modifyOrderDiscount/{orderDiscountCode}")
 	public String modifyOrderDiscount(@PathVariable(value = "orderDiscountCode") String orderDiscountCode
 									,Model model) {
+		
 		OrderDiscount orderdiscountList = discountService.getOrderDiscountInfo(orderDiscountCode);
-		return "admin/orderDiscount/modify_order_discount";
+		
+		model.addAttribute("title","주문서별 할인혜택 수정");
+		model.addAttribute("orderdiscountList", orderdiscountList);
+		
+		return "admin/orderDiscount/modifyOrderDiscount";
 	}
 	//주문서별 할인혜택 수정 처리
-	@PostMapping("/modify_order_discount")
+	@PostMapping("/modifyOrderDiscount")
 	public String modifyOrderDiscount(OrderDiscount orderDiscount
 			
 			,RedirectAttributes reAttr) {
@@ -72,11 +92,13 @@ public class AdminDiscountController {
 		}else {
 			reAttr.addAttribute("msg", "수정 실패");
 		}
-		return "redirect:/admin/orderDiscont/order_discount_list";
+		
+		return "redirect:/admin/orderDiscont/orderDiscountCode";
 	}
 	//주문서별 할인혜택 삭제 처리
-	@PostMapping("/remove_order_discount/{order_discount_code}")
+	@PostMapping("/removeOrderDiscount/{order_discount_code}")
 	public String removeOrderDiscount(@PathVariable(value = "order_discount_code") String order_discount_code) {
-		return "redirect:/admin/orderDiscont/order_discount_list";
+		
+		return "redirect:/admin/orderDiscont/orderDiscountList";
 	}
 }

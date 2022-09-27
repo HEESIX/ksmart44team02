@@ -1,21 +1,24 @@
-package ks44team02.seller.controller;
+package ks44team02.service;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import ks44team02.mapper.SellerCompanyMapper;
 
-@Controller
-@RequestMapping(value = "seller/companypage")
-public class sellerCompanyController {
+@Service
+public class SellerCompanyService {
+
+	private final SellerCompanyMapper sellerCompanyMapper;
+		
+	public SellerCompanyService(SellerCompanyMapper sellerCompanyMapper) {
+		this.sellerCompanyMapper = sellerCompanyMapper;
+		}
 	
 	//업체 정보 등록
-	@GetMapping("/company_insert")
 	public String addCompany() {
 		return "seller/companypage/company_insert";
 	}
 	
 	//업체 정보 검색 및 전체 리스트
-	@GetMapping("/company_list")
 	public String sellerCompanyInfo() {
 		return "seller/companypage/company_list";
 	}
@@ -26,15 +29,12 @@ public class sellerCompanyController {
 	}
 	
 	//업체 정보 수정
-	@GetMapping("/company_modify")
 	public String sellerCompanyModify() {
 		return "seller/companypage/company_modify";
 	}
 	
 	//업체 정보 삭제
-	@GetMapping("/company_delete")
 	public String sellerCompanyRemove() {
 		return "seller/companypage/company_delete";
 	}
-	
 }

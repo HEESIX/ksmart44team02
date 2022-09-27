@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 상품별 할인혜택 목록  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>주문서별 할인혜택 목록</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>No.</th>
+										<th>할인율/할인금액</th>
+										<th>할인명</th>
+										<th>유효기간</th>
+										<th>최소주문금액</th>
+										<th>최대할인금액</th>
+										<th>등록일자</th>
+										<th>수정</th>
+										<th>삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(orderDiscountList)}"
+										th:each="odl : ${orderDiscountList}">
+										<td th:text="${odl.orderDiscountCode}"></td>
+										<td th:if="${odl.discountRate} != 0" th:text="${odl.discountRate}+'%'"></td>
+										<td th:if="${odl.discountPrice} != 0" th:text="'₩'+${odl.discountPrice}"></td>
+										<td th:text="${odl.discountName}"></td>
+										<td th:text="${odl.discountExpirationDate}"></td>
+										<td th:text="${odl.minOrderPrice}"></td>
+										<td th:text="${odl.maxDiscountPrice}"></td>
+										<td th:text="${odl.gProductionRegDateTime}"></td>
+										<td><a
+											th:href="@{|/admin/orderDiscount/modifyOrderDiscount/${odl.orderDiscountCode}|}">수정</a></td>
+										<td><a
+											th:href="@{|/admin/orderDiscount/removeOrderDiscount/${odl.orderDiscountCode}|}">삭제</a></td>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(orderDiscountList)}">
+										<td colspan="5" style="text-align: center;">주문서별 할인혜택이 존재하지
+											않습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<a th:href="@{/admin/orderDiscount/addOrderDiscount}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">등록</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+
+</html>

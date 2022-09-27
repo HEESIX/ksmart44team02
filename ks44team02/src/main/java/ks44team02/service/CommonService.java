@@ -20,4 +20,9 @@ public class CommonService {
 
 		return result;
 	}
+	
+	public String getNewCode(String tableName) {
+		String newCode = commonMapper.getNewCode(tableName);
+		return newCode;
+	}
 }

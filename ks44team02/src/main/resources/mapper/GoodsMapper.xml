@@ -10,6 +10,16 @@
 		<result column="member_id" property="goodsCategoryRegId"/>
 		<result column="cate_status" property="goodsCategoryStatus"/>
 	</resultMap>
+	<resultMap type="GoodsDiscount" id="goodsDiscountResultMap">
+		<id column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="discount_price" property="goodsDiscountPrice"/>
+		<result column="discount_rate" property="goodsDiscountRate"/>
+		<result column="discount_name" property="goodsDiscountName"/>
+		<result column="discount_expiration_date" property="goodsDiscountExpirationDate"/>
+		<result column="member_id" property="goodsDiscountRegistrant"/>
+		<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
+		<result column="enter_code" property="enterCode"/>
+	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
@@ -38,14 +48,14 @@
 			tb_goods_cate;
 	</select>
 	<!-- 상품 카테고리 리스트(사용중지된 카테고리 제외)  -->	
-	<select id="getGoodsCategoryListBuyer" resultMap="categoryResultMap">
+	<select id="getGoodsCategoryListUser" resultMap="categoryResultMap">
 		SELECT
 			g_cate_code
 			,cate_name
 		FROM
 			tb_goods_cate
 		WHERE
-			cate_status = 'Y';
+			cate_status = 1;
 	</select>
 	<!-- 특정 상품 카테고리 정보 조회(상품 카테고리 수정화면) -->
 	<select id="getGoodsCategoryInfo" parameterType="String" resultMap="categoryResultMap">
@@ -69,6 +79,7 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
+	<!-- 상품 카테고리 삭제 처리  -->
 	<delete id="removeGoodsCategory" parameterType="String">
 		DELETE 
 		FROM 
@@ -76,4 +87,38 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</delete>
+	<!-- 상품별 할인혜택 리스트(admin)   -->
+	<select id="getGoodsDiscountListAdmin" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.enter_code IS NULL;
+	</select>
+	<!-- 상품별 할인혜택 리스트(seller) -->
+	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.member_id = #{memberId}
+			OR 
+			gdm.enter_code IS NULL;
+	</select>
 </mapper>
