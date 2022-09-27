@@ -1,121 +1,289 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.GoodsDiscount;
+import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
 
 @Controller
 @RequestMapping(value = "/admin/goods")
 public class AdminGoodsController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AdminGoodsController.class);
-	
+
 	private final GoodsService goodsService;
-	
-	public AdminGoodsController(GoodsService goodsService) {
+	private final CommonService commonService;
+
+	public AdminGoodsController(GoodsService goodsService, CommonService commonService) {
 		this.goodsService = goodsService;
+		this.commonService = commonService;
 	}
-	
+
 	@PostConstruct
 	public void adminGoodsControllerInit() {
 		log.info("AdminGoodsController bean 생성");
 	}
-	
-	//상품 카테고리 등록
+
+	// 상품 등록 신청 리스트
+	@GetMapping("/goods_reg_apply_list")
+	public String getGoodsRegApplyList() {
+		return "admin/goods/goods_reg_apply_list";
+	}
+
+	// 상품 카테고리 등록 폼
 	@GetMapping("/category/goodscate_reg")
-	public String addGoodsCategory() {
-		return null;
+	public String addGoodsCategoryForm(Model model) {
+
+		model.addAttribute("title", "상품 카테고리 등록");
+		return "admin/goods/category/goodscate_reg";
+	}
+
+	// 상품 카테고리 등록 처리
+	@PostMapping("/category/goodscate_reg")
+	public String addGoodsCategory(GoodsCategory goodsCategory
+								  ,RedirectAttributes reAttr) {
+		boolean result = goodsService.addGoodsCategory(goodsCategory);
+		String msg = "";
+		if (result) {
+			msg = "등록 성공";
+		} else {
+			msg = "등록 실패";
+		}
+		reAttr.addAttribute("msg", msg);
+		return "redirect:/admin/goods/category/goodscate_list";
+	}
+
+	// 상품 카테고리 리스트
+	@GetMapping("/category/goodscate_list")
+	public String getGoodsCategoryList(Model model
+									  ,@RequestParam(value = "msg", required = false) String msg) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+
+		model.addAttribute("title", "상품 카테고리 목록");
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		if (msg != null)
+			model.addAttribute("msg", msg);
+
+		return "admin/goods/category/goodscate_list";
+	}
+
+	// 상품 카테고리 수정 폼
+	@GetMapping("/category/goodscate_update/{goodsCategoryCode}")
+	public String modifyGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode
+										 ,Model model) {
+		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
+
+		model.addAttribute("title", "상품 카테고리 수정");
+		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
+		return "admin/goods/category/goodscate_update";
+	}
+
+	// 상품 카테고리 수정 처리
+	@PostMapping("/category/goodscate_update")
+	public String modifyGoodsCategory(GoodsCategory goodsCategory
+									 ,RedirectAttributes reAttr) {
+
+		boolean result = goodsService.modifyGoodsCategory(goodsCategory);
+
+		if (result) {
+			reAttr.addAttribute("msg", "수정 완료");
+		} else {
+			reAttr.addAttribute("msg", "수정 실패");
+		}
+
+		return "redirect:/admin/goods/category/goodscate_list";
+	}
+
+	// 상품 카테고리 삭제 폼
+	@GetMapping("/category/goodscate_remove/{goodsCategoryCode}")
+	public String removeGoodsCategoryForm(@PathVariable(value = "goodsCategoryCode") String goodsCategoryCode
+									 	 ,Model model) {
+		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
+		System.out.println(goodsCategoryInfo.toString());
+		model.addAttribute("title", "상품 카테고리 삭제");
+		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
+		
+		return "admin/goods/category/goodscate_remove";
 	}
 	
-	//상품 카테고리 리스트
-	public String getGoodsCategoryList() {
-		return null;
+	// 상품 카테고리 삭제 처리
+	@PostMapping("/category/goodscate_remove")
+	public String removeGoodsCategory(@RequestParam(value = "goodsCategoryCode") String goodsCategoryCode
+									 ,@RequestParam(value = "memberPw") String memberPw
+									 ,HttpSession session
+									 ,RedirectAttributes reAttr) {
+		//session 저장하는 로그인 완성되면 이 부분 session 아이디 가져오게 교체
+		//String memberId = session.getAttribute("SID");
+		//null일 경우 체크(비정상적인 접근)
+		//현재 없으므로 픽스된 값 입력
+		String memberId = "id001";
+		boolean idCheckResult = commonService.sessionIdPwCheck(memberId, memberPw);
+		if(idCheckResult) {
+			//아이디 비번 일치
+			goodsService.removeGoodsCategory(goodsCategoryCode);
+			reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다.");
+		}else {
+			//아이디 비번 불일치
+			reAttr.addAttribute("msg", "삭제 실패: 비밀번호가 일치하지 않습니다.");
+		}
+		return "redirect:/admin/goods/category/goodscate_list";
 	}
-	
-	//상품 카테고리 수정
-	public String modifyGoodsCategory() {
-		return null;
+
+	// 상품 등록 폼
+	@GetMapping("/goods_reg_form")
+	public String addGoodsForm(Model model) {
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListAdmin();
+		
+		model.addAttribute("title", "상품 등록");
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
+		return "admin/goods/goods_reg_form";
 	}
-	
-	//상품 카테고리 삭제
-	public String removeGoodsCategory() {
-		return null;
+
+	// 상품 등록 처리
+	@PostMapping("/goods_reg_form")
+	public String addGoods(@RequestParam MultipartFile[] uploadfile) {
+		log.info(uploadfile.toString());
+		return "redirect:/admin/goods/goods_list_admin";
 	}
-	
-	//상품 등록
-	public String addGoods() {
-		return null;
-	}
-	
-	//상품 리스트
+
+	// 상품 리스트
+	@GetMapping("/goods_list_admin")
 	public String getAdminGoodsList() {
-		return null;
+		return "admin/goods/goods_list_admin";
 	}
-	
-	//개별 상품 정보
-	public String getGoodsInfo() {
-		return null;
+
+	// 개별 상품 정보
+	@GetMapping("/goods_detail_admin/{g_code}")
+	public String getGoodsInfo(@PathVariable(value = "g_code") String g_code) {
+
+		// 받은 g_code로 상품 정보 select 후 모델에 담는 작업 필요
+		// g_code null? 혹은 존재하지 않을경우?
+		return "admin/goods/goods_detail_admin";
 	}
-	
-	//상품 수정
+
+	// 상품 수정 폼
+	@GetMapping("/goods_update_admin/{g_code}")
+	public String modifyGoodsForm(@PathVariable(value = "g_code") String g_code) {
+
+		return "admin/goods/goods_update_admin";
+	}
+
+	// 상품 수정 처리
+	@PostMapping("/goods_update_admin")
 	public String modifyGoods() {
-		return null;
+
+		// 수정 처리 후 돌아갈 화면 redirect
+		return "redirect:/admin/goods/goods_list_admin";
 	}
-	
-	//상품 삭제
-	public String removeAdminGoods() {
-		return null;
+
+	// 상품 삭제 처리
+	@PostMapping("/goods_remove/{g_code}")
+	public String removeAdminGoods(@PathVariable(value = "g_code") String g_code) {
+
+		return "redirect:/admin/goods/goods_list_admin";
 	}
-	
-	//식단 등록
+
+	// 식단 등록 폼
+	@GetMapping("/menu/menu_reg_form")
+	public String addAdminMenuForm() {
+		return "admin/goods/menu/menu_reg_form";
+	}
+
+	// 식단 등록 처리
+	@PostMapping("/menu/menu_reg_form")
 	public String addAdminMenu() {
-		return null;
+		return "redirect:/admin/goods/menu/menu_list";
 	}
-	
-	//식단 리스트
+
+	// 식단 리스트
+	@GetMapping("/menu/menu_list")
 	public String getAdminMenuList() {
-		return null;
+		return "admin/goods/menu/menu_list";
 	}
-	
-	//식단 수정
+
+	// 식단 수정 폼
+	@GetMapping("/menu/menu_update_admin/{menu_code}")
+	public String modifyAdminMenuForm(@PathVariable(value = "menu_code") String menu_code) {
+
+		return "admin/goods/menu/menu_update_admin";
+	}
+
+	// 식단 수정 처리
+	@PostMapping("menu/menu_update_admin")
 	public String modifyAdminMenu() {
-		return null;
+
+		return "redirect:/admin/goods/menu/menu_list";
 	}
-	
-	//식단 삭제
-	public String removeAdminMenu() {
-		return null;
+
+	// 식단 삭제 처리
+	@PostMapping("menu/menu_remove/{menu_code}")
+	public String removeAdminMenu(@PathVariable(value = "menu_code") String menu_code) {
+
+		return "redirect:/admin/goods/menu/menu_list";
 	}
-	
-	//개별 식단 정보 
-	public String getMenuInfo() {
-		return null;
+
+	// 개별 식단 정보
+	@GetMapping("/menu/menu_detail_admin/{menu_code}")
+	public String getMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+
+		return "admin/goods/menu/menu_detail_admin";
 	}
-	
-	//상품별 할인 혜택 등록
+
+	// 상품별 할인 혜택 등록 폼
+	@GetMapping("/discount/goods_discount_reg_form")
+	public String addGoodsDiscountForm() {
+		return "admin/goods/discount/goods_discount_reg_form";
+	}
+
+	// 상품별 할인 혜택 등록 처리
+	@PostMapping("/discount/goods_discount_reg_form")
 	public String addGoodsDiscount() {
-		return null;
+		return "redirect:/admin/goods/discount/goods_discount_list";
 	}
-	
-	//상품별 할인 혜택 리스트
+
+	// 상품별 할인 혜택 리스트
+	@GetMapping("/discount/goods_discount_list")
 	public String getGoodsDiscountList() {
-		return null;
+		return "admin/goods/discount/goods_discount_list";
 	}
-	
-	//상품별 할인 혜택 수정
+
+	// 상품별 할인 혜택 수정 폼
+	@GetMapping("/discount/goods_discount_update_form/{g_discount_code}")
+	public String modifyGoodsDiscountForm(@PathVariable(value = "g_discount_code") String g_discount_code) {
+
+		return "admin/goods/discount/goods_discount_update_form";
+	}
+
+	// 상품별 할인 혜택 수정 처리
+	@PostMapping("/discount/goods_discount_update_form")
 	public String modifyGoodsDiscount() {
-		return null;
+
+		return "redirect:/admin/goods/discount/goods_discount_list";
 	}
-	
-	//상품별 할인 혜택 삭제
-	public String removeGoodsDiscount() {
-		return null;
+
+	// 상품별 할인 혜택 삭제 처리
+	@PostMapping("discount/goods_discount_remove/{g_discount_code}")
+	public String removeGoodsDiscount(@PathVariable(value = "g_discount_code") String g_discount_code) {
+
+		return "redirect:/admin/goods/discount/goods_discount_list";
 	}
 }

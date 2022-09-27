@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/buyerDefault}">
+
+<!-- 구매자 상품 리스트 -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>주문리스트</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/}">Home</a><span>my order</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+<th:block layout:fragment="customContents">
+	<div class="row">
+		<div class="col-lg-3 col-md-5">
+			<div class="sidebar">
+				<div class="sidebar__item">
+                      <h4>MY PAY</h4>
+                            <ul>
+                                <li><a th:href="@{/buyer/mypage/orderStatus/myorder_status_list}">주문조회</a></li>
+                                <li><a th:href="@{/buyer/mypage/orderStatus/myorder_apply_list}">취소/교환/환불 내역</a></li>
+                            </ul>
+                </div>
+			</div>
+		</div>
+		
+		<div class="col-lg-9 col-md-7">
+			<div class="product__discount">
+				<div class="section-title product__discount__title">
+					<h2>MY ORDER</h2>
+				</div>
+				<div class="row">
+                <div class="col-lg-12">
+                    
+                    
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">주문번호</th>
+                                    <th class="shoping__product">상품명</th>
+                                    <th class="shoping__product">가격</th>
+                                    <th class="shoping__product">수량</th>
+                                    <th class="shoping__product">상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                	<td class="shoping__cart__num">
+                                    	주문번호
+                                    </td>
+                                	<td class="shoping__cart__item">
+                                       	상품1
+                                    </td>
+                                     <td class="shoping__cart__price">
+                                       95,000
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        1
+                                    </td>
+                                    <td class="shoping__cart__status">
+                                      
+                                    </td>
+                                    
+                                    <td>
+                                    
+                                    </td>
+                                    
+                                    
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                
+                                
+                                
+                                
+                                
+                                </tr>
+                                
+                                
+                                
+                                
+                                <tr>
+                                   <td class="shoping__cart__item">
+                                        <h5>상품2</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                       95,000
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty"><span class="dec qtybtn">-</span>
+                                                <input type="text" value="1">
+                                            <span class="inc qtybtn">+</span></div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $39.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <h5>상품3</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        $69.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty"><span class="dec qtybtn">-</span>
+                                                <input type="text" value="1">
+                                            <span class="inc qtybtn">+</span></div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $69.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+           
+				
+				
+				</div>
+			</div>
+			<div class="product__pagination">
+				<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+			</div>
+		</div>		
+	</div>
+
+
+
+
+</th:block>
+
+
+
+
+</html>

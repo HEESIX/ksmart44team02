@@ -3,5 +3,122 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.GoodsMapper">
-
+	<resultMap type="GoodsCategory" id="categoryResultMap">
+		<id column="g_cate_code" property="goodsCategoryCode"/>
+		<result column="cate_name" property="goodsCategoryName"/>
+		<result column="cate_reg_date" property="goodsCategoryRegDate"/>
+		<result column="member_id" property="goodsCategoryRegId"/>
+		<result column="cate_status" property="goodsCategoryStatus"/>
+	</resultMap>
+	<resultMap type="GoodsDiscount" id="goodsDiscountResultMap">
+		<id column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="discount_price" property="goodsDiscountPrice"/>
+		<result column="discount_rate" property="goodsDiscountRate"/>
+		<result column="discount_name" property="goodsDiscountName"/>
+		<result column="discount_expiration_date" property="goodsDiscountExpirationDate"/>
+		<result column="member_id" property="goodsDiscountRegistrant"/>
+		<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
+		<result column="enter_code" property="enterCode"/>
+	</resultMap>
+	<!-- 상품 카테고리 등록 처리  -->
+	<insert id="addGoodsCategory" parameterType="GoodsCategory">
+		INSERT INTO tb_goods_cate(
+			g_cate_code
+			,cate_name
+			,cate_reg_date
+			,member_id
+			,cate_status
+		)VALUES(
+			sf_new_goods_cate_code()
+			,#{goodsCategoryName}
+			,NOW()
+			,'id001'
+			,${goodsCategoryStatus}
+		);
+	</insert>
+	<!-- 상품 카테고리 리스트(사용중지된 카테고리까지)  -->
+	<select id="getGoodsCategoryList" resultMap="categoryResultMap">
+		SELECT
+			g_cate_code
+			,cate_name
+			,cate_reg_date
+			,member_id
+			,cate_status
+		FROM
+			tb_goods_cate;
+	</select>
+	<!-- 상품 카테고리 리스트(사용중지된 카테고리 제외)  -->	
+	<select id="getGoodsCategoryListUser" resultMap="categoryResultMap">
+		SELECT
+			g_cate_code
+			,cate_name
+		FROM
+			tb_goods_cate
+		WHERE
+			cate_status = 1;
+	</select>
+	<!-- 특정 상품 카테고리 정보 조회(상품 카테고리 수정화면) -->
+	<select id="getGoodsCategoryInfo" parameterType="String" resultMap="categoryResultMap">
+		SELECT
+			gc.g_cate_code
+			,gc.cate_name
+			,gc.cate_reg_date
+			,gc.member_id
+			,gc.cate_status
+		FROM
+			tb_goods_cate AS gc
+		WHERE
+			gc.g_cate_code = #{goodsCategoryCode};
+	</select>
+	<!-- 상품 카테고리 수정 처리  -->
+	<update id="modifyGoodsCategory" parameterType="GoodsCategory">
+		UPDATE tb_goods_cate AS gc
+		SET 
+			gc.cate_name = #{goodsCategoryName}
+			,gc.cate_status = ${goodsCategoryStatus}
+		WHERE 
+			gc.g_cate_code = #{goodsCategoryCode};
+	</update>
+	<!-- 상품 카테고리 삭제 처리  -->
+	<delete id="removeGoodsCategory" parameterType="String">
+		DELETE 
+		FROM 
+			tb_goods_cate AS gc
+		WHERE 
+			gc.g_cate_code = #{goodsCategoryCode};
+	</delete>
+	<!-- 상품별 할인혜택 리스트(admin)   -->
+	<select id="getGoodsDiscountListAdmin" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.enter_code IS NULL;
+	</select>
+	<!-- 상품별 할인혜택 리스트(seller) -->
+	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.member_id = #{memberId}
+			OR 
+			gdm.enter_code IS NULL;
+	</select>
 </mapper>
