@@ -75,7 +75,10 @@ public class AdminDiscountController {
 		
 		OrderDiscount orderdiscountList = discountService.getOrderDiscountInfo(orderDiscountCode);
 		
-		return "admin/orderDiscount/orderDiscountCode";
+		model.addAttribute("title","주문서별 할인혜택 수정");
+		model.addAttribute("orderdiscountList", orderdiscountList);
+		
+		return "admin/orderDiscount/modifyOrderDiscount";
 	}
 	//주문서별 할인혜택 수정 처리
 	@PostMapping("/modifyOrderDiscount")
