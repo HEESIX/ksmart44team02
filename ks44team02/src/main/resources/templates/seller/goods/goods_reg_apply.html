@@ -89,6 +89,18 @@
 									</div>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>상품 썸네일 이미지 업로드</p>
+										<div class="filebox">
+											<input class="upload-name" id="goodsMainImageName" placeholder="상품 썸네일 이미지(*.gif, *.jpg, *.png)" > <label
+												for="goodsMainImage" style="margin-top: 8px;">파일찾기</label> <input
+												type="file" id="goodsMainImage" class="imageUpload" accept=".gif, .jpg, .png">
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="checkout__input">
 								<p>
 									상품명<span>*</span>
@@ -124,25 +136,26 @@
 								</div>
 							</div>
 							<div class="row">
-									<div class="checkout__input col-lg-3">
-										<p>제조일자</p>
-										<select>
-											<option value="manuImage">컨텐츠 포함</option>
-											<option value="manuText">직접 작성하기</option>
-										</select>
-									</div>
-									<div id="manuText" class="checkout__input col-lg-9" style="margin-top: 46px; display: none; padding-left: 0;">
-										<input type="date" placeholder="제조일자" style="height: 42px;">
-									</div>
+								<div class="checkout__input col-lg-3">
+									<p>제조일자</p>
+									<select>
+										<option value="manuImage">컨텐츠 포함</option>
+										<option value="manuText">직접 작성하기</option>
+									</select>
+								</div>
+								<div id="manuText" class="checkout__input col-lg-9"
+									style="margin-top: 46px; display: none; padding-left: 0;">
+									<input type="date" placeholder="제조일자" style="height: 42px;">
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>상품 소개 이미지 업로드</p>
 										<div class="filebox">
-											<input class="upload-name" placeholder="첨부파일"> <label
+											<input class="upload-name" id="goodsInfoImageName" placeholder="상품 소개 이미지(*.gif, *.jpg, *.png)"> <label
 												for="goodsInfoImage" style="margin-top: 8px;">파일찾기</label> <input
-												type="file" id="goodsInfoImage">
+												type="file" id="goodsInfoImage" class="imageUpload" accept=".gif, .jpg, .png">
 										</div>
 									</div>
 								</div>
@@ -173,7 +186,8 @@
 										</p>
 										<select id="goodsIngredientSelect">
 											<option value="giText">직접 작성</option>
-											<option value="giImage" selected="selected">컨텐츠 포함 및 표시 대상 아님</option>
+											<option value="giImage" selected="selected">컨텐츠 포함 및
+												표시 대상 아님</option>
 										</select>
 									</div>
 								</div>
@@ -286,20 +300,27 @@
 <th:block layout:fragment="customFootjs}">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
-		$(function(){
+		$(function() {
 			
-			$('.nice-select li').click(function(){
+			$('.imageUpload').change(function(){
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+			
+			$('.nice-select li').click(function() {
 				var selectValue = $(this).attr('data-value');
-				
-				if(selectValue == 'giText'){
+
+				if (selectValue == 'giText') {
 					$('#goodsIngredient').css('display', 'block');
-				}else{
+				} else {
 					$('#goodsIngredient').css('display', 'none');
 				}
-				
-				if(selectValue == 'manuText'){
+
+				if (selectValue == 'manuText') {
 					$('#manuText').css('display', 'block');
-				}else{
+				} else {
 					$('#manuText').css('display', 'none');
 				}
 			});

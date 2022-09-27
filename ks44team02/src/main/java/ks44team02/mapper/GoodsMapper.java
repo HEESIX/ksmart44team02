@@ -5,26 +5,29 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.Menus;
 
 @Mapper
 public interface GoodsMapper {
 	
 	//상품 카테고리 등록
-	public int addGoodsCategory();
+	public boolean addGoodsCategory(GoodsCategory goodsCategory);
 	
-	//상품 카테고리 리스트
-	//Goods아님 변경 필요
-	public List<Goods> getGoodsCategoryList();
+	//상품 카테고리 리스트 : 사용 중지중인 것까지 포함
+	public List<GoodsCategory> getGoodsCategoryList();
+	
+	//상품 카테고리 리스트(사용중인 것만)
+	public List<GoodsCategory> getGoodsCategoryListBuyer();
 	
 	//기존 데이터 조회(상품 카테고리 수정화면)
-	public String getModifyGoodsCategoryCode();
+	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode);
 	
 	//상품 카테고리 수정
-	public int modifyGoodsCategory();
+	public boolean modifyGoodsCategory(GoodsCategory goodsCategory);
 	
 	//상품 카테고리 삭제
-	public int removeGoodsCategory();
+	public boolean removeGoodsCategory(String goodsCategoryCode);
 	
 	//상품 리스트
 	public List<Goods> getAdminGoodsList();

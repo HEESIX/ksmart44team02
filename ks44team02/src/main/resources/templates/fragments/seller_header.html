@@ -45,7 +45,7 @@
 				<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
 					<ul class="header__menu__dropdown">
 						<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
-						<li><a th:href="@{/seller/goods/goods_list_seller}">#상품조회</a></li>
+						<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
 					</ul></li>
 				<li><a href="#">#주문/배송 관리</a>
 					<ul class="header__menu__dropdown">
@@ -90,7 +90,7 @@
 							<ul>
 							<li><a href="#"><i class="fa fa-user"></i>#마이페이지</a>
 								<ul class="header__menu__dropdown">
-									<li><a href="#">#입점 신청 </a></li>
+									<li><a th:href="@{/seller/companypage/company_insert}">#입점 신청</a></li>
 									<li><a th:href="@{/seller/login/seller_login_list}">#회원정보</a></li>
 									<li><a href="#">#탈퇴 신청</a></li>
 								</ul></li>	
@@ -115,7 +115,7 @@
 							<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
 								<ul class="header__menu__dropdown">
 									<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
-									<li><a th:href="@{/seller/goods/goods_list_seller}">#상품조회</a></li>
+									<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
 								</ul></li>
 							<li><a href="#">#주문/배송 관리</a>
 								<ul class="header__menu__dropdown">
