@@ -1,10 +1,236 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	상품 등록 폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 상품 등록 폼(admin)  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12" style="padding-top: 15px;">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						<h3>상품 등록</h3>
+					</div>
+					<div class="card-block">
+						<div class="col-xl-3 col-lg-3"></div>
+						<div class="col-xl-6 col-lg-6">
+							<form>
+								<!-- <h6 class="sub-title">Single Select</h6> -->
+								<div class="form-group row">
+									<div>
+										<label for="goodsCateCode"
+											class="col-form-label form-control-label">상품 카테고리</label>
+									</div>
+									<div class="modal fade modal-flex" id="single-select-Modal"
+										tabindex="-1" role="dialog">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h5 class="modal-title">Code Explanation for single
+														select radio</h5>
+												</div>
+												<!-- end of modal-header -->
+												<div class="modal-body">
+													<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+												</div>
+												<!-- end of modal-body -->
+											</div>
+											<!-- end of modal-content -->
+										</div>
+										<!-- end of modal-dialog -->
+									</div>
+									<!-- end of modal -->
+									<select id="goodsCateCode" name="goodsCateCode"
+										class="js-example-basic-single" style="width: 40%;">
+										<th:block th:if="${not #lists.isEmpty(goodsCategoryList)}"
+											th:each="gcl : ${goodsCategoryList}">
+											<option th:value="${gcl.goodsCategoryCode}"
+												th:text="${gcl.goodsCategoryName}"></option>
+										</th:block>
+									</select>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsName"
+											class="col-form-label form-control-label">상품명</label>
+									</div>
+									<div>
+										<input class="form-control" type="text" id="goodsName"
+											name="goodsName">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsPrice"
+											class="col-form-label form-control-label">상품 가격</label>
+									</div>
+									<div>
+										<input class="form-control" type="number" id="goodsPrice"
+											name="goodsPrice">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsDiscountCode"
+											class="col-form-label form-control-label">적용 할인 혜택</label>
+									</div>
+									<div class="modal fade modal-flex" id="single-select-Modal"
+										tabindex="-1" role="dialog">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h5 class="modal-title">Code Explanation for single
+														select radio</h5>
+												</div>
+												<!-- end of modal-header -->
+												<div class="modal-body">
+													<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+												</div>
+												<!-- end of modal-body -->
+											</div>
+											<!-- end of modal-content -->
+										</div>
+										<!-- end of modal-dialog -->
+									</div>
+									<!-- end of modal -->
+									<select id="goodsDiscountCode" name="goodsDiscountCode"
+										class="js-example-basic-single" style="width: 40%;">
+										<th:block
+											th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
+											th:each="gdla : ${goodsDiscountListAdmin}">
+											<option th:value="${gdla.goodsDiscountCode}"
+												th:text="${gdla.goodsDiscountName}"></option>
+										</th:block>
+									</select>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsNetWeight"
+											class="col-form-label form-control-label">상품 중량(단위와
+											같이 기술)</label>
+									</div>
+									<div>
+										<input class="form-control" type="text" id="goodsNetWeight"
+											name="goodsNetWeight" placeholder="상품 중량">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsProduce"
+											class="col-form-label form-control-label">원산지</label>
+									</div>
+									<div>
+										<input class="form-control" type="text" id="goodsProduce"
+											name="goodsProduce" placeholder="원산지">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsProductionExpirationDate"
+											class="col-form-label form-control-label">제조연월일, 유통기한
+											또는 품질유지기한</label>
+									</div>
+									<div>
+										<input class="form-control" type="text"
+											id="goodsProductionExpirationDate"
+											name="goodsProductionExpirationDate"
+											placeholder="제조연월일, 유통기한 또는 품질유지기한">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div>
+										<label for="goodsProductionExpirationDate"
+											class="col-form-label form-control-label">상품 썸네일 이미지
+											업로드</label>
+									</div>
+									<div>
+										<label for="goodsInfoImage" class="custom-file"> <input
+											type="file" name="goodsInfoImage" id="goodsInfoImage"
+											class="custom-file-input"> <span
+											class="custom-file-control"> </span>
+										</label>
+									</div>
+									<label for="file" class="custom-file">
+                                                <input type="file" id="file" class="custom-file-input">
+                                                <span class="custom-file-control" lang="en"></span>
+                                            </label>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<!-- Select 2 js -->
+	<script type="text/javascript"
+		src="assets/plugins/syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript"
+		src="assets/plugins/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript"
+		src="assets/plugins/syntaxhighlighter/scripts/shBrushXml.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-example-basic-single").select2();
+		});
+	</script>
+</th:block>
 </html>

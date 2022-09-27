@@ -1,7 +1,7 @@
 "use strict";
 $(document).ready(function() {
 
-    $('.checkbox-ripple').rkmd_checkboxRipple();
+    //$('.checkbox-ripple').rkmd_checkboxRipple();
     change_checkbox_color();
 
     // Single Search Select
