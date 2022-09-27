@@ -1,4 +1,4 @@
-package ks44team02.seller.controller;
+package ks44team02.mapper;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "seller/companypage")
-public class sellerCompanyController {
+public class SellerCompanyMapper {
 	
 	//업체 정보 등록
 	@GetMapping("/company_insert")
@@ -36,5 +36,5 @@ public class sellerCompanyController {
 	public String sellerCompanyRemove() {
 		return "seller/companypage/company_delete";
 	}
-	
+
 }
