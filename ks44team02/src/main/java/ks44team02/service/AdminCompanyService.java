@@ -1,27 +1,28 @@
 package ks44team02.service;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Service;
+import ks44team02.mapper.AdminCompanyMapper;
 
-@Controller
-@RequestMapping(value = "admin/companypage")
+@Service
 public class AdminCompanyService {
 	
-	//업체 입점 승인 폼
-	@GetMapping("/seller_company_check")
+	private final AdminCompanyMapper adminCompanyMapper;
+	
+	public AdminCompanyService(AdminCompanyMapper adminCompanyMapper) {
+		this.adminCompanyMapper = adminCompanyMapper;
+		}
+	
+	//업체 입점 승인 폼)
 	public String companySuccess() {
 		return "admin/companypage/seller_company_check";
 	}
 	
 	//입점 업체 정보 및 리스트
-	@GetMapping("/seller_company_list")
 	public String companyInfoList() {
 		return "admin/companypage/seller_company_list";
 	}
 	
 	//업체 정보 삭제 승인 폼
-	@GetMapping("/seller_company_delete")
 	public String companyRemoveSuccess() {
 		return "admin/companypage/seller_company_delete";
 	}
