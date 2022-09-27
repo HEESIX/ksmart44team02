@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team02.mapper.DeliveryMapper">
+	<resultMap type="OrderRecordList" 		id="orderRecordResultMap">
+		<id column="order_record_code" 		property="orderRecordCode"/>
+		<result column="member_id" 			property="memberId"/>
+		<result column="order_detail_code" 	property="orderDetailCode"/>
+		<result column="payment_code" 		property="paymentCode"/>
+		<result column="delivery_code" 		property="deliveryCode"/>
+		<result column="rev_code" 			property="revCode"/>
+		<result column="order_group_code" 	property="orderGroupCode"/>
+		<result column="order_record_reg_datetime" property="orderRecordRegDatetime"/>
+		<result column="purchase_confirm" 	property="purchaseConfirm"/>
+	</resultMap>
+	
+	
+	<!-- 주문 목록 -->
+	<select id="getOrderList" resultType="map">
+		SELECT 
+			orl.order_record_code as orderRecordCode,
+			od.order_detail_code as orderDetailCode,
+			g.g_name as goodsName,
+			os.order_status_code as orderStatusCode,
+			oss.order_status_standard_details as orderStatusStandardDetails
+		FROM 
+			tb_order_record_list AS orl
+			INNER JOIN
+			tb_order_detail AS od
+			on
+			orl.order_detail_code = od.order_detail_code
+			INNER join
+			tb_goods AS g
+			on
+			od.g_code = g.g_code
+			INNER Join
+			tb_delivery AS d
+			on
+			d.order_detail_code = od.order_detail_code
+			INNER JOIN 
+			tb_order_status AS os
+			on
+			os.order_status_code = d.order_status_code
+			INNER join
+			tb_order_status_standard AS oss
+			on
+			os.order_status_code = oss.order_status_standard_code
+		ORDER BY
+			os.order_status_update_datetime;	
+	</select>
+	
+	
+	
+</mapper>
