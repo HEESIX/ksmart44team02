@@ -1,12 +1,29 @@
 package ks44team02.seller.controller;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.admin.controller.AdminGoodsController;
+import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.GoodsDiscount;
+import ks44team02.service.SellerCompanyService;
+
 @Controller
-@RequestMapping(value = "seller/companypage")
+@RequestMapping(value = "/seller/companypage")
 public class SellerCompanyController {
+	
+	private static final Logger log = LoggerFactory.getLogger(SellerCompanyController.class);
+	
+	private final SellerCompanyService sellerCompanyService;
+	
+	public SellerCompanyController(SellerCompanyService sellerCompanyService) {
+		this.sellerCompanyService = sellerCompanyService;
+	}
 	
 	//업체 정보 등록
 	@GetMapping("/company_insert")
