@@ -4,7 +4,7 @@ package ks44team02.dto;
 public class OrderExchange {
 	private String orderExchangeCode;
 	private String refundExchangeInCode;
-	private int orderExchangeApproveCheck;
+	private String orderExchangeApproveCheck;
 	private String exchangeDeliveryEnter;
 	private String exchangeDeliveryNum;
 	public String getOrderExchangeCode() {
@@ -19,10 +19,10 @@ public class OrderExchange {
 	public void setRefundExchangeInCode(String refundExchangeInCode) {
 		this.refundExchangeInCode = refundExchangeInCode;
 	}
-	public int getOrderExchangeApproveCheck() {
+	public String getOrderExchangeApproveCheck() {
 		return orderExchangeApproveCheck;
 	}
-	public void setOrderExchangeApproveCheck(int orderExchangeApproveCheck) {
+	public void setOrderExchangeApproveCheck(String orderExchangeApproveCheck) {
 		this.orderExchangeApproveCheck = orderExchangeApproveCheck;
 	}
 	public String getExchangeDeliveryEnter() {
@@ -53,5 +53,7 @@ public class OrderExchange {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 }
