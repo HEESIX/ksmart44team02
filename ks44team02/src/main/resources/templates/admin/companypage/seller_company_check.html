@@ -46,28 +46,22 @@
 										<th>회사 홈페이지</th>
 										<th>입점 신청 서류 파일</th>
 										<th>입점 신청 일자</th>
-										<th>수정</th>
-										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(seller_company_check)}"
 										th:each="gcl : ${seller_company_check}">
-										<td><a
-											th:href="@{|/admin/goods/category/goodscate_update/${gcl.goodsCategoryCode}|}">수정</a></td>
-										<td><a
-											th:href="@{|/admin/goods/category/goodscate_remove/${gcl.goodsCategoryCode}|}">삭제</a></td>
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(goodsCategoryList)}">
-										<td colspan="5" style="text-align: center;">상품 카테고리가 존재하지
-											않습니다.</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<a th:href="@{/admin/companypage/seller_company_list}"><button
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
+								style="float: right;" type="button">승인</button></a>
+								
+						<a th:href="@{/admin/companypage/seller_company_list}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">거부</button></a>
 
 					</div>
 				</div>
