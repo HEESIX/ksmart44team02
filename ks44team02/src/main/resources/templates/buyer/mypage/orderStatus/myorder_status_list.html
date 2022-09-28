@@ -41,6 +41,8 @@
 							<th>상품명</th>
 							<th>가격</th>
 							<th>주문현황</th>
+							<th>택배사</th>
+							<th>운송장번호</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,6 +55,8 @@
 							<td th:text="${orl.get('goodsName')}"></td>
 							<td th:text="${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderStatusStandardDetails')}"></td>
+							<td th:text="${orl.get('deliveryEnter')}"></td>
+							<td th:text="${orl.get('deliveryNum')}"></td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(getOrderList)}">
 							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.

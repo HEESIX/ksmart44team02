@@ -23,7 +23,7 @@ public interface DeliveryMapper {
 	
 	
 	// 상세주문현황 조회
-	public String getOrderStatus();
+	public List<Map<String, Object>> getOrderDetailList();
 	
 	
 	// 환불 신청
