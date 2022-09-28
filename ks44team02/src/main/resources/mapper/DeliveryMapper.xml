@@ -7,12 +7,14 @@
 	
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" resultType="map">	
-		SELECT
+	SELECT
 			om.order_code as orderCode,
 			g.g_name as goodsName,
 			om.final_price as finalPrice,
 			oss.order_status_standard_details as orderStatusStandardDetails,	
-			om.order_group_code AS orderGroupCode
+			om.order_group_code AS orderGroupCode,
+			d.delivery_enter AS deliveryEnter,
+			d.delivery_num AS deliveryNum
 		FROM
 			tb_order_management AS om
 			INNER join
@@ -31,6 +33,10 @@
 			tb_order_status_standard AS oss
 			on
 			oss.order_status_standard_code = os.order_status_standard_code
+			INNER Join
+			tb_delivery AS d
+			on
+			d.order_detail_code = od.order_detail_code
 		WHERE
 			od.member_id = 'id002'
 		ORDER BY
@@ -40,12 +46,10 @@
 	
 	<!-- 주문 상세리스트 -->
 	<select id="getOrderDetailList" resultType="map">
-	
-	
-	
-	
-	
-	
+		select
+			*
+		from 
+			tb_goods
 	</select>
 	
 	
