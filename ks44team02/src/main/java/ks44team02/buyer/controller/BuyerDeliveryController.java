@@ -42,8 +42,12 @@ public class BuyerDeliveryController {
 		
 		// 상세주문현황 조회
 		@GetMapping("/myorder_delivery_detail")
-		public String getOrderStatus(Model model) {
-			return null;
+		public String getOrderStatus(Model model
+									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
+			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus();
+				model.addAttribute("title", "상세 주문리스트");
+				model.addAttribute("getOrderDetailList", getOrderDetailList);
+			return "buyer/mypage/orderStatus/myorder_delivery_detail";
 		}
 
 		// 환불 신청 폼
