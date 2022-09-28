@@ -13,7 +13,7 @@ public interface DiscountMapper {
 	public List<OrderDiscount> getOrderDiscountList();
 	
 	//특정 주문서별 할인혜택 조회
-	public OrderDiscount getOrderDiscountInfo();
+	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode);
 		
 	//주문서별 할인혜택 수정
 	public boolean modifyOrderDiscount(OrderDiscount orderDiscount);
@@ -22,5 +22,5 @@ public interface DiscountMapper {
 	public boolean addOrderDiscount(OrderDiscount orderDiscount);
 		
 	//주문서별 할인혜택 삭제
-	public void removeOrderDiscount(OrderDiscount orderDiscount);
+	public boolean removeOrderDiscount(String orderDiscount);
 }
