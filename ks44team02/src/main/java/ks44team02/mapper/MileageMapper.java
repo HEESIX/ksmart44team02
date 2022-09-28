@@ -9,6 +9,8 @@ import ks44team02.dto.Mileage;
 @Mapper
 public interface MileageMapper {
 	
+
+	
 	//회원 적립금 조회
 		public List<Mileage> getMileageList();
 
@@ -20,4 +22,7 @@ public interface MileageMapper {
 		
 		//buyer적립금 조회
 		public String getBuyerMileageList();
+		
+		//특정회원 마일리지 조회
+		public Mileage getMileageInfo();
 }
