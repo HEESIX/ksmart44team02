@@ -30,10 +30,10 @@ public class DiscountService {
 	}
 	//특정 주문서별 할인혜택 조회
 	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode) {
-		OrderDiscount orderDiscount = discountMapper.getOrderDiscountInfo();
-		return orderDiscount;
+		OrderDiscount orderDiscountInfo = discountMapper.getOrderDiscountInfo(orderDiscountCode);
+		return orderDiscountInfo;
 	}
-	//주문서별 할인혜택 수정
+	//주문서별 할인혜택 수정처리
 	public boolean modifyOrderDiscount(OrderDiscount orderDiscount) {
 		boolean result = discountMapper.modifyOrderDiscount(orderDiscount);
 		return result;
@@ -44,8 +44,9 @@ public class DiscountService {
 		return result;
 	}
 	//주문서별 할인혜택 삭제
-	public void removeOrderDiscount(OrderDiscount orderDiscount) {
-		
+	public boolean removeOrderDiscount(String orderDiscountCode) {
+		boolean resultRemove = discountMapper.removeOrderDiscount(orderDiscountCode);
+		return resultRemove;
 	}
 
 }

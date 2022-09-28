@@ -15,50 +15,72 @@
 	<div class="container-fluid" style="height: 100%; width: 100%;">
 		<div class="row">
 			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
-				<div class="card" th:object="${goodsCategoryInfo}">
+				<div class="card" th:object="${orderDiscountInfo}">
 					<div class="card-header" style="text-align: center;">
-						<h3>카테고리 수정</h3>
 					</div>
-					<form th:action="@{/admin/goods/category/goodscate_update}"
+					<form th:action="@{/admin/orderDiscount/modifyOrderDiscount}"
 						method="post">
 						<div class="card-block">
 							<div class="form-group row">
-								<label for="goodsCategoryCode"
-									class="col-xs-2 col-form-label form-control-label">상품
-									카테고리 코드</label>
+								<label for="orderDiscountCode"
+									class="col-xs-2 col-form-label form-control-label">할인혜택 코드</label>
 								<div class="col-sm-10">
-									<input th:value="*{goodsCategoryCode}" class="form-control"
-										type="text" id="goodsCategoryCode" name="goodsCategoryCode"
+									<input th:value="*{orderDiscountCode}" class="form-control"
+										type="text" id="orderDiscountCode" name="orderDiscountCode"
 										readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="goodsCategoryName"
-									class="col-xs-2 col-form-label form-control-label">카테고리
-									이름</label>
+								<label for="discountName"
+									class="col-xs-2 col-form-label form-control-label">혜택명</label>
 								<div class="col-sm-10">
-									<input th:value="*{goodsCategoryName}" class="form-control"
-										type="text" id="goodsCategoryName" name="goodsCategoryName">
+									<input th:value="*{discountName}" class="form-control"
+										type="text" id="discountName" name="discountName">
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="col-md-2">
-									<label for="goodsCategoryStatus" class="form-control-label">사용
-										여부</label>
+								<label for="discountRate"
+									class="col-xs-2 col-form-label form-control-label">할인율</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountRate}" class="form-control"
+										type="text" id="discountRate" name="discountRate">
 								</div>
-								<div class="col-md-10 has-danger">
-									<label class="custom-control custom-checkbox"> <input
-										th:checked="*{goodsCategoryStatus} == 1"
-										class="custom-control-input" type="checkbox"
-										id="goodsCategoryStatus" name="goodsCategoryStatus" value="1">
-										<span class="custom-control-indicator"></span> <span
-										class="custom-control-description">사용</span>
-									</label>
+							</div>
+							<div class="form-group row">
+								<label for="discountPrice"
+									class="col-xs-2 col-form-label form-control-label">할인금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountPrice}" class="form-control"
+										type="text" id="discountPrice" name="discountPrice">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="discountExpirationDate"
+									class="col-xs-2 col-form-label form-control-label">유효기간</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountExpirationDate}" class="form-control"
+										type="text" id="discountExpirationDate" name="discountExpirationDate">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="minOrderPrice"
+									class="col-xs-2 col-form-label form-control-label">최소주문금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{minOrderPrice}" class="form-control"
+										type="text" id="minOrderPrice" name="minOrderPrice">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="maxDiscountPrice"
+									class="col-xs-2 col-form-label form-control-label">최대할인금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{maxDiscountPrice}" class="form-control"
+										type="text" id="maxDiscountPrice" name="maxDiscountPrice">
 								</div>
 							</div>
 							<button id="updateBtn" type="submit"
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;">등록</button>
+								style="float: right;">수정완료</button>
 						</div>
 					</form>
 				</div>
