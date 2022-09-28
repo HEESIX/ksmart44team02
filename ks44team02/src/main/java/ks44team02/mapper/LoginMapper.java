@@ -4,8 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface LoginMapper {
-	
-	public int addGoodsCategory();
+
 
 	//구매자 로그인
 	public int buyerLogin();
