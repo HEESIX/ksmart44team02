@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/sellerDefault}">
+	layout:decorate="~{layout/buyerDefault}">
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -267,30 +267,29 @@ footer .copyright-wrap span{
 			<form th:action="@{/seller/goods/goods_reg_apply}" method="post"
 				enctype="multipart/form-data">
 				<div class="checkout__form">
-					<h4>판매자 회원가입</h4>
+					<h4>구매자 회원가입</h4>
 					<div class="row">
 					  	<div class="col-lg-8 col-md-6">
-							<div class="row">
+							<div class="row">						
 							</div>
 							
-							<div class="row">
+					<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsInfoImage">아이디<span>*</span></label>
+											<label for="goodsInfoImage">아이디<span>
+													*</span></label>
 										</p>
 										<div class="filebox">
-											<input class="upload-name" id="goodsInfoImageName">
-													<button type="submit">중복확인</button>
-												<input
+											<input class="upload-name" id="goodsInfoImageName"> 
+												<button type="submit">중복확인</button>
+											 <input
 												type="file" id="goodsInfoImage" class="imageUpload"
 												name="goodsInfoImage">
 										</div>
 									</div>
 								</div>
-								
-							</div>
-
+					</div>
 						
 							<div class="row">
 									<div class="col-lg-6">
@@ -395,9 +394,9 @@ footer .copyright-wrap span{
 										</p>
 										<div class="filebox">
 											<input class="upload-name" id="goodsMainImageName"
-												placeholder="010-포함"> 
+												placeholder="010포함"> 
 													<button type="submit">인증</button>
-												<input
+												 <input
 												type="file" id="goodsMainImage" name="goodsMainImage" >
 										</div>
 									</div>
@@ -421,29 +420,53 @@ footer .copyright-wrap span{
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-lg-6">
+				
+				
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="checkout__input">
+								<p>
+									<label for="ingredientKCal">추천인ID</label>
+								</p>
+								<input type="inpuet" id="ingredientKCal" name="ingredientKCal">
+							</div>
+						</div>
+					</div>	
+					<div class="row">
+								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsStock">추천인ID</label>
+											<label for="goodsInfoImage">비기호제품</label>
 										</p>
-										<input type="number" id="goodsStock" name="goodsStock">
+										<div class="filebox">
+											<input class="upload-name" id="goodsInfoImageName"> <label
+												for="goodsInfoImage" style="margin-top: 8px;">검색
+												</label> <input
+												type="file" id="goodsInfoImage" class="imageUpload"
+												name="goodsInfoImage">
+										</div>
 									</div>
-
-						
 								</div>
-							</div>
-							<input type='checkbox'/>정보 제공 동의 <br>
-				  			<input type='checkbox'/>위치 정보 제공 동의
-					</div>
+					 </div>
+					
+					
+					
+					
+					
+						<div class="logcenter">	
+									<input type='checkbox'/>정보 제공 동의 <br>
+						  			<input type='checkbox'/>위치 정보 제공 동의
+						  			<br><br>
+						  			
+									<a th:href="@{/buyer/login/buyer_login}">
+										<div class="logcenter">	
+						  					<button type="button" class="loginbtn">회원 가입 완료</button>
+						  				</div>
+						  			</a>	
+						 </div>  	
+				  	</div>
 				</div>	
-		
-				<br>
-				<a th:href="@{/seller/login/seller_login}">
-					<div class="logcenter">	
-	  					<button type="button" class="loginbtn">회원 가입 완료</button>
-	  				</div>
-	  			</a>	
+					
 		
 	</section>
 </th:block>
