@@ -19,9 +19,20 @@
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/gradeDetails/buyer_gradelist}"><i	
 								class="icon-arrow-right"></i>#등급관리</a></li>
 					</ul></li>
+					
 
 				<li class="treeview"><a class="waves-effect waves-dark"
-					href="#"><i class="icon-chart"></i><span>#입점 업체 관리</span></a></li>
+					href="#"><i class="icon-chart"></i><span>#입점 업체 관리</span><i
+						class="icon-arrow-down"></i></a>
+					<ul class="treeview-menu">
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_check}"><i
+								class="icon-arrow-right"></i>#입점 업체 승인</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_list}"><i
+								class="icon-arrow-right"></i>#입점 업체 정보</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_delete}"><i
+								class="icon-arrow-right"></i>#입점 업체 삭제</a></li>	
+					</ul></li>
+						
 
 				<li class="treeview"><a class="waves-effect waves-dark"
 					href="#"><i class="icon-book-open"></i><span>#매출 현황</span><i
