@@ -10,6 +10,15 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script type="text/javascript" th:inline="javascript">
+		var msg = [[${msg}]]
+		
+		if(msg!=null) alert(msg);
+	</script>
+</th:block>
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
@@ -60,7 +69,7 @@
 						</div>
 						<a th:href="@{/admin/orderDiscount/addOrderDiscount}"><button
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
+								style="float: right;" type="submit">등록</button></a>
 					</div>
 				</div>
 			</div>

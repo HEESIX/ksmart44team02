@@ -3,6 +3,7 @@ package ks44team02.admin.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.standard.expression.OrExpression;
 
 import ks44team02.dto.OrderDiscount;
 import ks44team02.service.DiscountService;
@@ -36,11 +39,13 @@ public class AdminDiscountController {
 	}
 	//주문서별 할인혜택 목록 조회 폼
 	@GetMapping("/orderDiscountList")
-	public String getOrderDiscountList(Model model) {
+	public String getOrderDiscountList(Model model
+									  ,@RequestParam(value = "msg", required = false) String msg) {
 		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList();
 		
-		model.addAttribute("title", "주문서별 할인혜택 목록");
+		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
 		model.addAttribute("orderDiscountList", orderDiscountList);
+		if(msg!=null) model.addAttribute("msg", msg);
 		
 		return "admin/orderDiscount/orderDiscountList";
 	}
@@ -48,7 +53,7 @@ public class AdminDiscountController {
 	@GetMapping("/addOrderDiscount")
 	public String addOrderDiscount(Model model) {
 		
-		model.addAttribute("title", "주문서별 할인혜택 등록");
+		model.addAttribute("title", "하나의 주문서별 할인혜택 등록");
 
 		return "admin/orderDiscount/addOrderDiscount";
 	}
@@ -73,18 +78,17 @@ public class AdminDiscountController {
 	public String modifyOrderDiscount(@PathVariable(value = "orderDiscountCode") String orderDiscountCode
 									,Model model) {
 		
-		OrderDiscount orderdiscountList = discountService.getOrderDiscountInfo(orderDiscountCode);
+		OrderDiscount orderDiscountInfo = discountService.getOrderDiscountInfo(orderDiscountCode);
 		
-		model.addAttribute("title","주문서별 할인혜택 수정");
-		model.addAttribute("orderdiscountList", orderdiscountList);
-		
+		model.addAttribute("title","선택한 주문서별 할인혜택 수정");
+		model.addAttribute("orderDiscountInfo", orderDiscountInfo);
 		return "admin/orderDiscount/modifyOrderDiscount";
 	}
 	//주문서별 할인혜택 수정 처리
 	@PostMapping("/modifyOrderDiscount")
 	public String modifyOrderDiscount(OrderDiscount orderDiscount
-			
-			,RedirectAttributes reAttr) {
+									 ,RedirectAttributes reAttr) {
+		
 		boolean result = discountService.modifyOrderDiscount(orderDiscount);
 		
 		if(result) {
@@ -93,12 +97,19 @@ public class AdminDiscountController {
 			reAttr.addAttribute("msg", "수정 실패");
 		}
 		
-		return "redirect:/admin/orderDiscont/orderDiscountCode";
+		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
-	//주문서별 할인혜택 삭제 처리
-	@PostMapping("/removeOrderDiscount/{order_discount_code}")
-	public String removeOrderDiscount(@PathVariable(value = "order_discount_code") String order_discount_code) {
+	//주문서별 할인혜택 삭제 폼
+	@GetMapping("/removeOrderDiscount/{orderDiscountCode}")
+	public String removeOrderDiscount(@PathVariable(value = "orderDiscountCode") String orderDiscountCode
+												   ,Model model) {
 		
-		return "redirect:/admin/orderDiscont/orderDiscountList";
+		OrderDiscount orderDiscountInfo = discountService.getOrderDiscountInfo(orderDiscountCode); 
+		System.out.println(orderDiscountInfo.toString());
+		model.addAttribute("title", "선택한 주문서별 할인혜택 삭제");
+		model.addAttribute("orderDiscountInfo", orderDiscountInfo);
+		
+		return "redirect:/admin/orderDiscont/removeOrderDiscount";
 	}
+
 }
