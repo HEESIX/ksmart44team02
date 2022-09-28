@@ -1,8 +1,10 @@
 package ks44team02.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.Ingredient;
+import ks44team02.dto.MenuOrganize;
 import ks44team02.service.CommonService;
+import ks44team02.service.FileService;
 import ks44team02.service.GoodsService;
 
 @Controller
@@ -30,10 +36,14 @@ public class AdminGoodsController {
 
 	private final GoodsService goodsService;
 	private final CommonService commonService;
+	private final FileService fileService;
 
-	public AdminGoodsController(GoodsService goodsService, CommonService commonService) {
+	public AdminGoodsController(GoodsService goodsService
+							   ,CommonService commonService
+							   ,FileService fileService) {
 		this.goodsService = goodsService;
 		this.commonService = commonService;
+		this.fileService = fileService;
 	}
 
 	@PostConstruct
@@ -59,6 +69,8 @@ public class AdminGoodsController {
 	@PostMapping("/category/goodscate_reg")
 	public String addGoodsCategory(GoodsCategory goodsCategory
 								  ,RedirectAttributes reAttr) {
+		String goodsCateCode = commonService.getNewCode("tb_goods_cate");
+		goodsCategory.setGoodsCategoryCode(goodsCateCode);
 		boolean result = goodsService.addGoodsCategory(goodsCategory);
 		String msg = "";
 		if (result) {
@@ -75,8 +87,6 @@ public class AdminGoodsController {
 	public String getGoodsCategoryList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
-		String code = commonService.getNewCode("tb_goods_cate");
-		System.out.println(code);
 		model.addAttribute("title", "상품 카테고리 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		if (msg != null)
@@ -159,16 +169,18 @@ public class AdminGoodsController {
 		return "admin/goods/goods_reg_form";
 	}
 
-	// 상품 등록 처리
+	// 상품 등록 처리 및 영양 정보 등록 처리
 	@PostMapping("/goods_reg_form")
-	public String addGoods(@RequestParam MultipartFile[] uploadfile) {
-		log.info(uploadfile.toString());
+	public String addGoods() {
 		return "redirect:/admin/goods/goods_list_admin";
 	}
 
 	// 상품 리스트
 	@GetMapping("/goods_list_admin")
-	public String getAdminGoodsList() {
+	public String getAdminGoodsList(Model model) {
+		List<Goods> goodsList = goodsService.getAdminGoodsList();
+		
+		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goods_list_admin";
 	}
 
@@ -205,13 +217,49 @@ public class AdminGoodsController {
 
 	// 식단 등록 폼
 	@GetMapping("/menu/menu_reg_form")
-	public String addAdminMenuForm() {
+	public String addAdminMenuForm(Model model) {
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListAdmin();
+		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
+		
+		model.addAttribute("title", "식단 등록");
+		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
+		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/menu/menu_reg_form";
 	}
 
 	// 식단 등록 처리
 	@PostMapping("/menu/menu_reg_form")
-	public String addAdminMenu() {
+	public String addAdminMenu(@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage
+			  				  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage
+			  				  ,Goods goods
+			  				  ,Ingredient ingredient
+			  				  ,MenuOrganize[] menuOrganize
+			  				  ,HttpServletRequest request) {
+		String serverName = request.getServerName();
+		log.info("{} <<<< serverName", serverName);
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		String fileRealPath = "";
+		boolean isLocalhost = true;
+		
+		if("localhost".equals(serverName)) {				
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+			isLocalhost = false;
+			fileRealPath = System.getProperty("user.dir") + "/resources/";
+		}
+		String goodsMainImageIdx = fileService.fileUpload(goodsMainImage, fileRealPath, isLocalhost);
+		String goodsInfoImageIdx = fileService.fileUpload(goodsInfoImage, fileRealPath, isLocalhost);
+		String goodsCode = commonService.getNewCode("tb_goods");
+		String ingredientCode = commonService.getNewCode("tb_ingredient");
+		
+		goods.setGoodsCode(goodsCode);
+		goods.setGoodsMainImage(goodsMainImageIdx);
+		goods.setGoodsInfoImage(goodsInfoImageIdx);
+		ingredient.setIngredientCode(ingredientCode);
+		ingredient.setGoodsCode(goodsCode);
+		
 		return "redirect:/admin/goods/menu/menu_list";
 	}
 

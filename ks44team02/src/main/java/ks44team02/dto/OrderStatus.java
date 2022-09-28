@@ -1,6 +1,6 @@
 package ks44team02.dto;
 
-//상품주문현황
+//상품주문현황정의
 public class OrderStatus {
 
 	private String orderStatusCode;

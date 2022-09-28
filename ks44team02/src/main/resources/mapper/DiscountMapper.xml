@@ -22,9 +22,48 @@
 			,discount_name
 			,discount_expiration_date
 			,min_order_price
-			,max_discount_price
+			,ifnull(max_discount_price,0) as max_discount_price	
 			,g_production_reg_datetime
 		FROM
 			tb_order_discount_management;
 	</select>
+	<!-- 특정 주문서별 할인혜택 조회 -->
+	<select id="getOrderDiscountInfo" parameterType="String" resultMap="listResultMap">
+		SELECT
+			order_discount_code
+			,discount_rate	
+			,discount_price 
+			,discount_name 
+			,discount_expiration_date
+			,min_order_price 
+			,ifnull(max_discount_price,0) 
+			,g_production_reg_datetime 
+		FROM
+			tb_order_discount_management
+		WHERE
+			order_discount_code = #{orderDiscountCode};
+	</select>
+	<!-- 주문서별 할인혜택 수정처리 -->
+	<update id="modifyOrderDiscount" parameterType="OrderDiscount">
+		UPDATE
+			tb_order_discount_management
+		SET 
+			discount_name = #{discountName}
+			,discount_rate = #{discountRate}
+			,discount_price = #{discountPrice}
+			,discount_expiration_date = #{discountExpirationDate}
+			,min_order_price = #{minOrderPrice}
+			,max_discount_price = #{maxDiscountPrice}
+		WHERE
+			order_discount_code = #{orderDiscountCode};
+	</update>
+	<!-- 주문서별 할인혜택 삭제처리 -->
+	<delete id="removeOrderDiscount" parameterType="String">
+		DELETE
+		FROM
+			tb_order_discount_management
+		WHERE
+			discount_code = #{orderDiscountCode};
+	</delete>
+	
 </mapper>

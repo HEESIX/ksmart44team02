@@ -6,9 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.seller.controller.SellerCompanyController;
 import ks44team02.service.AdminCompanyService;
-import ks44team02.service.SellerCompanyService;
 
 @Controller
 @RequestMapping(value = "/admin/companypage")

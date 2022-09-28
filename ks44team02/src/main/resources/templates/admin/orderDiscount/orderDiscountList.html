@@ -10,6 +10,15 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script type="text/javascript" th:inline="javascript">
+		var msg = [[${msg}]]
+		
+		if(msg!=null) alert(msg);
+	</script>
+</th:block>
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
@@ -25,7 +34,7 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>할인 금액/할인율</th>
+										<th>할인율/할인금액</th>
 										<th>할인명</th>
 										<th>유효기간</th>
 										<th>최소주문금액</th>
@@ -39,8 +48,8 @@
 									<tr th:if="${not #lists.isEmpty(orderDiscountList)}"
 										th:each="odl : ${orderDiscountList}">
 										<td th:text="${odl.orderDiscountCode}"></td>
-										<td th:text="${odl.discountRate}"></td>
-										<td th:text="${odl.discountPrice}"></td>
+										<td th:if="${odl.discountRate} != 0" th:text="${odl.discountRate}+'%'"></td>
+										<td th:if="${odl.discountPrice} != 0" th:text="'₩'+${odl.discountPrice}"></td>
 										<td th:text="${odl.discountName}"></td>
 										<td th:text="${odl.discountExpirationDate}"></td>
 										<td th:text="${odl.minOrderPrice}"></td>
@@ -60,7 +69,7 @@
 						</div>
 						<a th:href="@{/admin/orderDiscount/addOrderDiscount}"><button
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
+								style="float: right;" type="submit">등록</button></a>
 					</div>
 				</div>
 			</div>
