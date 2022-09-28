@@ -1,6 +1,7 @@
 package ks44team02.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -104,8 +105,8 @@ public interface GoodsMapper {
 	//식단 목록
 	public List<Menus> getMenuList();
 	
-	//상품 목록
-	public List<Goods> getGoodsList();
+	//상품 목록(활성화 되어있는 것만)
+	public List<Map<String, Object>> getGoodsList();
 	
 	//개별 식단 정보
 	/* public Menus getMenuInfo(); */

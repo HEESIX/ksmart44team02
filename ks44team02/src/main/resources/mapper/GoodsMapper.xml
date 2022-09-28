@@ -20,6 +20,25 @@
 		<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
 		<result column="enter_code" property="enterCode"/>
 	</resultMap>
+	<resultMap type="Goods" id="goodsResultMap">
+		<id column="g_code" property="goodsCode"/>
+		<result column="enter_code" property="enterCode"/>
+		<result column="g_cate_code" property="goodsCateCode"/>
+		<result column="g_name" property="goodsName"/>
+		<result column="g_price" property="goodsPrice"/>
+		<result column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="g_discount" property="goodsDiscountPrice"/>
+		<result column="g_netweight" property="goodsNetWeight"/>
+		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
+		<result column="g_produce" property="goodsProduce"/>
+		<result column="g_production_expiration_info" property="goodsProductionExpirationDate"/>
+		<result column="g_info_image" property="goodsInfoImage"/>
+		<result column="g_main_image" property="goodsMainImage"/>
+		<result column="g_stock" property="goodsStock"/>
+		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
+		<result column="g_reg_datetime" property="goodsRegDatetime"/>
+		<result column="g_activation" property="goodsActivation"/>
+	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
@@ -120,5 +139,60 @@
 			gdm.member_id = #{memberId}
 			OR 
 			gdm.enter_code IS NULL;
+	</select>
+	<!-- 상품 목록(전부) 하자 없는 것 -->
+	<select id="getAdminGoodsList" resultType="Map">
+		SELECT
+			f.file_path AS filePath
+			,f.file_original_name AS fileOriginalName
+			,f.file_new_name AS fileNewName
+			,e.enter_name AS enterName
+			,gc.cate_name AS categoryName
+			,g.g_name AS goodsName
+			,g.g_price AS goodsPrice
+			,gdm.discount_name AS goodsDiscountName
+			,g.g_discount AS goodsDiscountedPrice
+			,g.g_netweight AS goodsNetWeight
+			,g.g_netweightunit AS goodsNetWeightUnit
+			,g.g_produce AS goodsProduce
+			,g.g_production_expiration_info AS goodsProductionExpirationInfo
+			,g.g_stock AS goodsStock
+			,g.g_delivery_charge AS goodsDeliveryCharge
+			,g.g_reg_datetime AS goodsRegDatetime
+			,g.g_activation AS goodsActivation
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_enterprise AS e
+			ON 
+			e.enter_code = g.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_file AS f
+			ON 
+			f.file_idx = g.g_info_image;
+	</select>
+	<!-- 상품 목록(활성화되어있는 것, 식단 제외) -->
+	<select id="getGoodsList" resultType="Map">
+		SELECT 
+			g_code as goodsCode
+			,g_name as goodsName
+		FROM 
+			tb_goods AS g
+			INNER JOIN 
+			tb_goods_cate AS gc
+			on
+			gc.g_cate_code = g.g_cate_code
+		WHERE 
+			g.g_activation = 1
+			AND 
+			gc.cate_name not LIKE CONCAT('%','식단','%'); 
 	</select>
 </mapper>
