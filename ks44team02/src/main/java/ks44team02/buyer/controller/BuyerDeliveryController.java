@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks44team02.dto.OrderRecordList;
 import ks44team02.dto.OrderRefund;
@@ -32,18 +33,16 @@ public class BuyerDeliveryController {
 		// 주문 목록 조회
 		@GetMapping("/myorder_status_list")
 		public String getOrderList(Model model) {
-			List<Map<String, Object>> orderRecordList = deliveryservice.getOrderList();
+			List<Map<String, Object>> getOrderList = deliveryservice.getOrderList();
 				model.addAttribute("title", "주문 리스트");
-				model.addAttribute("orderRecordList", orderRecordList);
+				model.addAttribute("getOrderList", getOrderList);
 				
 			return "buyer/mypage/orderStatus/myorder_status_list";
 		}
 		
 		// 상세주문현황 조회
 		@GetMapping("/myorder_delivery_detail")
-		public String getOrderStatus() {
-			
-			
+		public String getOrderStatus(Model model) {
 			return null;
 		}
 

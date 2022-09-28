@@ -31,8 +31,8 @@ public class DeliveryService {
 			
 	// 주문 리스트 list<>
 	public List<Map<String, Object>> getOrderList() {
-		List<Map<String, Object>> orderRecordList = deliveryMapper.getOrderList();
-		return orderRecordList;
+		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList();
+		return getOrderList;
 	}
 	
 	// 상세주문현황

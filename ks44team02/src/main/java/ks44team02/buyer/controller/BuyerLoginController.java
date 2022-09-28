@@ -22,9 +22,9 @@ public class BuyerLoginController {
 	}
 	
 	//구매자 로그인
-	@GetMapping("/buer_login")
+	@GetMapping("/buyer_login")
 	public String buyerLogin() {
-		return "buyer/login/buer_login";
+		return "buyer/login/buyer_login";
 	}
 	//구매자 로그아웃
 	public String buyelogout() {

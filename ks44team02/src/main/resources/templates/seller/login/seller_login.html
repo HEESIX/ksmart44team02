@@ -389,7 +389,8 @@ footer .copyright-wrap span{
 }
 .hc { width:800px; left:0; right:0; margin-left:auto; margin-right:auto; }
 .hcc {width:200px; left:0; right:0; margin-left:auto; margin-right:auto; }
-.loginbut {width:200px; left:0; right:0; margin-left:auto; margin-right:auto;}
+.logcenter{text-align: center;}
+.loginbtn{width:200px; left:0; right:0; margin-left:auto; margin-right:auto; background: #7FAD39; border: solid 1px var(--border-gray-color)}
 </style>
 </th:block>
 
@@ -398,10 +399,11 @@ footer .copyright-wrap span{
 	<section class="checkout spad">
 		<div class="container">
 			<form action="#" method="post">
-				
+				<div class="logcenter">
 				<div class="hcc">
 					<h4>판매자 로그인</h4>
 					<br><br><br>
+				</div>
 				</div>	
 		
 			  <div class="hc">
@@ -420,13 +422,21 @@ footer .copyright-wrap span{
 			  </div>	
 			  <br><br>
 			  <div class="hcc">
-				   <div class="form-group form-check">
+				 	<div class ="logcenter">
+				 		<div class="form-group form-check">
 					    <input type="checkbox" class="form-check-input" id="exampleCheck1">
 					    <label class="form-check-label" for="exampleCheck1">로그인정보저장</label>
-	  			 	</div>
+	  			 		</div>
+	  			 	</div>	
   			 </div>	
-  			<div class="loginbut">
-  			<button type="button" class="site-btn">로그인</button>
+  			<div class="logcenter">
+  				<button type="button" class="loginbtn">로그인</button>
+  			</div>
+  			<br>
+  			<div class="logcenter">
+  				<a th:href="@{/seller/login/seller_join}">
+  					<button type="button" class="loginbtn">회원가입</button>
+  				</a>
   			</div>
 			</form>
 		</div>

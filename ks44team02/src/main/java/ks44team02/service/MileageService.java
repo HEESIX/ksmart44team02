@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import ks44team02.mapper.MileageMapper;
 import ks44team02.dto.Mileage;
+import ks44team02.dto.OrderDiscount;
 
 @Service
 public class MileageService {
@@ -14,6 +15,12 @@ public class MileageService {
 	
 	public MileageService(MileageMapper mileageMapper) {
 		this.mileageMapper = mileageMapper;
+	}
+	
+	//특정회원 적립금 조회
+	public Mileage getMileageInfo(String currentMileage) {
+		Mileage mileage = mileageMapper.getMileageInfo();
+		return mileage;
 	}
 	
 	   //회원 적립금 조회
