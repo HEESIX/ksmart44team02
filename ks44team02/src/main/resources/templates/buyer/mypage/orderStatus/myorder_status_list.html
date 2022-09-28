@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/buyerDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/buyerDefault}">
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -35,28 +35,30 @@
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
 				<table class="table table-hover">
-				  <thead>
-				    <tr>
-				      <th>주문번호</th>
-				      <th>상품명</th>
-				      <th>가격</th>
-				      <th>주문상태</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	<tr th:if="${not #lists.isEmpty(orderRecordList)}"
-				  		th:each="orl : ${orderRecordList}">
-				    	<td th:text="${orl.get('orderRecordCode')}"></td>
-				    	<td th:text="${orl.get('orderDetailCode')}"></td>
-				    	<td th:text="${orl.get('goodsName')}"></td>
-				    	<td th:text="${orl.get('orderStatusStandardDetails')}"></td>
-				   	</tr>
-				  	<tr th:unless="${not #lists.isEmpty(orderRecordList)}">
-						<td colspan="5" style="text-align: center;">
-							주문 내역이 존재하지않습니다.
-						</td>
-					</tr>
-				  </tbody>
+					<thead>
+						<tr>
+							<th>주문번호</th>
+							<th>상품명</th>
+							<th>가격</th>
+							<th>주문현황</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<tr th:if="${not #lists.isEmpty(getOrderList)}"
+							th:each="orl : ${getOrderList}">
+							<td><a
+								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('orderCode')}">
+							</a></td>
+							<td th:text="${orl.get('goodsName')}"></td>
+							<td th:text="${orl.get('finalPrice')}"></td>
+							<td th:text="${orl.get('orderStatusStandardDetails')}"></td>
+						</tr>
+						<tr th:unless="${not #lists.isEmpty(getOrderList)}">
+							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
