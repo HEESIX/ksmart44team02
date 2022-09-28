@@ -10,10 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.dto.Mileage;
+import ks44team02.dto.OrderDiscount;
 import ks44team02.service.MileageService;
 
 @Controller
@@ -44,15 +46,24 @@ public class AdminMileageController {
 	
 	//적립금 적립 폼
 	@PostMapping("/mileageManage/mileage_give")
-	public String giveMileage() {
+	public String giveMileage(@PathVariable(value = "earndMileage") String earndMileage,
+			                  @PathVariable(value = "currentMileage") String currentMileage
+			,Model model
+			,Model model1) {
+     Mileage mileageAdd = mileageService.getMileageInfo(earndMileage);
+     Mileage mileageAdd1 = mileageService.getMileageInfo(currentMileage);
 		return "admin/mileageManage/mileage_give";
 	}
 	
 	//적립금 소멸 폼
 	@PostMapping("/mileageManage/mileage_extinct")
-	public String MileageExtinction() {
+	public String MileageExtinction(@PathVariable(value = "currentMileage") String currentMileage
+			,Model model) {
+		 Mileage mileageExtinct = mileageService.getMileageInfo(currentMileage);
 		return "admin/mileageManage/mileage_extinct";
 	}
 	
+		
+	}
 
-}
+
