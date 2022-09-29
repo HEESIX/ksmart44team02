@@ -51,11 +51,16 @@ public class BuyerDeliveryController {
 		public String getOrderStatus(Model model
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
 			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
+			Map<String, Object> getPaymentList = deliveryservice.getPaymentDetail(orderGroupCode);
+			
 				model.addAttribute("title", "상세 주문리스트");
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
-			return "buyer/mypage/orderStatus/myorder_delivery_detail";
+				model.addAttribute("getPaymentList", getPaymentList);
+				return "buyer/mypage/orderStatus/myorder_delivery_detail";
 		}
 
+		
+		
 		// 환불 신청 폼
 		@GetMapping("/myrefund_apply")
 		public String addRefundRequest(Model model) {

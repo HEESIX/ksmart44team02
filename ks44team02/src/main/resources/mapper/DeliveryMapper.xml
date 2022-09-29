@@ -9,10 +9,9 @@
 	<select id="getOrderList" parameterType="String" resultType="map">	
 	SELECT
 			om.order_code as orderCode,
-			g.g_main_image AS goodsMainImage,
 			g.g_name as goodsName,
 			om.final_price as finalPrice,
-			oss.order_status_standard_details as orderStatusStandardDetails,
+			od.order_datetime AS orderDatetime,
 			om.order_group_code AS orderGroupCode
 			
 		FROM
@@ -33,7 +32,7 @@
 			tb_order_status_standard AS oss
 			on
 			oss.order_status_standard_code = os.order_status_standard_code
-			INNER Join
+			left Join
 			tb_delivery AS d
 			on
 			d.order_detail_code = od.order_detail_code
@@ -53,6 +52,7 @@
          od.regular_price_subtotal as regularPriceSubtotal,
          od.order_amount as orderAmount,
          od.order_datetime as orderDatetime,
+         oss.order_status_standard_details as orderStatusStandardDetails,
          d.delivery_enter as deliveryEnter,
          d.delivery_num as deliveryNumber
 	FROM
@@ -73,16 +73,33 @@
          tb_order_status_standard AS oss
          on
          oss.order_status_standard_code = os.order_status_standard_code
-         INNER Join
-			tb_delivery AS d
-			on
-			d.order_detail_code = od.order_detail_code	
+         left join
+		 tb_delivery AS d
+		 on
+		 d.order_detail_code = od.order_detail_code	
 	WHERE
-         od.member_id = 'id002'
-    AND
     	od.order_group_code = #{orderGroupCode}
-	ORDER BY
-         os.order_status_update_datetime;
+
 	</select>
 
+	<!-- 결제정보 -->
+	<select id="getPaymentList" parameterType="String" resultType="map">
+		SELECT
+			p.payment_input_bank_card_number AS paymentInputNumber,
+			p.payment_agency AS paymentBank,
+			p.payment_cash_sum AS paymentCash,
+			p.payment_date AS paymentDate,
+			p.payment_payer_name AS paymentPayer
+		FROM
+			tb_payment_by_order AS p
+			INNER join
+			tb_order_management AS om
+			on
+			p.order_code = om.order_code
+		WHERE
+			om.order_group_code = #{orderGroupCode}
+	</select>
+	
+
+	
 </mapper>
