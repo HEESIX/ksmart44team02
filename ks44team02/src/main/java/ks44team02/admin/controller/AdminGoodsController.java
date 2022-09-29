@@ -53,7 +53,11 @@ public class AdminGoodsController {
 
 	// 상품 등록 신청 리스트
 	@GetMapping("/goods_reg_apply_list")
-	public String getGoodsRegApplyList() {
+	public String getGoodsRegApplyList(Model model) {
+		
+		List<Map<String, Object>> goodsRegApplyList = goodsService.getGoodsRegApplyList();
+		model.addAttribute("title", "상품 등록 신청 목록");
+		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
 		return "admin/goods/goods_reg_apply_list";
 	}
 
@@ -186,10 +190,14 @@ public class AdminGoodsController {
 
 	// 개별 상품 정보
 	@GetMapping("/goods_detail_admin/{g_code}")
-	public String getGoodsInfo(@PathVariable(value = "g_code") String g_code) {
+	public String getGoodsInfo(@PathVariable(value = "g_code") String goodsCode
+							  ,Model model) {
 
 		// 받은 g_code로 상품 정보 select 후 모델에 담는 작업 필요
 		// g_code null? 혹은 존재하지 않을경우?
+		
+		Map<String, Object> goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		model.addAttribute("goodsInfo", goodsInfo);
 		return "admin/goods/goods_detail_admin";
 	}
 
@@ -265,7 +273,9 @@ public class AdminGoodsController {
 
 	// 식단 리스트
 	@GetMapping("/menu/menu_list")
-	public String getAdminMenuList() {
+	public String getAdminMenuList(Model model) {
+		List<Map<String, Object>> adminMenuList = goodsService.getAdminMenuList();
+		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menu_list";
 	}
 

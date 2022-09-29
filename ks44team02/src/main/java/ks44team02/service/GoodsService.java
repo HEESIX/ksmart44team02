@@ -22,6 +22,12 @@ public class GoodsService {
 		this.goodsMapper = goodsMapper;
 	}
 	
+	// 상품 등록 신청 리스트
+	public List<Map<String, Object>> getGoodsRegApplyList(){
+		List<Map<String, Object>> goodsRegApplyList = goodsMapper.getGoodsRegApplyList();
+		return goodsRegApplyList;
+	}
+	
 	//상품 카테고리 등록
 	public boolean addGoodsCategory(GoodsCategory goodsCategory) {
 		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
@@ -84,8 +90,9 @@ public class GoodsService {
 	}
 	
 	//식단 리스트
-	public List<Goods> getAdminMenuList(){
-		return null;
+	public List<Map<String, Object>> getAdminMenuList(){
+		List<Map<String, Object>> adminMenuList = goodsMapper.getAdminMenuList();
+		return adminMenuList;
 	}
 	
 	//식단 수정
@@ -99,9 +106,12 @@ public class GoodsService {
 	}
 	
 	//개별 상품 정보
-	public Goods getGoodsInfo() {
-		return null;
+	public Map<String, Object> getGoodsInfo(String goodsCode) {
+		Map<String, Object> goodsInfo = goodsMapper.getGoodsInfo(goodsCode);
+		return goodsInfo;
 	}
+	
+	//
 	
 	//개별 식단 정보
 	public Goods getMenuInfo() {

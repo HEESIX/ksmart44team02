@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ks44team02.dto.FileDto;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
@@ -13,6 +14,8 @@ import ks44team02.dto.Menus;
 @Mapper
 public interface GoodsMapper {
 	
+	//상품 등록 신청 리스트 조회
+	public List<Map<String, Object>> getGoodsRegApplyList();
 	//상품 카테고리 등록
 	public boolean addGoodsCategory(GoodsCategory goodsCategory);
 	
@@ -41,8 +44,7 @@ public interface GoodsMapper {
 	public int addAdminMenu();
 	
 	//식단 리스트
-	//Goods 아님 변경 필요
-	public List<Goods> getAdminMenuList();
+	public List<Map<String, Object>> getAdminMenuList();
 	
 	//식단 수정
 	public int modifyAdminMenu();
@@ -50,8 +52,11 @@ public interface GoodsMapper {
 	//식단 삭제
 	public int removeAdminMenu();
 	
-	//개별 상품 정보
-	public Goods getGoodsInfo();
+	//개별 상품 정보 + 메인이미지 정보
+	public Map<String, Object> getGoodsInfo(String goodsCode);
+	
+	//소개 이미지 정보
+	public FileDto getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
 	//Goods 아님 변경 필요

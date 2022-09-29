@@ -43,8 +43,7 @@
 										<th>가격</th>
 										<th>적용 할인 혜택</th>
 										<th>할인 혜택 적용 후 가격</th>
-										<th>중량</th>
-										<th>중량 단위</th>
+										<th>포장 단위 중량</th>
 										<th>원산지</th>
 										<th>제조일/유통기한</th>
 										<th>재고</th>
@@ -57,20 +56,26 @@
 									<tr th:if="${not #lists.isEmpty(goodsList)}"
 										th:each="gcl, status : ${goodsList}">
 										<td th:text="${status.count}"></td>
-										<td><img th:src="@{'/' + ${gcl.filePath}}"
-											th:alt="${gcl.fileOriginalName}" style="width: 100px;"/></td>
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(goodsCategoryList)}">
-										<td colspan="16" style="text-align: center;">상품 카테고리가
-											존재하지 않습니다.</td>
+										<td><a th:href="@{|/admin/goods/goods_detail_admin/${gcl.goodsCode}|}"><img th:src="@{'/' + ${gcl.filePath}}"
+											th:alt="${gcl.fileOriginalName}" style="width: 100px;" /></a></td>
+										<td th:text="${gcl.enterName}"></td>	
+										<td th:text="${gcl.categoryName}"></td>
+										<td th:text="${gcl.goodsName}"></td>
+										<td th:text="${gcl.goodsPrice}"></td>
+										<td th:text="${gcl.goodsDiscountName}"></td>
+										<td th:text="${gcl.goodsDiscountedPrice}"></td>
+										<td th:text="${gcl.goodsNetWeight}+${gcl.goodsNetWeightUnit}"></td>
+										<td th:text="${gcl.goodsProduce}"></td>
+										<td th:text="${gcl.goodsProductionExpirationInfo}"></td>
+										<td th:text="${gcl.goodsStock}"></td>
+										<td th:text="${gcl.goodsDeliveryCharge}"></td>
+										<td th:text="${gcl.goodsRegDatetime}"></td>
+										<td th:if="${gcl.goodsActivation} == 1">판매중</td>
+										<td th:unless="${gcl.goodsActivation} == 1">판매중지</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<a th:href="@{/admin/goods/category/goodscate_reg}"><button
-								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
-
 					</div>
 				</div>
 			</div>
