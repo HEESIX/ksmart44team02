@@ -48,10 +48,58 @@
 									</tr>
 								</thead>
 								<tbody>
+									<tr th:if="${not #lists.isEmpty(buyerGradeList)}"
+										th:each="bgl : ${buyerGradeList}">
+										<td th:text="${bgl.memberLevelCode}"></td>
+										<td th:text="${bgl.memberLevelClassName}"></td>
+										<td th:text="${bgl.memberLevelName}"></td>
+										<td></td>
+										<td th:text="${bgl.memberLevelRegDate}"></td>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(goodsCategoryList)}">
+										<td colspan="5" style="text-align: center;">상품 카테고리가 존재하지
+											않습니다.</td>
+									</tr>
+								</tbody>
+								
+							
+					<!--  
+								<tr th:if="${not #lists.isEmpty(getOrderList)}"
+									th:each="orl : ${getOrderList}">
+									<td>
+									<a th:href="@{/admin/gradeDetails/buyer_gradelist(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('orderCode')}">
+									</a></td>
+									<td th:text="${orl.get('goodsName')}"></td>
+									<td th:text="${orl.get('finalPrice')}"></td>
+									<td th:text="${orl.get('orderStatusStandardDetails')}"></td>
+									<td th:text="${orl.get('deliveryEnter')}"></td>
+									<td th:text="${orl.get('deliveryNum')}"></td>
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(getOrderList)}">
+									<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
+									</td>
+								</tr>
+										
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 									<tr th:if="${not #lists.isEmpty(buyer_gradelist)}"
 										th:each="gcl : ${buyer_gradelist}">
 									</tr>
 								</tbody>
+								-->
+								
 							</table>
 						</div>
 						<a th:href="@{/admin/gradeDetails/buyer_modifylist}"><button

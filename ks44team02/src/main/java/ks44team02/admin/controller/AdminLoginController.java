@@ -1,11 +1,16 @@
 package ks44team02.admin.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ks44team02.dto.Member;
 import ks44team02.service.Loginservice;
 
 @Controller
@@ -33,7 +38,13 @@ public class AdminLoginController {
 
 	//판매자 회원 정보
 		@GetMapping("admin_login_list")
-		public String adminLoginList() {
+		public String adminLoginList(Model model
+									,HttpSession session) {
+			//세션 있을 경우 아래걸로 대체
+			//String memberId = session.getAttribute("SID");
+			String memberId = "id001";
+			Member memberInfo = loginservice.getAdminMemberList(memberId);
+			model.addAttribute("memberInfo", memberInfo);
 			return "admin/login/admin_login_list";
 		}
 	
