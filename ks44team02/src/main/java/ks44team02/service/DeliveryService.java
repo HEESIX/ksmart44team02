@@ -36,8 +36,9 @@ public class DeliveryService {
 	}
 	
 	// 상세주문현황
-	public String getOrderStatus() {
-		return null;
+	public List<Map<String, Object>> getOrderStatus() {
+		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList();
+		return getOrderDetailList;
 	}
 	
 	// 환불 신청

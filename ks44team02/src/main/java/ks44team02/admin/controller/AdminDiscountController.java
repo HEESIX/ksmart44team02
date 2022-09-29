@@ -19,6 +19,7 @@ import org.thymeleaf.standard.expression.OrExpression;
 
 import ks44team02.dto.OrderDiscount;
 import ks44team02.service.DiscountService;
+import ks44team02.service.CommonService; 
 
 @Controller
 @RequestMapping(value = "/admin/orderDiscount")
@@ -28,9 +29,11 @@ public class AdminDiscountController {
 	private static final Logger log = LoggerFactory.getLogger(AdminDiscountController.class);
 
 	private final DiscountService discountService;
+	private final CommonService commonService;
 	
-	public AdminDiscountController(DiscountService DiscountService) {
+	public AdminDiscountController(DiscountService DiscountService, CommonService commonService) {
 		this.discountService = DiscountService;
+		this.commonService = commonService;
 	}
 	
 	@PostConstruct
@@ -111,5 +114,26 @@ public class AdminDiscountController {
 		
 		return "redirect:/admin/orderDiscont/removeOrderDiscount";
 	}
-
+	//주문서별 할인혜택 삭제 처리
+	@PostMapping("/removeOrderDiscount")
+	public String removeOrderDiscount(@RequestParam(value = "orderDiscountCode") String orderDiscountCode
+									 ,@RequestParam(value = "memberPw") String memberPw
+									 ,HttpSession session
+									 ,RedirectAttributes reAttr) {
+		//session 저장하는 로그인 완성되면 이 부분 session 아이디 가져오게 교체
+		//String memberId = session.getAttribute("SID");
+		//null일 경우 체크(비정상적인 접근)
+		//현재 없으므로 픽스된 값 입력
+		String memberId = "id001";
+		boolean idCheckResult = commonService.sessionIdPwCheck(memberId, memberPw);
+		if(idCheckResult) {
+			//아이디 비번 일치
+			discountService.removeOrderDiscount(orderDiscountCode);
+			reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다.");
+		}else {
+			//아이디 비번 불일치
+			reAttr.addAttribute("msg", "삭제 실패: 비밀번호가 일치하지 않습니다.");
+		}
+		return "redirect:/admin/orderDiscount/orderDiscountList";
+	}
 }

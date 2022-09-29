@@ -155,12 +155,11 @@
 								<div class="form-group row">
 									<div>
 										<label for="goodsNetWeight"
-											class="col-form-label form-control-label">상품 중량(단위와
-											같이 기술)</label>
+											class="col-form-label form-control-label">상품 중량</label>
 									</div>
 									<div>
 										<input class="form-control" type="text" id="goodsNetWeight"
-											name="goodsNetWeight" placeholder="상품 중량">
+											name="goodsNetWeight" placeholder="상품 중량(단위도 작성해주세요.)">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -187,22 +186,24 @@
 									</div>
 								</div>
 								<div class="form-group row">
+									<label for="goodsInfoImage"
+										class="col-form-label form-control-label">상품 썸네일 이미지
+										업로드</label>
 									<div>
-										<label for="goodsProductionExpirationDate"
-											class="col-form-label form-control-label">상품 썸네일 이미지
-											업로드</label>
+										<div class="col-lg-8" style="padding-right: 0;">
+											<input class="upload-name form-control"
+												style="display: inline;" id="goodsInfoImageName"
+												placeholder="상품 썸네일 이미지(*.gif, *.jpg, *.png)">
+										</div>
+										<div class="col-lg-4" style="padding-left: 0; height: 35px;">
+											<label for="goodsInfoImage"
+												class="label label-lg label-default"
+												style="margin-top: 8px; height: 36px;">파일찾기</label> <input
+												type="file" id="goodsInfoImage" class="imageUpload"
+												name="goodsInfoImage" accept=".gif, .jpg, .png"
+												style="display: none;" multiple="multiple">
+										</div>
 									</div>
-									<div>
-										<label for="goodsInfoImage" class="custom-file"> <input
-											type="file" name="goodsInfoImage" id="goodsInfoImage"
-											class="custom-file-input"> <span
-											class="custom-file-control"> </span>
-										</label>
-									</div>
-									<label for="file" class="custom-file">
-                                                <input type="file" id="file" class="custom-file-input">
-                                                <span class="custom-file-control" lang="en"></span>
-                                            </label>
 								</div>
 							</form>
 						</div>
@@ -230,6 +231,12 @@
 	<script type="text/javascript">
 		$(function() {
 			$(".js-example-basic-single").select2();
+			$('.imageUpload').change(function() {
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
 		});
 	</script>
 </th:block>

@@ -1,6 +1,7 @@
 package ks44team02.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -61,9 +62,15 @@ public class GoodsService {
 		return resultRemove;
 	}
 	
+	//상품 등록 처리(관리자)
+	public boolean addAdminGoods(Goods goods) {
+		return false;
+	}
+	
 	//상품 리스트
 	public List<Goods> getAdminGoodsList(){
-		return null;
+		List<Goods> goodsList = goodsMapper.getAdminGoodsList();
+		return goodsList;
 	}
 	
 	//상품 삭제
@@ -187,9 +194,10 @@ public class GoodsService {
 		return null;
 	}
 	
-	//상품 목록
-	public List<Goods> getGoodsList(){
-		return null;
+	//상품 목록(활성화 되어있는 것만), 식단 제외
+	public List<Map<String, Object>> getGoodsList(){
+		List<Map<String, Object>> goodsList = goodsMapper.getGoodsList();
+		return goodsList;
 	}
 	
 	//개별 식단 정보
