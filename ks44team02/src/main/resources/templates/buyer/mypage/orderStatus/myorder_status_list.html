@@ -9,6 +9,8 @@
 </th:block>
 
 
+
+
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -38,10 +40,9 @@
 					<thead>
 						<tr>
 							<th>주문번호</th>
-							<th>IMAGE</th>
 							<th>ITEM</th>
 							<th>PRICE</th>
-							<th>주문상태</th>
+							<th>전체주문일자</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,10 +51,9 @@
 							<td><a
 								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('orderCode')}">
 							</a></td>
-							<td th:text="${orl.get('goodsMainImage')}"></td>
 							<td th:text="${orl.get('goodsName')}"></td>
 							<td th:text="${orl.get('finalPrice')}"></td>
-							<td th:text="${orl.get('orderStatusStandardDetails')}"></td>
+							<td th:text="${orl.get('orderDatetime')}"></td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(getOrderList)}">
 							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.

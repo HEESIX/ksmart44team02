@@ -29,24 +29,42 @@
 </th:block>
 <!-- end breadcrum section -->
 
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+<style>
+	.heading1  {
+	padding-left: 10px;
+	position: relative;
+    margin: 0 0 10px;
+	}
+	
+	.heading2{
+	padding-left: 10px;
+	position: relative;
+	margin: 100px 0 10px;
+	}
+</style>
+</th:block>
+
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
+	<div class="heading1">
+		<h4>주문서</h4>
+	</div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
-				<table class="table table-hover">
-					<thead>
-												
-					</thead>
-				</table>
+				
 				<table class="table table-hover">
 				  <thead>
 				    <tr>
 						<th>상세주문번호</th>
-						<th>IMAGE</th>
 						<th>ITEM</th>
 						<th>PRICE</th>
 						<th>수량</th>
+						<th>주문일자</th>
 						<th>주문상태</th>
 						<th>배송업체</th>
 						<th>운송장번호</th>
@@ -55,29 +73,44 @@
 					<tbody>
 						<tr th:each="odl : ${getOrderDetailList}">
 							<td th:text="${odl.get('orderGroupCode')}"></td>
-							<td th:text="${odl.get('goodsMainImage')}"></td>
 							<td th:text="${odl.get('goodsName')}"></td>
 							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
 							<td th:text="${odl.get('orderDatetime')}"></td>
+							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryEnter')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
 						</tr>
 					</tbody>
 				</table>
-
-				<table>
-					<thead>
-						<tr>
-							<th></th>							
-							<th></th>							
-						</tr>					
-					</thead>
+	
+			</div>
+		</div>
+	</div>
+	<div class="heading2">
+		<h4>결제정보</h4>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+			
+				<table class="table table-hover">
+				  <thead>
+				    <tr>
+						<th>결제정보</th>
+						<th>은행사</th>
+						<th>결제금액</th>
+						<th>결제자명 </th>
+						<th>결제일자</th>
+					</tr>
+				 </thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
+						<tr th:if="${not #lists.isEmpty(getPaymentList)}">
+							<td th:text="${getPaymentList.get('paymentInputNumber')}"></td>
+							<td th:text="${getPaymentList.get('paymentBank')}"></td>
+							<td th:text="${getPaymentList.get('paymentCash')}"></td>
+							<td th:text="${getPaymentList.get('paymentPayer')}"></td>
+							<td th:text="${getPaymentList.get('paymentDate')}"></td>
 						</tr>
 					</tbody>
 				</table>

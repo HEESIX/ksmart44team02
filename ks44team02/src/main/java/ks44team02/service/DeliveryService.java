@@ -40,6 +40,12 @@ public class DeliveryService {
 		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList(orderGroupCode);
 		return getOrderDetailList;
 	}
+	// 추가메서드(결제정보)
+	public Map<String, Object> getPaymentDetail(String orderGroupCode){
+		Map<String, Object> getPaymentList = deliveryMapper.getPaymentList(orderGroupCode);
+		return getPaymentList;
+	}
+	
 	
 	// 환불 신청
 	public String addRefundRequest() {
