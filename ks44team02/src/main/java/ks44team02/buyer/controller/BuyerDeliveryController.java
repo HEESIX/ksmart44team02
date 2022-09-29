@@ -3,6 +3,8 @@ package ks44team02.buyer.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,8 +34,12 @@ public class BuyerDeliveryController {
 	
 		// 주문 목록 조회
 		@GetMapping("/myorder_status_list")
-		public String getOrderList(Model model) {
-			List<Map<String, Object>> getOrderList = deliveryservice.getOrderList();
+		public String getOrderList(Model model
+								  ,HttpSession session) {
+			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
+			//String memberId = session.getAttribute("SID");
+			String memberId = "id002";
+			List<Map<String, Object>> getOrderList = deliveryservice.getOrderList(memberId);
 				model.addAttribute("title", "주문 리스트");
 				model.addAttribute("getOrderList", getOrderList);
 				
@@ -44,7 +50,7 @@ public class BuyerDeliveryController {
 		@GetMapping("/myorder_delivery_detail")
 		public String getOrderStatus(Model model
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
-			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus();
+			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
 				model.addAttribute("title", "상세 주문리스트");
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
 			return "buyer/mypage/orderStatus/myorder_delivery_detail";
