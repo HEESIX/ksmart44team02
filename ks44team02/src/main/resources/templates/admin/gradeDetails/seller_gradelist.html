@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	관리자 페이지 판매자 등급 기준 등록
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>판매자 등급 리스트</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<a th:href="@{/admin/gradeDetails/buyer_gradelist}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">구매자 등급 리스트</button></a>
+						
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th><input type="checkbox" value="che"></th>
+										<th>회원등급코드</th>
+										<th>등급이름</th>
+										<th>등급 기준(3개월 판매 누적 금액)</th>
+										<th>등록 가능 상품수</th>
+										<th>수수료</th>
+										<th>등급일자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(seller_gradelist)}"
+										th:each="gcl : ${seller_gradelist}">
+									</tr>
+								</tbody>
+							</table>
+						</div>
+	
+						<a th:href="@{/admin/gradeDetails/seller_modifylist}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">수정</button></a>
+								
+						<a th:href="@{/admin/gradeDetails/seller_removelist}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">삭제</button></a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 </html>

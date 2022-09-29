@@ -24,4 +24,6 @@ public interface LoginMapper {
 	//구매자 로그아웃
 	public int adminlogout();	
 	
+	
+	
 }
