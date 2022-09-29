@@ -6,15 +6,15 @@
 	
 	
 	<!-- 주문 리스트 -->
-	<select id="getOrderList" resultType="map">	
+	<select id="getOrderList" parameterType="String" resultType="map">	
 	SELECT
 			om.order_code as orderCode,
+			g.g_main_image AS goodsMainImage,
 			g.g_name as goodsName,
 			om.final_price as finalPrice,
-			oss.order_status_standard_details as orderStatusStandardDetails,	
-			om.order_group_code AS orderGroupCode,
-			d.delivery_enter AS deliveryEnter,
-			d.delivery_num AS deliveryNum
+			oss.order_status_standard_details as orderStatusStandardDetails,
+			om.order_group_code AS orderGroupCode
+			
 		FROM
 			tb_order_management AS om
 			INNER join
@@ -38,20 +38,51 @@
 			on
 			d.order_detail_code = od.order_detail_code
 		WHERE
-			od.member_id = 'id002'
+			od.member_id = #{memberId}
 		ORDER BY
 			os.order_status_update_datetime;
 	</select>
 	
 	
 	<!-- 주문 상세리스트 -->
-	<select id="getOrderDetailList" resultType="map">
-		select
-			*
-		from 
-			tb_goods
+	<select id="getOrderDetailList" parameterType="String" resultType="map">
+	SELECT
+         od.order_group_code as orderGroupCode,
+         g.g_main_image as goodsMainImage,
+         g.g_name as goodsName,
+         od.regular_price_subtotal as regularPriceSubtotal,
+         od.order_amount as orderAmount,
+         od.order_datetime as orderDatetime,
+         d.delivery_enter as deliveryEnter,
+         d.delivery_num as deliveryNumber
+	FROM
+         tb_order_detail AS od
+         INNER JOIN
+         tb_order_management AS om
+         on
+         od.order_group_code = om.order_group_code
+         INNER join
+         tb_goods AS g
+         on
+         g.g_code = od.g_code
+         INNER Join
+         tb_order_status AS os
+         on
+         g.g_code = os.g_code
+         INNER join
+         tb_order_status_standard AS oss
+         on
+         oss.order_status_standard_code = os.order_status_standard_code
+         INNER Join
+			tb_delivery AS d
+			on
+			d.order_detail_code = od.order_detail_code	
+	WHERE
+         od.member_id = 'id002'
+    AND
+    	od.order_group_code = #{orderGroupCode}
+	ORDER BY
+         os.order_status_update_datetime;
 	</select>
-	
-	
 
 </mapper>

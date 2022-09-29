@@ -19,12 +19,10 @@ public interface DeliveryMapper {
 	public String OrderDeal();
 			
 	// 주문 목록 조회 list<>
-	public List<Map<String, Object>> getOrderList();
-	
+	public List<Map<String, Object>> getOrderList(String memberId);
 	
 	// 상세주문현황 조회
-	public List<Map<String, Object>> getOrderDetailList();
-	
+	public List<Map<String, Object>> getOrderDetailList(String orderGroupCode);
 	
 	// 환불 신청
 	public String addRefundRequest();
