@@ -65,6 +65,8 @@ public class AdminDiscountController {
 	public String addOrderDiscount(OrderDiscount orderDiscount
 								  ,RedirectAttributes reAttr) {
 		
+		String orderDiscountCode = commonService.getNewCode("tb_order_discount_management");
+		orderDiscount.setOrderDiscountCode(orderDiscountCode);
 		boolean result = discountService.addOrderDiscount(orderDiscount);
 		String msg = "";
 		if (result) {
@@ -73,8 +75,7 @@ public class AdminDiscountController {
 			msg = "등록 실패";
 		}
 		reAttr.addAttribute("msg", msg);
-		
-		return "redirect:/admin/orderDiscont/addOrderDiscount";
+		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
 	//주문서별 할인혜택 수정 폼
 	@GetMapping("/modifyOrderDiscount/{orderDiscountCode}")
@@ -112,7 +113,7 @@ public class AdminDiscountController {
 		model.addAttribute("title", "선택한 주문서별 할인혜택 삭제");
 		model.addAttribute("orderDiscountInfo", orderDiscountInfo);
 		
-		return "redirect:/admin/orderDiscont/removeOrderDiscount";
+		return "admin/orderDiscount/removeOrderDiscount";
 	}
 	//주문서별 할인혜택 삭제 처리
 	@PostMapping("/removeOrderDiscount")
