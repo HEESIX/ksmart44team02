@@ -42,31 +42,49 @@
 				<table class="table table-hover">
 				  <thead>
 				    <tr>
-				      <th>주문번호</th>
-				      <th>상품명</th>
-				      <th>가격</th>
-				      <th>주문상태</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	<tr>
-				  		<td></td>
-				   	</tr>
-				  	<tr>
-						<td colspan="5" style="text-align: center;">
-							주문 내역이 존재하지않습니다.
-						</td>
+						<th>상세주문번호</th>
+						<th>IMAGE</th>
+						<th>ITEM</th>
+						<th>PRICE</th>
+						<th>수량</th>
+						<th>주문상태</th>
+						<th>배송업체</th>
+						<th>운송장번호</th>
 					</tr>
-				  </tbody>
+				 </thead>
+					<tbody>
+						<tr th:each="odl : ${getOrderDetailList}">
+							<td th:text="${odl.get('orderGroupCode')}"></td>
+							<td th:text="${odl.get('goodsMainImage')}"></td>
+							<td th:text="${odl.get('goodsName')}"></td>
+							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
+							<td th:text="${odl.get('orderAmount')}"></td>
+							<td th:text="${odl.get('orderDatetime')}"></td>
+							<td th:text="${odl.get('deliveryEnter')}"></td>
+							<td th:text="${odl.get('deliveryNumber')}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table>
+					<thead>
+						<tr>
+							<th></th>							
+							<th></th>							
+						</tr>					
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </th:block>
-
-
-
-
 
 
 </html>
