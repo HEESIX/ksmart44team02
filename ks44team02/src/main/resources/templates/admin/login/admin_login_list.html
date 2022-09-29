@@ -1,9 +1,367 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	관리자 로그인 리스트 
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.nice-select {
+	margin-bottom: 24px;
+}
+
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: middle;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #999999;
+	cursor: pointer;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+}
+:root{
+	--body-background-color: #f5f6f7;
+	--font-color: #4e4e4e;
+	--border-gray-color : #dadada;
+	--naver-green-color: #04c75a;
+	--naver-green-border-color: #06b350;
+}
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+body{
+	background:var(--body-background-color);
+}
+
+.main-container{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-top: 21px;
+}
+.main-container .main-wrap{
+	width:768px;
+
+}
+.main-container .main-wrap .sel-lang-wrap .lang-select
+{
+	width: 96px;
+	height: 30px;
+	color: var(--font-color);
+	border: solid 1px var(--border-gray-color);
+}
+.main-container .main-wrap .logo-wrap{
+	padding-top:55px;
+}
+.main-container .main-wrap .logo-wrap img
+{
+	width: 231px;
+	height: 44px;
+}
+
+.main-container .main-wrap header .sel-lang-wrap{
+	display:flex;
+	justify-content:flex-end;
+}
+
+.main-container .main-wrap header .logo-wrap{
+	display:flex;	
+	flex-direction: column;
+	align-items: center;
+}
+.login-input-section-wrap{
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-input-wrap{
+	width: 465px;
+	height :48px;
+	border: solid 1px var(	--border-gray-color );
+	background: white;
+}
+.password-wrap{
+	margin-top: 13px;
+}
+.login-input-wrap input{
+	border: none;
+	width:430px;
+	margin-top: 10px;
+	font-size: 14px;
+	margin-left: 10px;
+	height:30px;
+}
+.login-button-wrap {
+	padding-top: 13px;
+}
+.login-button-wrap button{
+	width: 465px;
+	height :48px;
+	font-size: 18px;
+	background: var(--naver-green-color);
+	color: white;
+	border: solid 1px var(--naver-green-border-color);
+}
+.login-stay-sign-in{
+	width: 465px;
+	height: 52px;
+	
+	display: flex;
+	font-size: 15px;
+	color: #4e4e4e;
+	align-items: center;
+	justify-content: flex-start;
+	border-bottom: solid 1px var(--border-gray-color);
+}
+.login-stay-sign-in i{
+	font-size: 25px;
+	color: #9ba1a3;
+}
+.login-stay-sign-in span{
+	padding-left: 5px;
+	line-height: 25px;
+}
+
+.Easy-sgin-in-wrap{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 40px;
+
+}
+.Easy-sgin-in-wrap h2{
+	font-size: 20px;
+}
+.Easy-sgin-in-wrap .sign-button-list
+{
+	padding-top:25px;
+	list-style: none;
+	width: 465px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.Easy-sgin-in-wrap .sign-button-list li{
+	padding-bottom: 10px;
+}
+.Easy-sgin-in-wrap .sign-button-list li button{
+	width: 465px;
+	height: 56px;
+	border: solid 1px var(--border-gray-color);
+	text-align: left;
+	background: white;
+}
+.Easy-sgin-in-wrap .sign-button-list li button i{
+	padding-left: 15px;
+	font-size: 20px;
+}
+.fa-qrcode
+{
+	color:var(--naver-green-color);
+}
+.fa-line{
+	color:var(--naver-green-color);
+}
+.fa-facebook-square
+{
+	color:#4064ac;
+}
+.Easy-sgin-in-wrap .sign-button-list li button span{
+	padding-left: 20px;
+	font-size: 18px;
+}
+.Easy-sgin-in-wrap .forget-msg{
+	color:var(--font-color);
+	font-size: 14px;
+	padding-top: 10px;
+
+}
+footer{
+   
+	padding-top: 95px;
+	padding-bottom: 15px;
+
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	width:768px;
+
+
+
+}
+.copyright-wrap{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 15px;
+
+
+}
+footer .copyright-wrap span img{
+	width: 59px;
+	
+	height: 11px;
+}
+footer .copyright-wrap span{
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.input_fir{
+            width: 400px;
+            height: 40px;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            border: 1px solid #dfe1e5;
+        }
+.input_sec{
+            width: 40px;
+            height: 40px;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            border: 1px solid #dfe1e5;
+        }
+.logcenter{text-align: center;}
+.loginbtn{width:200px; left:0; right:0; margin-left:auto; margin-right:auto; background: #7FAD39; border: solid 1px var(--border-gray-color)}        
+</style>
+</th:block>
+
+
+<th:block layout:fragment="customContents">
+	<section class="checkout spad">
+		<div class="container">
+			<form th:action="@{/seller/goods/goods_reg_apply}" method="post"
+				enctype="multipart/form-data">
+				<div class="checkout__form">
+					<h4>관리자 정보</h4>		
+							<div class="row">
+									<div class="col-lg-6">
+										<div class="checkout__input">
+											<p>아이디<span> *</span></p>
+											<input type="text" name="goodsProduce" id="goodsProduce">
+										</div>
+									</div>	
+							</div>
+							<br>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="checkout__input">
+											<p>비밀번호<span>*</span></p>
+												<input type="text" name="goodsProduce" id="goodsProduce">
+												<button type="submit">수정</button>
+										</div>
+									</div>			
+								</div>	
+								<br>
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="checkout__input">
+											<p>이름<span> *</span></p>
+											<input type="text" name="goodsProduce" id="goodsProduce">
+										</div>
+									</div>	
+								</div><br>	
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="checkout__input">
+											<p>성별 <span> *</span></p>
+											<select name="goodsDiscountCode" id="goodsDiscountCode">										
+													<option>--성별--</option>
+													<option>--여성--</option>
+													<option>--남성--</option>
+											</select>
+										</div>
+									</div>
+								</div><br>
+									<div class="row">
+									<div class="col-lg-12">
+										<div class="checkout__input">
+											<p>이메일<span>*</span></p>
+												<input type="text" name="goodsProduce" id="goodsProduce">
+												<button type="submit">수정</button>
+										</div>
+									</div>			
+								</div>	<br>		
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="checkout__input">
+											<p>연락처<span>*</span></p>
+												<input type="text" name="goodsProduce" id="goodsProduce">
+												<button type="submit">수정</button>
+										</div>
+									</div>			
+								</div>						
+					</div>
+				</div>	
+		
+				<br>
+				<a th:href="@{/admin}">
+					<div class="logcenter">	
+	  					<button type="button" class="loginbtn">등록완료</button>
+	  				</div>
+	  			</a>	
+	  	
+	</section>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs}">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			$('.imageUpload').change(function() {
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+
+			$('.nice-select li').click(function() {
+				var selectValue = $(this).attr('data-value');
+
+				if (selectValue == 'manuText') {
+					$('#manuText').css('display', 'block');
+				} else {
+					$('#manuText').css('display', 'none');
+				}
+			});
+		});
+	</script>
+</th:block>
+
+</html>

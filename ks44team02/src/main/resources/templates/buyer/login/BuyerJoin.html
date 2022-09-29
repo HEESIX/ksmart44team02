@@ -255,6 +255,39 @@ footer .copyright-wrap span{
             margin: 0px 0px 0px 0px;
             border: 1px solid #dfe1e5;
         }
+.nice-select {
+	margin-bottom: 24px;
+}
+
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: middle;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #999999;
+	cursor: pointer;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+}
 .logcenter{text-align: center;}
 .loginbtn{width:200px; left:0; right:0; margin-left:auto; margin-right:auto; background: #7FAD39; border: solid 1px var(--border-gray-color)}        
 </style>
@@ -271,23 +304,19 @@ footer .copyright-wrap span{
 							<div class="row">						
 							</div>
 							
-					<div class="row">
+							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsInfoImage">아이디<span>
-													*</span></label>
+											<label for="goodsInfoImage">아이디<span>*</span></label>
 										</p>
-										<div class="filebox">
+										<div class="checkout__input d-flex">
 											<input class="upload-name" id="goodsInfoImageName"> 
-												<button type="submit">중복확인</button>
-											 <input
-												type="file" id="goodsInfoImage" class="imageUpload"
-												name="goodsInfoImage">
+											<button type="submit" class="col-md-2 img-btn">중복확인</button>
 										</div>
 									</div>
 								</div>
-					</div>
+							</div>
 						
 							<div class="row">
 									<div class="col-lg-6">
@@ -382,70 +411,66 @@ footer .copyright-wrap span{
 									<p>일</p>
 							</div>
 							
-							
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsMainImage">연락처<span>
-													*</span></label>
+											<label for="goodsInfoImage">연락처<span>*</span></label>
 										</p>
-										<div class="filebox">
-											<input class="upload-name" id="goodsMainImageName"
-												placeholder="010포함"> 
-													<button type="submit">인증</button>
-												 <input
-												type="file" id="goodsMainImage" name="goodsMainImage" >
+										<div class="checkout__input d-flex">
+											<input class="upload-name" id="goodsInfoImageName" placeholder="010-000-0000"> 
+											<button type="submit" class="col-md-2 img-btn">인증</button>
 										</div>
 									</div>
 								</div>
 							</div>
 							
+							
+			
+							
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsInfoImage">주소<span>
-													*</span></label>
+											<label for="goodsInfoImage">주소<span>*</span></label>
 										</p>
-										<div class="filebox">
+										<div class="checkout__input d-flex">
 											<input class="upload-name" id="goodsInfoImageName"> 
-												<button type="submit">주소찾기</button>
-											 <input
-												type="file" id="goodsInfoImage" class="imageUpload"
-												name="goodsInfoImage">
+											<button type="submit" class="col-md-2 img-btn">주소찾기</button>
 										</div>
 									</div>
 								</div>
 							</div>
 				
 				
-					<div class="row">
-						<div class="col-lg-4">
-							<div class="checkout__input">
-								<p>
-									<label for="ingredientKCal">추천인ID</label>
-								</p>
-								<input type="text" id="ingredientKCal" name="ingredientKCal">
-							</div>
-						</div>
-					</div>	
-					<div class="row">
+							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsInfoImage">비기호제품</label>
+											<label for="goodsInfoImage">추천아이디</label>
 										</p>
-										<div class="filebox">
+										<div class="checkout__input d-flex">
 											<input class="upload-name" id="goodsInfoImageName"> 
-												<button type="submit">검색</button>
-											 <input
-												type="file" id="goodsInfoImage" class="imageUpload"
-												name="goodsInfoImage">
 										</div>
 									</div>
 								</div>
-					 </div>
+							</div>
+						
+				
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsInfoImage">비기호재료</label>
+										</p>
+										<div class="checkout__input d-flex">
+											<input class="upload-name" id="goodsInfoImageName"> 
+											<button type="submit" class="col-md-2 img-btn">검색</button>
+										</div>
+									</div>
+								</div>
+							</div>
+					
 					
 					
 					

@@ -31,5 +31,10 @@ public class AdminLoginController {
 		return "redirect:admin/login/admin_login_list";
 	}
 
+	//판매자 회원 정보
+		@GetMapping("admin_login_list")
+		public String adminLoginList() {
+			return "admin/login/admin_login_list";
+		}
 	
 }

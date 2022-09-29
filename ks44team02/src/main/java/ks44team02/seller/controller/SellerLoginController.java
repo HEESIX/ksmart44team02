@@ -29,4 +29,7 @@ public class SellerLoginController {
 	public String sellerlogout() {
 		return null;
 	}
+	
+
+	
 }
