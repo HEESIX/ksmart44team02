@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team02.mapper.SellerCompanyMapper">
+
+<!-- 입점 업체 신청 -->
+<!--
+SELECT
+	member_id							AS sellerID
+	,launching_brand					AS sellerBRAND
+	,launching_enter					AS sellerENTER
+	,launching_Business_reg_num	AS sellerNUM
+	,launching_manager				AS sellerMANAGER
+	,launching_phone					AS sellerPHONE
+	,launching_address				AS sellerADD
+	,launching_content				AS sellerCONTENT
+	,launching_hwp						AS sellerHWP
+	,launching_url						AS sellerURL
+	,launching_file					AS sellerFILE
+	,launching_datetime				AS sellerDATE
+	,launching_approval				AS sellerAPP
+FROM
+	tb_launching 	AS launching;
+WHERE
+	member_id = 'id010;
+	-->
+</mapper>
