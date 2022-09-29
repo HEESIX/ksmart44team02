@@ -57,13 +57,35 @@
 		WHERE
 			order_discount_code = #{orderDiscountCode};
 	</update>
+	<!-- 주문서별 할인혜택 등록처리 -->
+	<insert id="addOrderDiscount" parameterType="OrderDiscount">
+		INSERT INTO tb_order_discount_management (
+			order_discount_code
+			,discount_rate
+			,discount_price
+			,discount_name
+			,discount_expiration_date
+			,min_order_price
+			,max_discount_price
+			,g_production_reg_datetime
+		)VALUES(
+			#{orderDiscountCode}
+			,#{discountRate}
+			,#{discountPrice}
+			,#{discountName}
+			,date_add(NOW(), INTERVAL 1 MONTH)
+			,#{minOrderPrice}
+			,#{maxDiscountPrice}
+			,NOW()
+		);
+	</insert>
 	<!-- 주문서별 할인혜택 삭제처리 -->
 	<delete id="removeOrderDiscount" parameterType="String">
 		DELETE
 		FROM
 			tb_order_discount_management
 		WHERE
-			discount_code = #{orderDiscountCode};
+			order_discount_code = #{orderDiscountCode};
 	</delete>
 	
 </mapper>
