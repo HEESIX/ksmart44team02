@@ -92,6 +92,7 @@ public class GoodsService {
 	//식단 리스트
 	public List<Map<String, Object>> getAdminMenuList(){
 		List<Map<String, Object>> adminMenuList = goodsMapper.getAdminMenuList();
+		
 		return adminMenuList;
 	}
 	

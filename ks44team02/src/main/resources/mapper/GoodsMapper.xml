@@ -297,14 +297,13 @@
 	<select id="getAdminMenuList" resultType="Map">
 		SELECT 
 			g.g_code AS goodsCode
+			,mi.menu_code AS menuCode
 			,g.g_cate_code AS categoryCode
 			,gc.cate_name AS categoryName
 			,g.g_name AS goodsName	
 			,g.g_price AS goodsPrice
 			,gdm.discount_name AS goodsDiscountName
 			,g.g_discount AS goodsDiscountedPrice
-			,g.g_netweight AS goodsNetWeight
-			,g.g_netweightunit AS goodsNetWeightUnit
 			,g.g_produce AS goodsProduce
 			,g.g_production_expiration_info AS goodsProductionExpirationInfo
 			,gmi.file_original_name AS goodsMainImageName
@@ -323,10 +322,6 @@
 			tb_menu_information AS mi
 			ON 
 			mi.g_code = g.g_code
-			inner JOIN 
-			tb_menu_organize AS mo
-			on
-			mo.menu_code = mi.menu_code
 			INNER JOIN
 			tb_goods_main_image AS gmi
 			on
