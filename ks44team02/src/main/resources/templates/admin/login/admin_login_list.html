@@ -329,39 +329,12 @@ footer .copyright-wrap span{
 				</div>	
 		
 				<br>
-				<a th:href="@{/admin}">
-					<div class="logcenter">	
-	  					<button type="button" class="loginbtn">등록완료</button>
-	  				</div>
-	  			</a>	
+					<a th:href="@{/admin/login/admin_login_reg}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">등록완료</button></a>
+
 	  	
 	</section>
-</th:block>
-
-<!-- 사용자 정의 js 하단  -->
-<th:block layout:fragment="customFootjs}">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-
-			$('.imageUpload').change(function() {
-				var imageName = $(this).val().split('\\');
-				imageName = imageName[imageName.length - 1];
-				console.log(imageName);
-				$(this).parent().find('.upload-name').val(imageName);
-			});
-
-			$('.nice-select li').click(function() {
-				var selectValue = $(this).attr('data-value');
-
-				if (selectValue == 'manuText') {
-					$('#manuText').css('display', 'block');
-				} else {
-					$('#manuText').css('display', 'none');
-				}
-			});
-		});
-	</script>
 </th:block>
 
 </html>
