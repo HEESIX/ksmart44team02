@@ -25,7 +25,7 @@ public class MileageService {
 	
 	   //회원 적립금 조회
 		public List<Mileage> getMileageList() {
-			List<Mileage> mileage = mileageMapper.getMileageList();
+			List<Mileage> mileageList = mileageMapper.getMileageList();
 			return null;
 		}
 
