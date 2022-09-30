@@ -47,12 +47,12 @@ table td, th {
 						<div class="card-block col-lg-5"
 							style="padding-top: 0; padding-bottom: 0;">
 							<div class="row">
-								<div class="col-xl-6 col-lg-6 col-sm-6 col-xs-12">
+								<div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12">
 									<a th:href="@{'/'+*{goodsMainImageFilePath}}"
-										data-toggle="lightbox"
-										th:attr="data-title=*{goodsMainImageName}"> <img
-										th:src="@{'/'+*{goodsMainImageFilePath}}" class="img-fluid"
-										th:alt="*{goodsMainImageName}" style="width: 100%;">
+										data-toggle="lightbox" th:attr="data-title=*{goodsName}">
+										<img th:src="@{'/'+*{goodsMainImageFilePath}}"
+										class="img-fluid" th:alt="*{goodsMainImageName}"
+										style="width: 100%;">
 									</a>
 								</div>
 							</div>
@@ -135,6 +135,60 @@ table td, th {
 					<div class="col-lg-8">
 						<img th:alt="*{goodsInfoImageName}"
 							th:src="@{'/'+ *{goodsInfoImageFilePath}}">
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-block">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<div class="main-header row">
+							<h4>포함 상품</h4>
+						</div>
+						<div class="row">
+							<th:block
+								th:if="${not #lists.isEmpty(menuOrgarnizeGoodsInfoList)}"
+								th:each="gl, status : ${menuOrgarnizeGoodsInfoList}">
+								<table style="width: 100%; margin-bottom: 10px;">
+									<tbody>
+										<tr>
+											<th rowspan="4"><img
+												th:alt="${gl.goodsMainImageOriName}"
+												th:src="@{'/' + ${gl.goodsMainImageFilePath}}"
+												width="150px;"></th>
+											<th>상품명</th>
+											<td th:text="${gl.goodsName}"></td>
+											<th:block th:if="${not #lists.isEmpty(menuOrganizeList)}"
+												th:each="mol : ${menuOrganizeList}">
+												<th:block th:if="${mol.goodsOfMenuCode} == ${gl.goodsCode}">
+													<th>포함 개수</th>
+													<td th:text="${mol.menuGoodsAmount}"></td>
+												</th:block>
+											</th:block>
+										</tr>
+										<tr>
+											<th>칼로리(KCal)</th>
+											<td th:text="${gl.ingredientKCal} + 'Kcal'"></td>
+											<th>단백질(g)</th>
+											<td th:text="${gl.ingredientProtein} + 'g'"></td>
+										</tr>
+										<tr>
+											<th>탄수화물(g)</th>
+											<td th:text="${gl.ingredientCarb} + 'g'"></td>
+											<th>당류(g)</th>
+											<td th:text="${gl.ingredientSugar} + 'g'"></td>
+										</tr>
+										<tr>
+											<th>나트륨(mg)</th>
+											<td th:text="${gl.ingredientSodium} + 'mg'"></td>
+											<th>콜레스테롤(mg)</th>
+											<td th:text="${gl.ingredientCholesterol} + 'mg'"></td>
+										</tr>
+									</tbody>
+								</table>
+							</th:block>
+						</div>
 					</div>
 					<div class="col-lg-2"></div>
 				</div>

@@ -65,11 +65,14 @@ public interface GoodsMapper {
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
 	
-	//상품별 할인혜택 리스트(admin: admin이 등록한 할인혜택만)
-	public List<GoodsDiscount> getGoodsDiscountListAdmin();
+	//상품별 할인혜택 리스트(admin: admin이 등록한 것만)
+	public List<GoodsDiscount> getGoodsDiscountListForReg();
 	
 	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
+	
+	//상품별 할인혜택 리스트 제한 X
+	public List<Map<String, Object>> getGoodsDiscountList();
 	
 	//상품별 할인 혜택 수정
 	public int modifyGoodsDiscount();
