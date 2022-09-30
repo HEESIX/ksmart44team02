@@ -24,8 +24,12 @@ public interface DeliveryMapper {
 	// 상세주문현황 조회
 	public List<Map<String, Object>> getOrderDetailList(String orderGroupCode);
 	
-	//추가메서드(결제한 정보조회)
-	public Map<String, Object> getPaymentList(String getPaymentList);
+	//추가(결제정보조회)
+	public Map<String, Object> getPaymentList(String orderGroupCode);
+	
+	//추가(배송정보조회)
+	public Map<String, Object> getDeliveryinfo(String orderGroupCode);
+	
 	
 	// 환불 신청
 	public String addRefundRequest();

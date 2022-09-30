@@ -40,6 +40,7 @@
 					<thead>
 						<tr>
 							<th>주문번호</th>
+							<th></th>
 							<th>ITEM</th>
 							<th>PRICE</th>
 							<th>전체주문일자</th>
@@ -47,13 +48,15 @@
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
-							th:each="orl : ${getOrderList}">
+							th:each="orl, status : ${getOrderList}">
 							<td><a
-								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('orderCode')}">
+								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
 							</a></td>
+							<td>이미지 어떻게 넣을까</td>
 							<td th:text="${orl.get('goodsName')}"></td>
 							<td th:text="${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
+							
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(getOrderList)}">
 							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
