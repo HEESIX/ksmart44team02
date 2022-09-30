@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	개별 식단 정보(관리자)
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<!-- Light Box css -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/light-box/css/ekko-lightbox.css}">
+
+	<!-- Light Box 2 css -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/lightbox2/dist/css/lightbox.css}">
+	<style>
+table th {
+	background-color: #d5dade;
+	width: 150px;
+}
+
+table td, th {
+	text-align: center;
+	border: 2px solid #e5e5e5;
+}
+</style>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="light-box" th:object="${menuInfo}">
+			<div class="row">
+				<div class="col-sm-12 p-0">
+					<div class="main-header">
+						<h4>상품 상세 정보</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-block col-lg-5"
+							style="padding-top: 0; padding-bottom: 0;">
+							<div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-6 col-xs-12">
+									<a th:href="@{'/'+*{goodsMainImageFilePath}}"
+										data-toggle="lightbox"
+										th:attr="data-title=*{goodsMainImageName}"> <img
+										th:src="@{'/'+*{goodsMainImageFilePath}}" class="img-fluid"
+										th:alt="*{goodsMainImageName}" style="width: 100%;">
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-block col-lg-6" style="margin-left: 15px;">
+							<div class="row"
+								style="border-bottom: 1px solid gray; margin-bottom: 15px; padding-bottom: 15px;">
+								<h4 th:text="*{goodsName}" style="color: black;"></h4>
+								<span>'상품 리뷰 정보'</span>
+							</div>
+							<div class="row">
+								<span th:if="*{goodsDiscountingPrice} != 0"
+									th:text="*{goodsDiscountingPrice}+'원'"></span> <span
+									th:if="*{goodsDiscountingRate} != 0"
+									th:text="*{goodsDiscountingRate}+'%'"></span> <span
+									th:unless="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+									th:text="*{goodsPrice}+'원'"
+									style="text-decoration: line-through; color: gray;"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 5px;">
+								<h4 th:text="*{goodsDiscountedPrice} + '원'" style="color: red;"></h4>
+							</div>
+							<div class="row">
+								<span th:text="'배송비: ' + *{goodsDeliveryCharge} + '원'"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
+								<span
+									th:unless="*{goodsNetWeight} == 0 or *{goodsNetWeightUnit} == '' or *{goodsNetWeightUnit} == null"
+									th:text="'중량: ' + *{goodsNetWeight} + *{goodsNetWeightUnit}"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
+								<span>적립금 혜택 | 최대</span> <span
+									th:unless="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+									th:text="*{goodsDiscountedPrice}*0.1  + '원'"></span> <span
+									th:if="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+									th:text="*{goodsPrice}*0.1 + '원'"></span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="height: 40px;">
+									<th>품목 또는 명칭</th>
+									<td th:text="*{goodsName}"></td>
+									<th>제조연월일(포장일 또는 생산연도), 유통기한</th>
+									<td th:text="*{goodsProductionExpirationInfo}"></td>
+								</tr>
+								<tr style="height: 40px;">
+									<th>생산자</th>
+									<td>컨텐츠 참조</td>
+									<th>원산지</th>
+									<td th:text="*{goodsProduce}"></td>
+								</tr>
+								<th:block
+									th:unless="*{goodsNetWeight} == 0 or *{goodsNetWeightUnit} == '' or *{goodsNetWeightUnit} == null">
+									<tr>
+										<th>포장단위별 내용물의 용량(중량),수량,크기</th>
+										<td th:text="*{goodsNetWeight} + *{goodsNetWeightUnit}"></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-block">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<img th:alt="*{goodsInfoImageName}"
+							th:src="@{'/'+ *{goodsInfoImageFilePath}}">
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-8">리뷰 상세</div>
+				<div class="col-lg-2"></div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+
+	<!-- light Box js -->
+	<script th:src="@{/admin/assets/plugins/light-box/js/ekko-lightbox.js}"></script>
+
+	<!-- light Box 2 js -->
+	<script th:src="@{/admin/assets/plugins/lightbox2/dist/js/lightbox.js}"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(document).on('click', '[data-toggle="lightbox"]',
+					function(event) {
+						event.preventDefault();
+						$(this).ekkoLightbox();
+					});
+		});
+	</script>
+</th:block>
 </html>

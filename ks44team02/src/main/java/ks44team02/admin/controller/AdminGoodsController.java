@@ -265,6 +265,7 @@ public class AdminGoodsController {
 	// 식단 리스트
 	@GetMapping("/menu/menu_list")
 	public String getAdminMenuList(Model model) {
+		//image가 관련된 부분은 전부 isLocal test 필요
 		List<Map<String, Object>> adminMenuList = goodsService.getAdminMenuList();
 		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menu_list";
@@ -293,8 +294,16 @@ public class AdminGoodsController {
 
 	// 개별 식단 정보
 	@GetMapping("/menu/menu_detail_admin/{menuCode}")
-	public String getMenuInfo(@PathVariable(value = "menuCode") String menuCode) {
-
+	public String getMenuInfo(@PathVariable(value = "menuCode") String menuCode
+							 ,Model model
+							 ,HttpServletRequest request) {
+		//String serverName = request.getServerName();
+		List<Map<String, Object>> menuOrgarnizeGoodsInfoList = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		Map<String, Object> menuInfo = goodsService.getMenuInfo(menuCode);
+		
+		model.addAttribute("title", "개별 식단 정보");
+		model.addAttribute("menuInfo", menuInfo);
+		model.addAttribute("menuOrgarnizeGoodsInfoList", menuOrgarnizeGoodsInfoList);
 		return "admin/goods/menu/menu_detail_admin";
 	}
 
