@@ -1,10 +1,114 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	상품 할인혜택 등록 폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<!-- 상품 할인 혜택 등록  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+		<div class="row">
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						<h3>할인혜택 등록</h3>
+					</div>
+					<form th:action="@{/admin/goods/category/goodscate_reg}"
+						method="post">
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="goodsCategoryName"
+									class="col-xs-2 col-form-label form-control-label">할인혜택
+									이름</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text" id="goodsCategoryName"
+										name="goodsCategoryName">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-12">
+									<div>
+										<label for="selectRatePrice"
+											class="col-form-label form-control-label">할인율/할인금액</label>
+									</div>
+									<div class="modal fade modal-flex" id="single-select-Modal"
+										tabindex="-1" role="dialog">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h5 class="modal-title">Code Explanation for single
+														select radio</h5>
+												</div>
+												<!-- end of modal-header -->
+												<div class="modal-body">
+													<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+												</div>
+												<!-- end of modal-body -->
+											</div>
+											<!-- end of modal-content -->
+										</div>
+										<!-- end of modal-dialog -->
+									</div>
+									<!-- end of modal -->
+									<select id="selectRatePrice" name="selectRatePrice"
+										class="js-example-basic-single">
+										<option value="rate">할인율</option>
+										<option value="price">할인금액</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div></div>
+							</div>
+							<button type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">등록</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-example-basic-single").select2();
+		});
+	</script>
+</th:block>
+
 </html>

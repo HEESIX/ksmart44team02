@@ -1,10 +1,384 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	식단 수정폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 식단 수정 폼(admin)  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+	<style>
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: middle;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #999999;
+	cursor: pointer;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+}
+</style>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12" style="padding-top: 15px;">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						<h3>식단 등록</h3>
+					</div>
+					<div class="card-block" style="padding-top: 0;">
+						<div class="col-xl-3 col-lg-3"></div>
+						<div class="col-xl-6 col-lg-6">
+							<form id="addGoodsForm"
+								th:action="@{/admin/goods/goods_reg_form}" method="post"
+								enctype="multipart/form-data">
+								<!-- <h6 class="sub-title">Single Select</h6> -->
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsName"
+												class="col-form-label form-control-label">식단명</label>
+										</div>
+										<div>
+											<input class="form-control vailCheck" type="text"
+												id="goodsName" name="goodsName" placeholder="식단명을 입력해주세요.">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsPrice"
+												class="col-form-label form-control-label">식단 가격</label>
+										</div>
+										<div>
+											<input class="form-control vailCheck" type="number"
+												id="goodsPrice" name="goodsPrice"
+												placeholder="식단 가격을 입력해주세요.">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsDiscountCode"
+												class="col-form-label form-control-label">적용 할인 혜택</label>
+										</div>
+										<div class="modal fade modal-flex" id="single-select-Modal"
+											tabindex="-1" role="dialog">
+											<div class="modal-dialog modal-lg" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h5 class="modal-title">Code Explanation for single
+															select radio</h5>
+													</div>
+													<!-- end of modal-header -->
+													<div class="modal-body">
+														<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+													</div>
+													<!-- end of modal-body -->
+												</div>
+												<!-- end of modal-content -->
+											</div>
+											<!-- end of modal-dialog -->
+										</div>
+										<!-- end of modal -->
+										<select id="goodsDiscountCode" name="goodsDiscountCode"
+											class="js-example-basic-single" style="width: 40%;">
+											<option value="">적용 할인 혜택(비적용)</option>
+											<th:block
+												th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
+												th:each="gdla : ${goodsDiscountListAdmin}">
+												<option th:value="${gdla.goodsDiscountCode}"
+													th:text="${gdla.goodsDiscountName}"></option>
+											</th:block>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12" style="padding-right: 0;">
+										<div class="checkout__input">
+											<p>
+												<label for="goodsMainImage"
+													class="col-form-label form-control-label">식단 썸네일
+													이미지 </label>
+											</p>
+											<div class="filebox">
+												<input class="upload-name form-control"
+													id="goodsMainImageName"
+													placeholder="식단 썸네일 이미지(*.gif, *.jpg, *.png)"> <label
+													class="label-lg label-default" for="goodsMainImage"
+													style="margin-top: 8px;">파일찾기</label> <input type="file"
+													id="goodsMainImage" class="imageUpload vailCheck"
+													name="goodsMainImage" accept=".gif, .jpg, .png">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12" style="padding-right: 0;">
+										<div class="checkout__input">
+											<p>
+												<label for="goodsInfoImage"
+													class="col-form-label form-control-label">식단 소개 이미지
+												</label>
+											</p>
+											<div class="filebox">
+												<input class="upload-name form-control"
+													id="goodsInfoImageName"
+													placeholder="식단 소개 이미지(*.gif, *.jpg, *.png)"> <label
+													class="label-lg label-default" for="goodsInfoImage"
+													style="margin-top: 8px;">파일찾기</label> <input type="file"
+													id="goodsInfoImage" class="imageUpload vailCheck"
+													name="goodsInfoImage" accept=".gif, .jpg, .png">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsStock"
+												class="col-form-label form-control-label">재고</label>
+										</div>
+										<div>
+											<input class="form-control vailCheck" type="number"
+												id="goodsStock" name="goodsStock" placeholder="재고를 입력해주세요.">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsDeliveryCharge"
+												class="col-form-label form-control-label">배송비</label>
+										</div>
+										<div>
+											<input class="form-control vailCheck" type="number"
+												id="goodsDeliveryCharge" name="goodsDeliveryCharge"
+												placeholder="배송비를 입력해주세요.">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-2">
+										<label for="goodsActivation" class="form-control-label">사용
+											여부</label>
+									</div>
+									<div class="col-md-10 has-danger">
+										<label class="custom-control custom-checkbox"> <input
+											class="custom-control-input" type="checkbox"
+											id="goodsActivation" name="goodsActivation" value="1">
+											<span class="custom-control-indicator"></span> <span
+											class="custom-control-description">사용</span>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-5">
+										<label for="goodsOfMenuCode"
+											class="col-form-label form-control-label">포함 상품 선택</label>
+									</div>
+									<div class="col-lg-7">
+										<label for="menuGoodsAmount"
+											class="col-form-label form-control-label">수량</label>
+									</div>
+								</div>
+								<div class="form-group row" id="goodsOfMenuSelectForm">
+									<div class="col-lg-10 select_goods_Of_Menu"
+										style="padding-right: 0; margin-bottom: 10px;">
+										<div class="modal fade modal-flex" id="single-select-Modal"
+											tabindex="-1" role="dialog">
+											<div class="modal-dialog modal-lg" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h5 class="modal-title">Code Explanation for single
+															select radio</h5>
+													</div>
+													<!-- end of modal-header -->
+													<div class="modal-body">
+														<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+													</div>
+													<!-- end of modal-body -->
+												</div>
+												<!-- end of modal-content -->
+											</div>
+											<!-- end of modal-dialog -->
+										</div>
+										<!-- end of modal -->
+										<div>
+											<div class="col-lg-6" style="padding-left: 0;">
+												<select name="goodsOfMenuCode"
+													class="js-example-basic-single2" style="width: 100%;">
+													<th:block th:if="${not #lists.isEmpty(goodsList)}"
+														th:each="gl : ${goodsList}">
+														<option th:value="${gl.goodsCode}"
+															th:text="${gl.goodsName}"></option>
+													</th:block>
+												</select>
+											</div>
+											<div class="col-lg-6" style="height: 28px; padding-left: 0;">
+												<input class="form-control vailCheck" type="number"
+													id="menuGoodsAmount" name="menuGoodsAmount"
+													style="width: 100%; height: 100%;" placeholder="수량">
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2">
+										<button type="button"
+											class="btn btn-success waves-effect waves-light"
+											id="moreGoodsBtn" style="height: 28px;">추가</button>
+									</div>
+								</div>
+								<a th:href="@{/admin/goods/goods_list_admin}"><button
+										type="button" id="returnBtn" class="btn btn-disable disabled"
+										style="float: right;">취소</button></a>
+								<button type="button" id="submitBtn"
+									class="btn btn-info waves-effect waves-light"
+									style="float: right; margin-right: 10px;">수정</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<!-- Select 2 js -->
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-example-basic-single").select2();
+			$(".js-example-basic-single2").select2();
+
+			$('.imageUpload').change(function() {
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+
+			//유효성 검사
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == '') {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]')
+									.text();
+							alert(alertMsg + ' 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof data == 'undefined' || data == null
+							|| data == '') {
+						isValid = false;
+					}
+				}
+				return isValid;
+			}
+
+			$(document).on('click', '#submitBtn', function() {
+
+				var inputObj = $('.vailCheck');
+
+				var isValid = validationCheck(inputObj);
+
+				console.log(isValid, '아이디 이외의 값 유효성 검사');
+
+				if (isValid)
+					$('#').submit();
+			});
+
+			$('#moreGoodsBtn').click(
+					function() {
+						var $selectClone = $(
+								'.select_goods_Of_Menu:first-child').clone();
+
+						$('#goodsOfMenuSelectForm').append($selectClone);
+					});
+
+		});
+	</script>
+</th:block>
 </html>
