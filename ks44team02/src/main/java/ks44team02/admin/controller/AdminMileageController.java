@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.dto.Mileage;
-import ks44team02.dto.OrderDiscount;
 import ks44team02.service.MileageService;
 
 @Controller
-@RequestMapping(value = "/admin/Mileage")
+@RequestMapping(value = "/admin/mileageManage")
 public class AdminMileageController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
@@ -36,8 +35,10 @@ public class AdminMileageController {
 	}
 	
 	//회원 적립금 조회 
-	@GetMapping("/mileageManage/mileage_management")
+	@GetMapping("/mileage_management")
 	public String getMileageList(Model model) {
+		log.info("/mileageManage/mileage_management getMileageList AdminMileageController");
+		System.out.println("/mileageManage/mileage_management getMileageList AdminMileageController");
 		List<Mileage> mileageList = mileageService.getMileageList();
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
@@ -45,7 +46,7 @@ public class AdminMileageController {
 	}
 	
 	//적립금 적립 폼
-	@PostMapping("/mileageManage/mileage_give")
+	@GetMapping("/mileage_give/{currentMileage}")
 	public String giveMileage(@PathVariable(value = "earndMileage") String earndMileage,
 			                  @PathVariable(value = "currentMileage") String currentMileage
 			,Model model
@@ -56,7 +57,7 @@ public class AdminMileageController {
 	}
 	
 	//적립금 소멸 폼
-	@PostMapping("/mileageManage/mileage_extinct")
+	@GetMapping("/mileage_extinct/{currentMileage}")
 	public String MileageExtinction(@PathVariable(value = "currentMileage") String currentMileage
 			,Model model) {
 		 Mileage mileageExtinct = mileageService.getMileageInfo(currentMileage);
