@@ -146,7 +146,7 @@
 			OR 
 			gdm.enter_code IS NULL;
 	</select>
-	<!-- 상품 목록(전부) 하자 없는 것 -->
+	<!-- 상품 목록(전부) 하자 없는 것  !! fileIsLocal 들어가줘야함-->
 	<select id="getAdminGoodsList" resultType="Map">
 		SELECT
 			g.g_code AS goodsCode
@@ -186,7 +186,7 @@
 			ON 
 			gmi.file_idx = g.g_main_image;
 	</select>
-	<!-- 상품 목록(활성화되어있는 것, 식단 제외) -->
+	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
 	<select id="getGoodsList" resultType="Map">
 		SELECT 
 			g_code as goodsCode
@@ -202,7 +202,7 @@
 			AND 
 			gc.cate_name not LIKE CONCAT('%','식단','%'); 
 	</select>
-	<!-- 상품 정보  -->
+	<!-- 상품 상세 정보  -->
 	<select id="getGoodsInfo" parameterType="String" resultType="Map">
 		SELECT 
 			g.g_name	AS goodsName
@@ -259,6 +259,7 @@
 		WHERE 
 			g.g_code = #{goodsCode};
 	</select>
+	<!-- 상품 등록 신청 목록  -->
 	<select id="getGoodsRegApplyList" resultType="Map">
 		SELECT 
 			gmi.file_original_name AS goodsMainImageName
@@ -352,7 +353,8 @@
 	<!-- 하나의 식단 정보  -->
 	<select id="getMenuInfo" parameterType="String" resultType="Map">
 		SELECT 
-			g.g_code AS goodsCode
+			mi.menu_code as menuCode
+			,g.g_code AS goodsCode
 			,g.g_cate_code AS categoryCode
 			,gc.cate_name AS categoryName
 			,g.g_name AS goodsName
