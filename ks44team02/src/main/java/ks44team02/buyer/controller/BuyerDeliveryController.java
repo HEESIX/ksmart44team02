@@ -52,10 +52,12 @@ public class BuyerDeliveryController {
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
 			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
 			Map<String, Object> getPaymentList = deliveryservice.getPaymentDetail(orderGroupCode);
+			Map<String, Object> getDeliveryinfo = deliveryservice.getDeliveryinfo(orderGroupCode);
 			
 				model.addAttribute("title", "상세 주문리스트");
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
 				model.addAttribute("getPaymentList", getPaymentList);
+				model.addAttribute("getDeliveryinfo", getDeliveryinfo);
 				return "buyer/mypage/orderStatus/myorder_delivery_detail";
 		}
 
