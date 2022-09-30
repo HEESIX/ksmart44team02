@@ -1,13 +1,19 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.Grade;
 import ks44team02.service.Gradeservice;
 
 @Controller
@@ -34,11 +40,15 @@ public class SellerGradeController {
 		return "redirect:admin/gradeDetails/seller_gradelist";
 	}
 	
-	//판매자 등급 정의 조회
+	//판매자 등급 정의 리스트
 	@GetMapping("/seller_gradelist")
-	public String getSellerGradeList () {
+	public String getSellerGradeList (Model model) {
+		List<Grade> sellerGradeList = gradeservice.getSellerGradeList();
+		model.addAttribute("title", "판매자 등급 리스트");
+		model.addAttribute("sellerGradeList", sellerGradeList);
 		return "admin/gradeDetails/seller_gradelist";
-		}
+	}
+	
 	// 판매자 등급 정의 수정 폼 
 	@GetMapping ("/seller_modifylist/{vendor_level_states_code}")
 	public String ModifySellerGradeForm(@PathVariable

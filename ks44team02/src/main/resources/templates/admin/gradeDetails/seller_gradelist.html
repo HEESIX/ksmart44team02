@@ -40,17 +40,24 @@
 								<thead>
 									<tr>
 										<th><input type="checkbox" value="che"></th>
-										<th>회원등급코드</th>
+										<th>구분</th>
+										<th>등급코드</th>
 										<th>등급이름</th>
 										<th>등급 기준(3개월 판매 누적 금액)</th>
 										<th>등록 가능 상품수</th>
 										<th>수수료</th>
-										<th>등급일자</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr th:if="${not #lists.isEmpty(seller_gradelist)}"
-										th:each="gcl : ${seller_gradelist}">
+								<tbody> 
+									<tr th:if="${not #lists.isEmpty(sellerGradeList)}"
+										th:each="sgl : ${sellerGradeList}">
+										<td><input type="checkbox" value="che"></td>
+										<td th:text="${sgl.memberLevelClassName}"></td>
+										<td th:text="${sgl.memberLevelCode}"></td>
+										<td th:text="${sgl.memberLevelName}"></td>
+										<td th:text="${sgl.sellerLevel.sellerCondition}"></td>
+										<td th:text="${sgl.sellerLevel.canRegAmt}"></td>
+										<td th:text="${sgl.sellerLevel.sellerMileage}"></td>
 									</tr>
 								</tbody>
 							</table>
