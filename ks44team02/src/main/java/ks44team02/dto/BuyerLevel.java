@@ -1,10 +1,11 @@
 package ks44team02.dto;
 
-public class Buyer_level {
+public class BuyerLevel {
 	private String buyerLevelCode;
 	private String memberLevelCode;
 	private int buyerCondition;
 	private int buyerMileage;
+	
 	public String getBuyerLevelCode() {
 		return buyerLevelCode;
 	}

@@ -1,11 +1,12 @@
 package ks44team02.dto;
 
-public class Seller_level {
+public class SellerLevel {
 	private String sellerLevelCode;
 	private String memberLevelCode;
-	private int sellerCondition;
-	private int canRegAmt;
-	private int sellerMileage;
+	private String sellerCondition;
+	private String canRegAmt;
+	private String sellerMileage;
+	
 	public String getSellerLevelCode() {
 		return sellerLevelCode;
 	}
@@ -18,28 +19,28 @@ public class Seller_level {
 	public void setMemberLevelCode(String memberLevelCode) {
 		this.memberLevelCode = memberLevelCode;
 	}
-	public int getSellerCondition() {
+	public String getSellerCondition() {
 		return sellerCondition;
 	}
-	public void setSellerCondition(int sellerCondition) {
+	public void setSellerCondition(String sellerCondition) {
 		this.sellerCondition = sellerCondition;
 	}
-	public int getCanRegAmt() {
+	public String getCanRegAmt() {
 		return canRegAmt;
 	}
-	public void setCanRegAmt(int canRegAmt) {
+	public void setCanRegAmt(String canRegAmt) {
 		this.canRegAmt = canRegAmt;
 	}
-	public int getSellerMileage() {
+	public String getSellerMileage() {
 		return sellerMileage;
 	}
-	public void setSellerMileage(int sellerMileage) {
+	public void setSellerMileage(String sellerMileage) {
 		this.sellerMileage = sellerMileage;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Seller_level [sellerLevelCode=");
+		builder.append("SellerLevel [sellerLevelCode=");
 		builder.append(sellerLevelCode);
 		builder.append(", memberLevelCode=");
 		builder.append(memberLevelCode);
@@ -53,5 +54,6 @@ public class Seller_level {
 		return builder.toString();
 	}
 	
+
 	
 }

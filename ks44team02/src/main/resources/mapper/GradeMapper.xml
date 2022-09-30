@@ -3,49 +3,54 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.GradeMapper">
-	<resultMap type="Grade" id="GradeResultMap">
-		<id column="member_level_code" property="memberLevelCode"/>
+	<resultMap type="Grade" id="buyerGradeResultMap">
 		<result column="member_level_class_name" property="memberLevelClassName"/>
-		<result column="member_level_name" property="memberLevelName"/>
-		<result column="member_level_reg_date" property="memberLevelRegDate"/>
+		<result column="member_level_code" property="memberLevelCode"/>
+		<result column="member_level_name" property="memberLevelName"/>	
+		<association property ="buyerLevel" javaType="BuyerLevel">
+			<result column="buyer_condition" property="buyerCondition"/>
+			<result column="buyer_mileage" property="buyerMileage"/>
+		</association>
 	</resultMap>
-
+	<resultMap type="Grade" id="sellerGradeResultMap">
+		<result column="member_level_class_name" property="memberLevelClassName"/>
+		<result column="member_level_code" property="memberLevelCode"/>
+		<result column="member_level_name" property="memberLevelName"/>	
+		<association property ="sellerLevel" javaType="SellerLevel">
+			<result column="seller_condition" property="sellerCondition"/>
+			<result column="can_reg_amt" property="canRegAmt"/>
+			<result column="seller_mileage" property="sellerMileage"/>
+		</association>
+	</resultMap>
 <!-- 구매자 등급 정의 리스트 -->
-	<select id="getbuyerGradeList" parameterType="String" resultMap="GradeResultMap">
-		SELECT
-			member_level_code
-			,member_level_class_name
-			,member_level_name
-			,member_level_reg_date
-		from
-			tb_member_level
-		WHERE
-			member_level_class_name='구매자';
+	<select id="getbuyerGradeList"  resultMap="buyerGradeResultMap">
+		SELECT 
+			ml.member_level_class_name
+			,ml.member_level_code
+			,ml.member_level_name
+			,bl.buyer_condition
+			,bl.buyer_mileage
+		FROM 
+			tb_member_level AS ml
+		INNER JOIN 
+			tb_buyer_level AS bl
+		ON 
+			ml.member_level_code=bl.member_level_code;
 	</select>
-	
 <!-- 판매자 등급 정의 리스트 -->
-	<select id="getsellerGradeinfo" parameterType="String" resultMap="GradeResultMap">
-		SELECT
-			member_level_code
-			,member_level_class_name
-			,member_level_name
-			,member_level_reg_date
-		from
-			tb_member_level
-		WHERE
-			member_level_class_name='판매자';
+	<select id="getSellerGradeList" resultMap="sellerGradeResultMap">
+		SELECT 
+			ml.member_level_class_name
+			,ml.member_level_code
+			,ml.member_level_name
+			,sl.seller_condition
+			,sl.can_reg_amt
+			,sl.seller_mileage
+		FROM 
+			tb_member_level AS ml
+		INNER JOIN 
+			tb_seller_level AS sl
+		ON 
+			ml.member_level_code=sl.member_level_code;
 	</select>
-
-
-
-<!-- 등급 정의 수정처리 -->
-
-
-<!-- 등급 정의 삭제처리 -->
-
-
-
-
-
-
 </mapper>
