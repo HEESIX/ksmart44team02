@@ -1,20 +1,21 @@
 package ks44team02.dto;
 
-public class Cart {
-	private String cartListCode;
+public class OrderDetail {
+	private String orderDetailCode;
 	private String memberId;
 	private String goodsCode;
-	private int regularPrice;
 	private int discountPrice;
 	private int orderAmount;
 	private int regularPriceSubtotal;
-	private String orderDatetime;
+	private String orderDateTime;
+	private String orderGroupCode;
 	private String enterCode;
-	public String getCartListCode() {
-		return cartListCode;
+	private int gDeliveryCharge;
+	public String getOrderDetailCode() {
+		return orderDetailCode;
 	}
-	public void setCartListCode(String cartListCode) {
-		this.cartListCode = cartListCode;
+	public void setOrderDetailCode(String orderDetailCode) {
+		this.orderDetailCode = orderDetailCode;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -27,12 +28,6 @@ public class Cart {
 	}
 	public void setGoodsCode(String goodsCode) {
 		this.goodsCode = goodsCode;
-	}
-	public int getRegularPrice() {
-		return regularPrice;
-	}
-	public void setRegularPrice(int regularPrice) {
-		this.regularPrice = regularPrice;
 	}
 	public int getDiscountPrice() {
 		return discountPrice;
@@ -52,11 +47,17 @@ public class Cart {
 	public void setRegularPriceSubtotal(int regularPriceSubtotal) {
 		this.regularPriceSubtotal = regularPriceSubtotal;
 	}
-	public String getOrderDatetime() {
-		return orderDatetime;
+	public String getOrderDateTime() {
+		return orderDateTime;
 	}
-	public void setOrderDatetime(String orderDatetime) {
-		this.orderDatetime = orderDatetime;
+	public void setOrderDateTime(String orderDateTime) {
+		this.orderDateTime = orderDateTime;
+	}
+	public String getOrderGroupCode() {
+		return orderGroupCode;
+	}
+	public void setOrderGroupCode(String orderGroupCode) {
+		this.orderGroupCode = orderGroupCode;
 	}
 	public String getEnterCode() {
 		return enterCode;
@@ -64,27 +65,35 @@ public class Cart {
 	public void setEnterCode(String enterCode) {
 		this.enterCode = enterCode;
 	}
+	public int getgDeliveryCharge() {
+		return gDeliveryCharge;
+	}
+	public void setgDeliveryCharge(int gDeliveryCharge) {
+		this.gDeliveryCharge = gDeliveryCharge;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Cart [cartListCode=");
-		builder.append(cartListCode);
+		builder.append("OrderDetail [orderDetailCode=");
+		builder.append(orderDetailCode);
 		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", goodsCode=");
 		builder.append(goodsCode);
-		builder.append(", regularPrice=");
-		builder.append(regularPrice);
 		builder.append(", discountPrice=");
 		builder.append(discountPrice);
 		builder.append(", orderAmount=");
 		builder.append(orderAmount);
 		builder.append(", regularPriceSubtotal=");
 		builder.append(regularPriceSubtotal);
-		builder.append(", orderDatetime=");
-		builder.append(orderDatetime);
+		builder.append(", orderDateTime=");
+		builder.append(orderDateTime);
+		builder.append(", orderGroupCode=");
+		builder.append(orderGroupCode);
 		builder.append(", enterCode=");
 		builder.append(enterCode);
+		builder.append(", gDeliveryCharge=");
+		builder.append(gDeliveryCharge);
 		builder.append("]");
 		return builder.toString();
 	}

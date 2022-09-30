@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ks44team02.service.DeliveryService;
 
 @Controller
-@RequestMapping(value = "seller/order")
+@RequestMapping(value = "/seller/order")
 public class SellerDeliveryController {
 	
 	
@@ -25,7 +25,7 @@ public class SellerDeliveryController {
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 	@GetMapping("/seller_order_delivery_all_list")
 	public String getDelivery() {
-		return null;
+		return "/seller/order/seller_order_delivery_all_list";
 	}
 
 	

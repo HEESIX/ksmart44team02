@@ -25,12 +25,12 @@ public interface GradeMapper {
 	public String addVenderGrade();
 	
 	// 판매자 등급 정의 조회
-	public List<Grade> getVendeGradeList();
+	public List<Grade> getSellerGradeList();
 	
 	// 판매자 등급 정의 수정
-	public String ModifyVendeGrade();
+	public String ModifySellerGrade();
 	
 	// 판매자 등급 정의 삭제
-	public String RemoveVenderGrade();
+	public String RemoveSellerGrade();
 	
 }

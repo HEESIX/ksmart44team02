@@ -61,10 +61,11 @@
 				  <thead>
 				    <tr>
 						<th>상세주문번호</th>
+						<th>주문일자</th>
 						<th>ITEM</th>
+						<th>DISCOUNT</th>
 						<th>PRICE</th>
 						<th>수량</th>
-						<th>주문일자</th>
 						<th>주문상태</th>
 						<th>배송업체</th>
 						<th>운송장번호</th>
@@ -73,10 +74,11 @@
 					<tbody>
 						<tr th:each="odl : ${getOrderDetailList}">
 							<td th:text="${odl.get('orderGroupCode')}"></td>
+							<td th:text="${odl.get('orderDatetime')}"></td>
 							<td th:text="${odl.get('goodsName')}"></td>
+							<td th:text="${odl.get('discountPrice')}"></td>
 							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
-							<td th:text="${odl.get('orderDatetime')}"></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryEnter')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
@@ -87,6 +89,41 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="heading2">
+		<h4>배송정보</h4>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+			
+			<table class="table" style="float: left;">
+				  <thead>
+				    <tr>
+						<th>TYPE</th>
+						<th>수령인</th>
+						<th>연락처</th>
+						<th>배송지</th>
+						<th>배송메모</th>
+					</tr>
+				 </thead>
+					<tbody>
+						<tr th:if="${not #lists.isEmpty(getDeliveryinfo)}">
+							<td th:text="${getDeliveryinfo.get('deliType')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliName')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliPhone')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliAddress')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliMemo')}"></td>							
+						</tr>
+					
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
 	<div class="heading2">
 		<h4>결제정보</h4>
 	</div>
@@ -94,7 +131,7 @@
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
 			
-				<table class="table table-hover">
+				<table class="table" style="float: left;">
 				  <thead>
 				    <tr>
 						<th>결제정보</th>
@@ -117,6 +154,14 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 </th:block>
 
 
