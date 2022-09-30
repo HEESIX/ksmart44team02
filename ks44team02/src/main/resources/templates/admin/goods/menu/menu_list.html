@@ -37,34 +37,32 @@
 									<tr>
 										<th>번호</th>
 										<th>메인이미지</th>
-										<th>판매사</th>
 										<th>카테고리</th>
 										<th>상품명</th>
 										<th>가격</th>
 										<th>적용 할인 혜택</th>
 										<th>할인 혜택 적용 후 가격</th>
-										<th>포장 단위 중량</th>
 										<th>원산지</th>
 										<th>제조일/유통기한</th>
 										<th>재고</th>
 										<th>배송비</th>
 										<th>등록일자</th>
 										<th>판매여부</th>
+										<th>수정</th>
+										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(adminMenuList)}"
 										th:each="aml, status : ${adminMenuList}">
 										<td th:text="${status.count}"></td>
-										<td><img th:src="@{'/' + ${aml.goodsMainImageFilePath}}"
-											th:alt="${aml.goodsMainImageName}" style="width: 100px;" /></td>
+										<td><a th:href="@{|/admin/goods/menu/menu_detail_admin/${aml.menuCode}|}"><img th:src="@{'/' + ${aml.goodsMainImageFilePath}}"
+											th:alt="${aml.goodsMainImageName}" style="width: 100px;" /></a></td>
 										<td th:text="${aml.categoryName}"></td>
 										<td th:text="${aml.goodsName}"></td>
 										<td th:text="${aml.goodsPrice}"></td>
 										<td th:text="${aml.goodsDiscountName}"></td>
 										<td th:text="${aml.goodsDiscountedPrice}"></td>
-										<td th:unless="${aml.goodsNetWeight} == 0 or ${aml.goodsNetWeightUnit} == null" th:text="${aml.goodsNetWeight}+${aml.goodsNetWeightUnit}"></td>
-										<td th:if="${aml.goodsNetWeight} == 0 or ${aml.goodsNetWeightUnit} == null">컨텐츠 참조</td>
 										<td th:text="${aml.goodsProduce}"></td>
 										<td th:text="${aml.goodsProductionExpirationInfo}"></td>
 										<td th:text="${aml.goodsStock}"></td>
@@ -72,9 +70,14 @@
 										<td th:text="${aml.goodsRegDatetime}"></td>
 										<td th:if="${aml.goodsActivation} == 1">판매중</td>
 										<td th:unless="${aml.goodsActivation} == 1">판매중지</td>
+										<td><a th:href="@{|/admin/goods/menu/menu_update_admin/${aml.menuCode}|}">수정</a></td>
+										<td><a th:href="@{|/amdin/goods/menu/menu_remove/${aml.menuCode}|}">삭제</a></td>
 									</tr>
 								</tbody>
 							</table>
+							<a th:href="@{/admin/goods/menu/menu_reg_form}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">등록</button></a>
 						</div>
 					</div>
 				</div>

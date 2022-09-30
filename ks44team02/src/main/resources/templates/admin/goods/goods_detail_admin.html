@@ -21,11 +21,12 @@
 	<style>
 		table th{
 			background-color: #d5dade;
-			width: 150px;
+			
 		}
 		table td, th{
 			text-align: center;
 			border: 2px solid #d5dade;
+			width: 150px;
 		}
 	</style>
 </th:block>
@@ -117,7 +118,7 @@
 								</tr>
 								<tr style="height: 40px;">
 									<th>제조연월일(포장일 또는 생산연도), 유통기한</th>
-									<td th:text="*{ingredientKCal} + 'Kcal'"></td>
+									<td th:text="*{goodsProductionExpirationInfo}"></td>
 								</tr>
 							</tbody>
 						</table>

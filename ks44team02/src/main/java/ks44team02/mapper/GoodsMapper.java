@@ -9,6 +9,7 @@ import ks44team02.dto.FileDto;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.Menus;
 
 @Mapper
@@ -59,8 +60,7 @@ public interface GoodsMapper {
 	public FileDto getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
-	//Goods 아님 변경 필요
-	public Goods getMenuInfo();
+	public Map<String, Object> getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
@@ -118,5 +118,8 @@ public interface GoodsMapper {
 	
 	//개별 상품 정보
 	/* public Goods getGoodsInfo(); */
+	
+	//메뉴 코드로 어떤 상품이 몇개 포함되어있는지 조회
+	public List<MenuOrganize> getMenuOrganizeList(String menuCode);
 	
 }
