@@ -30,18 +30,18 @@ public class BuyerCartController {
 	}
 	
 	//장바구니에 담긴 상품 목록 조회
-	@GetMapping("/cart_list")
+	@GetMapping("/cartList")
 	public String getCartList() {
-		return "buyer/mypage/cart/cart_list";
+		return "buyer/mypage/cart/cartList";
 	}
 	//장바구니에 담긴 상품 선택 삭제
-	@PostMapping("/cart_list")
+	@PostMapping("/cartList")
 	public String removeCartGoods() {
-		return "buyer/mypage/cart/cart_list";
+		return "buyer/mypage/cart/cartList";
 	}
 	//장바구니에 담긴 상품 주문화면으로 선택 이동
-	@PostMapping("/cart_move")
+	@PostMapping("/cartMove")
 	public String moveCartGoods() {
-		return "buyer/mypage/cart/cart_list";
+		return "buyer/order/order";
 	}
 }

@@ -36,32 +36,32 @@ public class BuyerOrderController {
 	}
 
 	//주문 성공 화면
-	@GetMapping("/order/order_success")
+	@GetMapping("/order/orderSuccess")
 	public String orderSuccess(Model model) {
-		return "buyer/order/order_success";
+		return "buyer/order/orderSuccess";
 	}
 	//주문 성공 처리
-	@PostMapping("/mypage/orderStatus/order_success")
+	@PostMapping("/mypage/orderStatus/orderSuccess")
 	public String orderSuccess() {
-		return "buyer/mypage/orderStatus/order_success";
+		return "buyer/mypage/orderStatus/orderSuccess";
 	}
 	//결제 성공 화면
-	@GetMapping("/order/payment_success")
+	@GetMapping("/order/paymentSuccess")
 	public String paymentSuccess(Model model) {
-		return "buyer/order/payment_success";
+		return "buyer/order/paymentSuccess";
 	}
 	//결제 성공 처리
-	@PostMapping("/order/payment_success")
+	@PostMapping("/order/paymentSuccess")
 	public String paymentSuccess() {
-		return "buyer/order/payment_success";
+		return "buyer/order/paymentSuccess";
 	}
 	//주문 취소 화면
-	@GetMapping("/mypage/orderStatus/order_cancel")
+	@GetMapping("/mypage/orderStatus/orderCancel")
 	public String orderCancel(Model model) {
-		return "buyer/mypage/orderStatus/order_cancel";
+		return "buyer/mypage/orderStatus/orderCancel";
 	}
 	//주문 취소 처리
-	@PostMapping("/mypage/orderStatus/order_cancel")
+	@PostMapping("/mypage/orderStatus/orderCancel")
 	public String orderCancel() {
 		return "redirect:/buyer/mypage/orderStatus/myorder_status_list";
 	}

@@ -1,7 +1,12 @@
 package ks44team02.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.OrderRecordList;
+import ks44team02.dto.OrderRefund;
 import ks44team02.mapper.DeliveryMapper;
 
 @Service
@@ -24,15 +29,23 @@ public class DeliveryService {
 		return null;
 	}
 			
-	// 주문 목록 조회 list<>
-	public String getOrderList() {
-		return null;
+	// 주문 리스트 list<>
+	public List<Map<String, Object>> getOrderList(String memberId) {
+		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList(memberId);
+		return getOrderList;
 	}
 	
-	// 상세주문현황 조회
-	public String getOrderStatus() {
-		return null;
+	// 상세주문현황
+	public List<Map<String, Object>> getOrderStatus(String orderGroupCode) {
+		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList(orderGroupCode);
+		return getOrderDetailList;
 	}
+	// 추가메서드(결제정보)
+	public Map<String, Object> getPaymentDetail(String orderGroupCode){
+		Map<String, Object> getPaymentList = deliveryMapper.getPaymentList(orderGroupCode);
+		return getPaymentList;
+	}
+	
 	
 	// 환불 신청
 	public String addRefundRequest() {

@@ -2,6 +2,7 @@ package ks44team02.service;
 
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.Member;
 import ks44team02.mapper.LoginMapper;
 
 @Service
@@ -40,5 +41,10 @@ public class Loginservice {
 	public String adminlogout () {
 			return null;
 	}
-		
+	
+	//판매자 회원 정보
+	public Member getAdminMemberList(String memberId) {
+		Member memberInfo = loginmapper.getAdminMemberList(memberId);
+		return memberInfo;
+	}
 }

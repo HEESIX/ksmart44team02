@@ -10,6 +10,35 @@
 		<result column="member_id" property="goodsCategoryRegId"/>
 		<result column="cate_status" property="goodsCategoryStatus"/>
 	</resultMap>
+	<resultMap type="GoodsDiscount" id="goodsDiscountResultMap">
+		<id column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="discount_price" property="goodsDiscountPrice"/>
+		<result column="discount_rate" property="goodsDiscountRate"/>
+		<result column="discount_name" property="goodsDiscountName"/>
+		<result column="discount_expiration_date" property="goodsDiscountExpirationDate"/>
+		<result column="member_id" property="goodsDiscountRegistrant"/>
+		<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
+		<result column="enter_code" property="enterCode"/>
+	</resultMap>
+	<resultMap type="Goods" id="goodsResultMap">
+		<id column="g_code" property="goodsCode"/>
+		<result column="enter_code" property="enterCode"/>
+		<result column="g_cate_code" property="goodsCateCode"/>
+		<result column="g_name" property="goodsName"/>
+		<result column="g_price" property="goodsPrice"/>
+		<result column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="g_discount" property="goodsDiscountPrice"/>
+		<result column="g_netweight" property="goodsNetWeight"/>
+		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
+		<result column="g_produce" property="goodsProduce"/>
+		<result column="g_production_expiration_info" property="goodsProductionExpirationDate"/>
+		<result column="g_info_image" property="goodsInfoImage"/>
+		<result column="g_main_image" property="goodsMainImage"/>
+		<result column="g_stock" property="goodsStock"/>
+		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
+		<result column="g_reg_datetime" property="goodsRegDatetime"/>
+		<result column="g_activation" property="goodsActivation"/>
+	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
@@ -19,7 +48,7 @@
 			,member_id
 			,cate_status
 		)VALUES(
-			sf_new_goods_cate_code()
+			#{goodsCategoryCode}
 			,#{goodsCategoryName}
 			,NOW()
 			,'id001'
@@ -38,14 +67,14 @@
 			tb_goods_cate;
 	</select>
 	<!-- 상품 카테고리 리스트(사용중지된 카테고리 제외)  -->	
-	<select id="getGoodsCategoryListBuyer" resultMap="categoryResultMap">
+	<select id="getGoodsCategoryListUser" resultMap="categoryResultMap">
 		SELECT
 			g_cate_code
 			,cate_name
 		FROM
 			tb_goods_cate
 		WHERE
-			cate_status = 'Y';
+			cate_status = 1;
 	</select>
 	<!-- 특정 상품 카테고리 정보 조회(상품 카테고리 수정화면) -->
 	<select id="getGoodsCategoryInfo" parameterType="String" resultMap="categoryResultMap">
@@ -69,6 +98,7 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
+	<!-- 상품 카테고리 삭제 처리  -->
 	<delete id="removeGoodsCategory" parameterType="String">
 		DELETE 
 		FROM 
@@ -76,4 +106,234 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</delete>
+	<!-- 상품별 할인혜택 리스트(admin)   -->
+	<select id="getGoodsDiscountListAdmin" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.enter_code IS NULL;
+	</select>
+	<!-- 상품별 할인혜택 리스트(seller) -->
+	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.member_id = #{memberId}
+			OR 
+			gdm.enter_code IS NULL;
+	</select>
+	<!-- 상품 목록(전부) 하자 없는 것 -->
+	<select id="getAdminGoodsList" resultType="Map">
+		SELECT
+			g.g_code AS goodsCode
+			,gmi.file_path AS filePath
+			,gmi.file_original_name AS fileOriginalName
+			,gmi.file_new_name AS fileNewName
+			,e.enter_name AS enterName
+			,gc.cate_name AS categoryName
+			,g.g_name AS goodsName
+			,g.g_price AS goodsPrice
+			,gdm.discount_name AS goodsDiscountName
+			,g.g_discount AS goodsDiscountedPrice
+			,g.g_netweight AS goodsNetWeight
+			,g.g_netweightunit AS goodsNetWeightUnit
+			,g.g_produce AS goodsProduce
+			,g.g_production_expiration_info AS goodsProductionExpirationInfo
+			,g.g_stock AS goodsStock
+			,g.g_delivery_charge AS goodsDeliveryCharge
+			,g.g_reg_datetime AS goodsRegDatetime
+			,g.g_activation AS goodsActivation
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_enterprise AS e
+			ON 
+			e.enter_code = g.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.file_idx = g.g_main_image;
+	</select>
+	<!-- 상품 목록(활성화되어있는 것, 식단 제외) -->
+	<select id="getGoodsList" resultType="Map">
+		SELECT 
+			g_code as goodsCode
+			,g_name as goodsName
+		FROM 
+			tb_goods AS g
+			INNER JOIN 
+			tb_goods_cate AS gc
+			on
+			gc.g_cate_code = g.g_cate_code
+		WHERE 
+			g.g_activation = 1
+			AND 
+			gc.cate_name not LIKE CONCAT('%','식단','%'); 
+	</select>
+	<!-- 상품 정보  -->
+	<select id="getGoodsInfo" parameterType="String" resultType="Map">
+		SELECT 
+			g.g_name	AS goodsName
+			,g.g_price AS goodsPrice
+			,gdm.discount_price AS goodsDiscountingPrice
+			,gdm.discount_rate AS goodsDiscountingRate
+			,gdm.discount_name AS goodsDicountName
+			,g.g_discount AS goodsDiscountedPrice
+			,g.g_delivery_charge AS goodsDeliveryCharge
+			,g.g_netweight AS goodsNetWeight
+			,g.g_netweightunit AS goodsNetWeightUnit
+			,g.g_produce AS goodsProduce
+			,e.enter_name AS enterName
+			,gc.cate_name AS categoryName
+			,gc.g_cate_code AS categoryCode
+			,i.ingr_kcal AS ingredientKCal
+			,i.ingr_protein AS ingredientProtein
+			,i.ingr_carb AS ingredientCarb
+			,i.ingr_sugar AS ingredientSugar
+			,i.ingr_sodium AS ingredientSodium
+			,i.ingr_cholesterol AS ingredientCholesterol
+			,gmi.file_original_name AS goodsMainImageOriName
+			,gmi.file_path AS goodsMainImageFilePath
+			,gii.file_original_name AS goodsInfoImageOriName
+			,gii.file_path AS goodsInfoImageFilePath
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_enterprise AS e 
+			ON 
+			e.enter_code = g.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_ingredient AS i 
+			ON 
+			i.g_code = g.g_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi 
+			ON 
+			gmi.file_idx = g.g_main_image
+			INNER JOIN 
+			tb_goods_info_image AS gii
+			on
+			gii.file_idx = g.g_info_image
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+		WHERE 
+			g.g_code = #{goodsCode};
+	</select>
+	<select id="getGoodsRegApplyList" resultType="Map">
+		SELECT 
+			gmi.file_original_name AS goodsMainImageName
+			,gmi.file_path AS goodsMainImageFilePath
+			,e.enter_name AS enterName
+			,gc.cate_name AS categoryName
+			,ga.ga_name AS goodsName
+			,ga.ga_price AS goodsPrice
+			,gdm.discount_name AS goodsDiscountName
+			,ga.ga_discount AS goodsDiscountedPrice
+			,ga.ga_netweight AS goodsNetWeight
+			,ga.ga_netweightunit AS goodsNetWeightUnit
+			,ga.ga_produce AS goodsProduce
+			,ga.ga_production_expiration_info AS goodsProductionExpirationInfo
+			,ga.ga_stock AS goodsStock
+			,ga.ga_delivery_charge AS goodsDeliveryCharge
+			,ga.ga_reg_apply_datetime AS goodsRegApplyDatetime
+			,ga.g_apply_code AS goodsApplyCode
+		FROM 
+			tb_goods_apply AS ga
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.file_idx = ga.ga_main_image
+			INNER JOIN 
+			tb_goods_info_image AS gii
+			ON 
+			gii.file_idx = ga.ga_info_image
+			INNER JOIN 
+			tb_enterprise AS e 
+			ON 
+			e.enter_code = ga.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = ga.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			on
+			gdm.goods_discount_code = ga.goods_discount_code
+		WHERE 
+			ga.ga_approve_refuse = '검토중';
+	</select>
+	<select id="getAdminMenuList" resultType="Map">
+		SELECT 
+			g.g_code AS goodsCode
+			,g.g_cate_code AS categoryCode
+			,gc.cate_name AS categoryName
+			,g.g_name AS goodsName	
+			,g.g_price AS goodsPrice
+			,gdm.discount_name AS goodsDiscountName
+			,g.g_discount AS goodsDiscountedPrice
+			,g.g_netweight AS goodsNetWeight
+			,g.g_netweightunit AS goodsNetWeightUnit
+			,g.g_produce AS goodsProduce
+			,g.g_production_expiration_info AS goodsProductionExpirationInfo
+			,gmi.file_original_name AS goodsMainImageName
+			,gmi.file_path AS goodsMainImageFilePath
+			,g.g_stock AS goodsStock
+			,g.g_delivery_charge AS goodsDeliveryCharge
+			,g.g_reg_datetime AS goodsRegDatetime
+			,g.g_activation AS goodsActivation
+		FROM 
+			tb_goods AS g
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_menu_information AS mi
+			ON 
+			mi.g_code = g.g_code
+			inner JOIN 
+			tb_menu_organize AS mo
+			on
+			mo.menu_code = mi.menu_code
+			INNER JOIN
+			tb_goods_main_image AS gmi
+			on
+			gmi.file_idx = g.g_main_image
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Grade;
+import ks44team02.mapper.GoodsMapper;
 import ks44team02.mapper.GradeMapper;
 
 @Service
@@ -22,7 +23,9 @@ public class Gradeservice {
 	
 	// 구매자 등급 정의 조회
 	public List<Grade> getbuyerGradeList() {
-		return null;
+		List<Grade> buyerGradeList = gradeMapper.getbuyerGradeList();
+		
+		return buyerGradeList;
 	}
 	
 	// 구매자 등급 정의 수정

@@ -1,6 +1,9 @@
 package ks44team02.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,12 @@ public class GoodsService {
 		this.goodsMapper = goodsMapper;
 	}
 	
+	// 상품 등록 신청 리스트
+	public List<Map<String, Object>> getGoodsRegApplyList(){
+		List<Map<String, Object>> goodsRegApplyList = goodsMapper.getGoodsRegApplyList();
+		return goodsRegApplyList;
+	}
+	
 	//상품 카테고리 등록
 	public boolean addGoodsCategory(GoodsCategory goodsCategory) {
 		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
@@ -34,9 +43,9 @@ public class GoodsService {
 	}
 	
 	//상품 카테고리 리스트: 사용중인 것만
-	public List<GoodsCategory> getGoodsCategoryListBuyer(){
+	public List<GoodsCategory> getGoodsCategoryListUser(){
 		
-		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryListBuyer();
+		List<GoodsCategory> goodsCategoryList = goodsMapper.getGoodsCategoryListUser();
 		
 		return goodsCategoryList;
 	}
@@ -59,9 +68,15 @@ public class GoodsService {
 		return resultRemove;
 	}
 	
+	//상품 등록 처리(관리자)
+	public boolean addAdminGoods(Goods goods) {
+		return false;
+	}
+	
 	//상품 리스트
 	public List<Goods> getAdminGoodsList(){
-		return null;
+		List<Goods> goodsList = goodsMapper.getAdminGoodsList();
+		return goodsList;
 	}
 	
 	//상품 삭제
@@ -75,8 +90,9 @@ public class GoodsService {
 	}
 	
 	//식단 리스트
-	public List<Goods> getAdminMenuList(){
-		return null;
+	public List<Map<String, Object>> getAdminMenuList(){
+		List<Map<String, Object>> adminMenuList = goodsMapper.getAdminMenuList();
+		return adminMenuList;
 	}
 	
 	//식단 수정
@@ -90,9 +106,12 @@ public class GoodsService {
 	}
 	
 	//개별 상품 정보
-	public Goods getGoodsInfo() {
-		return null;
+	public Map<String, Object> getGoodsInfo(String goodsCode) {
+		Map<String, Object> goodsInfo = goodsMapper.getGoodsInfo(goodsCode);
+		return goodsInfo;
 	}
+	
+	//
 	
 	//개별 식단 정보
 	public Goods getMenuInfo() {
@@ -104,9 +123,20 @@ public class GoodsService {
 		return 0;
 	}
 	
-	//상품별 할인 혜택 리스트
-	public List<GoodsDiscount> getGoodsDiscountList(){
-		return null;
+	//상품별 할인 혜택 리스트(admin: admin이 등록한 할인혜택만)
+	public List<GoodsDiscount> getGoodsDiscountListAdmin(){
+		List<GoodsDiscount> goodsDiscountAdmin = goodsMapper.getGoodsDiscountListAdmin();
+		return goodsDiscountAdmin;
+	}
+	
+	//상품별 할인 혜택 리스트(seller: seller가 접속한 session id와 일치하는 목록 출력)
+	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session){
+		//세션의 아이디 조회
+		//현재 없으므로 fix된 값 사용
+		//String memberId = session.getAttribute("SID");
+		String memberId = "id010";
+		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
+		return goodsDiscountListSeller;
 	}
 	
 	//상품별 할인 혜택 수정
@@ -174,9 +204,10 @@ public class GoodsService {
 		return null;
 	}
 	
-	//상품 목록
-	public List<Goods> getGoodsList(){
-		return null;
+	//상품 목록(활성화 되어있는 것만), 식단 제외
+	public List<Map<String, Object>> getGoodsList(){
+		List<Map<String, Object>> goodsList = goodsMapper.getGoodsList();
+		return goodsList;
 	}
 	
 	//개별 식단 정보

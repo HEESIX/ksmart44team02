@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	식단 리스트(관리자)
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>식단 목록</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>메인이미지</th>
+										<th>판매사</th>
+										<th>카테고리</th>
+										<th>상품명</th>
+										<th>가격</th>
+										<th>적용 할인 혜택</th>
+										<th>할인 혜택 적용 후 가격</th>
+										<th>포장 단위 중량</th>
+										<th>원산지</th>
+										<th>제조일/유통기한</th>
+										<th>재고</th>
+										<th>배송비</th>
+										<th>등록일자</th>
+										<th>판매여부</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(adminMenuList)}"
+										th:each="aml, status : ${adminMenuList}">
+										<td th:text="${status.count}"></td>
+										<td><img th:src="@{'/' + ${aml.goodsMainImageFilePath}}"
+											th:alt="${aml.goodsMainImageName}" style="width: 100px;" /></td>
+										<td th:text="${aml.categoryName}"></td>
+										<td th:text="${aml.goodsName}"></td>
+										<td th:text="${aml.goodsPrice}"></td>
+										<td th:text="${aml.goodsDiscountName}"></td>
+										<td th:text="${aml.goodsDiscountedPrice}"></td>
+										<td th:unless="${aml.goodsNetWeight} == 0 or ${aml.goodsNetWeightUnit} == null" th:text="${aml.goodsNetWeight}+${aml.goodsNetWeightUnit}"></td>
+										<td th:if="${aml.goodsNetWeight} == 0 or ${aml.goodsNetWeightUnit} == null">컨텐츠 참조</td>
+										<td th:text="${aml.goodsProduce}"></td>
+										<td th:text="${aml.goodsProductionExpirationInfo}"></td>
+										<td th:text="${aml.goodsStock}"></td>
+										<td th:text="${aml.goodsDeliveryCharge}"></td>
+										<td th:text="${aml.goodsRegDatetime}"></td>
+										<td th:if="${aml.goodsActivation} == 1">판매중</td>
+										<td th:unless="${aml.goodsActivation} == 1">판매중지</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 </html>

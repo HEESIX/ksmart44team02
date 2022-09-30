@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	상품 등록 신청 리스트
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<!-- 상품 등록 신청 리스트  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>상품 등록 신청 목록</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>메인이미지</th>
+										<th>판매사</th>
+										<th>카테고리</th>
+										<th>상품명</th>
+										<th>가격</th>
+										<th>적용 할인 혜택</th>
+										<th>할인 혜택 적용 후 가격</th>
+										<th>포장 단위 중량</th>
+										<th>원산지</th>
+										<th>제조일/유통기한</th>
+										<th>재고</th>
+										<th>배송비</th>
+										<th>신청 일시</th>
+										<th>승인</th>
+										<th>거절</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(goodsRegApplyList)}"
+										th:each="gral, status : ${goodsRegApplyList}">
+										<td th:text="${status.count}"></td>
+										<td><img th:src="@{'/' + ${gral.goodsMainImageFilePath}}"
+											th:alt="${gral.goodsMainImageName}" style="width: 100px;" /></td>
+										<td th:text="${gral.enterName}"></td>
+										<td th:text="${gral.categoryName}"></td>
+										<td th:text="${gral.goodsName}"></td>
+										<td th:text="${gral.goodsPrice}"></td>
+										<td th:text="${gral.goodsDiscountName}"></td>
+										<td th:text="${gral.goodsDiscountedPrice}"></td>
+										<td
+											th:text="${gral.goodsNetWeight}+${gral.goodsNetWeightUnit}"></td>
+										<td th:text="${gral.goodsProduce}"></td>
+										<td th:text="${gral.goodsProductionExpirationInfo}"></td>
+										<td th:text="${gral.goodsStock}"></td>
+										<td th:text="${gral.goodsDeliveryCharge}"></td>
+										<td th:text="${gral.goodsRegApplyDatetime}"></td>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(goodsRegApplyList)}">
+										<td colspan="16" style="text-align: center;">상품 등록 신청이
+											없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 </html>

@@ -26,24 +26,27 @@ public class DiscountService {
 	//주문서별 할인혜택 목록 조회
 	public List<OrderDiscount> getOrderDiscountList(){
 		List<OrderDiscount> orderDiscount = discountMapper.getOrderDiscountList();
-		return null;
+		return orderDiscount;
 	}
 	//특정 주문서별 할인혜택 조회
 	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode) {
-		OrderDiscount orderDiscount = discountMapper.getOrderDiscountInfo();
-		return orderDiscount;
+		OrderDiscount orderDiscountInfo = discountMapper.getOrderDiscountInfo(orderDiscountCode);
+		return orderDiscountInfo;
 	}
-	//주문서별 할인혜택 수정
+	//주문서별 할인혜택 수정처리
 	public boolean modifyOrderDiscount(OrderDiscount orderDiscount) {
 		boolean result = discountMapper.modifyOrderDiscount(orderDiscount);
 		return result;
 	}
 	//주문서별 할인혜택 등록
-	public void addOrderDiscount(OrderDiscount orderDiscount) {
+	public boolean addOrderDiscount(OrderDiscount orderDiscount) {
+		boolean result = discountMapper.addOrderDiscount(orderDiscount);
+		return result;
 	}
 	//주문서별 할인혜택 삭제
-	public void removeOrderDiscount(OrderDiscount orderDiscount) {
-		
+	public boolean removeOrderDiscount(String orderDiscountCode) {
+		boolean resultRemove = discountMapper.removeOrderDiscount(orderDiscountCode);
+		return resultRemove;
 	}
 
 }

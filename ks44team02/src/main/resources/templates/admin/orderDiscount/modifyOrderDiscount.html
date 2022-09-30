@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 주문서별 할인혜택 수정 폼  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+		<div class="row">
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card" th:object="${orderDiscountInfo}">
+					<div class="card-header" style="text-align: center;">
+					</div>
+					<form th:action="@{/admin/orderDiscount/modifyOrderDiscount}"
+						method="post">
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="orderDiscountCode"
+									class="col-xs-2 col-form-label form-control-label">할인혜택 코드</label>
+								<div class="col-sm-10">
+									<input th:value="*{orderDiscountCode}" class="form-control"
+										type="text" id="orderDiscountCode" name="orderDiscountCode"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="discountName"
+									class="col-xs-2 col-form-label form-control-label">혜택명</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountName}" class="form-control"
+										type="text" id="discountName" name="discountName">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="discountRate"
+									class="col-xs-2 col-form-label form-control-label">할인율</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountRate}" class="form-control"
+										type="text" id="discountRate" name="discountRate">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="discountPrice"
+									class="col-xs-2 col-form-label form-control-label">할인금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountPrice}" class="form-control"
+										type="text" id="discountPrice" name="discountPrice">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="discountExpirationDate"
+									class="col-xs-2 col-form-label form-control-label">유효기간</label>
+								<div class="col-sm-10">
+									<input th:value="*{discountExpirationDate}" class="form-control"
+										type="text" id="discountExpirationDate" name="discountExpirationDate">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="minOrderPrice"
+									class="col-xs-2 col-form-label form-control-label">최소주문금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{minOrderPrice}" class="form-control"
+										type="text" id="minOrderPrice" name="minOrderPrice">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="maxDiscountPrice"
+									class="col-xs-2 col-form-label form-control-label">최대할인금액</label>
+								<div class="col-sm-10">
+									<input th:value="*{maxDiscountPrice}" class="form-control"
+										type="text" id="maxDiscountPrice" name="maxDiscountPrice">
+								</div>
+							</div>
+							<button id="modifyBtn" type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">수정완료</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>

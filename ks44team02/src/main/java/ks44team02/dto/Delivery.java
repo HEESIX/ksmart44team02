@@ -1,6 +1,6 @@
 package ks44team02.dto;
 
-//배송관리 객체
+//배송관리(주문 세부내역) 객체
 public class Delivery {
 	private String deliveryCode;
 	private String orderDetailCode;
