@@ -19,6 +19,15 @@ public class Goods {
 	private int goodsDeliveryCharge;
 	private String goodsRegDatetime;
 	private int goodsActivation;
+	
+	private Enterprise enterprise;
+	private GoodsDiscount goodsDiscount;
+	private GoodsCategory goodsCategory;
+	private Ingredient ingredient;
+	private Menus menu;
+	private GoodsMainImage goodsMainImageInfo;
+	private GoodsInfoImage goodsInfoImageInfo;
+	
 
 	public String getGoodsNetWeightUnit() {
 		return goodsNetWeightUnit;
