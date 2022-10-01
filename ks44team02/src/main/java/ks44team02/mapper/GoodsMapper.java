@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks44team02.dto.FileDto;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.Menus;
 
@@ -57,7 +57,7 @@ public interface GoodsMapper {
 	public Map<String, Object> getGoodsInfo(String goodsCode);
 	
 	//소개 이미지 정보
-	public FileDto getGoodsInfoImage(String goodsCode, int isLocal);
+	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
 	public Map<String, Object> getMenuInfo(String menuCode);

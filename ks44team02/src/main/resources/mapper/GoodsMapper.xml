@@ -45,6 +45,48 @@
 		<result column="g_code" property="goodsOfMenuCode"/>
 		<result column="menu_goods_amount" property="menuGoodsAmount"/>
 	</resultMap>
+	<resultMap type="Goods" id="exampleResultMap">
+		<id column="g_code" property="goodsCode"/>
+		<result column="enter_code" property="enterCode"/>
+		<result column="g_cate_code" property="goodsCateCode"/>
+		<result column="g_name" property="goodsName"/>
+		<result column="g_price" property="goodsPrice"/>
+		<result column="goods_discount_code" property="goodsDiscountCode"/>
+		<result column="g_discount" property="goodsDiscountPrice"/>
+		<result column="g_netweight" property="goodsNetWeight"/>
+		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
+		<result column="g_produce" property="goodsProduce"/>
+		<result column="g_production_expiration_info" property="goodsProductionExpirationDate"/>
+		<result column="g_main_image" property="goodsMainImage"/>
+		<result column="g_info_image" property="goodsInfoImage"/>
+		<result column="g_stock" property="goodsStock"/>
+		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
+		<result column="g_reg_datetime" property="goodsRegDatetime"/>
+		<result column="g_activation" property="goodsActivation"/>
+		<association property="enterprise" javaType="EnterPrise">
+			<id column="enter_code" property="enterCode"/>
+			<result column="memberId" property="enterId"/>
+			<result column="launching_brand" property="enterBrand"/>
+			<result column="enter_name" property="enterName"/>
+			<result column="enter_address" property="enterAdd"/>
+			<result column="enter_number" property="enterNum"/>
+			<result column="enter_sign_datetime" property="enterDate"/>
+			<result column="enter_business_reg_num" property="enterBusinessNum"/>
+			<result column="seller_level_code" property="enterLevelCode"/>
+			<result column="reg_products_amt" property="enterProducts"/>
+			<result column="enter_withdraw_status" property="enterWithdraw"/>
+		</association>
+		<association property="goodsDiscount" javaType="GoodsDiscount">
+			<id column="goods_discount_code" property="goodsDiscountCode"/>
+			<result column="discount_price" property="goodsDiscountPrice"/>
+			<result column="discount_rate" property="goodsDiscountRate"/>
+			<result column="discount_name" property="goodsDiscountName"/>
+			<result column="discount_expiration_date" property="goodsDiscountExpirationDate"/>
+			<result column="member_id" property="goodsDiscountRegistrant"/>
+			<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
+			<result column="enter_code" property="enterCode"/>
+		</association>
+	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
@@ -150,9 +192,9 @@
 	<select id="getAdminGoodsList" resultType="Map">
 		SELECT
 			g.g_code AS goodsCode
-			,gmi.file_path AS filePath
-			,gmi.file_original_name AS fileOriginalName
-			,gmi.file_new_name AS fileNewName
+			,gmi.main_image_path AS filePath
+			,gmi.main_image_original_name AS fileOriginalName
+			,gmi.main_image_new_name AS fileNewName
 			,e.enter_name AS enterName
 			,gc.cate_name AS categoryName
 			,g.g_name AS goodsName
@@ -184,7 +226,7 @@
 			INNER JOIN 
 			tb_goods_main_image AS gmi
 			ON 
-			gmi.file_idx = g.g_main_image;
+			gmi.main_image_idx = g.g_main_image;
 	</select>
 	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
 	<select id="getGoodsList" resultType="Map">
@@ -226,10 +268,10 @@
 			,i.ingr_sugar AS ingredientSugar
 			,i.ingr_sodium AS ingredientSodium
 			,i.ingr_cholesterol AS ingredientCholesterol
-			,gmi.file_original_name AS goodsMainImageOriName
-			,gmi.file_path AS goodsMainImageFilePath
-			,gii.file_original_name AS goodsInfoImageOriName
-			,gii.file_path AS goodsInfoImageFilePath
+			,gmi.main_image_original_name AS goodsMainImageOriName
+			,gmi.main_image_path AS goodsMainImageFilePath
+			,gii.info_image_original_name AS goodsInfoImageOriName
+			,gii.info_image_path AS goodsInfoImageFilePath
 		FROM 
 			tb_goods AS g 
 			INNER JOIN 
@@ -247,11 +289,11 @@
 			INNER JOIN 
 			tb_goods_main_image AS gmi 
 			ON 
-			gmi.file_idx = g.g_main_image
+			gmi.main_image_idx = g.g_main_image
 			INNER JOIN 
 			tb_goods_info_image AS gii
 			on
-			gii.file_idx = g.g_info_image
+			gii.info_image_idx = g.g_info_image
 			INNER JOIN 
 			tb_goods_discount_management AS gdm
 			ON 
@@ -262,8 +304,8 @@
 	<!-- 상품 등록 신청 목록  -->
 	<select id="getGoodsRegApplyList" resultType="Map">
 		SELECT 
-			gmi.file_original_name AS goodsMainImageName
-			,gmi.file_path AS goodsMainImageFilePath
+			gmi.main_image_original_name AS goodsMainImageName
+			,gmi.main_image_path AS goodsMainImageFilePath
 			,e.enter_name AS enterName
 			,gc.cate_name AS categoryName
 			,ga.ga_name AS goodsName
@@ -283,11 +325,11 @@
 			INNER JOIN 
 			tb_goods_main_image AS gmi
 			ON 
-			gmi.file_idx = ga.ga_main_image
+			gmi.main_image_idx = ga.ga_main_image
 			INNER JOIN 
 			tb_goods_info_image AS gii
 			ON 
-			gii.file_idx = ga.ga_info_image
+			gii.info_image_idx = ga.ga_info_image
 			INNER JOIN 
 			tb_enterprise AS e 
 			ON 
@@ -315,8 +357,8 @@
 			,g.g_discount AS goodsDiscountedPrice
 			,g.g_produce AS goodsProduce
 			,g.g_production_expiration_info AS goodsProductionExpirationInfo
-			,gmi.file_original_name AS goodsMainImageName
-			,gmi.file_path AS goodsMainImageFilePath
+			,gmi.main_image_original_name AS goodsMainImageName
+			,gmi.main_image_path AS goodsMainImageFilePath
 			,g.g_stock AS goodsStock
 			,g.g_delivery_charge AS goodsDeliveryCharge
 			,g.g_reg_datetime AS goodsRegDatetime
@@ -334,7 +376,7 @@
 			INNER JOIN
 			tb_goods_main_image AS gmi
 			on
-			gmi.file_idx = g.g_main_image
+			gmi.main_image_idx = g.g_main_image
 			INNER JOIN 
 			tb_goods_discount_management AS gdm
 			ON 
@@ -367,10 +409,10 @@
 			,g.g_netweightunit AS goodsNetWeightUnit
 			,g.g_produce AS goodsProduce
 			,g.g_production_expiration_info AS goodsProductionExpirationInfo
-			,gmi.file_original_name AS goodsMainImageName
-			,gmi.file_path AS goodsMainImageFilePath
-			,gii.file_original_name AS goodsInfoImageName
-			,gii.file_path AS goodsInfoImageFilePath
+			,gmi.main_image_original_name AS goodsMainImageName
+			,gmi.main_image_path AS goodsMainImageFilePath
+			,gii.info_image_original_name AS goodsInfoImageName
+			,gii.info_image_path AS goodsInfoImageFilePath
 			,g.g_stock AS goodsStock
 			,g.g_delivery_charge AS goodsDeliveryCharge
 			,g.g_reg_datetime AS goodsRegDatetime
@@ -388,7 +430,7 @@
 			INNER JOIN
 			tb_goods_main_image AS gmi
 			on
-			gmi.file_idx = g.g_main_image
+			gmi.main_image_idx = g.g_main_image
 			INNER JOIN 
 			tb_goods_discount_management AS gdm
 			ON 
@@ -396,7 +438,7 @@
 			INNER JOIN 
 			tb_goods_info_image AS gii
 			ON 
-			gii.file_idx = g.g_info_image
+			gii.info_image_idx = g.g_info_image
 		WHERE 
 			mi.menu_code = #{menuCode}
 	</select>
