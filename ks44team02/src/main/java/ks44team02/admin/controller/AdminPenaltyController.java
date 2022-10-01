@@ -5,12 +5,14 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.service.PenaltyService;
 
 @Controller
-@RequestMapping(value = "/admin/penalty")
+@RequestMapping(value = "/admin")
 public class AdminPenaltyController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
@@ -27,8 +29,15 @@ public class AdminPenaltyController {
 	}
 	
 	//패널티 부여 폼
-	public int givePenalty() {
-		return 0;
+	@GetMapping("/pernaltyManage/givePenalty")
+	public String givePenaltyForm() {
+		return "admin/pernaltyManage/givePenalty";
+	}
+	
+	//패널티 부여 처리
+	@PostMapping("/pernaltyManage/givePenalty")
+	public String givePenalty() {
+		return"/admin/pernaltyManage/givePenalty";
 	}
 
 }

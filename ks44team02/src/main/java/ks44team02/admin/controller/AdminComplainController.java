@@ -5,12 +5,14 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.service.ComplainService;
 
 @Controller
-@RequestMapping(value = "/admin/Complain")
+@RequestMapping(value = "/admin")
 public class AdminComplainController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
@@ -27,12 +29,20 @@ public class AdminComplainController {
 	}
 	
 	//회원 신고내역 조회
+	@GetMapping("/complainManage/complainList")
 	public String getComplainList() {
-		return null;
+		return "admin/complainManage/complainList";
 	}
 
-	//회원 신고내역 삭제
-	public int ComplainDelete() {
-		return 0;
+	//회원 신고내역 삭제 폼
+	@GetMapping("/complainManage/complainDelete")
+	public String ComplainDeleteForm() {
+		return "admin/complainManage/complainDelete";
+	}
+	
+	//회원 신고내역 삭제처리
+	@PostMapping("/complainManage/complainDelete/{complainCode}")
+	public String ComplainDelete( ) {
+		return "admin/complainManage/complainDelete";
 	}
 }

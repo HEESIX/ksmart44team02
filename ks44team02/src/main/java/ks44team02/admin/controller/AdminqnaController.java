@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.dto.Mileage;
+import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.QnA;
 import ks44team02.service.QnAservice;
 
@@ -46,11 +46,17 @@ public class AdminqnaController {
 	}
 
 	//회원 QnA 답글 등록 폼
-	@PostMapping("/qnaManage/qnaAnswer")
-	public String qnaAnswer(@PathVariable(value = "qnaAnswer") String qnaAnswer
+	@GetMapping("/qnaManage/qnaAnswer")
+	public String qnaAnswerForm(@PathVariable(value = "qnaAnswer") String qnaAnswer
 			,Model model) {
 		 QnA Answerqna = qnaService.getqnaInfo(qnaAnswer);
 		return "/admin/qnaManage/qnaAnswer";
+	}
+	
+	//회원QnA 답글 등록 처리
+	@PostMapping("/qnaManage/qnaAnswer")
+	public String qnaAnswer() {
+		return "admin/qnaManage/qnaAnswer";
 	}
 
 }

@@ -3,11 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.MileageMapper">
-	<resultMap type="Mileage" id="mileageResultMap">
+	<resultMap type="MemberMileageAcc" id="mileageResultMap">
 		<id column="m_mileage_acc_code" property="mMileageCode"/>
 		<result column="member_id" property="memberId"/>
 		<result column="order_detail_code" property="orderDetailCode"/>
-		<result column="order_detail_code" property="currentMileage"/>
+		<result column="present_mileage" property="currentMileage"/>
 		<result column="mileage_distinct" property="mileageDistinct"/>
 		<result column="added_used_mileage" property="addedUsedMileage"/>
 		<result column="mileage_subtotal" property="mileageSubtotal"/>
@@ -17,17 +17,20 @@
 	
 	
 	<!-- 회원 마일리지 조회 -->
-	<select id="getMileageList" resultMap="mileageResultMap">
+	<select id="getMileageList" parameterType="String" resultMap="mileageResultMap">
 		SELECT
 			member_id
+			,order_detail_code
 			,present_mileage
+			,mileage_distinct
 			,added_used_mileage
 			,mileage_subtotal
 			,mileage_update_datetime
 		FROM
-			tb_member_mileage_acc;
-		WhERE
-		  member_id = #{memberId};	
+			tb_member_mileage_acc
+		WHERE
+			member_id = #{memberId};
+				
 	</select>
 	
 	</mapper>
