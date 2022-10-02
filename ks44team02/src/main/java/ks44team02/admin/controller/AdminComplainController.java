@@ -1,14 +1,18 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.Complain;
 import ks44team02.service.ComplainService;
 
 @Controller
@@ -30,7 +34,13 @@ public class AdminComplainController {
 	
 	//회원 신고내역 조회
 	@GetMapping("/complainManage/complainList")
-	public String getComplainList() {
+	public String getComplainList(Model model) {
+		log.info("/complainManage/complainList getComplainList AdminComplainController");
+		System.out.println("/complainManage/complainList getComplainList AdminComplainController");
+		List<Complain> complainList = complainService.getComplainList();
+		System.out.println(complainList.toString());
+		model.addAttribute("title", "회원 신고내역 현황");
+		model.addAttribute("complainList", complainList);
 		return "admin/complainManage/complainList";
 	}
 
