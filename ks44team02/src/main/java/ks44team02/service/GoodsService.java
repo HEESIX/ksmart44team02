@@ -12,7 +12,7 @@ import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.MenuOrganize;
-import ks44team02.dto.Menus;
+import ks44team02.dto.MenuInformation;
 import ks44team02.mapper.GoodsMapper;
 
 @Service
@@ -206,7 +206,7 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 목록 조회
-	public List<Menus> getBuyerMenuList() {
+	public List<MenuInformation> getBuyerMenuList() {
 		return null;
 	}
 
@@ -221,12 +221,12 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 정보
-	public Menus getBuyerMenuInfo() {
+	public MenuInformation getBuyerMenuInfo() {
 		return null;
 	}
 
 	// 식단 목록
-	public List<Menus> getMenuList() {
+	public List<MenuInformation> getMenuList() {
 		return null;
 	}
 

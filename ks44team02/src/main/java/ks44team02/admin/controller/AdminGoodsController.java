@@ -176,7 +176,7 @@ public class AdminGoodsController {
 	@GetMapping("/goods_list_admin")
 	public String getAdminGoodsList(Model model) {
 		List<Goods> goodsList = goodsService.getAdminGoodsList();
-
+		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goods_list_admin";
 	}

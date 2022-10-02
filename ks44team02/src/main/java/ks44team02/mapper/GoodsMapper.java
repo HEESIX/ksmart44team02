@@ -10,7 +10,7 @@ import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.MenuOrganize;
-import ks44team02.dto.Menus;
+import ks44team02.dto.MenuInformation;
 
 @Mapper
 public interface GoodsMapper {
@@ -99,7 +99,7 @@ public interface GoodsMapper {
 	public int addBuyerMenu();
 	
 	//개인 맞춤 식단 목록 조회
-	public List<Menus> getBuyerMenuList();
+	public List<MenuInformation> getBuyerMenuList();
 	
 	//개인 맞춤 식단 수정
 	public int modifyBuyerMenu();
@@ -108,10 +108,10 @@ public interface GoodsMapper {
 	public int removeBuyerMenu();
 	
 	//개인 맞춤 식단 정보
-	public Menus getBuyerMenuInfo();
+	public MenuInformation getBuyerMenuInfo();
 	
 	//식단 목록
-	public List<Menus> getMenuList();
+	public List<MenuInformation> getMenuList();
 	
 	//상품 목록(활성화 되어있는 것만)
 	public List<Map<String, Object>> getGoodsList();
