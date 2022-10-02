@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.dto.Mileage;
+import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.OrderDiscount;
 import ks44team02.dto.Review;
 import ks44team02.service.ReviewService;
 
 @Controller
-@RequestMapping(value = "/admin/review")
+@RequestMapping(value = "/admin")
 public class AdminReviewController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
@@ -44,16 +44,23 @@ public class AdminReviewController {
 		return "/admin/reviewManage/watchReview";
 	}
 
-	//회원 리뷰 수정
-	@PostMapping("/reviewManage/modifyReview")
-	public String ReviewModify(@PathVariable(value = "reviewContents") String reviewContents
+	//회원 리뷰 수정 폼
+	@GetMapping("/reviewManage/modifyReview")
+	public String ReviewModifyForm(@PathVariable(value = "reviewContents") String reviewContents
 			,Model model) {
 		Review reviewList = reviewService.getReviewInfo(reviewContents);
 		return "admin/reviewManage/modifyReview";
 	}
-	//회원 리뷰 삭제
-	@PostMapping("/reviewManage/deleteReview")
-	public String ReviewDelete(@PathVariable(value = "reviewContents") String reviewContents
+	
+	//회원리뷰 수정처리
+	@PostMapping("/reviewManage/modifyReview")
+	public String ReviewModify() {
+		return "admin/reviewManage/modifyReview";
+	}
+	
+	//회원 리뷰 삭제 폼
+	@GetMapping("/reviewManage/deleteReview")
+	public String ReviewDeletForm(@PathVariable(value = "reviewContents") String reviewContents
 			,Model model) {
 		
 		Review reviewInfo = reviewService.getReviewInfo(reviewContents);
@@ -62,9 +69,16 @@ public class AdminReviewController {
 		model.addAttribute("reviewInfo", reviewInfo);
 		return "admin/reviewManage/deleteReview";
 	}
-	//회원 리뷰 답변
-	@PostMapping("/reviewManage/answerReview")
-	public String ReviewAnswer(@PathVariable(value = "reviewContents") String reviewContents
+	
+	//회원리뷰 삭제처리
+		@PostMapping("/reviewManage/deleteReview")
+		public String ReviewDelet() {
+			return "admin/reviewManage/deleteReview";
+		}
+		
+	//회원 리뷰 답변 폼
+	@GetMapping("/reviewManage/answerReview")
+	public String ReviewAnsweForm(@PathVariable(value = "reviewContents") String reviewContents
 			,Model model) {
 		
 		Review reviewInfo = reviewService.getReviewInfo(reviewContents);
@@ -73,7 +87,17 @@ public class AdminReviewController {
 		model.addAttribute("reviewInfo", reviewInfo);
 		
 		
-		return "/reviewManage/answerReview";
+		return "admin/reviewManage/answerReview";
 	}
+	
+	/*
+	 * //회원리뷰 답변처리
+	 * 
+	 * @PostMapping("/reviewManage/deleteReview") public String ReviewAnswer() {
+	 * return "admin/reviewManage/deleteReview"; }
+	 */
+		
+	
+	
 
 }
