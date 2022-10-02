@@ -26,37 +26,37 @@ public class AdminDeliveryController {
 	
 	
 	//구매자의 배송현황 조회
-	@GetMapping("/buyer_order_delivery_status")
+	@GetMapping("/buyerOrderDeliveryStatus")
 	public String getAdminOrderStatusList() {
 		return null;
 	}
 
 	//환불 사유 카테고리 등록
-	@GetMapping("/refund_exchange_reason_add")
+	@GetMapping("/refundExchangeReasonAdd")
 	public String addRefundExchangeReason(Model model) {
 		return null;
 	}
 
 	//환불 사유 카테고리 등록 처리
-	@PostMapping("/refund_exchange_reason_add")
+	@PostMapping("/refundExchangeReasonAdd")
 	public String addRefundExchangeReason() {
 		return null;
 	}
 
 	//환불 사유 카테고리 수정
-	@GetMapping("/refund_exchange_reason_modify/{refund_exchange_reasons_code}")
+	@GetMapping("/refundExchangeReasonModify/{refund_exchange_reasons_code}")
 	public String modifyRefundExchangeReason(@PathVariable(value = "refund_exchange_reasons_code") String refund_exchange_reasons_code) {
 		return null;
 	}
 	
 	//환불 사유 카테고리 수정 처리
-	@PostMapping("/refund_exchange_reason_modify")
+	@PostMapping("/refundExchangeReasonModify")
 	public String modifyRefundExchangeReason() {
 		return null;
 	}
 	
 	//환불 사유 카테고리 리스트
-	@GetMapping("/refund_exchange_reason_list")
+	@GetMapping("/refundExchangeReasonList")
 	public String getRefundExchangeReasonList() {
 		return null;
 	}
