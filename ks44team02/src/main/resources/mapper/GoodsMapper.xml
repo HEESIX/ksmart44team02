@@ -19,6 +19,25 @@
 		<result column="member_id" property="goodsDiscountRegistrant"/>
 		<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
 		<result column="enter_code" property="enterCode"/>
+		<association property="enterprise" javaType="EnterPrise" columnPrefix="en_">
+			<id column="enter_code" property="enterCode"/>
+			<result column="memberId" property="enterId"/>
+			<result column="launching_brand" property="enterBrand"/>
+			<result column="enter_name" property="enterName"/>
+			<result column="enter_address" property="enterAdd"/>
+			<result column="enter_number" property="enterNum"/>
+			<result column="enter_sign_datetime" property="enterDate"/>
+			<result column="enter_business_reg_num" property="enterBusinessNum"/>
+			<result column="seller_level_code" property="enterLevelCode"/>
+			<result column="reg_products_amt" property="enterProducts"/>
+			<result column="enter_withdraw_status" property="enterWithdraw"/>
+		</association>
+	</resultMap>
+	<resultMap type="MenuOrganize" id="menuOrganizeResultMap">
+		<id column="menu_goods_code" property="menuGoodsCode"/>
+		<result column="menu_code" property="menuCode"/>
+		<result column="g_code" property="goodsOfMenuCode"/>
+		<result column="menu_goods_amount" property="menuGoodsAmount"/>
 	</resultMap>
 	<resultMap type="Goods" id="goodsResultMap">
 		<id column="g_code" property="goodsCode"/>
@@ -32,38 +51,13 @@
 		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
 		<result column="g_produce" property="goodsProduce"/>
 		<result column="g_production_expiration_info" property="goodsProductionExpirationDate"/>
-		<result column="g_info_image" property="goodsInfoImage"/>
-		<result column="g_main_image" property="goodsMainImage"/>
-		<result column="g_stock" property="goodsStock"/>
-		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
-		<result column="g_reg_datetime" property="goodsRegDatetime"/>
-		<result column="g_activation" property="goodsActivation"/>
-	</resultMap>
-	<resultMap type="MenuOrganize" id="menuOrganizeResultMap">
-		<id column="menu_goods_code" property="menuGoodsCode"/>
-		<result column="menu_code" property="menuCode"/>
-		<result column="g_code" property="goodsOfMenuCode"/>
-		<result column="menu_goods_amount" property="menuGoodsAmount"/>
-	</resultMap>
-	<resultMap type="Goods" id="exampleResultMap">
-		<id column="g_code" property="goodsCode"/>
-		<result column="enter_code" property="enterCode"/>
-		<result column="g_cate_code" property="goodsCateCode"/>
-		<result column="g_name" property="goodsName"/>
-		<result column="g_price" property="goodsPrice"/>
-		<result column="goods_discount_code" property="goodsDiscountCode"/>
-		<result column="g_discount" property="goodsDiscountPrice"/>
-		<result column="g_netweight" property="goodsNetWeight"/>
-		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
-		<result column="g_produce" property="goodsProduce"/>
-		<result column="g_production_expiration_info" property="goodsProductionExpirationDate"/>
 		<result column="g_main_image" property="goodsMainImage"/>
 		<result column="g_info_image" property="goodsInfoImage"/>
 		<result column="g_stock" property="goodsStock"/>
 		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
 		<result column="g_reg_datetime" property="goodsRegDatetime"/>
 		<result column="g_activation" property="goodsActivation"/>
-		<association property="enterprise" javaType="EnterPrise">
+		<association property="enterprise" javaType="EnterPrise" columnPrefix="e_">
 			<id column="enter_code" property="enterCode"/>
 			<result column="memberId" property="enterId"/>
 			<result column="launching_brand" property="enterBrand"/>
@@ -76,7 +70,7 @@
 			<result column="reg_products_amt" property="enterProducts"/>
 			<result column="enter_withdraw_status" property="enterWithdraw"/>
 		</association>
-		<association property="goodsDiscount" javaType="GoodsDiscount">
+		<association property="goodsDiscount" javaType="GoodsDiscount" columnPrefix="gdm_">
 			<id column="goods_discount_code" property="goodsDiscountCode"/>
 			<result column="discount_price" property="goodsDiscountPrice"/>
 			<result column="discount_rate" property="goodsDiscountRate"/>
@@ -85,6 +79,46 @@
 			<result column="member_id" property="goodsDiscountRegistrant"/>
 			<result column="g_pro_reg_datetime" property="goodsDiscountRegDatetime"/>
 			<result column="enter_code" property="enterCode"/>
+		</association>
+		<association property="goodsCategory" javaType="GoodsCategory" columnPrefix="gc_">
+			<id column="g_cate_code" property="goodsCategoryCode"/>
+			<result column="cate_name" property="goodsCategoryName"/>
+			<result column="cate_reg_date" property="goodsCategoryRegDate"/>
+			<result column="member_id" property="goodsCategoryRegId"/>
+			<result column="cate_status" property="goodsCategoryStatus"/>
+		</association>
+		<association property="ingredient" javaType="Ingredient" columnPrefix="i_">
+			<id column="ingr_code" property="ingredientCode"/>
+			<result column="g_code" property="goodsCode"/>
+			<result column="ingr_kcal" property="ingredientKCal"/>
+			<result column="ingr_protein" property="ingredientProtein"/>
+			<result column="ingr_carb" property="ingredientCarb"/>
+			<result column="ingr_sugar" property="ingredientSugar"/>
+			<result column="ingr_sodium" property="ingredientSodium"/>
+			<result column="ingr_cholesterol" property="ingredientCholesterol"/>
+		</association>
+		<association property="menuInformation" javaType="MenuInformation" columnPrefix="mi_">
+			<id column="menu_code" property="menuCode"/>
+			<result column="g_code" property="goodsCode"/>
+			<result column="menu_name" property="menuName"/>
+			<result column="menu_reg_datetime" property="menuRegDatetime"/>
+			<result column="menu_reg_id" property="menuRegId"/>
+		</association>
+		<association property="goodsMainImageInfo" javaType="GoodsMainImage" columnPrefix="gmi_">
+			<id column="main_image_idx" property="mainImageIdx"/>
+			<result column="main_image_original_name" property="mainImageOriginalName"/>
+			<result column="main_image_new_name" property="mainImageNewName"/>
+			<result column="main_image_path" property="mainImagePath"/>
+			<result column="main_image_size" property="mainImageSize"/>
+			<result column="main_image_islocal" property="mainImageIsLocal"/>
+		</association>
+		<association property="goodsInfoImageInfo" javaType="GoodsInfoImage" columnPrefix="gii_">
+			<id column="info_image_idx" property="infoImageIdx"/>
+			<result column="info_image_original_name" property="infoImageOriginalName"/>
+			<result column="info_image_new_name" property="infoImageNewName"/>
+			<result column="info_image_path" property="infoImagePath"/>
+			<result column="info_image_size" property="infoImageSize"/>
+			<result column="info_image_islocal" property="infoImageIsLocal"/>
 		</association>
 	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
@@ -189,26 +223,26 @@
 			gdm.enter_code IS NULL;
 	</select>
 	<!-- 상품 목록(전부) 하자 없는 것  !! fileIsLocal 들어가줘야함-->
-	<select id="getAdminGoodsList" resultType="Map">
+	<select id="getAdminGoodsList" resultMap="goodsResultMap">
 		SELECT
-			g.g_code AS goodsCode
-			,gmi.main_image_path AS filePath
-			,gmi.main_image_original_name AS fileOriginalName
-			,gmi.main_image_new_name AS fileNewName
-			,e.enter_name AS enterName
-			,gc.cate_name AS categoryName
-			,g.g_name AS goodsName
-			,g.g_price AS goodsPrice
-			,gdm.discount_name AS goodsDiscountName
-			,g.g_discount AS goodsDiscountedPrice
-			,g.g_netweight AS goodsNetWeight
-			,g.g_netweightunit AS goodsNetWeightUnit
-			,g.g_produce AS goodsProduce
-			,g.g_production_expiration_info AS goodsProductionExpirationInfo
-			,g.g_stock AS goodsStock
-			,g.g_delivery_charge AS goodsDeliveryCharge
-			,g.g_reg_datetime AS goodsRegDatetime
-			,g.g_activation AS goodsActivation
+			g.g_code
+			,gmi.main_image_path			as gmi_main_image_path
+			,gmi.main_image_original_name	as gmi_main_image_original_name
+			,gmi.main_image_new_name		as gmi_main_image_new_name
+			,e.enter_name					as e_enter_name
+			,gc.cate_name					as gc_cate_name
+			,g.g_name
+			,g.g_price
+			,gdm.discount_name				as gdm_discount_name
+			,g.g_discount
+			,g.g_netweight
+			,g.g_netweightunit
+			,g.g_produce
+			,g.g_production_expiration_info
+			,g.g_stock
+			,g.g_delivery_charge
+			,g.g_reg_datetime
+			,g.g_activation
 		FROM 
 			tb_goods AS g 
 			INNER JOIN 
@@ -245,33 +279,33 @@
 			gc.cate_name not LIKE CONCAT('%','식단','%'); 
 	</select>
 	<!-- 상품 상세 정보  -->
-	<select id="getGoodsInfo" parameterType="String" resultType="Map">
+	<select id="getGoodsInfo" parameterType="String" resultMap="goodsResultMap">
 		SELECT 
-			g.g_name	AS goodsName
-			,g.g_code as goodsCode
-			,g.g_price AS goodsPrice
-			,gdm.discount_price AS goodsDiscountingPrice
-			,gdm.discount_rate AS goodsDiscountingRate
-			,gdm.discount_name AS goodsDicountName
-			,g.g_discount AS goodsDiscountedPrice
-			,g.g_delivery_charge AS goodsDeliveryCharge
-			,g.g_netweight AS goodsNetWeight
-			,g.g_netweightunit AS goodsNetWeightUnit
-			,g.g_produce AS goodsProduce
-			,g.g_production_expiration_info AS goodsProductionExpirationInfo
-			,e.enter_name AS enterName
-			,gc.cate_name AS categoryName
-			,gc.g_cate_code AS categoryCode
-			,i.ingr_kcal AS ingredientKCal
-			,i.ingr_protein AS ingredientProtein
-			,i.ingr_carb AS ingredientCarb
-			,i.ingr_sugar AS ingredientSugar
-			,i.ingr_sodium AS ingredientSodium
-			,i.ingr_cholesterol AS ingredientCholesterol
-			,gmi.main_image_original_name AS goodsMainImageOriName
-			,gmi.main_image_path AS goodsMainImageFilePath
-			,gii.info_image_original_name AS goodsInfoImageOriName
-			,gii.info_image_path AS goodsInfoImageFilePath
+			g.g_name
+			,g.g_code
+			,g.g_price
+			,gdm.discount_price AS gdm_discount_price
+			,gdm.discount_rate as gdm_discount_rate
+			,gdm.discount_name AS gdm_discount_name
+			,g.g_discount
+			,g.g_delivery_charge
+			,g.g_netweight
+			,g.g_netweightunit
+			,g.g_produce
+			,g.g_production_expiration_info
+			,e.enter_name AS e_enter_name
+			,gc.cate_name AS gc_cate_name
+			,gc.g_cate_code AS gc_g_cate_code
+			,i.ingr_kcal AS i_ingr_kcal
+			,i.ingr_protein AS i_ingr_protein
+			,i.ingr_carb AS i_ingr_carb
+			,i.ingr_sugar AS i_ingr_sugar
+			,i.ingr_sodium AS i_ingr_sodium
+			,i.ingr_cholesterol AS i_ingr_cholesterol
+			,gmi.main_image_original_name AS gmi_main_image_original_name
+			,gmi.main_image_path AS gmi_main_image_path
+			,gii.info_image_original_name AS gii_info_image_original_name
+			,gii.info_image_path AS gii_info_image_path
 		FROM 
 			tb_goods AS g 
 			INNER JOIN 

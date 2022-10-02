@@ -54,24 +54,24 @@
 								</thead>
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(goodsList)}"
-										th:each="gcl, status : ${goodsList}">
+										th:each="gl, status : ${goodsList}">
 										<td th:text="${status.count}"></td>
-										<td><a th:href="@{|/admin/goods/goods_detail_admin/${gcl.goodsCode}|}"><img th:src="@{'/' + ${gcl.filePath}}"
-											th:alt="${gcl.fileOriginalName}" style="width: 100px;" /></a></td>
-										<td th:text="${gcl.enterName}"></td>	
-										<td th:text="${gcl.categoryName}"></td>
-										<td th:text="${gcl.goodsName}"></td>
-										<td th:text="${gcl.goodsPrice}"></td>
-										<td th:text="${gcl.goodsDiscountName}"></td>
-										<td th:text="${gcl.goodsDiscountedPrice}"></td>
-										<td th:text="${gcl.goodsNetWeight}+${gcl.goodsNetWeightUnit}"></td>
-										<td th:text="${gcl.goodsProduce}"></td>
-										<td th:text="${gcl.goodsProductionExpirationInfo}"></td>
-										<td th:text="${gcl.goodsStock}"></td>
-										<td th:text="${gcl.goodsDeliveryCharge}"></td>
-										<td th:text="${gcl.goodsRegDatetime}"></td>
-										<td th:if="${gcl.goodsActivation} == 1">판매중</td>
-										<td th:unless="${gcl.goodsActivation} == 1">판매중지</td>
+										<td><a th:href="@{|/admin/goods/goods_detail_admin/${gl.goodsCode}|}"><img th:src="@{'/' + ${gl.goodsMainImageInfo.mainImagePath}}"
+											th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px;" /></a></td>
+										<td th:text="${gl.enterprise.enterName}"></td>	
+										<td th:text="${gl.goodsCategory.goodsCategoryName}"></td>
+										<td th:text="${gl.goodsName}"></td>
+										<td th:text="${gl.goodsPrice}"></td>
+										<td th:text="${gl.goodsDiscount.goodsDiscountName}"></td>
+										<td th:text="${gl.goodsDiscountedPrice}"></td>
+										<td th:text="${gl.goodsNetWeight}+${gl.goodsNetWeightUnit}"></td>
+										<td th:text="${gl.goodsProduce}"></td>
+										<td th:text="${gl.goodsProductionExpirationInfo}"></td>
+										<td th:text="${gl.goodsStock}"></td>
+										<td th:text="${gl.goodsDeliveryCharge}"></td>
+										<td th:text="${gl.goodsRegDatetime}"></td>
+										<td th:if="${gl.goodsActivation} == 1">판매중</td>
+										<td th:unless="${gl.goodsActivation} == 1">판매중지</td>
 									</tr>
 								</tbody>
 							</table>
