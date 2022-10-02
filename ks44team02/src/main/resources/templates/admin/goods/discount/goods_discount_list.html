@@ -39,25 +39,22 @@
 									<tr th:if="${not #lists.isEmpty(goodsDiscountList)}"
 										th:each="gdl : ${goodsDiscountList}">
 										<th:block
-											th:unless="${gdl.discountRate} == 0 and ${gdl.discountPrice} == 0">
-											<td th:text="${gdl.discountName}"></td>
-											<td th:if="${gdl.discountRate} != 0"
-												th:text="${gdl.discountRate}+'%'"></td>
-											<td th:if="${gdl.discountPrice} != 0"
-												th:text="'₩'+${gdl.discountPrice}"></td>
-											<td th:text="${gdl.discountExpirationDate}"></td>
-											<td th:text="${gdl.memberId}"></td>
-											<td
-												th:if="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterName')}"
-												th:text="${gdl.enterName}"></td>
-											<td
-												th:unless="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterName')}">관리자</td>
-											<td
-												th:if="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterNumber')}"
-												th:text="${gdl.enterNumber}"></td>
-											<td
-												th:unless="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterNumber')}">N/A</td>
-											<td th:text="${gdl.regDatetime}"></td>
+											th:unless="${gdl.goodsDiscountRate} == 0 and ${gdl.goodsDiscountPrice} == 0">
+											<td th:text="${gdl.goodsDiscountName}"></td>
+											<td th:if="${gdl.goodsDiscountRate} != 0"
+												th:text="${gdl.goodsDiscountRate}+'%'"></td>
+											<td th:if="${gdl.goodsDiscountPrice} != 0"
+												th:text="'₩'+${gdl.goodsDiscountPrice}"></td>
+											<td th:text="${gdl.goodsDiscountExpirationDate}"></td>
+											<td th:text="${gdl.goodsDiscountRegistrant}"></td>
+											<th:block th:if="${not #lists.isEmpty(gdl.enterprise)}">
+												<td th:text="${gdl.enterprise.enterName}"></td>
+												<td th:text="${gdl.enterprise.enterNum}"></td>
+											</th:block>
+											<th:block th:unless="${not #lists.isEmpty(gdl.enterprise)}">
+												<td>관리자</td>
+												<td>N/A</td>
+											</th:block>
 											<td><a
 												th:href="@{|/admin/goods/discount/goods_discount_update_form/${gdl.goodsDiscountCode}|}">수정</a></td>
 											<td><a

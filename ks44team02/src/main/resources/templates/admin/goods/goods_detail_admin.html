@@ -49,11 +49,11 @@
 							style="padding-top: 0; padding-bottom: 0;">
 							<div class="row">
 								<div class="col-xl-6 col-lg-6 col-sm-6 col-xs-12">
-									<a th:href="@{'/'+*{goodsMainImageFilePath}}"
+									<a th:href="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
 										data-toggle="lightbox"
-										th:attr="data-title=*{goodsMainImageOriName}"> <img
-										th:src="@{'/'+*{goodsMainImageFilePath}}" class="img-fluid"
-										th:alt="*{goodsMainImageOriName}" style="width: 100%;">
+										th:attr="data-title=*{goodsMainImageInfo.mainImageOriginalName}"> <img
+										th:src="@{'/'+*{goodsMainImageInfo.mainImagePath}}" class="img-fluid"
+										th:alt="*{goodsMainImageInfo.mainImageOriginalName}" style="width: 100%;">
 									</a>
 								</div>
 							</div>
@@ -65,11 +65,11 @@
 								<span>'상품 리뷰 정보'</span>
 							</div>
 							<div class="row">
-								<span th:if="*{goodsDiscountingPrice} != 0"
-									th:text="*{goodsDiscountingPrice}+'원'"></span> <span
-									th:if="*{goodsDiscountingRate} != 0"
-									th:text="*{goodsDiscountingRate}+'%'"></span> <span
-									th:unless="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+								<span th:if="*{goodsDiscount.goodsDiscountPrice} != 0"
+									th:text="*{goodsDiscount.goodsDiscountPrice}+'원'"></span> <span
+									th:if="*{goodsDiscount.goodsDiscountRate} != 0"
+									th:text="*{goodsDiscount.goodsDiscountRate}+'%'"></span> <span
+									th:unless="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
 									th:text="*{goodsPrice}+'원'"
 									style="text-decoration: line-through; color: gray;"></span>
 							</div>
@@ -88,9 +88,9 @@
 							<div class="row"
 								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
 								<span>적립금 혜택 | 최대</span> <span
-									th:unless="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+									th:unless="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
 									th:text="*{goodsDiscountedPrice}*0.1  + '원'"></span> <span
-									th:if="*{goodsDiscountingPrice} == 0 AND *{goodsDiscountingRate} == 0"
+									th:if="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
 									th:text="*{goodsPrice}*0.1 + '원'"></span>
 							</div>
 						</div>
@@ -112,7 +112,7 @@
 								</tr>
 								<tr style="height: 40px;">
 									<th>생산자</th>
-									<td th:text="*{enterName}"></td>
+									<td th:text="*{enterprise.enterName}"></td>
 									<th>원산지</th>
 									<td th:text="*{goodsProduce}"></td>
 								</tr>
@@ -130,8 +130,8 @@
 				<div class="card-block">
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8">
-						<img th:alt="*{goodsInfoImageOriName}"
-							th:src="@{'/'+ *{goodsInfoImageFilePath}}">
+						<img th:alt="*{goodsInfoImageInfo.infoImageOriginalName}"
+							th:src="@{'/'+ *{goodsInfoImageInfo.infoImagePath}}" style="width: 100%;"> 
 					</div>
 					<div class="col-lg-2"></div>
 				</div>
