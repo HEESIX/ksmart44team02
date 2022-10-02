@@ -33,13 +33,21 @@ public class MileageService {
 		public int giveMileage() {
 			return 0;
 		}
-		//회원 적립금 소멸
-		public int MileageExtinction() {
-			return 0;
-		}
+		
 		//buyer 적립금 조회
 		public String getBuyerMileageList() {
 			return null;
 		}
+		public boolean giveMileage(MemberMileageAcc memberMileageAcc) {
+			boolean result = mileageMapper.giveMileage(memberMileageAcc);
+			return result;
+		}
+
+		//회원 적립금 소멸
+		public String MileageExtinction(String mMileageCode) {
+			return null;
+				
+		}
+
 
 }
