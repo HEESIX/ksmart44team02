@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.admin.controller.AdminqnaController;
@@ -27,7 +28,8 @@ public class BuyerMileageController {
 	}
 	
 	//회원 적립금 조회
+	@GetMapping("/mileageList")
 	public String getBuyerMileageList() {
-		return null;
+		return "/buyer/Mileage/mileageList";
 	}
 }
