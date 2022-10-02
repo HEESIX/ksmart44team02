@@ -50,7 +50,7 @@
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
 							th:each="orl, status : ${getOrderList}">
 							<td><a
-								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
+								th:href="@{/buyer/mypage/orderStatus/myorderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
 							</a></td>
 							<td>이미지 어떻게 넣을까</td>
 							<td th:text="${orl.get('goodsName')}"></td>

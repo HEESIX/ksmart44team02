@@ -33,7 +33,7 @@ public class BuyerDeliveryController {
 
 	
 		// 주문 목록 조회
-		@GetMapping("/myorder_status_list")
+		@GetMapping("/myorderStatusList")
 		public String getOrderList(Model model
 								  ,HttpSession session) {
 			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
@@ -43,11 +43,11 @@ public class BuyerDeliveryController {
 				model.addAttribute("title", "주문 리스트");
 				model.addAttribute("getOrderList", getOrderList);
 				
-			return "buyer/mypage/orderStatus/myorder_status_list";
+			return "buyer/mypage/orderStatus/myorderStatusList";
 		}
 		
 		// 상세주문현황 조회
-		@GetMapping("/myorder_delivery_detail")
+		@GetMapping("/myorderDeliveryDetail")
 		public String getOrderStatus(Model model
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
 			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
@@ -58,37 +58,37 @@ public class BuyerDeliveryController {
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
 				model.addAttribute("getPaymentList", getPaymentList);
 				model.addAttribute("getDeliveryinfo", getDeliveryinfo);
-				return "buyer/mypage/orderStatus/myorder_delivery_detail";
+				return "buyer/mypage/orderStatus/myorderDeliveryDetail";
 		}
 
 		
 		
 		// 환불 신청 폼
-		@GetMapping("/myrefund_apply")
+		@GetMapping("/myrefundApply")
 		public String addRefundRequest(Model model) {
 			return null;
 		}
 		
 		// 환불 신청 제출 처리
-		@PostMapping("/myrefund_apply")
+		@PostMapping("/myrefundApply")
 		public String addRefundRequest() {
 			return null;
 		}
 		
 		// 교환 신청 폼
-		@GetMapping("/myexchange_apply")
+		@GetMapping("/myexchangeApply")
 		public String addExchangeRequest(Model model) {
 			return null;
 		}
 		
 		// 교환 신청 제출 처리
-		@PostMapping("/myexchange_apply")
+		@PostMapping("/myexchangeApply")
 		public String addExchangeRequest() {
 			return null;
 		}
 		
 		// 취소/교환/환불 조회
-		@GetMapping("/myorder_apply_list")
+		@GetMapping("/myorderApplyList")
 		public String getRefundExchangeList(Model model) {
 			return null;
 		}
