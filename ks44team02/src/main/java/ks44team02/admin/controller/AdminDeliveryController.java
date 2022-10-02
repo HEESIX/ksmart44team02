@@ -1,5 +1,7 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ks44team02.dto.RefundExchangeReasons;
 import ks44team02.service.AdminDeliveryeService;
 
 @Controller
@@ -57,8 +61,15 @@ public class AdminDeliveryController {
 	
 	//환불 사유 카테고리 리스트
 	@GetMapping("/refundExchangeReasonList")
-	public String getRefundExchangeReasonList() {
-		return null;
+	public String getRefundExchangeReasonList(Model model
+											,@RequestParam(value = "msg", required = false) String msg) {
+		List<RefundExchangeReasons> refundExchangeReasonList = adminDeliveryeService.getRefundExchangeReasonList();
+		
+		model.addAttribute("titele", "환불/교환사유 목록");
+		model.addAttribute("refundExchangeReasonList", refundExchangeReasonList);
+		if(msg!=null) model.addAttribute("msg", msg);
+		
+		return "admin/order/refundExchangeReasonList";
 	}
 }
 

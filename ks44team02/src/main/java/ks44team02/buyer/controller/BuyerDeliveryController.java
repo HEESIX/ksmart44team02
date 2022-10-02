@@ -33,7 +33,7 @@ public class BuyerDeliveryController {
 
 	
 		// 주문 목록 조회
-		@GetMapping("/myorderStatusList")
+		@GetMapping("/myOrderStatusList")
 		public String getOrderList(Model model
 								  ,HttpSession session) {
 			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
@@ -43,11 +43,11 @@ public class BuyerDeliveryController {
 				model.addAttribute("title", "주문 리스트");
 				model.addAttribute("getOrderList", getOrderList);
 				
-			return "buyer/mypage/orderStatus/myorderStatusList";
+			return "buyer/mypage/orderStatus/myOrderStatusList";
 		}
 		
 		// 상세주문현황 조회
-		@GetMapping("/myorderDeliveryDetail")
+		@GetMapping("/myOrderDeliveryDetail")
 		public String getOrderStatus(Model model
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
 			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
@@ -58,37 +58,37 @@ public class BuyerDeliveryController {
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
 				model.addAttribute("getPaymentList", getPaymentList);
 				model.addAttribute("getDeliveryinfo", getDeliveryinfo);
-				return "buyer/mypage/orderStatus/myorderDeliveryDetail";
+				return "buyer/mypage/orderStatus/myOrderDeliveryDetail";
 		}
 
 		
 		
 		// 환불 신청 폼
-		@GetMapping("/myrefundApply")
+		@GetMapping("/myRefundApply")
 		public String addRefundRequest(Model model) {
 			return null;
 		}
 		
 		// 환불 신청 제출 처리
-		@PostMapping("/myrefundApply")
+		@PostMapping("/myRefundApply")
 		public String addRefundRequest() {
 			return null;
 		}
 		
 		// 교환 신청 폼
-		@GetMapping("/myexchangeApply")
+		@GetMapping("/myExchangeApply")
 		public String addExchangeRequest(Model model) {
 			return null;
 		}
 		
 		// 교환 신청 제출 처리
-		@PostMapping("/myexchangeApply")
+		@PostMapping("/myExchangeApply")
 		public String addExchangeRequest() {
 			return null;
 		}
 		
 		// 취소/교환/환불 조회
-		@GetMapping("/myorderApplyList")
+		@GetMapping("/myOrderApplyList")
 		public String getRefundExchangeList(Model model) {
 			return null;
 		}

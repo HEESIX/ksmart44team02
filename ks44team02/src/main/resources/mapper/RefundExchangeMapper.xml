@@ -2,7 +2,20 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team02.mapper.RefundExchangeMapper">
+<mapper namespace="ks44team02.mapper.AdminDeliveryMapper">
+	<resultMap type="RefundExchangeReasons" id="reasonsResultMap">
+		<id column="refund_exchange_reasons_code" property="refundExchangeReasonsCode"/>
+		<result column="refund_exchange_reasons" property="refundExchangeReasons"/>
+		<result column="refund_exchange_reasons_datetime" property="refundExchangeReasonsDatetime"/>
+	</resultMap>
 
-
+	<!-- 환불/교환사유 목록 -->
+	<select id="getRefundExchangeReasonList" resultMap="reasonsResultMap">
+		SELECT
+			refund_exchange_reasons,
+			refund_exchange_reasons_datetime
+		FROM
+			tb_refund_exchange_reasons;
+	</select>
+	
 </mapper>
