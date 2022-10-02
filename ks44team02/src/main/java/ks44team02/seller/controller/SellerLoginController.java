@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.service.Loginservice;
+import ks44team02.service.LoginService;
 
 @Controller
 @RequestMapping(value = "/seller/login")
@@ -14,9 +14,9 @@ public class SellerLoginController {
 	
 	private static final Logger log = LoggerFactory.getLogger(SellerLoginController.class);
 
-	private final Loginservice loginService;
+	private final LoginService loginService;
 	
-	public SellerLoginController (Loginservice loginService) {
+	public SellerLoginController (LoginService loginService) {
 		this.loginService = loginService;
 	}
 	

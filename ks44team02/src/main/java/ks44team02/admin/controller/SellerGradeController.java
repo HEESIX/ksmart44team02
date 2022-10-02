@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.dto.Grade;
-import ks44team02.service.Gradeservice;
+import ks44team02.service.GradeService;
 
 @Controller
 @RequestMapping(value = "/admin/gradeDetails")
@@ -23,52 +23,52 @@ public class SellerGradeController {
 	
 	private static final Logger log = LoggerFactory.getLogger(SellerGradeController.class);
 
-	private final Gradeservice gradeservice;
+	private final GradeService gradeService;
 	
-	public SellerGradeController (Gradeservice gradeservice) {
-		this.gradeservice = gradeservice;
+	public SellerGradeController (GradeService gradeService) {
+		this.gradeService = gradeService;
 	}
 	// 판매자 등급 정의 등록 폼 
-	@GetMapping ("seller_addgradeform")
+	@GetMapping ("sellerAddGradeForm")
 	public String addSellerGradeForm() {
-		return "admin/gradeDetails/seller_addgradeform";
+		return "admin/gradeDetails/sellerAddGradeForm";
 	}
 		
 	//판매자 등급 정의 등록 처리 
-	@PostMapping("/seller_addgradeform")
+	@PostMapping("/sellerAddgradeForm")
 	public String addSellerGrade () {
-		return "redirect:admin/gradeDetails/seller_gradelist";
+		return "redirect:admin/gradeDetails/sellerAddgradeForm";
 	}
 	
 	//판매자 등급 정의 리스트
-	@GetMapping("/seller_gradelist")
+	@GetMapping("/sellerGradeList")
 	public String getSellerGradeList (Model model) {
-		List<Grade> sellerGradeList = gradeservice.getSellerGradeList();
+		List<Grade> sellerGradeList = gradeService.getSellerGradeList();
 		model.addAttribute("title", "판매자 등급 리스트");
 		model.addAttribute("sellerGradeList", sellerGradeList);
-		return "admin/gradeDetails/seller_gradelist";
+		return "admin/gradeDetails/sellerGradeList";
 	}
 	
 	// 판매자 등급 정의 수정 폼 
-	@GetMapping ("/seller_modifylist/{vendor_level_states_code}")
+	@GetMapping ("/sellerModifyList/{vendor_level_states_code}")
 	public String ModifySellerGradeForm(@PathVariable
 			(value = "vendor_level_states_code")String vendor_level_states_code) {
-		return "admin/gradeDetails/seller_removelist";	
+		return "admin/gradeDetails/sellerModifyList";	
 	}
 		
 		
 	//판매자 등급 정의 수정 처리
-	@PostMapping("/seller_modifylist")
+	@PostMapping("/sellerModifyList")
 	public String ModifySellerGrade () {
-		return "redirect:admin/gradeDetails/seller_gradelist";
+		return "redirect:admin/gradeDetails/sellerGradeList";
 	}
 		
 		
 	//판매자 등급 정의 삭제 처리  
-	@PostMapping("/seller_removelist/{vendor_level_states_code}")
+	@PostMapping("/sellerRemoveList/{vendor_level_states_code}")
 	public String RemoveSellerGrade(@PathVariable 
 			(value = "vendor_level_states_code")String vendor_level_states_code){
-		return "redirect:admin/gradeDetails/seller_gradelist";
+		return "redirect:admin/gradeDetails/sellerGradeList";
 
 	}
 

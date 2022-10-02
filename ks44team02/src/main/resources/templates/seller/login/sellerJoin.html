@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/adminDefault}">
+	layout:decorate="~{layout/sellerDefault}">
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -264,77 +264,167 @@ footer .copyright-wrap span{
 <th:block layout:fragment="customContents">
 	<section class="checkout spad">
 		<div class="container">
-			<form th:action="@{/seller/goods/goods_reg_apply}" method="post"
-				enctype="multipart/form-data">
 				<div class="checkout__form">
-					<h4>관리자 정보</h4>		
+					<h4>판매자 회원가입</h4>
+					<div class="row">
+					  	<div class="col-lg-8 col-md-6">
+							<div class="row">						
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>아이디<span>*</span></p>
+										<div class="checkout__input d-flex">
+											<input class="upload-name" id="goodsInfoImageName"> 
+											<button type="submit" class="col-md-2 img-btn">중복확인</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						
 							<div class="row">
 									<div class="col-lg-6">
 										<div class="checkout__input">
-											<p>아이디<span> *</span></p>
-											<input type="text" name="goodsProduce" id="goodsProduce">
-										</div>
-									</div>	
-							</div>
-							<br>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="checkout__input">
-											<p>비밀번호<span>*</span></p>
-												<input type="text" name="goodsProduce" id="goodsProduce">
-												<button type="submit">수정</button>
-										</div>
-									</div>			
-								</div>	
-								<br>
-								<div class="row">
-									<div class="col-lg-6">
-										<div class="checkout__input">
-											<p>이름<span> *</span></p>
-											<input type="text" name="goodsProduce" id="goodsProduce">
-										</div>
-									</div>	
-								</div><br>	
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="checkout__input">
-											<p>성별 <span> *</span></p>
-											<select name="goodsDiscountCode" id="goodsDiscountCode">										
-													<option>--성별--</option>
-													<option>--여성--</option>
-													<option>--남성--</option>
-											</select>
+											<p>비밀번호<span> *</span></p>
+											<input type="text" id="ingredientKCal" name="ingredientKCal">
 										</div>
 									</div>
-								</div><br>
-									<div class="row">
-									<div class="col-lg-12">
+									<div class="col-lg-6">
 										<div class="checkout__input">
-											<p>이메일<span>*</span></p>
-												<input type="text" name="goodsProduce" id="goodsProduce">
-												<button type="submit">수정</button>
+											<p>비밀번호확인<span>*</span></p>
+											<input type="text" id="ingredientProtein" name="ingredientProtein">
 										</div>
-									</div>			
-								</div>	<br>		
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="checkout__input">
-											<p>연락처<span>*</span></p>
-												<input type="text" name="goodsProduce" id="goodsProduce">
-												<button type="submit">수정</button>
+									</div>
+							</div>
+						
+							<div class="checkout__input">
+									<p>이름<span> *</span></p>
+								 <input type="text" id="goodsName" name="goodsName">
+							</div>
+			
+							
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>성별 <span> *</span></p>
+										<select name="goodsDiscountCode" id="goodsDiscountCode">										
+												<option>--성별--</option>
+												<option>--여성--</option>
+												<option>--남성--</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-12 mt10">
+									<div class="checkout__input">
+										<p>이메일<span> *</span></p>
+										<input type="text" name="goodsProduce" id="goodsProduce">
+								</div>
+							</div>
+							
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input" style="margin-bottom: 0;">
+										<p>생년월일<span> *</span></p>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="checkout__input col-lg-2">
+										<input type="text" name="goodsProduce" id="goodsProduce" placeholder="4자 연도">								
+								</div>	
+								<p>년</p>
+								
+								<div class="checkout__input col-lg-3">
+									<select id="goodsProductionExpirationDate">
+										<option >----월----</option>
+										<option >1월</option>
+										<option >2월</option>
+										<option >3월</option>
+										<option >4월</option>
+										<option >5월</option>
+										<option >6월</option>
+										<option >7월</option>
+										<option >8월</option>
+										<option >9월</option>
+										<option >10월</option>
+										<option >11월</option>
+										<option >12월</option>
+									</select>
+									</div>
+									<div class="checkout__input col-lg-2">
+										<input type="text" name="goodsProduce" id="goodsProduce"placeholder="일">								
+									</div>	
+									<p>일</p>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>연락처<span>*</span></p>
+										<div class="checkout__input d-flex">
+											<input class="upload-name" id="goodsInfoImageName" placeholder="010-000-0000"> 
+											<button type="submit" class="col-md-2 img-btn">인증</button>
 										</div>
-									</div>			
-								</div>						
-					</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>주소<span>*</span></p>
+										<div class="checkout__input d-flex">
+											<input class="upload-name" id="goodsInfoImageName"> 
+											<button type="submit" class="col-md-2 img-btn">주소찾기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+				
+						<div class="logcenter">	
+									<input type='checkbox'/>정보 제공 동의 <br>
+						  			<input type='checkbox'/>위치 정보 제공 동의
+						  			<br><br>
+						  			<div class="logcenter">	
+										<a th:href="@{/buyer/login/buyer_login}">
+						  					<button type="button" class="loginbtn">회원 가입 완료</button>		  			
+						  				</a>	
+						  			</div>
+						 </div>  	
+				  	</div>
 				</div>	
-		
-				<br>
-					<a th:href="@{/admin/login/admin_login_reg}"><button
-								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록완료</button></a>
-
-	  	
+				</div>	
+				</div>	
 	</section>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs}">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			$('.imageUpload').change(function() {
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+
+			$('.nice-select li').click(function() {
+				var selectValue = $(this).attr('data-value');
+
+				if (selectValue == 'manuText') {
+					$('#manuText').css('display', 'block');
+				} else {
+					$('#manuText').css('display', 'none');
+				}
+			});
+		});
+	</script>
 </th:block>
 
 </html>

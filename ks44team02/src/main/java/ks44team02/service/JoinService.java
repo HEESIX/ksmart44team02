@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import ks44team02.mapper.JoinMapper;
 
 @Service
-public class Joinservice {
+public class JoinService {
 	private final JoinMapper joinMapper;
 		
-	public Joinservice (JoinMapper joinMapper) {
+	public JoinService (JoinMapper joinMapper) {
 		this.joinMapper = joinMapper;
 	}
 	

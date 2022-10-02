@@ -6,11 +6,11 @@ import ks44team02.dto.Member;
 import ks44team02.mapper.LoginMapper;
 
 @Service
-public class Loginservice {
-	private final LoginMapper loginmapper;
+public class LoginService {
+	private final LoginMapper loginMapper;
 	
-	public Loginservice (LoginMapper Loginmapper) {
-		this.loginmapper = Loginmapper;
+	public LoginService (LoginMapper loginMapper) {
+		this.loginMapper = loginMapper;
 	}
 	//구매자 로그인
 	public String buyerLogin () {
@@ -18,7 +18,7 @@ public class Loginservice {
 	}
 	
 	//구매자 로그아웃
-	public String buyelogout () {
+	public String buyeLogout () {
 		return null;
 	}
 	
@@ -28,7 +28,7 @@ public class Loginservice {
 	}
 
 	//판매자 로그아웃
-	public String sellerlogout () {
+	public String sellerLogout () {
 			return null;
 	}
 		
@@ -38,13 +38,13 @@ public class Loginservice {
 	}
 		
 	//판매자 로그아웃
-	public String adminlogout () {
+	public String adminLogout () {
 			return null;
 	}
 	
 	//판매자 회원 정보
 	public Member getAdminMemberList(String memberId) {
-		Member memberInfo = loginmapper.getAdminMemberList(memberId);
+		Member memberInfo = loginMapper.getAdminMemberList(memberId);
 		return memberInfo;
 	}
 }
