@@ -1,7 +1,10 @@
 package ks44team02.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.RefundExchangeReasons;
 import ks44team02.mapper.AdminDeliveryMapper;
 
 @Service
@@ -24,8 +27,11 @@ public class AdminDeliveryeService {
 		
 	//환불 사유 카테고리 리스트
 	//dto만들어서 List<>로 수정필요
-		public String getRefundExchangeReasonList() {
-			return null;
+		public List<RefundExchangeReasons> getRefundExchangeReasonList() {
+			
+			List<RefundExchangeReasons> refundExchangeReasonList = adminDeliveryMapper.getRefundExchangeReasonList();
+			
+			return refundExchangeReasonList;
 		}
 		
 	//구매자 배송현황 조회

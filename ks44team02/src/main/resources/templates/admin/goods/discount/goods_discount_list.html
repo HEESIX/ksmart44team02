@@ -24,38 +24,55 @@
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
-										<th>No.</th>
-										<th>할인 금액/할인율</th>
 										<th>할인명</th>
+										<th>할인율/할인금액</th>
 										<th>유효기간</th>
-										<th>등록자아이디</th>
-										<th>등록 일시</th>
+										<th>등록자ID</th>
+										<th>등록사/관리자</th>
+										<th>판매사 전화번호</th>
+										<th>등록일자</th>
 										<th>수정</th>
 										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:if="${not #lists.isEmpty(goodsCategoryList)}"
-										th:each="gcl : ${goodsCategoryList}">
-										<td th:text="${gcl.goodsCategoryName}"></td>
-										<td th:text="${gcl.goodsCategoryRegDate}"></td>
-										<td th:if="${gcl.goodsCategoryStatus} == 1">사용중</td>
-										<td th:unless="${gcl.goodsCategoryStatus} == 1">사용정지</td>
-										<td><a
-											th:href="@{|/admin/goods/category/goodscate_update/${gcl.goodsCategoryCode}|}">수정</a></td>
-										<td><a
-											th:href="@{|/admin/goods/category/goodscate_remove/${gcl.goodsCategoryCode}|}">삭제</a></td>
+									<tr th:if="${not #lists.isEmpty(goodsDiscountList)}"
+										th:each="gdl : ${goodsDiscountList}">
+										<th:block
+											th:unless="${gdl.discountRate} == 0 and ${gdl.discountPrice} == 0">
+											<td th:text="${gdl.discountName}"></td>
+											<td th:if="${gdl.discountRate} != 0"
+												th:text="${gdl.discountRate}+'%'"></td>
+											<td th:if="${gdl.discountPrice} != 0"
+												th:text="'₩'+${gdl.discountPrice}"></td>
+											<td th:text="${gdl.discountExpirationDate}"></td>
+											<td th:text="${gdl.memberId}"></td>
+											<td
+												th:if="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterName')}"
+												th:text="${gdl.enterName}"></td>
+											<td
+												th:unless="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterName')}">관리자</td>
+											<td
+												th:if="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterNumber')}"
+												th:text="${gdl.enterNumber}"></td>
+											<td
+												th:unless="${not #maps.isEmpty(gdl)} and ${#maps.containsKey(gdl, 'enterNumber')}">N/A</td>
+											<td th:text="${gdl.regDatetime}"></td>
+											<td><a
+												th:href="@{|/admin/goods/discount/goods_discount_update_form/${gdl.goodsDiscountCode}|}">수정</a></td>
+											<td><a
+												th:href="@{|/admin/goods/discount/goods_discount_remove/${gdl.goodsDiscountCode}|}">삭제</a></td>
+										</th:block>
 									</tr>
-									<tr th:unless="${not #lists.isEmpty(goodsCategoryList)}">
-										<td colspan="5" style="text-align: center;">상품 카테고리가 존재하지
-											않습니다.</td>
+									<tr th:unless="${not #lists.isEmpty(goodsDiscountList)}">
+										<td colspan="8" style="text-align: center;">주문서별 할인혜택이
+											존재하지 않습니다.</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<a th:href="@{/admin/goods/category/goodscate_reg}"><button
-								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
+						<a th:href="@{/admin/goods/discount/goods_discount_reg_form}"><button style="float: right; margin-top: 10px;"
+								class="btn btn-info waves-effect waves-light" type="button">등록</button></a>
 					</div>
 				</div>
 			</div>

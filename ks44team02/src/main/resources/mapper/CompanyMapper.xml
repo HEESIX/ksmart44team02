@@ -3,26 +3,74 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.SellerCompanyMapper">
-
-<!-- 입점 업체 신청 -->
-<!--
+	<resultMap type="Launching" id="sellercompanyaddResultMap">
+		<id column="launching_code" property="sellerCode"/>
+		<result column="member_id" property="sellerId"/>
+		<result column="launching_brand" property="sellerBrand"/>
+		<result column="launching_enter" property="sellerEnter"/>
+		<result column="launching_Business_reg_num" property="sellerNum"/>
+		<result column="launching_manager" property="sellerManager"/>
+		<result column="launching_phone" property="sellerPhone"/>
+		<result column="launching_address" property="sellerAdd"/>
+		<result column="launching_content" property="sellerContent"/>
+		<result column="launching_hwp" property="sellerHwp"/>
+		<result column="launching_url" property="sellerUrl"/>
+		<result column="launching_file" property="sellerFile"/>
+		<result column="launching_datetime" property="sellerDate"/>
+		<result column="launching_approval" property="sellerApp"/>
+	</resultMap>
+<!-- 입점 업체 등록 -->
+<insert id="addCompany" parameterType="Launching">
+INSERT INTO tb_launching(
+		launching_code,
+		member_id,
+		launching_brand,
+		launching_enter,
+		launching_business_reg_num,
+		launching_manager,
+		launching_phone,
+		launching_address,
+		launching_content,
+		launching_hwp,
+		launching_url,
+		launching_file,
+		launching_datetime,
+		launching_approval
+)VALUES(
+		'lch_009'
+		,'id019'
+		,'fire'
+		,'(주)불'
+		,'459-12-58939'
+		,'홍대표'
+		,'01012340009'
+		,'전라북도 전주시 호성동'
+		,'전국에서 제일 싱싱한 식품입니다'
+		,'sys/A/B/D/입점회사/d.hwp'
+		,'http://fire.com'
+		,'sys/A/B/E4.사업제안서'
+		,NOW()
+		,'Y'
+		);
+</insert>
+<!-- 입점 업체 리스트 -->
+<select id="sellerCompanyInfoList" resultMap="sellercompanyaddResultMap">
 SELECT
-	member_id							AS sellerID
-	,launching_brand					AS sellerBRAND
-	,launching_enter					AS sellerENTER
-	,launching_Business_reg_num	AS sellerNUM
+	launching_code					AS sellerCODE
+	,member_id						AS sellerID
+	,launching_brand				AS sellerBRAND
+	,launching_enter				AS sellerENTER
+	,launching_Business_reg_num		AS sellerNUM
 	,launching_manager				AS sellerMANAGER
-	,launching_phone					AS sellerPHONE
+	,launching_phone				AS sellerPHONE
 	,launching_address				AS sellerADD
 	,launching_content				AS sellerCONTENT
-	,launching_hwp						AS sellerHWP
-	,launching_url						AS sellerURL
+	,launching_hwp					AS sellerHWP
+	,launching_url					AS sellerURL
 	,launching_file					AS sellerFILE
 	,launching_datetime				AS sellerDATE
 	,launching_approval				AS sellerAPP
 FROM
 	tb_launching 	AS launching;
-WHERE
-	member_id = 'id010;
-	-->
+</select>
 </mapper>

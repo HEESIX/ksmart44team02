@@ -5,6 +5,8 @@ public class Member_level {
 	private String memberLevelClassName;
 	private String memberLevelName;
 	private String  memberLevelRegRate;
+	
+	
 	public String getMemberLevelCode() {
 		return memberLevelCode;
 	}

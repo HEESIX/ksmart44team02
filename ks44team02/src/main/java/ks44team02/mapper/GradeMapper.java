@@ -10,27 +10,27 @@ import ks44team02.dto.Grade;
 public interface GradeMapper {
 
 	// 구매자 등급 정의 등록
-	public String addbuyerGrade();
+	public String addBuyerGrade();
 	
 	// 구매자 등급 정의 조회
-	public List<Grade> getbuyerGradeList();
+	public List<Grade> getBuyerGradeList();
 	
 	// 구매자 등급 정의 수정
-	public String ModifybuyerGrade();
+	public String modifyBuyerGrade();
 	
 	// 구매자 등급 정의 삭제
-	public String RemovebuyerGrade();
+	public String removeBuyerGrade();
 	
 	// 판매자 등급 정의 등록
-	public String addVenderGrade();
+	public String addSellerGrade();
 	
 	// 판매자 등급 정의 조회
-	public List<Grade> getVendeGradeList();
+	public List<Grade> getSellerGradeList();
 	
 	// 판매자 등급 정의 수정
-	public String ModifyVendeGrade();
+	public String modifySellerGrade();
 	
 	// 판매자 등급 정의 삭제
-	public String RemoveVenderGrade();
+	public String removeSellerGrade();
 	
 }

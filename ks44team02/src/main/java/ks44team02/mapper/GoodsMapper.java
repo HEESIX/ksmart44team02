@@ -5,10 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks44team02.dto.FileDto;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.GoodsInfoImage;
+import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.Menus;
 
 @Mapper
@@ -56,20 +57,22 @@ public interface GoodsMapper {
 	public Map<String, Object> getGoodsInfo(String goodsCode);
 	
 	//소개 이미지 정보
-	public FileDto getGoodsInfoImage(String goodsCode, int isLocal);
+	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
-	//Goods 아님 변경 필요
-	public Goods getMenuInfo();
+	public Map<String, Object> getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
 	
-	//상품별 할인혜택 리스트(admin: admin이 등록한 할인혜택만)
-	public List<GoodsDiscount> getGoodsDiscountListAdmin();
+	//상품별 할인혜택 리스트(admin: admin이 등록한 것만)
+	public List<GoodsDiscount> getGoodsDiscountListForReg();
 	
 	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
+	
+	//상품별 할인혜택 리스트 제한 X
+	public List<Map<String, Object>> getGoodsDiscountList();
 	
 	//상품별 할인 혜택 수정
 	public int modifyGoodsDiscount();
@@ -118,5 +121,8 @@ public interface GoodsMapper {
 	
 	//개별 상품 정보
 	/* public Goods getGoodsInfo(); */
+	
+	//메뉴 코드로 어떤 상품이 몇개 포함되어있는지 조회
+	public List<MenuOrganize> getMenuOrganizeList(String menuCode);
 	
 }

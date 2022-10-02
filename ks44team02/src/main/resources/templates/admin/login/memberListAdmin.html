@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>전체 회원 리스트</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th><input type="checkbox" value="che"></th>
+										<th>분류</th>
+										<th>아이디</th>
+										<th>회원등급</th>
+										<th>적립금</th>
+										<th>연락처</th>
+										<th>이메일</th>
+										<th>성별</th>
+										<th>생년월일</th>
+										<th>주소</th>
+										<th>추천인 아이디</th>
+										<th>가입일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(memberListAdmin)}"
+										th:each="gcl : ${memberListAdmin}">
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<a th:href="@{/admin/login/member_list_admin}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">수정</button></a>
+								
+						<a th:href="@{/admin/login/member_list_admin}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">삭제</button></a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>

@@ -35,7 +35,7 @@
 			<div class="header__top__right__auth">
 				<ul>
 				<li>
-				<a href="#"><i class="fa fa-user"></i> Login</a>
+				<a th:href="@{/seller/login/sellerLogin}"><i class="fa fa-user"></i> Login</a>
 				</li>
 				</ul>
 			</div>
@@ -47,11 +47,8 @@
 						<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
 						<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
 					</ul></li>
-				<li><a href="#">#주문/배송 관리</a>
-					<ul class="header__menu__dropdown">
-						<li><a href="#">#신규주문</a></li>
-						<li><a href="#">#결제 전</a></li>
-					</ul></li>
+				<li><a th:href="@{/seller/order/seller_order_delivery_all_list}">#주문/배송 관리</a>
+					</li>
 				<li><a href="#">#정산내역</a></li>
 				<li><a href="#">#고객관리</a>
 					<ul class="header__menu__dropdown">
@@ -92,7 +89,7 @@
 								<ul class="header__menu__dropdown">
 									<li><a th:href="@{/seller/companypage/company_insert}">#입점신청</a></li>
 									<li><a th:href="@{/seller/companypage/company_modify}">#회사정보</a></li>
-									<li><a th:href="@{/seller/login/seller_login_list}">#회원정보</a></li>
+									<li><a th:href="@{/seller/login/sellerLoginList}">#회원정보</a></li>
 									<li><a th:href="@{/seller/companypage/company_delete}">#탈퇴신청</a></li>
 								</ul></li>	
 							</ul>	
@@ -118,12 +115,8 @@
 									<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
 									<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
 								</ul></li>
-							<li><a href="#">#주문/배송 관리</a>
-								<ul class="header__menu__dropdown">
-									<li><a href="#">#신규주문</a></li>
-									<li><a href="#">#결제 전</a></li>
-								</ul></li>
-								
+							<li><a th:href="@{/seller/order/seller_order_delivery_all_list}">#주문/배송 관리</a>
+							</li>
 							<li><a href="#">#정산내역</a>
 								<ul class="header__menu__dropdown">
 									<li><a th:href="@{/seller/salespage/seller_sales}">#매출현황</a></li>
