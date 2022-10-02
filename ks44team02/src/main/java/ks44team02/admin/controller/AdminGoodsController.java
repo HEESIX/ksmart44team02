@@ -176,7 +176,7 @@ public class AdminGoodsController {
 	@GetMapping("/goods_list_admin")
 	public String getAdminGoodsList(Model model) {
 		List<Goods> goodsList = goodsService.getAdminGoodsList();
-
+		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goods_list_admin";
 	}
@@ -188,7 +188,7 @@ public class AdminGoodsController {
 		// 받은 g_code로 상품 정보 select 후 모델에 담는 작업 필요
 		// g_code null? 혹은 존재하지 않을경우?
 
-		Map<String, Object> goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		model.addAttribute("goodsInfo", goodsInfo);
 		return "admin/goods/goods_detail_admin";
 	}
@@ -266,7 +266,7 @@ public class AdminGoodsController {
 	@GetMapping("/menu/menu_list")
 	public String getAdminMenuList(Model model) {
 		//image가 관련된 부분은 전부 isLocal test 필요
-		List<Map<String, Object>> adminMenuList = goodsService.getAdminMenuList();
+		List<Goods> adminMenuList = goodsService.getAdminMenuList();
 		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menu_list";
 	}
@@ -298,8 +298,8 @@ public class AdminGoodsController {
 							 ,Model model
 							 ,HttpServletRequest request) {
 		//String serverName = request.getServerName();
-		List<Map<String, Object>> menuOrgarnizeGoodsInfoList = goodsService.getMenuOrganizeGoodsInfo(menuCode);
-		Map<String, Object> menuInfo = goodsService.getMenuInfo(menuCode);
+		List<Goods> menuOrgarnizeGoodsInfoList = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
 		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
 		
 		model.addAttribute("title", "개별 식단 정보");
@@ -324,7 +324,7 @@ public class AdminGoodsController {
 	// 상품별 할인 혜택 리스트
 	@GetMapping("/discount/goods_discount_list")
 	public String getGoodsDiscountList(Model model) {
-		List<Map<String, Object>> goodsDiscountList = goodsService.getGoodsDiscountList();
+		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountList();
 		
 		model.addAttribute("title", "상품별 할인 혜택 목록");
 		model.addAttribute("goodsDiscountList", goodsDiscountList);

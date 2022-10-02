@@ -44,21 +44,21 @@
 									<tr th:if="${not #lists.isEmpty(goodsRegApplyList)}"
 										th:each="gral, status : ${goodsRegApplyList}">
 										<td th:text="${status.count}"></td>
-										<td><img th:src="@{'/' + ${gral.goodsMainImageFilePath}}"
-											th:alt="${gral.goodsMainImageName}" style="width: 100px;" /></td>
-										<td th:text="${gral.enterName}"></td>
-										<td th:text="${gral.categoryName}"></td>
-										<td th:text="${gral.goodsName}"></td>
-										<td th:text="${gral.goodsPrice}"></td>
-										<td th:text="${gral.goodsDiscountName}"></td>
-										<td th:text="${gral.goodsDiscountedPrice}"></td>
+										<td><img th:src="@{'/' + ${gral.goodsMainImageInfo.mainImagePath}}"
+											th:alt="${gral.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px;" /></td>
+										<td th:text="${gral.enterprise.enterName}"></td>
+										<td th:text="${gral.goodsCategory.goodsCategoryName}"></td>
+										<td th:text="${gral.goodsApplyName}"></td>
+										<td th:text="${gral.goodsApplyPrice}"></td>
+										<td th:text="${gral.goodsDiscount.goodsDiscountName}"></td>
+										<td th:text="${gral.goodsApplyDiscount}"></td>
 										<td
-											th:text="${gral.goodsNetWeight}+${gral.goodsNetWeightUnit}"></td>
-										<td th:text="${gral.goodsProduce}"></td>
-										<td th:text="${gral.goodsProductionExpirationInfo}"></td>
-										<td th:text="${gral.goodsStock}"></td>
-										<td th:text="${gral.goodsDeliveryCharge}"></td>
-										<td th:text="${gral.goodsRegApplyDatetime}"></td>
+											th:text="${gral.goodsApplyNetWeight}+${gral.goodsApplyNetWeightUnit}"></td>
+										<td th:text="${gral.goodsApplyProduce}"></td>
+										<td th:text="${gral.goodsApplyProductionExpirationInfo}"></td>
+										<td th:text="${gral.goodsApplyStock}"></td>
+										<td th:text="${gral.goodsApplyDeliveryCharge}"></td>
+										<td th:text="${gral.goodsApplyRegDatetime}"></td>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(goodsRegApplyList)}">
 										<td colspan="16" style="text-align: center;">상품 등록 신청이
