@@ -45,7 +45,7 @@ public interface GoodsMapper {
 	public int addAdminMenu();
 	
 	//식단 리스트
-	public List<Map<String, Object>> getAdminMenuList();
+	public List<Goods> getAdminMenuList();
 	
 	//식단 수정
 	public int modifyAdminMenu();
@@ -54,13 +54,13 @@ public interface GoodsMapper {
 	public int removeAdminMenu();
 	
 	//개별 상품 정보 + 메인이미지 정보
-	public Map<String, Object> getGoodsInfo(String goodsCode);
+	public Goods getGoodsInfo(String goodsCode);
 	
 	//소개 이미지 정보
 	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
-	public Map<String, Object> getMenuInfo(String menuCode);
+	public Goods getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
@@ -72,7 +72,7 @@ public interface GoodsMapper {
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
 	//상품별 할인혜택 리스트 제한 X
-	public List<Map<String, Object>> getGoodsDiscountList();
+	public List<GoodsDiscount> getGoodsDiscountList();
 	
 	//상품별 할인 혜택 수정
 	public int modifyGoodsDiscount();

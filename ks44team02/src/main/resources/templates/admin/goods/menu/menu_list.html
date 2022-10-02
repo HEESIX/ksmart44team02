@@ -56,12 +56,12 @@
 									<tr th:if="${not #lists.isEmpty(adminMenuList)}"
 										th:each="aml, status : ${adminMenuList}">
 										<td th:text="${status.count}"></td>
-										<td><a th:href="@{|/admin/goods/menu/menu_detail_admin/${aml.menuCode}|}"><img th:src="@{'/' + ${aml.goodsMainImageFilePath}}"
-											th:alt="${aml.goodsMainImageName}" style="width: 100px;" /></a></td>
-										<td th:text="${aml.categoryName}"></td>
+										<td><a th:href="@{|/admin/goods/menu/menu_detail_admin/${aml.menuInformation.menuCode}|}"><img th:src="@{'/' + ${aml.goodsMainImageInfo.mainImagePath}}"
+											th:alt="${aml.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px;" /></a></td>
+										<td th:text="${aml.goodsCategory.goodsCategoryName}"></td>
 										<td th:text="${aml.goodsName}"></td>
 										<td th:text="${aml.goodsPrice}"></td>
-										<td th:text="${aml.goodsDiscountName}"></td>
+										<td th:text="${aml.goodsDiscount.goodsDiscountName}"></td>
 										<td th:text="${aml.goodsDiscountedPrice}"></td>
 										<td th:text="${aml.goodsProduce}"></td>
 										<td th:text="${aml.goodsProductionExpirationInfo}"></td>
@@ -70,8 +70,8 @@
 										<td th:text="${aml.goodsRegDatetime}"></td>
 										<td th:if="${aml.goodsActivation} == 1">판매중</td>
 										<td th:unless="${aml.goodsActivation} == 1">판매중지</td>
-										<td><a th:href="@{|/admin/goods/menu/menu_update_admin/${aml.menuCode}|}">수정</a></td>
-										<td><a th:href="@{|/amdin/goods/menu/menu_remove/${aml.menuCode}|}">삭제</a></td>
+										<td><a th:href="@{|/admin/goods/menu/menu_update_admin/${aml.menuInformation.menuCode}|}">수정</a></td>
+										<td><a th:href="@{|/amdin/goods/menu/menu_remove/${aml.menuInformation.menuCode}|}">삭제</a></td>
 									</tr>
 								</tbody>
 							</table>

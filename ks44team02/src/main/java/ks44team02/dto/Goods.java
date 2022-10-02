@@ -8,11 +8,11 @@ public class Goods {
 	private String goodsName;
 	private int goodsPrice;
 	private String goodsDiscountCode;
-	private int goodsDiscountPrice;
+	private int goodsDiscountedPrice;
 	private float goodsNetWeight;
 	private String goodsNetWeightUnit;
 	private String goodsProduce;
-	private String goodsProductionExpirationDate;
+	private String goodsProductionExpirationInfo;
 	private String goodsInfoImage;
 	private String goodsMainImage;
 	private int goodsStock;
@@ -27,7 +27,6 @@ public class Goods {
 	private MenuInformation menuInformation;
 	private GoodsMainImage goodsMainImageInfo;
 	private GoodsInfoImage goodsInfoImageInfo;
-	
 	public String getGoodsCode() {
 		return goodsCode;
 	}
@@ -64,11 +63,11 @@ public class Goods {
 	public void setGoodsDiscountCode(String goodsDiscountCode) {
 		this.goodsDiscountCode = goodsDiscountCode;
 	}
-	public int getGoodsDiscountPrice() {
-		return goodsDiscountPrice;
+	public int getGoodsDiscountedPrice() {
+		return goodsDiscountedPrice;
 	}
-	public void setGoodsDiscountPrice(int goodsDiscountPrice) {
-		this.goodsDiscountPrice = goodsDiscountPrice;
+	public void setGoodsDiscountedPrice(int goodsDiscountedPrice) {
+		this.goodsDiscountedPrice = goodsDiscountedPrice;
 	}
 	public float getGoodsNetWeight() {
 		return goodsNetWeight;
@@ -88,11 +87,11 @@ public class Goods {
 	public void setGoodsProduce(String goodsProduce) {
 		this.goodsProduce = goodsProduce;
 	}
-	public String getGoodsProductionExpirationDate() {
-		return goodsProductionExpirationDate;
+	public String getGoodsProductionExpirationInfo() {
+		return goodsProductionExpirationInfo;
 	}
-	public void setGoodsProductionExpirationDate(String goodsProductionExpirationDate) {
-		this.goodsProductionExpirationDate = goodsProductionExpirationDate;
+	public void setGoodsProductionExpirationInfo(String goodsProductionExpirationInfo) {
+		this.goodsProductionExpirationInfo = goodsProductionExpirationInfo;
 	}
 	public String getGoodsInfoImage() {
 		return goodsInfoImage;
@@ -187,16 +186,16 @@ public class Goods {
 		builder.append(goodsPrice);
 		builder.append(", goodsDiscountCode=");
 		builder.append(goodsDiscountCode);
-		builder.append(", goodsDiscountPrice=");
-		builder.append(goodsDiscountPrice);
+		builder.append(", goodsDiscountedPrice=");
+		builder.append(goodsDiscountedPrice);
 		builder.append(", goodsNetWeight=");
 		builder.append(goodsNetWeight);
 		builder.append(", goodsNetWeightUnit=");
 		builder.append(goodsNetWeightUnit);
 		builder.append(", goodsProduce=");
 		builder.append(goodsProduce);
-		builder.append(", goodsProductionExpirationDate=");
-		builder.append(goodsProductionExpirationDate);
+		builder.append(", goodsProductionExpirationInfo=");
+		builder.append(goodsProductionExpirationInfo);
 		builder.append(", goodsInfoImage=");
 		builder.append(goodsInfoImage);
 		builder.append(", goodsMainImage=");

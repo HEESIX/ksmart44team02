@@ -10,6 +10,18 @@ public class GoodsDiscount {
 	private String goodsDiscountRegistrant;
 	private String goodsDiscountRegDatetime;
 	private String enterCode;
+	
+	private Enterprise enterprise;
+	
+	
+
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
 
 	public String getGoodsDiscountCode() {
 		return goodsDiscountCode;
@@ -94,6 +106,8 @@ public class GoodsDiscount {
 		builder.append(goodsDiscountRegDatetime);
 		builder.append(", enterCode=");
 		builder.append(enterCode);
+		builder.append(", enterprise=");
+		builder.append(enterprise);
 		builder.append("]");
 		return builder.toString();
 	}
