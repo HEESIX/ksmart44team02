@@ -22,14 +22,14 @@ public class SellerSalesController {
 	}
 	
 	//판매자 매출 현황 화면
-	@GetMapping("/seller_sales")
+	@GetMapping("/sellerSales")
 	public String getSaleList() {
-		return "seller/salespage/seller_sales";
+		return "seller/salespage/sellerSales";
 	}
 	
 	//판매자 매출 정산 확인 화면
-	@GetMapping("/seller_sales_calculate")
+	@GetMapping("/sellerSalesCalculate")
 	public String sellerSalesSuccess() {
-		return "seller/salespage/seller_sales_calculate";	
+		return "seller/salespage/sellerSalesCalculate";	
 	}
 }

@@ -14,16 +14,16 @@ public class AdminCompanyService {
 	
 	//업체 입점 승인 폼)
 	public String companySuccess() {
-		return "admin/companypage/seller_company_check";
+		return "admin/companypage/sellerCompanyCheck";
 	}
 	
 	//입점 업체 정보 및 리스트
 	public String companyInfoList() {
-		return "admin/companypage/seller_company_list";
+		return "admin/companypage/sellerCompanyList";
 	}
 	
 	//업체 정보 삭제 승인 폼
 	public String companyRemoveSuccess() {
-		return "admin/companypage/seller_company_delete";
+		return "admin/companypage/sellerCompanyDelete";
 	}
 }
