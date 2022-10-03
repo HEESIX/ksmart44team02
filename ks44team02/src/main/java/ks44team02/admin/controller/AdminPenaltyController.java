@@ -60,7 +60,7 @@ System.out.println(penaltyInfo.toString());
 		}
 		reAttr.addAttribute("msg", msg);
 
-		return"/admin/pernaltyManage/givePenalty";
+		return"redirect:/admin/pernaltyManage/givePenalty";
 	}
 
 }

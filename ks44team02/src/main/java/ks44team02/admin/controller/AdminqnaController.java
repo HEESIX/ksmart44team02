@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.QnA;
+import ks44team02.service.CommonService;
 import ks44team02.service.QnAservice;
 
 @Controller
@@ -25,8 +27,10 @@ public class AdminqnaController {
 
 	private final QnAservice qnaService;
 
-	public AdminqnaController(QnAservice qnaService) {
+	private final CommonService commonService;
+	public AdminqnaController(QnAservice qnaService,CommonService commonService) {
 		this.qnaService = qnaService;
+		this.commonService = commonService;
 	}
 
 	@PostConstruct
@@ -55,8 +59,18 @@ public class AdminqnaController {
 	
 	//회원QnA 답글 등록 처리
 	@PostMapping("/qnaManage/qnaAnswer")
-	public String qnaAnswer() {
-		return "admin/qnaManage/qnaAnswer";
+	public String qnaAnswer(QnA qna, RedirectAttributes reAttr) {
+		String qnaCode = commonService.getNewCode("tb_qna");
+		qna.setQnaCode(qnaCode);
+		boolean result = qnaService.qnaAnswer(qna);
+		String msg = "";
+		if (result) {
+			msg = "답글 등록 성공";
+		} else {
+			msg = "답글 등록 실패";
+		}
+		reAttr.addAttribute("msg", msg);
+		return "redirect:admin/qnaManage/qnaAnswer";
 	}
 
 }

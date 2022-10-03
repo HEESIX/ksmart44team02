@@ -95,7 +95,7 @@ public class AdminMileageController<Mileage> {
 		}
 		reAttr.addAttribute("msg", msg);
 
-		return "admin/mileageManage/mileage_give";
+		return "redirect:admin/mileageManage/mileage_give";
 	}
 	
 	//적립금 소멸 폼
