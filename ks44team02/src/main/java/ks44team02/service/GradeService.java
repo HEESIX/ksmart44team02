@@ -2,9 +2,12 @@ package ks44team02.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import ks44team02.dto.Grade;
 import ks44team02.mapper.GradeMapper;
 
+@Service
 public class GradeService {
 
 
