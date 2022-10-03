@@ -27,4 +27,6 @@ public interface MileageMapper {
 		public MemberMileageAcc getMileageInfo();
 
 		public MemberMileageAcc getMemberMileageAccInfo(String mMileageCode, String currentMileage);
+
+		public boolean MileageExtinction(String mMileageCode);
 }

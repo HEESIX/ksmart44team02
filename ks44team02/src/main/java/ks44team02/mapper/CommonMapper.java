@@ -13,4 +13,6 @@ public interface CommonMapper {
 	public boolean MileageExtinction(String mMileageCode);
 
 	public boolean ComplainDelete(String complainCode);
+
+	public boolean ReviewDelete(String revCode);
 }

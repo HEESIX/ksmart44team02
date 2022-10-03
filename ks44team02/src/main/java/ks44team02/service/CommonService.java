@@ -43,6 +43,12 @@ public class CommonService {
 		boolean result = commonMapper.ComplainDelete(complainCode);
 		return result;
 	}
+
+	public boolean ReviewDelete(String revCode) {
+		boolean result = commonMapper.ReviewDelete(revCode);
+		return result;
+	};
+	
 	
 
 }

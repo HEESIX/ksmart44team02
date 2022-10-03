@@ -45,14 +45,17 @@ public class MileageService {
 		public String getBuyerMileageList() {
 			return null;
 		}
+		
+		//회원 적립금 부여
 		public boolean giveMileage(MemberMileageAcc memberMileageAcc) {
 			boolean result = mileageMapper.giveMileage(memberMileageAcc);
 			return result;
 		}
 
 		//회원 적립금 소멸
-		public String MileageExtinction(String mMileageCode) {
-			return null;
+		public boolean MileageExtinction(String mMileageCode) {
+			boolean resultRemove = mileageMapper.MileageExtinction(mMileageCode);
+			return resultRemove;
 				
 		}
 
