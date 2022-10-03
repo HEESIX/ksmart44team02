@@ -1,8 +1,11 @@
 package ks44team02.service;
 
+import org.springframework.stereotype.Service;
+
 import ks44team02.dto.Member;
 import ks44team02.mapper.LoginMapper;
 
+@Service
 public class LoginService {
 	
 	private final LoginMapper LoginMapper;
