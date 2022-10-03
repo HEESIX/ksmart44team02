@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Complain;
-import ks44team02.dto.GoodsCategory;
 import ks44team02.service.CommonService;
 import ks44team02.service.ComplainService;
 
