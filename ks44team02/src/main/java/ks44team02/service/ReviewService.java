@@ -59,4 +59,19 @@ public class ReviewService {
 			return 0;
 		}
 
+		public boolean ReviewModify(Review review) {
+			boolean result = reviewMapper.ReviewModify(review);
+			return result;
+		}
+
+		public boolean ReviewDelete(String revCode) {
+			boolean resultRemove = reviewMapper.ReviewDelete(revCode);
+			return resultRemove;
+		}
+
+		public boolean ReviewAnswer(Review reviewContents) {
+			boolean resultAnswer = reviewMapper.ReviewAnswer(reviewContents);
+			return resultAnswer;
+		}
+
 }

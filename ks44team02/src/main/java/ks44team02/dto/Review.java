@@ -2,6 +2,7 @@ package ks44team02.dto;
 
 public class Review {
 	
+	private String revCode;
 	private String memberId;
 	private String reviewTitle;
 	private String reviewContents;
@@ -37,10 +38,20 @@ public class Review {
 	public void setReviewregDate(String reviewregDate) {
 		this.reviewregDate = reviewregDate;
 	}
+	
+	
+	public String getRevCode() {
+		return revCode;
+	}
+	public void setRevCode(String revCode) {
+		this.revCode = revCode;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Review [memberId=");
+		builder.append("Review [revCode=");
+		builder.append(revCode);
+		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", reviewTitle=");
 		builder.append(reviewTitle);
