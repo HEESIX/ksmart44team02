@@ -25,7 +25,7 @@
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
-	<table>
+	<table style="width: 100%;">
 		<thead>
 			<tr>
 				<th>썸네일</th>
@@ -41,6 +41,8 @@
 				<th>재고</th>
 				<th>배송비</th>
 				<th>상품상세페이지</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,6 +60,8 @@
 				<td>재고</td>
 				<td>배송비</td>
 				<td><a>방문</a></td>
+				<td><a class="primary-btn" style="width: 70%;">수정</a></td>
+				<td><a><button>삭제</button></a></td>
 			</tr>
 		</tbody>
 	</table>
