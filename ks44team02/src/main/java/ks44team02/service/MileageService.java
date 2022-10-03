@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks44team02.mapper.MileageMapper;
+import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.OrderDiscount;
 
@@ -18,9 +19,9 @@ public class MileageService {
 	}
 	
 	//특정회원 적립금 조회
-	public MemberMileageAcc getMileageInfo(String currentMileage) {
-		MemberMileageAcc mileage = mileageMapper.getMileageInfo();
-		return mileage;
+	public MemberMileageAcc getMileageInfo(String currentMileage, String mMileageCode) {
+		MemberMileageAcc mileageInfo = mileageMapper.getMileageInfo();
+		return mileageInfo;
 	}
 	
 	   //회원 적립금 조회
@@ -32,6 +33,12 @@ public class MileageService {
 		//회원 적립금 적립
 		public int giveMileage() {
 			return 0;
+		}
+		
+		// 기존 데이터 조회(마일리지 적립화면)
+		public MemberMileageAcc getMemberMileageAccInfo(String mMileageCode,String currentMileage ) {
+			MemberMileageAcc memberMileageAccInfo = mileageMapper.getMemberMileageAccInfo(mMileageCode, currentMileage);
+			return memberMileageAccInfo;
 		}
 		
 		//buyer 적립금 조회

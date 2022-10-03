@@ -11,4 +11,6 @@ public interface CommonMapper {
 	public String getNewCode(String tableName);
 
 	public boolean MileageExtinction(String mMileageCode);
+
+	public boolean ComplainDelete(String complainCode);
 }

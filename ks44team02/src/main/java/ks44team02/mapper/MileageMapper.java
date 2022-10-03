@@ -25,4 +25,6 @@ public interface MileageMapper {
 		
 		//특정회원 마일리지 조회
 		public MemberMileageAcc getMileageInfo();
+
+		public MemberMileageAcc getMemberMileageAccInfo(String mMileageCode, String currentMileage);
 }

@@ -33,4 +33,29 @@
 				
 	</select>
 	
-	</mapper>
+	<!-- 회뤈 마일리지 적립 -->
+	<insert id="giveMileage" parameterType="MemberMileageAcc">
+		INSERT INTO tb_member_mileage_acc
+		(member_id
+		,oerder_detail_code
+		,present_mileage
+		,mileage_distinct
+		,added_used_mileage
+		,mileage_subtotal
+		,mileage_update_datetime
+		,order_group_code)
+		VALUES
+		(#{mMileageCode}
+		,#{memberId}
+		,#{orderDetailCode}
+		,#{currentMileage}
+		,#{mileageDistinct}
+		,#{addedUsedMileage}
+		,#{mileageSubtotal}
+		,NOW()
+		,#{orderGroupCode});
+		
+		</insert>
+		
+		
+		</mapper>

@@ -38,5 +38,11 @@ public class CommonService {
 		return result;
 	}
 	
+	//회원 신고내역 삭제
+	public boolean ComplainDelete(String complainCode) {
+		boolean result = commonMapper.ComplainDelete(complainCode);
+		return result;
+	}
+	
 
 }

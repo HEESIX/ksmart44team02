@@ -2,6 +2,7 @@ package ks44team02.dto;
 
 //QnA 구성요소,내용(객체)
 public class QnA {
+	private String qnaCode;
 	private String memberId;
 	private String qnaCategory;
 	private String qnaTitle;
@@ -44,10 +45,20 @@ public class QnA {
 	public void setQnaRegDate(String qnaRegDate) {
 		this.qnaRegDate = qnaRegDate;
 	}
+	
+	
+	public String getQnaCode() {
+		return qnaCode;
+	}
+	public void setQnaCode(String qnaCode) {
+		this.qnaCode = qnaCode;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QnA [memberId=");
+		builder.append("QnA [qnaCode=");
+		builder.append(qnaCode);
+		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", qnaCategory=");
 		builder.append(qnaCategory);

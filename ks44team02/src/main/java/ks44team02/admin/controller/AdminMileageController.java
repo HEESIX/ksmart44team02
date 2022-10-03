@@ -13,24 +13,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.MemberMileageAcc;
+import ks44team02.mapper.MileageMapper;
 import ks44team02.service.CommonService;
 import ks44team02.service.MileageService;
 
 @Controller
-@RequestMapping(value = "/admin/mileageManage")
+
+@RequestMapping(value="/admin/mileageManage", method=RequestMethod.GET)
 public class AdminMileageController<Mileage> {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
+
 
 
 	private final MileageService mileageService;
 
 
 	private final CommonService commonService;
+
 
 	public AdminMileageController(MileageService mileageService, CommonService commonService) {
 		this.mileageService = mileageService;
@@ -71,9 +76,9 @@ public class AdminMileageController<Mileage> {
 			                  @PathVariable(value = "currentMileage") String currentMileage
 			,Model model
 			,Model model1) {
-     MemberMileageAcc mileageAdd = mileageService.getMileageInfo(mMileageCode);
-     MemberMileageAcc mileageAdd1 = mileageService.getMileageInfo(currentMileage);
-		return "admin/mileageManage/mileage_give";
+     MemberMileageAcc memberMileageAccInfo = mileageService.getMileageInfo(mMileageCode, currentMileage);
+     System.out.println(memberMileageAccInfo.toString());
+     		return "admin/mileageManage/mileage_give";
 	}
 	
 	//적립금 적립 처리
@@ -90,14 +95,16 @@ public class AdminMileageController<Mileage> {
 		}
 		reAttr.addAttribute("msg", msg);
 
-		return "admin/mileageManage/mileage_give";
+		return "redirect:admin/mileageManage/mileage_give";
 	}
 	
 	//적립금 소멸 폼
 	@GetMapping("/mileage_extinct/{currentMileage}")
-	public String MileageExtinctionForm(@PathVariable(value = "currentMileage") String currentMileage
-			,Model model) {
-		 MemberMileageAcc mileageExtinct = mileageService.getMileageInfo(currentMileage);
+	public String MileageExtinctionForm(@PathVariable(value = "currentMileage") String currentMileage,
+										@PathVariable(value = "mMileageCode") String mMileageCode
+			,Model model
+			,Model model1) {
+		 MemberMileageAcc mileageExtinct = mileageService.getMileageInfo(currentMileage, mMileageCode);
 		return "admin/mileageManage/mileage_extinct";
 	}
 	

@@ -32,5 +32,12 @@ import ks44team02.mapper.QnAmapper;
 			
 			return null;
 		}
+
+		public boolean qnaAnswer(QnA qna) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+	
 	}
 
