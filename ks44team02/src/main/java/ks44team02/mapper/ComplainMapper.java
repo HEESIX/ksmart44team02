@@ -21,6 +21,8 @@ public interface ComplainMapper {
 
   //구매자 신고 등록
   public int regBuyerComplain();
+
+public Complain getComplainInfo();
 		
 	
 
