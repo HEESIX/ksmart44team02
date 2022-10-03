@@ -81,6 +81,6 @@ public class AdminComplainController {
 			// 코드 불일치
 			reAttr.addAttribute("msg", "삭제 실패: 코드가 일치하지 않습니다.");
 		}
-		return "admin/complainManage/complainDelete";
+		return "redirect:admin/complainManage/complainDelete";
 	}
 }
