@@ -45,7 +45,7 @@
     </appender>
 	
 	<!-- 프로젝트 패키지 안 클래스에 설정된 로그 출력 -->
-	<logger name="ksmart.mybatis" level="INFO" additivity="false">
+	<logger name="ks44team02" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ROLLING_FILE" />
 	</logger>
