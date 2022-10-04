@@ -23,26 +23,26 @@ public class AdminCalculateController {
 	}
 	
 	//판매자 일일 정산금 확인
-	@GetMapping("/admin_seller_daily_calculate")
+	@GetMapping("/adminSellerDailyCalculate")
 	public String sellerTodayCalculate() {
-		return "admin/calculatepage/admin_seller_daily_calculate";
+		return "admin/calculatepage/adminSellerDailyCalculate";
 	}
 			
 	//관리자 수수료 확인
-	@GetMapping("/admin_fee_check")
+	@GetMapping("/adminFeeCheck")
 	public String adminFeeCheck() {
-		return "admin/calculatepage/admin_fee_check";
+		return "admin/calculatepage/adminFeeCheck";
 	}
 			
 	//관리자 수수료 정산
-	@GetMapping("/admin_fee_calculate")
+	@GetMapping("/adminFeeCalculate")
 	public String adminFeeCalculate() {
-		return "admin/calculatepage/admin_fee_calculate";
+		return "admin/calculatepage/adminFeeCalculate";
 	}
 			
 	//판매자 정산금 정산
-	@GetMapping("/admin_seller_calculate")
+	@GetMapping("/adminSellerCalculate")
 	public String sellerCalculateSuccess() {
-		return "admin/calculatepage/admin_seller_calculate";
+		return "admin/calculatepage/adminSellerCalculate";
 	}
 }
