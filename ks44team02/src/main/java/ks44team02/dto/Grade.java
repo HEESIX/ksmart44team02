@@ -6,6 +6,23 @@ public class Grade {
 	private String memberLevelClassName;
 	private String memberLevelName;
 	private String memberLevelRegDate;
+	
+	private BuyerLevel buyerLevel;
+	
+	private SellerLevel sellerLevel;
+	
+	public SellerLevel getSellerLevel() {
+		return sellerLevel;
+	}
+	public void setSellerLevel(SellerLevel sellerLevel) {
+		this.sellerLevel = sellerLevel;
+	}
+	public BuyerLevel getBuyerLevel() {
+		return buyerLevel;
+	}
+	public void setBuyerLevel(BuyerLevel buyerLevel) {
+		this.buyerLevel = buyerLevel;
+	}
 	public String getMemberLevelCode() {
 		return memberLevelCode;
 	}
@@ -41,6 +58,10 @@ public class Grade {
 		builder.append(memberLevelName);
 		builder.append(", memberLevelRegDate=");
 		builder.append(memberLevelRegDate);
+		builder.append(", buyerLevel=");
+		builder.append(buyerLevel);
+		builder.append(", sellerLevel=");
+		builder.append(sellerLevel);
 		builder.append("]");
 		return builder.toString();
 	}

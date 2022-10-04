@@ -3,6 +3,7 @@ package ks44team02.dto;
 public class RefundExchangeReasons {
 	private String refundExchangeReasonsCode;
 	private String refundExchangeReasons;
+	private String refundExchangeReasonsDatetime;
 	public String getRefundExchangeReasonsCode() {
 		return refundExchangeReasonsCode;
 	}
@@ -15,6 +16,12 @@ public class RefundExchangeReasons {
 	public void setRefundExchangeReasons(String refundExchangeReasons) {
 		this.refundExchangeReasons = refundExchangeReasons;
 	}
+	public String getRefundExchangeReasonsDatetime() {
+		return refundExchangeReasonsDatetime;
+	}
+	public void setRefundExchangeReasonsDatetime(String refundExchangeReasonsDatetime) {
+		this.refundExchangeReasonsDatetime = refundExchangeReasonsDatetime;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -22,6 +29,8 @@ public class RefundExchangeReasons {
 		builder.append(refundExchangeReasonsCode);
 		builder.append(", refundExchangeReasons=");
 		builder.append(refundExchangeReasons);
+		builder.append(", refundExchangeReasonsDatetime=");
+		builder.append(refundExchangeReasonsDatetime);
 		builder.append("]");
 		return builder.toString();
 	}

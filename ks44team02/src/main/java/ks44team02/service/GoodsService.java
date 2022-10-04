@@ -12,7 +12,7 @@ import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.MenuOrganize;
-import ks44team02.dto.Menus;
+import ks44team02.dto.MenuInformation;
 import ks44team02.mapper.GoodsMapper;
 
 @Service
@@ -92,8 +92,8 @@ public class GoodsService {
 	}
 
 	// 식단 리스트
-	public List<Map<String, Object>> getAdminMenuList() {
-		List<Map<String, Object>> adminMenuList = goodsMapper.getAdminMenuList();
+	public List<Goods> getAdminMenuList() {
+		List<Goods> adminMenuList = goodsMapper.getAdminMenuList();
 
 		return adminMenuList;
 	}
@@ -109,27 +109,32 @@ public class GoodsService {
 	}
 
 	// 개별 상품 정보
-	public Map<String, Object> getGoodsInfo(String goodsCode) {
-		Map<String, Object> goodsInfo = goodsMapper.getGoodsInfo(goodsCode);
+	public Goods getGoodsInfo(String goodsCode) {
+		Goods goodsInfo = goodsMapper.getGoodsInfo(goodsCode);
 		return goodsInfo;
 	}
 
-	//
+	// 개별 식단 정보(식단이 포함하는 상품들의 개수 정보)
+	public List<MenuOrganize> getMenuOrganizeList(String menuCode){
+		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
+		return menuOrganizeList;
+	}
 
 	// 개별 식단 정보(식단이 포함하는 상품들의 정보)
-	public List<Map<String, Object>> getMenuOrganizeGoodsInfo(String menuCode) {
+	public List<Goods> getMenuOrganizeGoodsInfo(String menuCode) {
+		List<Goods> menuOrganizeGoodsInfo = new ArrayList<Goods>();
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
-		List<Map<String, Object>> menuOrganizeGoodsInfo = new ArrayList<Map<String, Object>>();
 		for (MenuOrganize menuOrganize : menuOrganizeList) {
 			String goodsCode = menuOrganize.getGoodsOfMenuCode();
 			menuOrganizeGoodsInfo.add(goodsMapper.getGoodsInfo(goodsCode));
+			System.out.println(menuOrganizeGoodsInfo.toString());
 		}
 		return menuOrganizeGoodsInfo;
 	}
 	
 	//개별 식단 정보(식단 자체의 정보)
-	public Map<String, Object> getMenuInfo(String menuCode){
-		Map<String, Object> menuInfo = goodsMapper.getMenuInfo(menuCode);
+	public Goods getMenuInfo(String menuCode){
+		Goods menuInfo = goodsMapper.getMenuInfo(menuCode);
 		return menuInfo;
 	}
 
@@ -139,8 +144,8 @@ public class GoodsService {
 	}
 
 	// 상품별 할인 혜택 리스트(admin: admin이 등록한 할인혜택만)
-	public List<GoodsDiscount> getGoodsDiscountListAdmin() {
-		List<GoodsDiscount> goodsDiscountAdmin = goodsMapper.getGoodsDiscountListAdmin();
+	public List<GoodsDiscount> getGoodsDiscountListForReg() {
+		List<GoodsDiscount> goodsDiscountAdmin = goodsMapper.getGoodsDiscountListForReg();
 		return goodsDiscountAdmin;
 	}
 
@@ -152,6 +157,12 @@ public class GoodsService {
 		String memberId = "id010";
 		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
 		return goodsDiscountListSeller;
+	}
+	
+	//상품 별 할인 혜택 리스트(모든 리스트)
+	public List<GoodsDiscount> getGoodsDiscountList(){
+		List<GoodsDiscount> goodsDiscountList = goodsMapper.getGoodsDiscountList();
+		return goodsDiscountList;
 	}
 
 	// 상품별 할인 혜택 수정
@@ -195,7 +206,7 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 목록 조회
-	public List<Menus> getBuyerMenuList() {
+	public List<MenuInformation> getBuyerMenuList() {
 		return null;
 	}
 
@@ -210,12 +221,12 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 정보
-	public Menus getBuyerMenuInfo() {
+	public MenuInformation getBuyerMenuInfo() {
 		return null;
 	}
 
 	// 식단 목록
-	public List<Menus> getMenuList() {
+	public List<MenuInformation> getMenuList() {
 		return null;
 	}
 

@@ -5,6 +5,8 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.admin.controller.AdminqnaController;
@@ -28,13 +30,21 @@ public class SellerReviewController {
 	}
 	
 	//리뷰 조회
+	@GetMapping("/reviewRefer")
 	public String getReviewList() {
-	  return null;
+	  return "seller/review/reviewRefer";
 	}
 	
-	//리뷰 답변
-	public int ReviewAnswer() {
-	  return 0;
+	//리뷰 답변 폼
+	@GetMapping("/reviewAnswer")
+	public String ReviewAnswerForm() {
+	  return "seller/review/reviewAnswer";
 	}
+	
+	//리뷰답변 처리
+	@PostMapping("/reviewAnswer")
+	public String ReviewAnswer() {
+		  return "seller/review/reviewAnswer";
+		}
 
 }
