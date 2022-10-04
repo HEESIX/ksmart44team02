@@ -11,7 +11,7 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="#"><img src="user/img/logo.png" alt=""></a>
+			<a th:href="@{/}"><img src="/user/img/logo.png" alt=""></a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
@@ -110,7 +110,7 @@
 										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">#주문 정보</a></li>
 										<li><a href="#">#상품 후기</a></li>
 										<li><a href="#">#상품 문의</a></li>
-										<li><a th:href="@{/buyer/mypage/buyerBenefit/buyerBenefitList}">#할인 혜택</a></li>
+										<li><a th:href="@{/buyer/mypage/buyerBenefit/buyerBenefitList}">!#할인 혜택 : 서지석</a></li>
 										<li><a href="#">#적립금</a></li>
 										<li><a href="#">#로그아웃</a></li>
 									</ul></li>		
@@ -127,13 +127,13 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="header__logo">
-						<a href="./index.html"><img src="user/img/logo.png" alt=""></a>
+						<a th:href="@{/}"><img src="/user/img/logo.png" alt=""></a>
 					</div>
 				</div>
 				<div class="col-lg-7">
 					<nav class="header__menu" style="text-align: right;">
 						<ul> 
-							<li class="active"><a href="./index.html">#HOME</a></li>
+							<li class="active"><a th:href="@{/}">#HOME</a></li>
 							<li><a th:href="@{/buyer/goods/menu/menu_list}">#식단</a></li>
 							<li><a th:href="@{/buyer/goods/goods_list_buyer}">#상품</a></li>
 							<li><a href="#">#고객센터</a>
