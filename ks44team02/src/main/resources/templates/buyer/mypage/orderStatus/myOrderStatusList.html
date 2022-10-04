@@ -48,11 +48,11 @@
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
-							th:each="orl, status : ${getOrderList}">
+							th:each="orl, status : ${getOrderList}" style="line-height: 50px;">
 							<td><a
 								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
 							</a></td>
-							<td>이미지 어떻게 넣을까</td>
+							<td><a href="#"><img th:alt="${orl.mainImageOriName}" th:src="@{'/'+ ${orl.mainImagePath}}" style="height: 50px;"></a></td>
 							<td th:text="${orl.get('goodsName')}"></td>
 							<td th:text="${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
