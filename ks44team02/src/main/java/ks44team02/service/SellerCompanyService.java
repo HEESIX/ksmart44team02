@@ -2,6 +2,8 @@ package ks44team02.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import ks44team02.dto.Launching;
 import ks44team02.mapper.SellerCompanyMapper;
 
 @Service
@@ -14,9 +16,12 @@ public class SellerCompanyService {
 		}
 	
 	//업체 정보 등록
-	public String addCompany() {
-		
+	public boolean addCompany(Launching launching) {
+		boolean result = sellerCompanyMapper.addCompany(launching);
+		return result;
+		/*
 		return "seller/companypage/companyInsert";
+		*/
 	}
 	
 	//업체 정보 검색 및 전체 리스트
