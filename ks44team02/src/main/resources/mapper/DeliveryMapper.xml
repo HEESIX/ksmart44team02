@@ -5,15 +5,22 @@
 <mapper namespace="ks44team02.mapper.DeliveryMapper">
 	
 	
+	
+	
+	
+	
+	
+	
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" parameterType="String" resultType="map">	
-	SELECT
+		SELECT
 			om.order_code as orderCode,
-			g.g_name as goodsName,
+			group_concat(g.g_name SEPARATOR ', ') as goodsName,
 			om.final_price as finalPrice,
 			od.order_datetime AS orderDatetime,
 			om.order_group_code AS orderGroupCode
-			
+			,gmi.main_image_original_name AS mainImageOriName
+			,gmi.main_image_path	AS mainImagePath
 		FROM
 			tb_order_management AS om
 			INNER join
@@ -24,6 +31,10 @@
 			tb_goods AS g
 			on
 			g.g_code = od.g_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
 			INNER Join
 			tb_order_status AS os
 			on
@@ -38,6 +49,7 @@
 			d.order_detail_code = od.order_detail_code
 		WHERE
 			od.member_id = #{memberId}
+		GROUP BY om.order_code
 		ORDER BY
 			os.order_status_update_datetime;
 	</select>
