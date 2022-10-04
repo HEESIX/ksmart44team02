@@ -13,12 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -214,15 +216,11 @@ public class AdminGoodsController {
 
 	// 식단 등록 처리
 	@PostMapping("/menu/regMenu")
-	public String addAdminMenu(@RequestParam(value = "goodsMainImage", required = false) MultipartFile goodsMainImage
-							  ,@RequestParam(value = "goodsInfoImage", required = false) MultipartFile goodsInfoImage
-							  ,@RequestParam(value = "goodsOfMenuCode[]", required = false) String[] goodsOfMenuCode
-							  ,@RequestParam(value = "menuGoodsAmount[]", required = false) int[] menuGoodsAmount
-							  ,@RequestParam(value = "testJsonArray") List<Map<String, Object>> resultMap
-							  ,Goods goods
-							  ,Ingredient ingredient
+	@ResponseBody
+	public String addAdminMenu(@RequestBody Map<String, Object> param
 							  ,HttpServletRequest request) {
-		log.info(">>>>>>>>>>>>{}",resultMap);
+		log.info(">>>>>>>>>>>>{}", param);
+		System.out.println(param.toString());
 		/*
 		log.info(goods.toString());
 		List<MenuOrganize> menuOrganizes = new ArrayList<MenuOrganize>();

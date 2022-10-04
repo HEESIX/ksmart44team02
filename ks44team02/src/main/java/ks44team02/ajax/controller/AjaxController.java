@@ -17,4 +17,5 @@ public class AjaxController {
 						  ,HttpSession session) {
 		return false;
 	}
+	
 }

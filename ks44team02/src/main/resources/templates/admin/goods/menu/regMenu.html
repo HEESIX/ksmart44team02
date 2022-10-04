@@ -58,8 +58,10 @@
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
 					</ol>
 				</div>
 			</div>
@@ -73,9 +75,8 @@
 					<div class="card-block" style="padding-top: 0;">
 						<div class="col-xl-3 col-lg-3"></div>
 						<div class="col-xl-6 col-lg-6">
-							<form id="addGoodsForm"
-								th:action="@{/admin/goods/menu/regMenu}" method="post"
-								enctype="multipart/form-data">
+							<form id="addGoodsForm" th:action="@{/admin/goods/menu/regMenu}"
+								method="post">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
 								<div class="form-group row">
 									<div class="col-lg-12">
@@ -287,7 +288,9 @@
 										<div class="row goodsItems" style="margin-bottom: 10px;">
 											<div class="col-lg-6 goodsOfMenu" style="padding-left: 0;">
 												<select name="goodsOfMenuCode[]"
-													class="js-example-basic-single2 goodsOfMenuCode" style="width: 100%;">
+													class="js-example-basic-single2 goodsOfMenuCode"
+													style="width: 100%;">
+													<option value="">선택해주세요.</option>
 													<th:block th:if="${not #lists.isEmpty(goodsList)}"
 														th:each="gl : ${goodsList}">
 														<option th:value="${gl.goodsCode}"
@@ -295,10 +298,10 @@
 													</th:block>
 												</select>
 											</div>
-											<div class="col-lg-6 inputBox" style="height: 28px; padding-left: 0;">
+											<div class="col-lg-6 inputBox"
+												style="height: 28px; padding-left: 0;">
 												<input class="form-control vailCheck" type="number"
-													name="menuGoodsAmount[]"
-													value="1"
+													name="menuGoodsAmount[]" value="0"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
 										</div>
@@ -372,29 +375,15 @@
 			}
 
 			$(document).on('click', '#submitBtn', function() {
-
 				//var inputObj = $('.vailCheck');
 
 				//var isValid = validationCheck(inputObj);
- 
-				//console.log(isValid, '아이디 이외의 값 유효성 검사');
-				
-				var inputObj = $('.inputObj');
-				var postItemsArray = [];
-				$.each(inputObj, function(item, index){
-					var data = new Object();
-					data.goodsName = $('#goodsName').val();
-					data.goodsPrice = $('#goodsPrice').val();
-					data.goodsDiscountCode = $('#goodsDiscountCode:selected').val();
-					data.goodsMainImage = $('#goodsMainImage')
 
-				});
-				
-				
+				//console.log(isValid, '아이디 이외의 값 유효성 검사');
 				var goodsItemsObj = $('.goodsItems');
 				var goodsItemsArray = [];
-				
-				$.each(goodsItemsObj, function(item, index){
+
+				$.each(goodsItemsObj, function(item, index) {
 					var goodsItems = {};
 					var goodsOfMenuCode = $(this).find('select').val();
 					var menuGoodsAmount = $(this).find('input').val();
@@ -402,60 +391,37 @@
 					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
 					goodsItemsArray.push(goodsItems);
 				});
-				console.log(goodsItemsArray,"<<<<<");
-				
+				console.log(goodsItemsArray, "<<<<<");
+				var form = $('#addGoodsForm');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				formData.append('goodsMainImage', $('#goodsMainImage'));
+				formData.append('goodsInfoImage', $('#goodsInfoImage'));
+				console.log(formData, "<<<<<<<<<<<<<<");
 				$.ajax({
-					  url: "/admin/goods/menu/regMenu",
-					  method: "POST",
-					  data: { id : menuId },
-					  dataType: "json"
-					});
-					 
-					request.done(function( msg ) {
-					  $( "#log" ).html( msg );
-					});
-					 
-					request.fail(function( jqXHR, textStatus ) {
-					  alert( "Request failed: " + textStatus );
-					});
-				/*
- 				var goodsOfMenuCodeArray = new Array(); // 값을 담을 배열
- 				var menuGoodsAmountArray = new Array();
-				//셀렉트박스에 있는 값을 하나씩 꺼내 배열에 담는 로직
-				$('select[name=goodsOfMenuCode] option:selected').each(function(index){
-				
-					var goodsCode = $(this).val();
-					
-					goodsOfMenuCodeArray.push(goodsCode);
+					type : 'POST',
+					url : '/admin/goods/menu/regMenu',
+					processData : false,
+					contentType : "application/json",
+					data : formData,
+				}).done(function(data) {
+					alert('123');
+					window.location.href = '/';
+				}).fail(function(error) {
+					alert(JSON.stringify(error));
 				});
-				
-				$('input[name=menuGoodsAmount]').each(function(index){
-					
-					var menuGoodsAmount = $(this).val();
-					
-					menuGoodsAmountArray.push(menuGoodsAmount);
-				});
-					 
-				console.log(goodsOfMenuCodeArray);
-				console.log(menuGoodsAmountArray);
-				/*
-				if (isValid) {
-					$('#').submit();
-				}
-				*/
 			});
 
-			$('#moreGoodsBtn').click(
-					function() {
-						$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
-						var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
-						var $inputBox = $('.inputBox .vailCheck').clone();
-						$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
-						$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
-						$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
-						$(".js-example-basic-single2").select2();
-						$()
-					});
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
+				var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
+				$(".js-example-basic-single2").select2();
+				$()
+			});
 
 		});
 	</script>

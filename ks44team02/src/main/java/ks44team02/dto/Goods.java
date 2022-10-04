@@ -27,16 +27,9 @@ public class Goods {
 	private GoodsCategory goodsCategory;
 	private Ingredient ingredient;
 	private MenuInformation menuInformation;
-	private MenuOrganize[] menuOrganizes;
 	private GoodsMainImage goodsMainImageInfo;
 	private GoodsInfoImage goodsInfoImageInfo;
 	
-	public MenuOrganize[] getMenuOrganizes() {
-		return menuOrganizes;
-	}
-	public void setMenuOrganizes(MenuOrganize[] menuOrganizes) {
-		this.menuOrganizes = menuOrganizes;
-	}
 	public String getGoodsCode() {
 		return goodsCode;
 	}
@@ -229,8 +222,6 @@ public class Goods {
 		builder.append(ingredient);
 		builder.append(", menuInformation=");
 		builder.append(menuInformation);
-		builder.append(", menuOrganizes=");
-		builder.append(Arrays.toString(menuOrganizes));
 		builder.append(", goodsMainImageInfo=");
 		builder.append(goodsMainImageInfo);
 		builder.append(", goodsInfoImageInfo=");
