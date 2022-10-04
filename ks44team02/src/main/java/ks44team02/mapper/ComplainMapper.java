@@ -23,6 +23,8 @@ public interface ComplainMapper {
   public int regBuyerComplain();
 
 public Complain getComplainInfo();
+
+public boolean regBuyerComplain(Complain complain);
 		
 	
 
