@@ -25,7 +25,7 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
-			<h4>상품 카테고리 목록</h4>
+			<h4>환불/교환사유 카테고리 목록</h4>
 		</div>
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
@@ -37,6 +37,8 @@
 									<tr>
 										<th>카테고리명</th>
 										<th>등록일자</th>
+										<th>수정</th>
+										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -44,6 +46,11 @@
 										th:each="rerl : ${refundExchangeReasonList}">
 										<td th:text="${rerl.refundExchangeReasons}"></td>
 										<td th:text="${rerl.refundExchangeReasonsDatetime}"></td>
+										<td><a
+											th:href="@{|/admin/order/refundExchangeReasonModify/${rerl.refundExchangeReasonsCode}|}">수정</a></td>
+										<td><a
+											th:href="@{|/admin/order/refundExchangeReasonRemove/${rerl.refundExchangeReasonsCode}|}">삭제</a></td>
+										
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(refundExchangeReasonList)}">
 										<td colspan="5" style="text-align: center;">사유 카테고리가 존재하지

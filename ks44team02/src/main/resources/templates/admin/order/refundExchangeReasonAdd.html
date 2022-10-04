@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	환불 사유 카테고리 등록하는 폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<!-- 환불/교환 사유 등록  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+	<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>환불/교환 사유 등록</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/order/refundExchangeReasonList}">사유 목록</a>
+						</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-2 col-lg-2"></div>
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						<h3>환불/교환 사유 등록</h3>
+					</div>
+					<form th:action="@{/admin/order/refundExchangeReasonAdd}" method="post">
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="refundExchangeReasons"
+									class="col-xs-2 col-form-label form-control-label">사유 카테고리명</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text" id="refundExchangeReasons"
+										name="refundExchangeReasons">
+								</div>
+							</div>
+							<button type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">등록완료</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 </html>

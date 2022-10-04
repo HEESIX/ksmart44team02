@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 
-<!-- 환불/교환 카테고리 수정 폼  -->
+<!-- 환불/교환사유 카테고리 삭제 폼  -->
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -21,15 +21,16 @@
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
-		<div class="row">
+	<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
-					<h4>환불/교환 사유 카테고리 수정</h4>
+					<h4>환불/교환사유 카테고리 삭제</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
 						<li class="breadcrumb-item"><a th:href="@{/admin/order/refundExchangeReasonList}">카테고리 목록</a>
 						</li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/order/refundExchangeReasonRemove}">카테고리 삭제</a></li>
 					</ol>
 				</div>
 			</div>
@@ -39,14 +40,15 @@
 			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
 				<div class="card" th:object="${refundExchangeReasonInfo}">
 					<div class="card-header" style="text-align: center;">
-						<h3>할인혜택 수정</h3>
+						<h3>환불/교환사유 카테고리 삭제</h3>
 					</div>
-					<form th:action="@{/admin/order/refundExchangeReasonModify}"
+					<form th:action="@{/admin/order/refundExchangeReasonRemove}"
 						method="post">
 						<div class="card-block">
 							<div class="form-group row">
 								<label for="refundExchangeReasonsCode"
-									class="col-xs-2 col-form-label form-control-label">카테고리 코드</label>
+									class="col-xs-2 col-form-label form-control-label">
+									</label>
 								<div class="col-sm-10">
 									<input th:value="*{refundExchangeReasonsCode}" class="form-control"
 										type="text" id="refundExchangeReasonsCode" name="refundExchangeReasonsCode"
@@ -58,12 +60,20 @@
 									class="col-xs-2 col-form-label form-control-label">카테고리명</label>
 								<div class="col-sm-10">
 									<input th:value="*{refundExchangeReasons}" class="form-control"
-										type="text" id="refundExchangeReasons" name="refundExchangeReasons">
+										readonly="readonly" type="text" id="refundExchangeReasons">
 								</div>
 							</div>
-							<button id="modifyBtn" type="submit"
+							<div class="form-group row">
+								<label for="memberPw"
+									class="col-xs-2 col-form-label form-control-label">비밀번호</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="password" id="memberPw"
+										name="memberPw">
+								</div>
+							</div>
+							<button id="removeBtn" type="submit"
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;">수정완료</button>
+								style="float: right;">삭제</button>
 						</div>
 					</form>
 				</div>
@@ -71,4 +81,5 @@
 		</div>
 	</div>
 </th:block>
+
 </html>
