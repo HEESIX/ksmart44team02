@@ -99,6 +99,11 @@ public class ReviewService {
 			
 		}
 
+		public Review getReviewInfo(String reviewContents) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	
 		
 
