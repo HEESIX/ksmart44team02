@@ -12,10 +12,56 @@
 	<!-- 환불/교환사유 목록 -->
 	<select id="getRefundExchangeReasonList" resultMap="reasonsResultMap">
 		SELECT
+			refund_exchange_reasons_code,
 			refund_exchange_reasons,
 			refund_exchange_reasons_datetime
 		FROM
 			tb_refund_exchange_reasons;
 	</select>
+	
+	<!-- 특정 사유 조회 -->
+	<select id="getRefundExchangeReasonsInfo" parameterType="String" resultMap="reasonsResultMap">
+		SELECT
+			refund_exchange_reasons_code,
+			refund_exchange_reasons,
+			refund_exchange_reasons_datetime
+		FROM
+			tb_refund_exchange_reasons
+		WHERE
+			refund_exchange_reasons_code = #{refundExchangeReasonsCode};
+	</select>
+	
+	<!-- 특정사유 수정처리 -->
+	<update id="modifyRefundExchangeReason" parameterType="RefundExchangeReasons">
+		UPDATE 
+			tb_refund_exchange_reasons
+		SET
+			refund_exchange_reasons = #{refundExchangeReasons}
+		WHERE
+			refund_exchange_reasons_code=#{refundExchangeReasonsCode};
+	</update>
+	
+	<!-- 사유 등록처리 -->
+	<insert id="addRefundExchangeReason" parameterType="RefundExchangeReasons">
+		INSERT INTO tb_refund_exchange_reasons(
+			 refund_exchange_reasons_code
+			,refund_exchange_reasons
+			,refund_exchange_reasons_datetime
+		)VALUES(
+			#{refundExchangeReasonsCode}
+	 		,#{refundExchangeReasons}
+	 		,NOW()
+	 	);
+	</insert>
+	
+	<!-- 사유 삭제 처리 -->
+	<delete id="removeRefundExchangeReason" parameterType="String">
+		DELETE 
+		FROM
+			tb_refund_exchange_reasons 
+		WHERE 
+			refund_exchange_reasons_code = #{refundExchangeReasonsCode};
+	</delete>
+	
 	
 </mapper>
