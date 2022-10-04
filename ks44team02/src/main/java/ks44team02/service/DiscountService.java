@@ -51,13 +51,13 @@ public class DiscountService {
 		boolean resultRemove = discountMapper.removeOrderDiscount(orderDiscountCode);
 		return resultRemove;
 	}
-	//회원별 보유 혜택 목록 조회
-	public List<BuyerBenefit> getBuyerBenefitList(HttpSession session){
+	//구매자별 보유 혜택 목록 조회
+	public List<BuyerBenefit> getBuyerBenefitList(String sessionId){
 		//세션의 아이디 조회
 		//현재 없으므로 fix된 값 사용
 		//String memberId = session.getAttribute("SID");
-		String memberId = "id010";
-		List<BuyerBenefit> buyerBenefitList = discountMapper.getBuyerBenefitList(memberId);
+		//String memberId = "id002";
+		List<BuyerBenefit> buyerBenefitList = discountMapper.getBuyerBenefitList(sessionId);
 		return buyerBenefitList;
 	}
 	
