@@ -63,7 +63,7 @@ public interface GoodsMapper {
 	public Goods getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
-	public int addGoodsDiscount();
+	public boolean addGoodsDiscount(GoodsDiscount goodsDiscount);
 	
 	//상품별 할인혜택 리스트(admin: admin이 등록한 것만)
 	public List<GoodsDiscount> getGoodsDiscountListForReg();
@@ -75,10 +75,13 @@ public interface GoodsMapper {
 	public List<GoodsDiscount> getGoodsDiscountList();
 	
 	//상품별 할인 혜택 수정
-	public int modifyGoodsDiscount();
+	public boolean modifyGoodsDiscount(GoodsDiscount goodsDiscount);
 	
 	//상품별 할인 혜택 삭제
-	public int removeGoodsDiscount();
+	public boolean removeGoodsDiscount(String goodsDiscountCode);
+	
+	//개별 상품별 할인 혜택 조회
+	public GoodsDiscount getGoodsDiscount(String goodsDiscountCode);
 	
 	//상품 등록 신청
 	public int applyGoodsRegister();
