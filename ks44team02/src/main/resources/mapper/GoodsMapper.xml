@@ -104,7 +104,7 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
-	<!-- 상품 카테고리 삭제 처리  -->
+	<!-- 상품 카테고리 삭제 처리 -->
 	<delete id="removeGoodsCategory" parameterType="String">
 		DELETE 
 		FROM 
