@@ -47,6 +47,11 @@ public class CommonService {
 	public boolean ReviewDelete(String revCode) {
 		boolean result = commonMapper.ReviewDelete(revCode);
 		return result;
+	}
+
+	public boolean buyerReviewDelete(String revCode, String reviewContents) {
+		boolean result = commonMapper.buyerReviewDelete(reviewContents);
+		return result;
 	};
 	
 	

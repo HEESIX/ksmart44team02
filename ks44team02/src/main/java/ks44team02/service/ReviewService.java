@@ -17,8 +17,8 @@ public class ReviewService {
 	}
 	
 	//특정회원 리뷰 조회
-	public Review getReviewInfo(String reviewContents) {
-		Review reviewInfo = reviewMapper.getReviewInfo(reviewContents);
+	public Review getReviewInfo(String reviewContents, String revCode) {
+		Review reviewInfo = reviewMapper.getReviewInfo(reviewContents,revCode);
 		
 		return reviewInfo;
 		
@@ -73,5 +73,33 @@ public class ReviewService {
 			boolean resultAnswer = reviewMapper.ReviewAnswer(reviewContents);
 			return resultAnswer;
 		}
+		
+		public boolean regBuyerReviewForm(Review reviewContents) {
+			boolean resultAnswer = reviewMapper.regBuyerReviewForm(reviewContents);
+			return resultAnswer;
+			
+			
+		}
+
+		public boolean regBuyerReview(Review review) {
+			boolean resultReg = reviewMapper.regBuyerReview(review);
+			return resultReg;
+	
+		}
+		
+		public boolean buyerReviewDeleteForm(Review reviewContents) {
+			boolean resultDelete = reviewMapper.buyerReviewDeleteForm(reviewContents);
+			return resultDelete;
+			
+		}
+
+		public boolean buyerReviewDelete(String revCode) {
+			boolean resultDelete = reviewMapper.buyerReviewDelete(revCode);
+			return resultDelete;
+			
+		}
+
+	
+		
 
 }

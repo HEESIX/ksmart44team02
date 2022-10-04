@@ -15,4 +15,6 @@ public interface CommonMapper {
 	public boolean ComplainDelete(String complainCode);
 
 	public boolean ReviewDelete(String revCode);
+
+	public boolean buyerReviewDelete(String reviewContents);
 }
