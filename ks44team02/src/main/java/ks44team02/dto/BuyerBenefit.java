@@ -1,17 +1,26 @@
 package ks44team02.dto;
 
 public class BuyerBenefit {
-	private String buyerBenefitCode;
+	private String memberBenefitCode;
 	private String memberId;
 	private String orderDiscountCode;
 	private String benefitInfo;
 	private String benefitIssueDate;
 	private String benefitExpirationDate;
-	public String getBuyerBenefitCode() {
-		return buyerBenefitCode;
+	
+	private OrderDiscount orderDiscount;
+	
+	public OrderDiscount getOrderDiscount() {
+		return orderDiscount;
 	}
-	public void setBuyerBenefitCode(String buyerBenefitCode) {
-		this.buyerBenefitCode = buyerBenefitCode;
+	public void setOrderDiscount(OrderDiscount orderDiscount) {
+		this.orderDiscount = orderDiscount;
+	}
+	public String getMemberBenefitCode() {
+		return memberBenefitCode;
+	}
+	public void setMemberBenefitCode(String memberBenefitCode) {
+		this.memberBenefitCode = memberBenefitCode;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -46,8 +55,8 @@ public class BuyerBenefit {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BuyerBenefit [buyerBenefitCode=");
-		builder.append(buyerBenefitCode);
+		builder.append("BuyerBenefit [memberBenefitCode=");
+		builder.append(memberBenefitCode);
 		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", orderDiscountCode=");
@@ -58,10 +67,10 @@ public class BuyerBenefit {
 		builder.append(benefitIssueDate);
 		builder.append(", benefitExpirationDate=");
 		builder.append(benefitExpirationDate);
+		builder.append(", orderDiscount=");
+		builder.append(orderDiscount);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 	
 }
