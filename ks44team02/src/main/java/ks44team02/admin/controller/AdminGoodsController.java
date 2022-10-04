@@ -1,5 +1,7 @@
 package ks44team02.admin.controller;
 
+import java.awt.peer.MenuPeer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -211,9 +214,29 @@ public class AdminGoodsController {
 
 	// 식단 등록 처리
 	@PostMapping("/menu/regMenu")
-	public String addAdminMenu(@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage,
-			@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage, Goods goods, Ingredient ingredient,
-			MenuOrganize[] menuOrganize, HttpServletRequest request) {
+	public String addAdminMenu(@RequestParam(value = "goodsMainImage", required = false) MultipartFile goodsMainImage
+							  ,@RequestParam(value = "goodsInfoImage", required = false) MultipartFile goodsInfoImage
+							  ,@RequestParam(value = "goodsOfMenuCode[]", required = false) String[] goodsOfMenuCode
+							  ,@RequestParam(value = "menuGoodsAmount[]", required = false) int[] menuGoodsAmount
+							  ,@RequestParam(value = "testJsonArray") List<Map<String, Object>> resultMap
+							  ,Goods goods
+							  ,Ingredient ingredient
+							  ,HttpServletRequest request) {
+		log.info(">>>>>>>>>>>>{}",resultMap);
+		/*
+		log.info(goods.toString());
+		List<MenuOrganize> menuOrganizes = new ArrayList<MenuOrganize>();
+		commonService.getNewCode("tb_");
+		int num = goodsOfMenuCode.length;
+		for(int i = 0; i < num; i++) {
+			MenuOrganize menuOrganize = new MenuOrganize();
+			menuOrganize.setMenuGoodsCode(commonService.getNewCode("tb_menu_organize"));
+			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode[i]);
+			menuOrganize.setMenuGoodsAmount(menuGoodsAmount[i]);
+			menuOrganizes.add(menuOrganize);
+		}
+		System.out.println(menuOrganizes);
+		
 		String serverName = request.getServerName();
 		log.info("{} <<<< serverName", serverName);
 		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
@@ -236,11 +259,11 @@ public class AdminGoodsController {
 		String ingredientCode = commonService.getNewCode("tb_ingredient");
 
 		goods.setGoodsCode(goodsCode);
-		goods.setGoodsMainImage(goodsMainImageIdx);
-		goods.setGoodsInfoImage(goodsInfoImageIdx);
+		//goods.setGoodsMainImage(goodsMainImageIdx);
+		//goods.setGoodsInfoImage(goodsInfoImageIdx);
 		ingredient.setIngredientCode(ingredientCode);
 		ingredient.setGoodsCode(goodsCode);
-
+		*/
 		return "redirect:/admin/goods/menu/menuList";
 	}
 

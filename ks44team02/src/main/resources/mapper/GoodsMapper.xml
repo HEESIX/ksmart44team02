@@ -51,8 +51,8 @@
 		<result column="g_netweightunit" property="goodsNetWeightUnit"/>
 		<result column="g_produce" property="goodsProduce"/>
 		<result column="g_production_expiration_info" property="goodsProductionExpirationInfo"/>
-		<result column="g_main_image" property="goodsMainImage"/>
-		<result column="g_info_image" property="goodsInfoImage"/>
+		<result column="g_main_image" property="goodsMainImageCode"/>
+		<result column="g_info_image" property="goodsInfoImageCode"/>
 		<result column="g_stock" property="goodsStock"/>
 		<result column="g_delivery_charge" property="goodsDeliveryCharge"/>
 		<result column="g_reg_datetime" property="goodsRegDatetime"/>
@@ -257,7 +257,7 @@
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
-	<!-- 상품 카테고리 삭제 처리  -->
+	<!-- 상품 카테고리 삭제 처리 -->
 	<delete id="removeGoodsCategory" parameterType="String">
 		DELETE 
 		FROM 
