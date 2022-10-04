@@ -51,17 +51,30 @@
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
+	<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>식단 수정</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a href="#">식단 수정</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-xl-12 col-lg-12" style="padding-top: 15px;">
 				<div class="card">
 					<div class="card-header" style="text-align: center;">
-						<h3>식단 등록</h3>
+						<h3>식단 수정</h3>
 					</div>
 					<div class="card-block" style="padding-top: 0;">
 						<div class="col-xl-3 col-lg-3"></div>
 						<div class="col-xl-6 col-lg-6">
 							<form id="addGoodsForm"
-								th:action="@{/admin/goods/goods_reg_form}" method="post"
+								action="" method="post"
 								enctype="multipart/form-data">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
 								<div class="form-group row">

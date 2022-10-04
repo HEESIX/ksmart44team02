@@ -573,4 +573,61 @@
 			ON 
 			e.enter_code = gdm.enter_code
 	</select>
+	<insert id="addGoodsDiscount" parameterType="GoodsDiscount">
+		INSERT INTO tb_goods_discount_management(
+			goods_discount_code
+			,discount_price
+			,discount_rate
+			,discount_name
+			,discount_expiration_date
+			,member_id
+			,g_pro_reg_datetime
+			<if test="enterCode != null and enterCode != ''">
+				,enter_code
+			</if>
+		)VALUES(
+			#{goodsDiscountCode}
+			,${goodsDiscountPrice}
+			,${goodsDiscountRate}
+			,#{goodsDiscountName}
+			,#{goodsDiscountExpirationDate}
+			,#{goodsDiscountRegistrant}
+			,NOW()
+			<if test="enterCode != null and enterCode != ''">
+				,#{enterCode}
+			</if>
+		);
+	</insert>
+	<select id="getGoodsDiscount" parameterType="String" resultMap="goodsDiscountResultMap">
+		SELECT 
+			goods_discount_code
+			,discount_price
+			,discount_rate
+			,discount_name
+			,discount_expiration_date
+			,member_id
+			,g_pro_reg_datetime
+			,enter_code
+		FROM 
+			tb_goods_discount_management
+		WHERE
+			goods_discount_code = #{goodsDiscountCode};
+	</select>
+	<update id="modifyGoodsDiscount" parameterType="GoodsDiscount">
+		UPDATE tb_goods_discount_management AS gdm
+		SET
+			gdm.discount_price = ${goodsDiscountPrice}
+			,gdm.discount_rate = ${goodsDiscountRate}
+			,gdm.discount_name = #{goodsDiscountName}
+			,gdm.discount_expiration_date = #{goodsDiscountExpirationDate}
+		WHERE 
+			gdm.goods_discount_code = #{goodsDiscountCode}
+	</update>
+	<delete id="removeGoodsDiscount" parameterType="String">
+		DELETE 
+		FROM 
+			tb_goods_discount_management
+		WHERE 
+			goods_discount_code = #{goodsDiscountCode};
+	</delete>
 </mapper>

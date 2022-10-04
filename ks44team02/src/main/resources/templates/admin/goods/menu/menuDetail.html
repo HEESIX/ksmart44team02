@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -19,26 +18,32 @@
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/admin/assets/plugins/lightbox2/dist/css/lightbox.css}">
 	<style>
-		table th{
-			background-color: #d5dade;
-			
-		}
-		table td, th{
-			text-align: center;
-			border: 2px solid #d5dade;
-			width: 150px;
-		}
-	</style>
+table th {
+	background-color: #d5dade;
+	width: 150px;
+}
+
+table td, th {
+	text-align: center;
+	border: 2px solid #e5e5e5;
+}
+</style>
 </th:block>
 
 <!-- 사용자 정의 contents  -->
-<th:block layout:fragment="customContents" th:object="${goodsInfo}">
+<th:block layout:fragment="customContents">
 	<div class="container-fluid">
-		<div class="light-box">
+		<div class="light-box" th:object="${menuInfo}">
 			<div class="row">
 				<div class="col-sm-12 p-0">
 					<div class="main-header">
-						<h4>상품 상세 정보</h4>
+						<h4>식단 상세 정보</h4>
+						<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+							<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+									class="icofont icofont-home"></i></a></li>
+							<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+							<li class="breadcrumb-item"><a href="#">식단 상세 정보</a></li>
+						</ol>
 					</div>
 				</div>
 			</div>
@@ -48,12 +53,12 @@
 						<div class="card-block col-lg-5"
 							style="padding-top: 0; padding-bottom: 0;">
 							<div class="row">
-								<div class="col-xl-6 col-lg-6 col-sm-6 col-xs-12">
+								<div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12">
 									<a th:href="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
-										data-toggle="lightbox"
-										th:attr="data-title=*{goodsMainImageInfo.mainImageOriginalName}"> <img
-										th:src="@{'/'+*{goodsMainImageInfo.mainImagePath}}" class="img-fluid"
-										th:alt="*{goodsMainImageInfo.mainImageOriginalName}" style="width: 100%;">
+										data-toggle="lightbox" th:attr="data-title=*{goodsName}">
+										<img th:src="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
+										class="img-fluid" th:alt="*{goodsMainImageInfo.mainImageOriginalName}"
+										style="width: 100%;">
 									</a>
 								</div>
 							</div>
@@ -83,6 +88,7 @@
 							<div class="row"
 								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
 								<span
+									th:unless="*{goodsNetWeight} == 0 or *{goodsNetWeightUnit} == '' or *{goodsNetWeightUnit} == null"
 									th:text="'중량: ' + *{goodsNetWeight} + *{goodsNetWeightUnit}"></span>
 							</div>
 							<div class="row"
@@ -107,19 +113,22 @@
 								<tr style="height: 40px;">
 									<th>품목 또는 명칭</th>
 									<td th:text="*{goodsName}"></td>
-									<th>포장단위별 내용물의 용량(중량),수량,크기</th>
-									<td th:text="*{goodsNetWeight} + *{goodsNetWeightUnit}"></td>
-								</tr>
-								<tr style="height: 40px;">
-									<th>생산자</th>
-									<td th:text="*{enterprise.enterName}"></td>
-									<th>원산지</th>
-									<td th:text="*{goodsProduce}"></td>
-								</tr>
-								<tr style="height: 40px;">
 									<th>제조연월일(포장일 또는 생산연도), 유통기한</th>
 									<td th:text="*{goodsProductionExpirationInfo}"></td>
 								</tr>
+								<tr style="height: 40px;">
+									<th>생산자</th>
+									<td>컨텐츠 참조</td>
+									<th>원산지</th>
+									<td th:text="*{goodsProduce}"></td>
+								</tr>
+								<th:block
+									th:unless="*{goodsNetWeight} == 0 or *{goodsNetWeightUnit} == '' or *{goodsNetWeightUnit} == null">
+									<tr>
+										<th>포장단위별 내용물의 용량(중량),수량,크기</th>
+										<td th:text="*{goodsNetWeight} + *{goodsNetWeightUnit}"></td>
+									</tr>
+								</th:block>
 							</tbody>
 						</table>
 					</div>
@@ -131,7 +140,61 @@
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8">
 						<img th:alt="*{goodsInfoImageInfo.infoImageOriginalName}"
-							th:src="@{'/'+ *{goodsInfoImageInfo.infoImagePath}}" style="width: 100%;"> 
+							th:src="@{'/'+ *{goodsInfoImageInfo.infoImagePath}}">
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-block">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<div class="main-header row">
+							<h4>포함 상품</h4>
+						</div>
+						<div class="row">
+							<th:block
+								th:if="${not #lists.isEmpty(menuOrgarnizeGoodsInfoList)}"
+								th:each="gl, status : ${menuOrgarnizeGoodsInfoList}">
+								<table style="width: 100%; margin-bottom: 10px;">
+									<tbody>
+										<tr>
+											<th rowspan="4"><img
+												th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+												th:src="@{'/' + ${gl.goodsMainImageInfo.mainImagePath}}"
+												width="150px;"></th>
+											<th>상품명</th>
+											<td th:text="${gl.goodsName}"></td>
+											<th:block th:if="${not #lists.isEmpty(menuOrganizeList)}"
+												th:each="mol : ${menuOrganizeList}">
+												<th:block th:if="${mol.goodsOfMenuCode} == ${gl.goodsCode}">
+													<th>포함 개수</th>
+													<td th:text="${mol.menuGoodsAmount}"></td>
+												</th:block>
+											</th:block>
+										</tr>
+										<tr>
+											<th>칼로리(KCal)</th>
+											<td th:text="${gl.ingredient.ingredientKCal} + 'Kcal'"></td>
+											<th>단백질(g)</th>
+											<td th:text="${gl.ingredient.ingredientProtein} + 'g'"></td>
+										</tr>
+										<tr>
+											<th>탄수화물(g)</th>
+											<td th:text="${gl.ingredient.ingredientCarb} + 'g'"></td>
+											<th>당류(g)</th>
+											<td th:text="${gl.ingredient.ingredientSugar} + 'g'"></td>
+										</tr>
+										<tr>
+											<th>나트륨(mg)</th>
+											<td th:text="${gl.ingredient.ingredientSodium} + 'mg'"></td>
+											<th>콜레스테롤(mg)</th>
+											<td th:text="${gl.ingredient.ingredientCholesterol} + 'mg'"></td>
+										</tr>
+									</tbody>
+								</table>
+							</th:block>
+						</div>
 					</div>
 					<div class="col-lg-2"></div>
 				</div>

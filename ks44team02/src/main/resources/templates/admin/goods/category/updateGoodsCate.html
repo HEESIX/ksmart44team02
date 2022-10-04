@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 
-<!-- 상품 카테고리 삭제 폼  -->
+<!-- 상품 카테고리 수정 폼  -->
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -14,12 +14,23 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
 		<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>상품 카테고리 수정</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/goods/category/goodsCateList}">상품 카테고리 목록</a></li>
+						<li class="breadcrumb-item"><a href="#">상품 카테고리 수정</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-2 col-lg-2"></div>
 			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
-				<div class="card" th:object="${goodsCategoryInfo}">
-					<div class="card-header" style="text-align: center;">
-						<h3>카테고리 삭제</h3>
-					</div>
-					<form th:action="@{/admin/goods/category/goodscate_remove}"
+				<div class="card" th:object="${goodsCategoryInfo}"style="padding-top: 20px;">
+					<form th:action="@{/admin/goods/category/updateGoodsCate}"
 						method="post">
 						<div class="card-block">
 							<div class="form-group row">
@@ -38,7 +49,7 @@
 									이름</label>
 								<div class="col-sm-10">
 									<input th:value="*{goodsCategoryName}" class="form-control"
-										readonly="readonly" type="text" id="goodsCategoryName">
+										type="text" id="goodsCategoryName" name="goodsCategoryName">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -48,25 +59,17 @@
 								</div>
 								<div class="col-md-10 has-danger">
 									<label class="custom-control custom-checkbox"> <input
-										disabled="disabled" th:checked="*{goodsCategoryStatus} == 1"
+										th:checked="*{goodsCategoryStatus} == 1"
 										class="custom-control-input" type="checkbox"
-										id="goodsCategoryStatus" th:value="*{goodsCategoryStatus}">
+										id="goodsCategoryStatus" name="goodsCategoryStatus" value="1">
 										<span class="custom-control-indicator"></span> <span
 										class="custom-control-description">사용</span>
 									</label>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="memberPw"
-									class="col-xs-2 col-form-label form-control-label">비밀번호</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="password" id="memberPw"
-										name="memberPw">
-								</div>
-							</div>
 							<button id="updateBtn" type="submit"
 								class="btn btn-info waves-effect waves-light"
-								style="float: right;">삭제</button>
+								style="float: right;">수정</button>
 						</div>
 					</form>
 				</div>

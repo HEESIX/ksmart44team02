@@ -139,8 +139,9 @@ public class GoodsService {
 	}
 
 	// 상품별 할인 혜택 등록
-	public int getGoodsDiscout() {
-		return 0;
+	public boolean addGoodsDiscount(GoodsDiscount goodsDiscount) {
+		boolean result = goodsMapper.addGoodsDiscount(goodsDiscount);
+		return result;
 	}
 
 	// 상품별 할인 혜택 리스트(admin: admin이 등록한 할인혜택만)
@@ -165,14 +166,28 @@ public class GoodsService {
 		return goodsDiscountList;
 	}
 
-	// 상품별 할인 혜택 수정
-	public int modifyGoodsDiscount() {
-		return 0;
+	// 상품별 할인 혜택 수정 폼
+	public GoodsDiscount modifyGoodsDiscountForm(String goodsDiscountCode) {
+		GoodsDiscount goodsDiscountInfo = goodsMapper.getGoodsDiscount(goodsDiscountCode);
+		return goodsDiscountInfo;
+	}
+	
+	//상품별 할인 혜택 수정 처리
+	public boolean modifyGoodsDiscount(GoodsDiscount goodsDiscount) {
+		boolean result = goodsMapper.modifyGoodsDiscount(goodsDiscount);
+		return result;
 	}
 
-	// 상품별 할인 혜택 삭제
-	public int removeGoodsDiscount() {
-		return 0;
+	// 상품별 할인 혜택 삭제 폼
+	public GoodsDiscount removeGoodsDiscountForm(String goodsDiscountCode) {
+		GoodsDiscount goodsDiscountInfo = goodsMapper.getGoodsDiscount(goodsDiscountCode);
+		return goodsDiscountInfo;
+	}
+	
+	// 상품별 할인 헤택 삭제 처리
+	public boolean removeGoodsDiscount(String goodsDiscountCode) {
+		boolean result = goodsMapper.removeGoodsDiscount(goodsDiscountCode);
+		return result;
 	}
 
 	// 상품 등록 신청
