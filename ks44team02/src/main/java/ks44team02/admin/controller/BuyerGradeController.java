@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import ks44team02.dto.Grade;
-import ks44team02.service.Gradeservice;
+import ks44team02.service.GradeService;
 
 @Controller
 @RequestMapping(value = "/admin/gradeDetails")
@@ -21,52 +21,51 @@ public class BuyerGradeController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BuyerGradeController.class);
 
-	private final Gradeservice gradeservice;
+	private final GradeService gradeService;
 
-	public BuyerGradeController(Gradeservice gradeservice) {
-		this.gradeservice = gradeservice;
+	public BuyerGradeController(GradeService gradeService) {
+		this.gradeService = gradeService;
 	}
 	// 구매자 등급 정의 등록 폼 
-	@GetMapping("/buyer_gradeform")
-	public String getbuyerGradeForm() {
-		return "admin/gradeDetails/buyer_gradeform";
+	@GetMapping("/buyerGradeForm")
+	public String getBuyerGradeForm() {
+		return "admin/gradeDetails/buyerGradeForm";
 	}
 	
 	// 구매자 등급 정의 등록 처리 
-	@PostMapping("/buyer_gradeform")
-	public String getbuyerGrade() {
-		
-		return "redirect:admin/gradeDetails/buyer_gradelist";
+	@PostMapping("/buyerGradeForm")
+	public String getBuyerGrade() {
+		return "redirect:admin/gradeDetails/buyerGradeForm";
 	}	
 	
 	// 구매자 등급 정의 리스트
-	@GetMapping("/buyer_gradelist")
+	@GetMapping("/buyerGradeList")
 	public String getbuyerGradeList(Model model) {
-		List<Grade> buyerGradeList = gradeservice.getbuyerGradeList();
+		List<Grade> buyerGradeList = gradeService.getBuyerGradeList();
 		model.addAttribute("title", "구매자 등급 리스트");
 		model.addAttribute("buyerGradeList", buyerGradeList);
-		return "admin/gradeDetails/buyer_gradelist";
+		return "admin/gradeDetails/buyerGradeList";
 	}
 	
 	//구매자 등급 정의 수정폼 
-	@GetMapping("/buyer_modifylist/{consumer_level_states_code}")
+	@GetMapping("/buyerModifyList/{consumer_level_states_code}")
 	public String ModifybuyerGradeForm(@PathVariable(value = "consumer_level_states_code") 
 			String consumer_level_states_code) {
-				return "admin/gradeDetails/buyer_modifylist";
+				return "admin/gradeDetails/buyerModifyList";
 	}
 	
 	
 	//구매자 등급 정의 수정 처리 
-	@PostMapping("/buyer_modifylist")
+	@PostMapping("/buyerModifylist")
 	public String ModifybuyerGrade() {
-		return "redirect:admin/gradeDetails/buyer_gradelist";
+		return "redirect:admin/gradeDetails/buyerGradeList";
 		}
 	
 	
 	//구매자 등급 정의 삭제 처리
-	@PostMapping("/buyer_removelist/{consumer_level_states_code}")
+	@PostMapping("/buyerRemoveList/{consumer_level_states_code}")
 	public String RemovebuyerGrade(@PathVariable(value = "consumer_level_states_code") 
 	String consumer_level_states_code) {
-		return "redirect:admin/gradeDetails/buyer_gradelist";
+		return "redirect:admin/gradeDetails/buyerGradeList";
 			}
 }

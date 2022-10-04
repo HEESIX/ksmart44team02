@@ -158,7 +158,7 @@ public class AdminGoodsController {
 	@GetMapping("/goods_reg_form")
 	public String addGoodsForm(Model model) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
-		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListAdmin();
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
 
 		model.addAttribute("title", "상품 등록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
@@ -176,7 +176,7 @@ public class AdminGoodsController {
 	@GetMapping("/goods_list_admin")
 	public String getAdminGoodsList(Model model) {
 		List<Goods> goodsList = goodsService.getAdminGoodsList();
-
+		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goods_list_admin";
 	}
@@ -188,7 +188,7 @@ public class AdminGoodsController {
 		// 받은 g_code로 상품 정보 select 후 모델에 담는 작업 필요
 		// g_code null? 혹은 존재하지 않을경우?
 
-		Map<String, Object> goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		model.addAttribute("goodsInfo", goodsInfo);
 		return "admin/goods/goods_detail_admin";
 	}
@@ -218,7 +218,7 @@ public class AdminGoodsController {
 	// 식단 등록 폼
 	@GetMapping("/menu/menu_reg_form")
 	public String addAdminMenuForm(Model model) {
-		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListAdmin();
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
 		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
 
 		model.addAttribute("title", "식단 등록");
@@ -266,7 +266,7 @@ public class AdminGoodsController {
 	@GetMapping("/menu/menu_list")
 	public String getAdminMenuList(Model model) {
 		//image가 관련된 부분은 전부 isLocal test 필요
-		List<Map<String, Object>> adminMenuList = goodsService.getAdminMenuList();
+		List<Goods> adminMenuList = goodsService.getAdminMenuList();
 		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menu_list";
 	}
@@ -274,7 +274,7 @@ public class AdminGoodsController {
 	// 식단 수정 폼
 	@GetMapping("/menu/menu_update_admin/{menuCode}")
 	public String modifyAdminMenuForm(@PathVariable(value = "menuCode") String menuCode) {
-
+		
 		return "admin/goods/menu/menu_update_admin";
 	}
 
@@ -298,12 +298,14 @@ public class AdminGoodsController {
 							 ,Model model
 							 ,HttpServletRequest request) {
 		//String serverName = request.getServerName();
-		List<Map<String, Object>> menuOrgarnizeGoodsInfoList = goodsService.getMenuOrganizeGoodsInfo(menuCode);
-		Map<String, Object> menuInfo = goodsService.getMenuInfo(menuCode);
+		List<Goods> menuOrgarnizeGoodsInfoList = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
+		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
 		
 		model.addAttribute("title", "개별 식단 정보");
 		model.addAttribute("menuInfo", menuInfo);
 		model.addAttribute("menuOrgarnizeGoodsInfoList", menuOrgarnizeGoodsInfoList);
+		model.addAttribute("menuOrganizeList", menuOrganizeList);
 		return "admin/goods/menu/menu_detail_admin";
 	}
 
@@ -321,7 +323,12 @@ public class AdminGoodsController {
 
 	// 상품별 할인 혜택 리스트
 	@GetMapping("/discount/goods_discount_list")
-	public String getGoodsDiscountList() {
+	public String getGoodsDiscountList(Model model) {
+		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountList();
+		
+		model.addAttribute("title", "상품별 할인 혜택 목록");
+		model.addAttribute("goodsDiscountList", goodsDiscountList);
+		System.out.println(goodsDiscountList.toString());
 		return "admin/goods/discount/goods_discount_list";
 	}
 
@@ -340,7 +347,7 @@ public class AdminGoodsController {
 	}
 
 	// 상품별 할인 혜택 삭제 처리
-	@PostMapping("discount/goods_discount_remove/{g_discount_code}")
+	@PostMapping("/discount/goods_discount_remove/{g_discount_code}")
 	public String removeGoodsDiscount(@PathVariable(value = "g_discount_code") String g_discount_code) {
 
 		return "redirect:/admin/goods/discount/goods_discount_list";

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team02.service.Joinservice;
+import ks44team02.service.JoinService;
 
 @Controller
 @RequestMapping(value = "buyer/login")
@@ -15,10 +15,10 @@ public class BuyerJoinController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BuyerJoinController.class);
 	
-	private final Joinservice joinservice;
+	private final JoinService joinService;
 	
-	public BuyerJoinController (Joinservice joinservice) {
-		this.joinservice = joinservice;
+	public BuyerJoinController (JoinService joinService) {
+		this.joinService = joinService;
 	}
 	
 	//구매자 회원가입

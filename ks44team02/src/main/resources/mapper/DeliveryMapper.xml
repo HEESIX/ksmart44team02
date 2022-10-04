@@ -49,6 +49,7 @@
          od.order_group_code as orderGroupCode,
          g.g_main_image as goodsMainImage,
          g.g_name as goodsName,
+         od.discount_price AS discountPrice,
          od.regular_price_subtotal as regularPriceSubtotal,
          od.order_amount as orderAmount,
          od.order_datetime as orderDatetime,
@@ -78,7 +79,7 @@
 		 on
 		 d.order_detail_code = od.order_detail_code	
 	WHERE
-    	od.order_group_code = #{orderGroupCode}
+    	od.order_group_code = #{orderGroupCode};
 
 	</select>
 
@@ -97,9 +98,26 @@
 			on
 			p.order_code = om.order_code
 		WHERE
-			om.order_group_code = #{orderGroupCode}
+			om.order_group_code = #{orderGroupCode};
 	</select>
 	
+	<!-- 배송정보 -->
+	<select id="getDeliveryinfo" parameterType="String" resultType="map">
+		SELECT
+			d.d_type AS deliType,
+			d.d_get_name AS deliName,
+			d.d_get_addr AS deliAddress,
+			d.d_get_phone AS deliPhone,
+			d.d_memo AS deliMemo
+		FROM
+			tb_delivery AS d
+			LEFT join
+			tb_order_detail AS od
+			on
+			d.order_detail_code = od.order_detail_code
+		WHERE
+			od.order_group_code = #{orderGroupCode};
+	</select>
 
 	
 </mapper>

@@ -9,4 +9,10 @@ public interface CommonMapper {
 	
 	//테이블 명과 컬럼명을 입력하여 새로운 코드를 반환
 	public String getNewCode(String tableName);
+
+	public boolean MileageExtinction(String mMileageCode);
+
+	public boolean ComplainDelete(String complainCode);
+
+	public boolean ReviewDelete(String revCode);
 }

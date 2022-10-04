@@ -1,13 +1,14 @@
 package ks44team02.dto;
 
 public class FileDto {
-	
+
 	private String fileIdx;
 	private String fileOriginalName;
 	private String fileNewName;
 	private String filePath;
 	private Long fileSize;
 	private boolean fileIsLocal;
+	
 	public String getFileIdx() {
 		return fileIdx;
 	}
@@ -32,35 +33,28 @@ public class FileDto {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public Long getFileSize() {
-		return fileSize;
-	}
+	
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public boolean isFileIsLocal() {
+	
+	public Long getFileSize() {
+		return fileSize;
+	}
+	
+	public boolean getFileIsLocal() {
 		return fileIsLocal;
 	}
+	
 	public void setFileIsLocal(boolean fileIsLocal) {
 		this.fileIsLocal = fileIsLocal;
 	}
+	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FileDto [fileIdx=");
-		builder.append(fileIdx);
-		builder.append(", fileOriginalName=");
-		builder.append(fileOriginalName);
-		builder.append(", fileNewName=");
-		builder.append(fileNewName);
-		builder.append(", filePath=");
-		builder.append(filePath);
-		builder.append(", fileSize=");
-		builder.append(fileSize);
-		builder.append(", fileIsLocal=");
-		builder.append(fileIsLocal);
-		builder.append("]");
-		return builder.toString();
+		return "FileDto [fileIdx=" + fileIdx + ", fileOriginalName=" + fileOriginalName + ", fileNewName=" + fileNewName
+				+ ", filePath=" + filePath + ", fileSize=" + fileSize + ", fileIsLocal=" + fileIsLocal + "]";
 	}
+	
 	
 }

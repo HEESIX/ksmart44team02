@@ -15,12 +15,12 @@ public class SellerSalesService {
 
 	//판매자 매출 현황 화면
 	public String getSaleList() {
-		return "seller/salespage/seller_sales";
+		return "seller/salespage/sellerSales";
 	}
 	
 	//판매자 매출 정산 확인 화면
 	public String sellerSalesSuccess() {
-		return "seller/salespage/seller_sales_calculate";	
+		return "seller/salespage/sellerSalesCalculate";	
 	}
 }
 

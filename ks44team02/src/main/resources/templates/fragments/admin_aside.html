@@ -6,19 +6,21 @@
 		<section class="sidebar" id="sidebar-scroll">
 			<!-- Sidebar Menu-->
 			<ul class="sidebar-menu">
-
 				<li class="nav-level">--- 관리</li>
 				<li class="treeview"><a class="waves-effect waves-dark"
 					href="#"><i class="icon-briefcase"></i><span>#회원 관리</span><i
 						class="icon-arrow-down"></i></a>
 					<ul class="treeview-menu">
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/login/admin_login_list}"><i
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/login/adminLoginList}"><i
 								class="icon-arrow-right"></i>#회원등록</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/login/member_list_admin}"><i
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/login/memberListAdmin}"><i
 								class="icon-arrow-right"></i>#회원 조회/검색</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/mileageManage/mileage_management}"><i
-								class="icon-arrow-right"></i>#회원 적립금 조회</a></li>		
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/gradeDetails/buyer_gradelist}"><i	
+								class="icon-arrow-right"></i>#회원 적립금 조회</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/mileageManage/mileage_give}"><i
+								class="icon-arrow-right"></i>#회원 적립금 적립</a></li>		
+								
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/gradeDetails/buyerGradeList}"><i	
 								class="icon-arrow-right"></i>#등급관리</a></li>
 					</ul></li>
 					
@@ -27,11 +29,11 @@
 					href="#"><i class="icon-chart"></i><span>#입점 업체 관리</span><i
 						class="icon-arrow-down"></i></a>
 					<ul class="treeview-menu">
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_check}"><i
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyCheck}"><i
 								class="icon-arrow-right"></i>#입점 업체 승인</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_list}"><i
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyList}"><i
 								class="icon-arrow-right"></i>#입점 업체 정보</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/seller_company_delete}"><i
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyDelete}"><i
 								class="icon-arrow-right"></i>#입점 업체 삭제</a></li>	
 					</ul></li>
 						
@@ -44,18 +46,18 @@
 								class="icon-arrow-right"></i>#판매자 매출<i
 								class="icon-arrow-down"></i></a>
 							<ul class="treeview-menu">
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/admin_seller_daily_calculate}"><i
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/adminSellerDailyCalculate}"><i
 										class="icon-arrow-right"></i>#판매자 일일 정산금</a></li>
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/admin_seller_calculate}"><i
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/adminSellerCalculate}"><i
 										class="icon-arrow-right"></i>#판매자 정산금 정산</a></li>
 							</ul></li>
 						<li><a class="waves-effect waves-dark" href="#"><i
 								class="icon-arrow-right"></i>#관리자 매출<i
 								class="icon-arrow-down"></i></a>
 							<ul class="treeview-menu">
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/admin_fee_check}"><i
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/adminFeeCheck}"><i
 										class="icon-arrow-right"></i>#관리자 수수료 확인</a></li>
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/admin_fee_calculate}"><i
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/calculatepage/adminFeeCalculate}"><i
 										class="icon-arrow-right"></i>#관리자 수수료 정산</a></li>
 							</ul></li>
 					</ul></li>
@@ -83,27 +85,27 @@
 								class="icon-arrow-right"></i>!#판매 식단 목록</a></li>
 					</ul></li>
 				<li class="treeview"><a class="waves-effect waves-dark"
-					href="#"> <i class="icon-list"></i><span>#할인혜택 관리</span><i
+					href="#"> <i class="icon-list"></i><span>!#할인혜택 관리:민관,지석</span><i
 						class="icon-arrow-down"></i>
 				</a>
 					<ul class="treeview-menu">
 						<li><a class="waves-effect waves-dark" href="#"><i
-								class="icon-arrow-right"></i>#상품별 할인 혜택<i
+								class="icon-arrow-right"></i>#!상품별 할인 혜택: 장민관<i
 								class="icon-arrow-down"></i></a>
 							<ul class="treeview-menu">
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/goods/discount/goods_discount_list}"><i
-										class="icon-arrow-right"></i>#할인 혜택 조회</a></li>
+										class="icon-arrow-right"></i>#!할인 혜택 조회</a></li>
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/goods/discount/goods_discount_reg_form}"><i
-										class="icon-arrow-right"></i>#신규 할인 혜택 등록</a></li>
+										class="icon-arrow-right"></i>#!신규 할인 혜택 등록</a></li>
 							</ul></li>
 						<li><a class="waves-effect waves-dark" href="#"><i
-								class="icon-arrow-right"></i>#주문서별 할인 혜택<i
+								class="icon-arrow-right"></i>!#주문서별 할인 혜택: 서지석<i
 								class="icon-arrow-down"></i></a>
 							<ul class="treeview-menu">
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/addOrderDiscount}"><i
-										class="icon-arrow-right"></i>#신규 할인 혜택 등록</a></li>
+										class="icon-arrow-right"></i>!#신규 할인 혜택 등록</a></li>
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/orderDiscountList}"><i
-										class="icon-arrow-right"></i>#할인 혜택 조회</a></li>
+										class="icon-arrow-right"></i>!#할인 혜택 조회</a></li>
 							</ul></li>
 					</ul></li>
 				<li class="treeview"><a class="waves-effect waves-dark"
@@ -113,18 +115,18 @@
 					<ul class="treeview-menu">
 						<li><a class="waves-effect waves-dark" href="#"><i
 								class="icon-arrow-right"></i>#QnA</a></li>
-						<li><a class="waves-effect waves-dark" href="#"><i
-								class="icon-arrow-right"></i>#신고</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/complainManage/complainList}"><i
+								class="icon-arrow-right"></i>신고관리</a></li>
 					</ul></li>
 				<li class="treeview"><a class="waves-effect waves-dark"
-					href="#"> <i class="icon-list"></i><span>#환불/교환 사유 관리</span><i
+					href="#"> <i class="icon-list"></i><span>#환불/교환 사유 관리:장보경</span><i
 						class="icon-arrow-down"></i>
 				</a>
 					<ul class="treeview-menu">
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refund_exchange_reason_list}"><i
-								class="icon-arrow-right"></i>#환불/교환 사유 조회</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refund_exchange_reason_add}"><i
-								class="icon-arrow-right"></i>#환불/교환 사유 등록</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refundExchangeReasonList}"><i
+								class="icon-arrow-right"></i>#환불/교환사유 목록</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refundExchangeReasonAdd}"><i
+								class="icon-arrow-right"></i>#환불/교환사유 등록</a></li>
 					</ul></li>	
 					
 				<li class="treeview"><a class="waves-effect waves-dark"

@@ -16,7 +16,7 @@ public interface SellerCompanyMapper {
 	public List<Launching> sellerCompanyInfoList();
 	
 	//업체 세부 정보 화면
-	public String company_detail();
+	public String companyDetail();
 	
 	//업체 정보 수정
 	public String sellerCompanyModify();

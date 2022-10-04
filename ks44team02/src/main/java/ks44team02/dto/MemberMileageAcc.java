@@ -1,6 +1,6 @@
 package ks44team02.dto;
 
-public class Mileage {
+public class MemberMileageAcc {
 
 	private String mMileageCode;
 	private String memberId;

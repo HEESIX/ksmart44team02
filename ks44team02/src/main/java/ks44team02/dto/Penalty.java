@@ -2,6 +2,8 @@ package ks44team02.dto;
 
 public class Penalty {
 
+	 
+	private String penaltyStateCode;
 	private String memberId;
 	private String penaltySort;  //패널티종류
 	private String reviewAvg;
@@ -38,10 +40,20 @@ public class Penalty {
 	public void setPenaltyApplyDate(String penaltyApplyDate) {
 		this.penaltyApplyDate = penaltyApplyDate;
 	}
+	
+	
+	public String getPenaltyStateCode() {
+		return penaltyStateCode;
+	}
+	public void setPenaltyStateCode(String penaltyStateCode) {
+		this.penaltyStateCode = penaltyStateCode;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Penalty [memberId=");
+		builder.append("Penalty [penaltyStateCode=");
+		builder.append(penaltyStateCode);
+		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", penaltySort=");
 		builder.append(penaltySort);

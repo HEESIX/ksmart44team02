@@ -9,8 +9,6 @@
 </th:block>
 
 
-
-
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -19,9 +17,9 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>주문리스트</h2>
+						<h2>주문관리</h2>
 						<div class="breadcrumb__option">
-							<a th:href="@{/}">Home</a><span>my order</span>
+							<a th:href="@{/}">Home</a><span></span>
 						</div>
 					</div>
 				</div>
@@ -46,19 +44,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(getOrderList)}"
-							th:each="orl : ${getOrderList}">
-							<td><a
-								th:href="@{/buyer/mypage/orderStatus/myorder_delivery_detail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('orderCode')}">
-							</a></td>
-							<td th:text="${orl.get('goodsName')}"></td>
-							<td th:text="${orl.get('finalPrice')}"></td>
-							<td th:text="${orl.get('orderDatetime')}"></td>
-						</tr>
-						<tr th:unless="${not #lists.isEmpty(getOrderList)}">
-							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
-							</td>
-						</tr>
+					
 					</tbody>
 				</table>
 			</div>

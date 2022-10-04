@@ -1,5 +1,7 @@
 package ks44team02.admin.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ks44team02.dto.RefundExchangeReasons;
 import ks44team02.service.AdminDeliveryeService;
 
 @Controller
@@ -26,39 +30,46 @@ public class AdminDeliveryController {
 	
 	
 	//구매자의 배송현황 조회
-	@GetMapping("/buyer_order_delivery_status")
+	@GetMapping("/buyerOrderDeliveryStatus")
 	public String getAdminOrderStatusList() {
 		return null;
 	}
 
 	//환불 사유 카테고리 등록
-	@GetMapping("/refund_exchange_reason_add")
+	@GetMapping("/refundExchangeReasonAdd")
 	public String addRefundExchangeReason(Model model) {
 		return null;
 	}
 
 	//환불 사유 카테고리 등록 처리
-	@PostMapping("/refund_exchange_reason_add")
+	@PostMapping("/refundExchangeReasonAdd")
 	public String addRefundExchangeReason() {
 		return null;
 	}
 
 	//환불 사유 카테고리 수정
-	@GetMapping("/refund_exchange_reason_modify/{refund_exchange_reasons_code}")
+	@GetMapping("/refundExchangeReasonModify/{refund_exchange_reasons_code}")
 	public String modifyRefundExchangeReason(@PathVariable(value = "refund_exchange_reasons_code") String refund_exchange_reasons_code) {
 		return null;
 	}
 	
 	//환불 사유 카테고리 수정 처리
-	@PostMapping("/refund_exchange_reason_modify")
+	@PostMapping("/refundExchangeReasonModify")
 	public String modifyRefundExchangeReason() {
 		return null;
 	}
 	
 	//환불 사유 카테고리 리스트
-	@GetMapping("/refund_exchange_reason_list")
-	public String getRefundExchangeReasonList() {
-		return null;
+	@GetMapping("/refundExchangeReasonList")
+	public String getRefundExchangeReasonList(Model model
+											,@RequestParam(value = "msg", required = false) String msg) {
+		List<RefundExchangeReasons> refundExchangeReasonList = adminDeliveryeService.getRefundExchangeReasonList();
+		
+		model.addAttribute("titele", "환불/교환사유 목록");
+		model.addAttribute("refundExchangeReasonList", refundExchangeReasonList);
+		if(msg!=null) model.addAttribute("msg", msg);
+		
+		return "admin/order/refundExchangeReasonList";
 	}
 }
 

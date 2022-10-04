@@ -13,19 +13,19 @@ public interface LoginMapper {
 	public int buyerLogin();
 
 	//구매자 로그아웃
-	public int buyerlogout();	
+	public int buyerLogout();	
 	
 	//판매자 로그인
 	public int sellerLogin();
 
 	//구매자 로그아웃
-	public int sellerlogout();	
+	public int sellerLogout();	
 	
 	//구매자 로그인
 	public int adminLogin();
 
 	//구매자 로그아웃
-	public int adminlogout();	
+	public int adminLogout();	
 	
 	//판매자 회원 정보 리스트 
 	public Member getAdminMemberList(String memberId);

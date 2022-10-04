@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks44team02.dto.FileDto;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.MenuOrganize;
-import ks44team02.dto.Menus;
+import ks44team02.dto.MenuInformation;
 
 @Mapper
 public interface GoodsMapper {
@@ -45,7 +45,7 @@ public interface GoodsMapper {
 	public int addAdminMenu();
 	
 	//식단 리스트
-	public List<Map<String, Object>> getAdminMenuList();
+	public List<Goods> getAdminMenuList();
 	
 	//식단 수정
 	public int modifyAdminMenu();
@@ -54,22 +54,25 @@ public interface GoodsMapper {
 	public int removeAdminMenu();
 	
 	//개별 상품 정보 + 메인이미지 정보
-	public Map<String, Object> getGoodsInfo(String goodsCode);
+	public Goods getGoodsInfo(String goodsCode);
 	
 	//소개 이미지 정보
-	public FileDto getGoodsInfoImage(String goodsCode, int isLocal);
+	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
-	public Map<String, Object> getMenuInfo(String menuCode);
+	public Goods getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
 	public int addGoodsDiscount();
 	
-	//상품별 할인혜택 리스트(admin: admin이 등록한 할인혜택만)
-	public List<GoodsDiscount> getGoodsDiscountListAdmin();
+	//상품별 할인혜택 리스트(admin: admin이 등록한 것만)
+	public List<GoodsDiscount> getGoodsDiscountListForReg();
 	
 	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
+	
+	//상품별 할인혜택 리스트 제한 X
+	public List<GoodsDiscount> getGoodsDiscountList();
 	
 	//상품별 할인 혜택 수정
 	public int modifyGoodsDiscount();
@@ -96,7 +99,7 @@ public interface GoodsMapper {
 	public int addBuyerMenu();
 	
 	//개인 맞춤 식단 목록 조회
-	public List<Menus> getBuyerMenuList();
+	public List<MenuInformation> getBuyerMenuList();
 	
 	//개인 맞춤 식단 수정
 	public int modifyBuyerMenu();
@@ -105,10 +108,10 @@ public interface GoodsMapper {
 	public int removeBuyerMenu();
 	
 	//개인 맞춤 식단 정보
-	public Menus getBuyerMenuInfo();
+	public MenuInformation getBuyerMenuInfo();
 	
 	//식단 목록
-	public List<Menus> getMenuList();
+	public List<MenuInformation> getMenuList();
 	
 	//상품 목록(활성화 되어있는 것만)
 	public List<Map<String, Object>> getGoodsList();

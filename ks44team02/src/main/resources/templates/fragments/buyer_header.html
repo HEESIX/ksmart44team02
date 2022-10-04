@@ -16,7 +16,7 @@
 		<div class="humberger__menu__cart">
 			<ul>
 				<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-				<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+				<li><a th:href="@{buyer/mypage/cart/cartList}">!#<i class="fa fa-shopping-bag">지석</i> <span>3</span></a></li>
 			</ul>
 			<div class="header__cart__price">
 				item: <span>$150.00</span>
@@ -35,7 +35,7 @@
 			</div>
 			-->
 			<div class="header__top__right__auth">
-				<a href="#"><i class="fa fa-user"></i> Login</a>
+				<a th:href="@{/buyer/login/buyerLogin}"><i class="fa fa-user"></i> Login</a>
 			</div>	
 		</div>
 		
@@ -103,11 +103,11 @@
 							<div class="header__top__right__auth">
 							<nav class="header__menu" style="padding: 0 0 0 0;">	
 							<ul>
-								<li><a th:href="@{/buyer/login/buyer_login}">
+								<li><a th:href="@{/buyer/login/buyerLogin}">
 								<i class="fa fa-user"></i> Login</a>
 									<ul class="header__menu__dropdown">
-										<li><a th:href="@{/buyer/login/buyer_login_list}">#회원정보 수정</a></li>
-										<li><a th:href="@{/buyer/mypage/orderStatus/myorder_status_list}">#주문 정보</a></li>
+										<li><a th:href="@{/buyer/login/buyerLoginList}">#회원정보 수정</a></li>
+										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">#주문 정보</a></li>
 										<li><a href="#">#상품 후기</a></li>
 										<li><a href="#">#상품 문의</a></li>
 										<li><a href="#">#적립금</a></li>
@@ -131,7 +131,7 @@
 				</div>
 				<div class="col-lg-7">
 					<nav class="header__menu" style="text-align: right;">
-						<ul>
+						<ul> 
 							<li class="active"><a href="./index.html">#HOME</a></li>
 							<li><a th:href="@{/buyer/goods/menu/menu_list}">#식단</a></li>
 							<li><a th:href="@{/buyer/goods/goods_list_buyer}">#상품</a></li>
@@ -148,7 +148,7 @@
 					<div class="header__cart">
 						<ul>
 							<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-							<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+							<li><a th:href="@{/buyer/mypage/cart/cartList}">!#<i class="fa fa-shopping-bag"></i>지석 <span>3</span></a></li>
 						</ul>
 						<div class="header__cart__price">
 						<!--

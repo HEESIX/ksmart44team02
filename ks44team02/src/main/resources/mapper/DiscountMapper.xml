@@ -8,7 +8,6 @@
 		<result column="discount_rate" 				property="discountRate"/>
 		<result column="discount_price" 			property="discountPrice"/>
 		<result column="discount_name" 				property="discountName"/>
-		<result column="discount_expiration_date" 	property="discountExpirationDate"/>
 		<result column="min_order_price" 			property="minOrderPrice"/>
 		<result column="max_discount_price" 		property="maxDiscountPrice"/>
 		<result column="g_production_reg_datetime" 	property="gProductionRegDateTime"/>
@@ -20,7 +19,6 @@
 			,discount_rate
 			,discount_price
 			,discount_name
-			,discount_expiration_date
 			,min_order_price
 			,ifnull(max_discount_price,0) as max_discount_price	
 			,g_production_reg_datetime
@@ -34,7 +32,6 @@
 			,discount_rate	
 			,discount_price 
 			,discount_name 
-			,discount_expiration_date
 			,min_order_price 
 			,ifnull(max_discount_price,0) 
 			,g_production_reg_datetime 
@@ -51,7 +48,6 @@
 			discount_name = #{discountName}
 			,discount_rate = #{discountRate}
 			,discount_price = #{discountPrice}
-			,discount_expiration_date = #{discountExpirationDate}
 			,min_order_price = #{minOrderPrice}
 			,max_discount_price = #{maxDiscountPrice}
 		WHERE
@@ -64,7 +60,6 @@
 			,discount_rate
 			,discount_price
 			,discount_name
-			,discount_expiration_date
 			,min_order_price
 			,max_discount_price
 			,g_production_reg_datetime
@@ -73,7 +68,6 @@
 			,#{discountRate}
 			,#{discountPrice}
 			,#{discountName}
-			,date_add(NOW(), INTERVAL 1 MONTH)
 			,#{minOrderPrice}
 			,#{maxDiscountPrice}
 			,NOW()

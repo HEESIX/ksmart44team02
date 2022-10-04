@@ -20,31 +20,31 @@ public class SellerCompanyController {
 	}
 	
 	//업체 정보 등록
-	@GetMapping("/company_insert")
+	@GetMapping("/companyInsert")
 	public String addCompany() {
-		return "seller/companypage/company_insert";
+		return "seller/companypage/companyInsert";
 	}
 		
 	//업체 정보 검색 및 전체 리스트
-	@GetMapping("/company_list")
+	@GetMapping("/companyList")
 	public String sellerCompanyInfo() {
-		return "seller/companypage/company_list";
+		return "seller/companypage/companyList";
 	}
 		
 	//업체 세부 정보 화면
-	public String company_detail() {
+	public String companyDetail() {
 		return null;
 	}
 		
 	//업체 정보 수정
-	@GetMapping("/company_modify")
+	@GetMapping("/companyModify")
 	public String sellerCompanyModify() {
-		return "seller/companypage/company_modify";
+		return "seller/companypage/companyModify";
 	}
 		
 	//업체 정보 삭제
-	@GetMapping("/company_delete")
+	@GetMapping("/companyDelete")
 	public String sellerCompanyRemove() {
-		return "seller/companypage/company_delete";
+		return "seller/companypage/companyDelete";
 	}
 }

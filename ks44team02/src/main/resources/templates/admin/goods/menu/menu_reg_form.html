@@ -271,8 +271,8 @@
 											<!-- end of modal-dialog -->
 										</div>
 										<!-- end of modal -->
-										<div>
-											<div class="col-lg-6" style="padding-left: 0;">
+										<div class="row" style="margin-bottom: 10px;">
+											<div class="col-lg-6 goodsOfMenu" style="padding-left: 0;">
 												<select name="goodsOfMenuCode"
 													class="js-example-basic-single2" style="width: 100%;">
 													<th:block th:if="${not #lists.isEmpty(goodsList)}"
@@ -282,9 +282,9 @@
 													</th:block>
 												</select>
 											</div>
-											<div class="col-lg-6" style="height: 28px; padding-left: 0;">
+											<div class="col-lg-6 inputBox" style="height: 28px; padding-left: 0;">
 												<input class="form-control vailCheck" type="number"
-													id="menuGoodsAmount" name="menuGoodsAmount"
+													name="menuGoodsAmount"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
 										</div>
@@ -372,10 +372,14 @@
 
 			$('#moreGoodsBtn').click(
 					function() {
-						var $selectClone = $(
-								'.select_goods_Of_Menu:first-child').clone();
-
-						$('#goodsOfMenuSelectForm').append($selectClone);
+						$('.select_goods_Of_Menu').append('<div class="row" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
+						var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
+						var $inputBox = $('.inputBox .vailCheck').clone();
+						$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
+						$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
+						$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
+						$(".js-example-basic-single2").select2();
+						$()
 					});
 
 		});

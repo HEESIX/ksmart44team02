@@ -25,4 +25,30 @@ public class CommonService {
 		String newCode = commonMapper.getNewCode(tableName);
 		return newCode;
 	}
+	
+	//회원 마일리지 부여
+	public boolean giveMileage(String mMileageCode) {
+		boolean result =commonMapper.getNewCode(mMileageCode) != null;
+		return result;
+	}
+	
+	//회원 마일리지 소멸
+	public boolean MileageExtinction(String mMileageCode, String currentMileage) {
+		boolean result = commonMapper.MileageExtinction(mMileageCode);
+		return result;
+	}
+	
+	//회원 신고내역 삭제
+	public boolean ComplainDelete(String complainCode) {
+		boolean result = commonMapper.ComplainDelete(complainCode);
+		return result;
+	}
+
+	public boolean ReviewDelete(String revCode) {
+		boolean result = commonMapper.ReviewDelete(revCode);
+		return result;
+	};
+	
+	
+
 }
