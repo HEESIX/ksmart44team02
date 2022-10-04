@@ -3,15 +3,33 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.DiscountMapper">
-	<resultMap type="OrderDiscount" id="listResultMap">
-		<id column="order_discount_code" 			property="orderDiscountCode"/>
-		<result column="discount_rate" 				property="discountRate"/>
-		<result column="discount_price" 			property="discountPrice"/>
-		<result column="discount_name" 				property="discountName"/>
-		<result column="min_order_price" 			property="minOrderPrice"/>
-		<result column="max_discount_price" 		property="maxDiscountPrice"/>
-		<result column="g_production_reg_datetime" 	property="gProductionRegDateTime"/>
+	<resultMap type="OrderDiscount" 					id="listResultMap">
+		<id column="order_discount_code" 				property="orderDiscountCode"/>
+		<result column="discount_rate" 					property="discountRate"/>
+		<result column="discount_price" 				property="discountPrice"/>
+		<result column="discount_name" 					property="discountName"/>
+		<result column="min_order_price" 				property="minOrderPrice"/>
+		<result column="max_discount_price" 			property="maxDiscountPrice"/>
+		<result column="g_production_reg_datetime" 		property="gProductionRegDateTime"/>
 	</resultMap>
+	<resultMap type="BuyerBenefit" 						id="buyerBenefitResultMap">
+		<id column="member_benefit_code" 				property="memberBenefitCode"/>
+		<result column="member_id" 						property="memberId"/>
+		<result column="order_discount_code" 			property="orderDiscountCode"/>
+		<result column="benefit_info" 					property="benefitInfo"/>
+		<result column="benefit_issue_date" 			property="benefitIssueDate"/>
+		<result column="benefit_expiration_date" 		property="benefitExpirationDate"/>
+		<association property="orderDiscount"			javaType="OrderDiscount"			>
+			<id column="order_discount_code" 			property="orderDiscountCode"/>
+			<result column="discount_rate" 				property="discountRate"/>
+			<result column="discount_price" 			property="discountPrice"/>
+			<result column="discount_name" 				property="discountName"/>
+			<result column="min_order_price" 			property="minOrderPrice"/>
+			<result column="max_discount_price" 		property="maxDiscountPrice"/>
+			<result column="g_production_reg_datetime" 	property="gProductionRegDateTime"/>
+		</association>	
+	</resultMap>
+	
 	<!-- 주문서별 할인헤택 목록 조회 -->
 	<select id="getOrderDiscountList" resultMap="listResultMap">
 		SELECT
@@ -25,6 +43,7 @@
 		FROM
 			tb_order_discount_management;
 	</select>
+	
 	<!-- 특정 주문서별 할인혜택 조회 -->
 	<select id="getOrderDiscountInfo" parameterType="String" resultMap="listResultMap">
 		SELECT
@@ -40,19 +59,21 @@
 		WHERE
 			order_discount_code = #{orderDiscountCode};
 	</select>
+	
 	<!-- 주문서별 할인혜택 수정처리 -->
 	<update id="modifyOrderDiscount" parameterType="OrderDiscount">
 		UPDATE
 			tb_order_discount_management
 		SET 
-			discount_name = #{discountName}
-			,discount_rate = #{discountRate}
-			,discount_price = #{discountPrice}
-			,min_order_price = #{minOrderPrice}
-			,max_discount_price = #{maxDiscountPrice}
+			discount_name		 	= #{discountName}
+			,discount_rate 			= #{discountRate}
+			,discount_price 		= #{discountPrice}
+			,min_order_price 		= #{minOrderPrice}
+			,max_discount_price 	= #{maxDiscountPrice}
 		WHERE
-			order_discount_code = #{orderDiscountCode};
+			order_discount_code 	= #{orderDiscountCode};
 	</update>
+	
 	<!-- 주문서별 할인혜택 등록처리 -->
 	<insert id="addOrderDiscount" parameterType="OrderDiscount">
 		INSERT INTO tb_order_discount_management (
@@ -73,6 +94,7 @@
 			,NOW()
 		);
 	</insert>
+	
 	<!-- 주문서별 할인혜택 삭제처리 -->
 	<delete id="removeOrderDiscount" parameterType="String">
 		DELETE
@@ -82,4 +104,21 @@
 			order_discount_code = #{orderDiscountCode};
 	</delete>
 	
+	<!-- 구매자별 보유 혜택 목록 조회 -->
+	<select id="getBuyerBenefitList" parameterType="String" resultMap="buyerBenefitResultMap">
+		SELECT 
+			m.discount_name
+			,m.discount_price
+			,m.discount_rate
+			,b.benefit_issue_date
+			,b.benefit_expiration_date
+		FROM 
+			tb_buyer_benefit AS b
+			RIGHT JOIN 
+			tb_order_discount_management AS m
+			ON 
+			m.order_discount_code = b.order_discount_code
+		WHERE 
+			b.member_id = #{SID};
+	</select>
 </mapper>

@@ -25,7 +25,7 @@ public interface DiscountMapper {
 	//주문서별 할인혜택 삭제
 	public boolean removeOrderDiscount(String orderDiscount);
 	
-	//회원별 보유 혜택 목록 조회(buyer세션 아이디와 일치하는 것만?)
+	//구매자별 보유 혜택 목록 조회(buyer세션 아이디와 일치하는 것만?)
 	public List<BuyerBenefit> getBuyerBenefitList(String memberId);
 	
 }
