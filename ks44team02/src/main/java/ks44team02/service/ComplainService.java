@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Complain;
 import ks44team02.dto.MemberMileageAcc;
+import ks44team02.dto.Review;
 import ks44team02.mapper.ComplainMapper;
 
 @Service
@@ -44,6 +45,16 @@ public class ComplainService {
 		Complain complainInfo = complainMapper.getComplainInfo();
 		return complainInfo;
 	
+	}
+
+	public Complain getComplainInfo(String complainContent, String complainTitle) {
+		Complain complainInfo = complainMapper.getComplainInfo();
+		return complainInfo;
+	}
+
+	public boolean regBuyerComplain(Complain complain) {
+		boolean result = complainMapper.regBuyerComplain(complain);
+		return result;
 	}
 
 }
