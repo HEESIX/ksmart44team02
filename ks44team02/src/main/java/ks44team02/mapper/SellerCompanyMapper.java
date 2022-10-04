@@ -10,7 +10,7 @@ import ks44team02.dto.Launching;
 public interface SellerCompanyMapper {
 	
 	//업체 정보 등록
-	public boolean addCompany(Launching sellerCompanyAdd);
+	public boolean addCompany(Launching launching);
 	
 	//업체 정보 리스트
 	public List<Launching> sellerCompanyInfoList();

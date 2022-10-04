@@ -19,7 +19,7 @@ public class DeliveryService {
 	}
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
-	//list로 해야되나?
+	//list로 변경
 	public String getDelivery() {
 		return null;
 	}

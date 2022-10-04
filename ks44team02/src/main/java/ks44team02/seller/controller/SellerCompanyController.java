@@ -1,10 +1,17 @@
 package ks44team02.seller.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import ks44team02.dto.Launching;
 import ks44team02.service.SellerCompanyService;
 
 @Controller
@@ -21,27 +28,32 @@ public class SellerCompanyController {
 	
 	//업체 정보 등록
 	@GetMapping("/companyInsert")
-	public String addCompany() {
+	public String addCompany(Model model
+							,HttpSession session) {
+		List<Launching> sellerCompanyInfoList = sellerCompanyService.sellerCompanyInfoList();
+		
+		model.addAttribute("title", "업체 정보 등록");
+		model.addAttribute("sellerCompanyInfoList", sellerCompanyInfoList);	
 		return "seller/companypage/companyInsert";
 	}
-		
+	
 	//업체 정보 검색 및 전체 리스트
 	@GetMapping("/companyList")
 	public String sellerCompanyInfo() {
 		return "seller/companypage/companyList";
 	}
-		
+	
 	//업체 세부 정보 화면
 	public String companyDetail() {
 		return null;
 	}
-		
+	
 	//업체 정보 수정
 	@GetMapping("/companyModify")
 	public String sellerCompanyModify() {
 		return "seller/companypage/companyModify";
 	}
-		
+	
 	//업체 정보 삭제
 	@GetMapping("/companyDelete")
 	public String sellerCompanyRemove() {
