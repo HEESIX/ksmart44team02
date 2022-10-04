@@ -22,11 +22,18 @@ public class AdminJoinController {
 		this.joinServie = joinservie;
 	}
 	
-	//판매자 회원 가입
-	@GetMapping("adminJoin")
+	//관리자 회원 가입 폼
+	/*
+	@GetMapping("/adminLoginList")
 	public String adminJoinForm() {
-		return "admin/login/adminJoin";
+		return "admin/login/adminLoginList";
 			
+	}
+	*/
+	//관리자 회원 가입 처리
+	@GetMapping("/adminJoin")
+	public String adminJoin() {
+		return "admin/login/adminJoin";
 	}
 	
 }

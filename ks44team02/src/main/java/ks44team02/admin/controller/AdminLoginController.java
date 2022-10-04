@@ -26,7 +26,7 @@ public class AdminLoginController {
 			this.loginService = loginService;
 	}
 	// 판매자 로그인
-	@GetMapping("adminLogin")
+	@GetMapping("/adminLogin")
 	public String adminLogin() {
 		return "admin/login/adminLogin";
 	}
@@ -37,15 +37,15 @@ public class AdminLoginController {
 	}
 
 	//판매자 회원 정보
-		@GetMapping("adminLoginList")
-		public String adminLoginList(Model model
-									,HttpSession session) {
-			//세션 있을 경우 아래걸로 대체
-			//String memberId = session.getAttribute("SID");
-			String memberId = "id001";
-			Member memberInfo = loginService.getAdminMemberList(memberId);
-			model.addAttribute("memberInfo", memberInfo);
-			return "admin/login/adminLoginList";
-		}
+	@GetMapping("/adminLoginList")
+	public String adminLoginList(Model model
+								,HttpSession session) {
+		//세션 있을 경우 아래걸로 대체
+		//String memberId = session.getAttribute("SID");
+		String memberId = "id001";
+		//Member memberInfo = loginService.getMemberListAdmin(memberId);
+		//model.addAttribute("memberInfo", memberInfo);
+		return "admin/login/adminLoginList";
+	}
 	
 }

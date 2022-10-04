@@ -13,8 +13,18 @@ public class JoinService {
 		this.joinMapper = joinMapper;
 	}
 	
-	//판매자 회원가입
+	//관리자 회원가입
 	public String adminJoinForm() {
+		return null;
+	}
+	
+	//판매자 회원가입
+	public String sellerJoinForm() {
+			return null;
+		}
+		
+	//판매자 회원가입
+	public String buyerJoinForm() {
 		return null;
 	}
 	
