@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>환불/교환사유 카테고리 목록</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>카테고리명</th>
+										<th>등록일자</th>
+										<th>수정</th>
+										<th>삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(refundExchangeReasonList)}"
+										th:each="rerl : ${refundExchangeReasonList}">
+										<td th:text="${rerl.refundExchangeReasons}"></td>
+										<td th:text="${rerl.refundExchangeReasonsDatetime}"></td>
+										<td><a
+											th:href="@{|/admin/order/refundExchangeReasonModify/${rerl.refundExchangeReasonsCode}|}">수정</a></td>
+										<td><a
+											th:href="@{|/admin/order/refundExchangeReasonRemove/${rerl.refundExchangeReasonsCode}|}">삭제</a></td>
+										
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(refundExchangeReasonList)}">
+										<td colspan="5" style="text-align: center;">사유 카테고리가 존재하지
+											않습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<a th:href="@{/admin/order/refundExchangeReasonAdd}"><button
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;" type="button">등록</button></a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>

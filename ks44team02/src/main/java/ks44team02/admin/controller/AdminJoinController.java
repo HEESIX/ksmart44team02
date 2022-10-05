@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import ks44team02.service.Joinservice;
+import ks44team02.service.JoinService;
 
 
 @Controller
@@ -16,17 +16,24 @@ public class AdminJoinController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminJoinController.class);
 
-	private final Joinservice joinservie;
+	private final JoinService joinServie;
 
-	public AdminJoinController (Joinservice joinservie) {
-		this.joinservie = joinservie;
+	public AdminJoinController (JoinService joinservie) {
+		this.joinServie = joinservie;
 	}
 	
-	//판매자 회원 가입
-	@GetMapping("admin_join")
+	//관리자 회원 가입 폼
+	/*
+	@GetMapping("/adminLoginList")
 	public String adminJoinForm() {
-		return "admin/login/admin_join";
+		return "admin/login/adminLoginList";
 			
+	}
+	*/
+	//관리자 회원 가입 처리
+	@GetMapping("/adminJoin")
+	public String adminJoin() {
+		return "admin/login/adminJoin";
 	}
 	
 }

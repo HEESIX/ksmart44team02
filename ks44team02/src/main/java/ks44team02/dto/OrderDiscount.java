@@ -5,7 +5,6 @@ public class OrderDiscount {
 	private int discountRate;
 	private int discountPrice;
 	private String discountName;
-	private String discountExpirationDate;
 	private int minOrderPrice;
 	private int maxDiscountPrice;
 	private String gProductionRegDateTime;
@@ -33,12 +32,6 @@ public class OrderDiscount {
 	}
 	public void setDiscountName(String discountName) {
 		this.discountName = discountName;
-	}
-	public String getDiscountExpirationDate() {
-		return discountExpirationDate;
-	}
-	public void setDiscountExpirationDate(String discountExpirationDate) {
-		this.discountExpirationDate = discountExpirationDate;
 	}
 	public int getMinOrderPrice() {
 		return minOrderPrice;
@@ -69,8 +62,6 @@ public class OrderDiscount {
 		builder.append(discountPrice);
 		builder.append(", discountName=");
 		builder.append(discountName);
-		builder.append(", discountExpirationDate=");
-		builder.append(discountExpirationDate);
 		builder.append(", minOrderPrice=");
 		builder.append(minOrderPrice);
 		builder.append(", maxDiscountPrice=");

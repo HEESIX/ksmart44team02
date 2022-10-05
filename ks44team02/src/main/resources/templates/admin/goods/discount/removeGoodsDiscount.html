@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<!-- 상품 할인 혜택 삭제  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+		<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>할인 혜택 삭제</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
+						<li class="breadcrumb-item"><a href="#">할인 혜택 삭제</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-2 col-lg-2"></div>
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card" th:object="${goodsDiscountInfo}">
+					<div class="card-header" style="text-align: center;">
+						<h3>할인혜택 삭제</h3>
+					</div>
+					<div class="card-block">
+						<div class="form-group row">
+							<div class="col-sm-3">
+								<label for="goodsDiscountName"
+									class="col-form-label form-control-label">할인혜택 이름</label>
+							</div>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" id="goodsDiscountName"
+									name="goodsDiscountName" th:value="*{goodsDiscountName}"
+									readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-3">
+								<label for="discountNumber"
+									class="col-form-label form-control-label">할인율/할인금액</label>
+							</div>
+							<div class="col-sm-2">
+								<div class="modal fade modal-flex" id="single-select-Modal"
+									tabindex="-1" role="dialog">
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<h5 class="modal-title">Code Explanation for single
+													select radio</h5>
+											</div>
+											<!-- end of modal-header -->
+											<div class="modal-body">
+												<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+											</div>
+											<!-- end of modal-body -->
+										</div>
+										<!-- end of modal-content -->
+									</div>
+									<!-- end of modal-dialog -->
+								</div>
+								<!-- end of modal -->
+								<select id="selectRatePrice" name="selectRatePrice"
+									class="js-example-basic-single" disabled="disabled">
+									<option th:if="*{goodsDiscountRate} != 0" value="rate"
+										selected="selected">할인율(%)</option>
+									<option th:unless="*{goodsDiscountRate} != 0" value="rate">할인율(%)</option>
+									<option th:if="*{goodsDiscountPrice}" value="price"
+										selected="selected">할인금액(￦)</option>
+									<option th:unless="*{goodsDiscountPrice}" value="price">할인금액(￦)</option>
+								</select>
+							</div>
+							<div class="col-sm-7">
+								<input th:if="*{goodsDiscountPrice} != 0"
+									th:value="*{goodsDiscountPrice}" class="form-control"
+									type="number" readonly="readonly"> <input
+									th:if="*{goodsDiscountRate} != 0"
+									th:value="*{goodsDiscountRate}" class="form-control"
+									type="number" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-3">
+								<label for="goodsDiscountExpirationDate"
+									class="col-form-label form-control-label">유효기간</label>
+							</div>
+							<div class="col-sm-9">
+								<input th:value="*{goodsDiscountExpirationDate}"
+									class="form-control" type="date" readonly="readonly">
+							</div>
+						</div>
+						<form
+							th:action="@{|/admin/goods/discount/removeGoodsDiscount/*{goodsDiscountCode}|}"
+							method="post">
+							<div class="form-group row">
+								<div class="col-sm-3">
+									<label for="memberPw" class="col-form-label form-control-label">비밀번호</label>
+								</div>
+								<div class="col-sm-9">
+									<input class="form-control" type="password" id="memberPw"
+										name="memberPw">
+								</div>
+							</div>
+							<button type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">삭제</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-example-basic-single").select2();
+		});
+	</script>
+</th:block>
+
+</html>

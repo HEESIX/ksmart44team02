@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 환불/교환사유 카테고리 삭제 폼  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid" style="height: 100%; width: 100%;">
+	<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>환불/교환사유 카테고리 삭제</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/order/refundExchangeReasonList}">카테고리 목록</a>
+						</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-2 col-lg-2"></div>
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card" th:object="${refundExchangeReasonInfo}">
+					<div class="card-header" style="text-align: center;">
+						<h3>환불/교환사유 카테고리 삭제</h3>
+					</div>
+					<form th:action="@{/admin/order/refundExchangeReasonRemove}"
+						method="post">
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="refundExchangeReasonsCode"
+									class="col-xs-2 col-form-label form-control-label">
+									</label>
+								<div class="col-sm-10">
+									<input th:value="*{refundExchangeReasonsCode}" class="form-control"
+										type="text" id="refundExchangeReasonsCode" name="refundExchangeReasonsCode"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="refundExchangeReasons"
+									class="col-xs-2 col-form-label form-control-label">카테고리명</label>
+								<div class="col-sm-10">
+									<input th:value="*{refundExchangeReasons}" class="form-control"
+										readonly="readonly" type="text" id="refundExchangeReasons">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="memberPw"
+									class="col-xs-2 col-form-label form-control-label">비밀번호</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="password" id="memberPw"
+										name="memberPw">
+								</div>
+							</div>
+							<button id="removeBtn" type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">삭제</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>

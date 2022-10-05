@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team02.mapper.ComplainMapper">
+<resultMap type="Complain" id="getComplainList">
+		<id column="complain_code" 			property="complainCode"/>
+		<result column="member_id" 				property="memberId"/>
+		<result column="g_code" 				property="gCode"/>
+		<result column="complain_category" 			property="complainCategory"/>
+		<result column="enter_code" 				property="enterCode"/>
+		<result column="complain_title" 	property="complainTitle"/>
+		<result column="complain_content" 			property="complainContent"/>
+		<result column="complain_reg_datetime" 		property="complainRegDatetime"/>
+		<result column="complain_answer_confirm" 	property="complainAnswerConfirm"/>
+		<result column="complain_answer_content" 	property="complainAnswerContent"/>
+		<result column="complain_answer_datetime" 	property="complainAnswerDatetime"/>
+	</resultMap>
+	
+	<!-- 신고 리스트 조회 -->
+	<select id="getComplainList" resultMap="getComplainList">
+		SELECT
+			complain_code             
+			,member_id 	             
+			,g_code 	             
+			,complain_category       
+			,enter_code			    
+			,complain_title			
+			,complain_content		 
+			,complain_reg_datetime	 
+			,complain_answer_confirm 
+			,complain_answer_content 
+			,complain_answer_datetime 
+		FROM
+			tb_complain;
+	</select>
+
+</mapper>

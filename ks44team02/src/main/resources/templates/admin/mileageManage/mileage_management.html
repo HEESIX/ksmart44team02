@@ -1,10 +1,113 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-     회원마일리지 조회/관리
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+
+
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<h1>회원마일리지 조회/관리</h1>
+
+	<form action="mileage_management">
+		<div class="position-relative">
+			<div class="col-xs-3">
+
+				<input class="form-control" id="memberId" type="text"
+					name="memberId" placeholder="회원아이디검색">
+
+			</div>
+			<button type="button" id="mSearch" class="btn btn-primary">검색</button>
+		</div>
+	</form>
+	<br>
+		<table class="table m-b-0 photo-table">
+    			<thead>
+    			<tr>
+    				<th>회원 아이디</th>
+    				<th>주문 상세코드</th>
+    				<th>현재 적립금</th>
+    				<th>적립금 구분</th>
+    				<th>적립금 사용/적립금액</th>
+    				<th>마일리지소계</th>
+    				<th>적립금 갱신날짜</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr th:if="${not #lists.isEmpty(mileageList)}"
+    				th:each="ml : ${mileageList}">
+    				<td th:text="${ml.memberId}"></td>
+    				<td th:text="${ml.orderDetailCode}"></td>
+    				<td th:text="${ml.currentMileage}"></td>
+    				<td th:text="${ml.mileageDistinct}"></td>
+    				<td th:text="${ml.addedUsedMileage}"></td>
+    				<td th:text="${ml.mileageSubtotal}"></td>
+    				<td th:text="${ml.mUpdateDatetime}"></td>
+
+    			</tr>
+    			<tr th:unless="${not #lists.isEmpty(mileageList)}">
+    				<td colspan="7" style="text-align: center;">마일리지 내역이 존재하지 않습니다.</td>
+    			</tr>
+    		</tbody>
+    	</table>
+
+
+	</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script type="text/javascript">
+	 let memberId = document.querySeletor("#memberId");	
+     let mSearch = document.querySelector("#mSearch");
+	 let result = document.querySelector("#result");
+     
+	 mSearch.addEventListener('click', function(){
+    	 
+    	 console.log("회원마일리지 노출");
+    	 
+    	 if(memberId.value == #{memberId})
+    	
+    		 { 	<table class="table m-b-0 photo-table">
+ 			<thead>
+			<tr>
+				<th>회원 아이디</th>
+				<th>주문 상세코드</th>
+				<th>현재 적립금</th>
+				<th>적립금 구분</th>
+				<th>적립금 사용/적립금액</th>
+				<th>마일리지소계</th>
+				<th>적립금 갱신날짜</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(mileageList)}"
+				th:each="ml : ${mileageList}">
+				<td th:text="${ml.memberId}"></td>
+				<td th:text="${ml.orderDetailCode}"></td>
+				<td th:text="${ml.currentMileage}"></td>
+				<td th:text="${ml.mileageDistinct}"></td>
+				<td th:text="${ml.addedUsedMileage}"></td>
+				<td th:text="${ml.mileageSubtotal}"></td>
+				<td th:text="${ml.mUpdateDatetime}"></td>
+
+			</tr>
+			<tr th:unless="${not #lists.isEmpty(mileageList)}">
+				<td colspan="7" style="text-align: center;">마일리지 내역이 존재하지 않습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+    		 
+    		 }else{
+    			 alert("올바른 아이디를 입력해 주세요.");
+    		 }
+     });
+     
+     </script>
+</th:block>
+
+
+
 </html>

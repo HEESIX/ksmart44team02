@@ -1,27 +1,39 @@
 package ks44team02.mapper;
 
+
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import ks44team02.dto.Member;
+
+
+
 
 @Mapper
 public interface LoginMapper {
 
 
 	//구매자 로그인
-	public int buyerLogin();
+	public String buyerLogin();
 
 	//구매자 로그아웃
-	public int buyerlogout();	
+	public String buyerLogout();	
 	
 	//판매자 로그인
-	public int sellerLogin();
+	public String sellerLogin();
 
 	//구매자 로그아웃
-	public int sellerlogout();	
+	public String sellerLogout();	
 	
 	//구매자 로그인
-	public int adminLogin();
+	public String adminLogin();
 
 	//구매자 로그아웃
-	public int adminlogout();	
+	public String adminLogout();	
+	
+	//판매자 회원 정보 리스트 조회 
+	public List<Member> getMemberListAdmin();
+	
 	
 }

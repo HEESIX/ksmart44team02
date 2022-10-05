@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/buyerDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>상세주문리스트</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/}">Home</a><span>my order detail</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+<style>
+	.heading1  {
+	padding-left: 10px;
+	position: relative;
+    margin: 0 0 10px;
+	}
+	
+	.heading2{
+	padding-left: 10px;
+	position: relative;
+	margin: 100px 0 10px;
+	}
+</style>
+</th:block>
+
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="heading1">
+		<h4>주문서</h4>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				
+				<table class="table table-hover">
+				  <thead>
+				    <tr>
+						<th>상세주문번호</th>
+						<th>주문일자</th>
+						<th>ITEM</th>
+						<th>DISCOUNT</th>
+						<th>PRICE</th>
+						<th>수량</th>
+						<th>주문상태</th>
+						<th>배송업체</th>
+						<th>운송장번호</th>
+					</tr>
+				 </thead>
+					<tbody>
+						<tr th:each="odl : ${getOrderDetailList}">
+							<td th:text="${odl.get('orderGroupCode')}"></td>
+							<td th:text="${odl.get('orderDatetime')}"></td>
+							<td th:text="${odl.get('goodsName')}"></td>
+							<td th:text="${odl.get('discountPrice')}"></td>
+							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
+							<td th:text="${odl.get('orderAmount')}"></td>
+							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
+							<td th:text="${odl.get('deliveryEnter')}"></td>
+							<td th:text="${odl.get('deliveryNumber')}"></td>
+						</tr>
+					</tbody>
+				</table>
+	
+			</div>
+		</div>
+	</div>
+	
+	<div class="heading2">
+		<h4>배송정보</h4>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+			
+			<table class="table" style="float: left;">
+				  <thead>
+				    <tr>
+						<th>TYPE</th>
+						<th>수령인</th>
+						<th>연락처</th>
+						<th>배송지</th>
+						<th>배송메모</th>
+					</tr>
+				 </thead>
+					<tbody>
+						<tr th:if="${not #lists.isEmpty(getDeliveryinfo)}">
+							<td th:text="${getDeliveryinfo.get('deliType')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliName')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliPhone')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliAddress')}"></td>							
+							<td th:text="${getDeliveryinfo.get('deliMemo')}"></td>							
+						</tr>
+					
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="heading2">
+		<h4>결제정보</h4>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+			
+				<table class="table" style="float: left;">
+				  <thead>
+				    <tr>
+						<th>결제정보</th>
+						<th>은행사</th>
+						<th>결제금액</th>
+						<th>결제자명 </th>
+						<th>결제일자</th>
+					</tr>
+				 </thead>
+					<tbody>
+						<tr th:if="${not #lists.isEmpty(getPaymentList)}">
+							<td th:text="${getPaymentList.get('paymentInputNumber')}"></td>
+							<td th:text="${getPaymentList.get('paymentBank')}"></td>
+							<td th:text="${getPaymentList.get('paymentCash')}"></td>
+							<td th:text="${getPaymentList.get('paymentPayer')}"></td>
+							<td th:text="${getPaymentList.get('paymentDate')}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+</th:block>
+
+
+</html>

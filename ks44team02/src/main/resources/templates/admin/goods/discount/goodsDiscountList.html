@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 상품별 할인혜택 목록  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>할인 혜택 목록</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>할인명</th>
+										<th>할인율/할인금액</th>
+										<th>유효기간</th>
+										<th>등록자ID</th>
+										<th>등록사/관리자</th>
+										<th>판매사 전화번호</th>
+										<th>등록일자</th>
+										<th>수정</th>
+										<th>삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(goodsDiscountList)}"
+										th:each="gdl : ${goodsDiscountList}">
+										<th:block
+											th:unless="${gdl.goodsDiscountRate} == 0 and ${gdl.goodsDiscountPrice} == 0">
+											<td th:text="${gdl.goodsDiscountName}"></td>
+											<td th:if="${gdl.goodsDiscountRate} != 0"
+												th:text="${gdl.goodsDiscountRate}+'%'"></td>
+											<td th:if="${gdl.goodsDiscountPrice} != 0"
+												th:text="'₩'+${gdl.goodsDiscountPrice}"></td>
+											<td th:text="${gdl.goodsDiscountExpirationDate}"></td>
+											<td th:text="${gdl.goodsDiscountRegistrant}"></td>
+											<th:block th:if="${not #lists.isEmpty(gdl.enterprise)}">
+												<td th:text="${gdl.enterprise.enterName}"></td>
+												<td th:text="${gdl.enterprise.enterNum}"></td>
+											</th:block>
+											<th:block th:unless="${not #lists.isEmpty(gdl.enterprise)}">
+												<td>관리자</td>
+												<td>N/A</td>
+											</th:block>
+											<td th:text="${gdl.goodsDiscountRegDatetime}"></td>
+											<td><a
+												th:href="@{|/admin/goods/discount/updateGoodsDiscount/${gdl.goodsDiscountCode}|}">수정</a></td>
+											<td><a th:href="@{|/admin/goods/discount/removeGoodsDiscount/${gdl.goodsDiscountCode}|}">삭제</a></td>
+										</th:block>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(goodsDiscountList)}">
+										<td colspan="8" style="text-align: center;">주문서별 할인혜택이
+											존재하지 않습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<a th:href="@{/admin/goods/discount/goods_discount_reg_form}"><button
+								style="float: right; margin-top: 10px;"
+								class="btn btn-info waves-effect waves-light" type="button">등록</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+
+
+</html>

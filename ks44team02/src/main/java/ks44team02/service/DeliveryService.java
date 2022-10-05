@@ -19,7 +19,7 @@ public class DeliveryService {
 	}
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
-	//list로 해야되나?
+	//list로 변경
 	public String getDelivery() {
 		return null;
 	}
@@ -30,16 +30,28 @@ public class DeliveryService {
 	}
 			
 	// 주문 리스트 list<>
-	public List<Map<String, Object>> getOrderList() {
-		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList();
+	public List<Map<String, Object>> getOrderList(String memberId) {
+		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList(memberId);
 		return getOrderList;
 	}
 	
 	// 상세주문현황
-	public List<Map<String, Object>> getOrderStatus() {
-		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList();
+	public List<Map<String, Object>> getOrderStatus(String orderGroupCode) {
+		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList(orderGroupCode);
 		return getOrderDetailList;
 	}
+	//추가(결제정보)
+	public Map<String, Object> getPaymentDetail(String orderGroupCode){
+		Map<String, Object> getPaymentList = deliveryMapper.getPaymentList(orderGroupCode);
+		return getPaymentList;
+	}
+	
+	//추가(배송정보)
+	public Map<String, Object> getDeliveryinfo(String orderGroupCode){
+		Map<String, Object> getDeliveryinfo = deliveryMapper.getDeliveryinfo(orderGroupCode);
+		return getDeliveryinfo;
+	}
+	
 	
 	// 환불 신청
 	public String addRefundRequest() {

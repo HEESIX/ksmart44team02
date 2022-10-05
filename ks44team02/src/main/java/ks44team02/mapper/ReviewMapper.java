@@ -35,6 +35,22 @@ public interface ReviewMapper {
      
 		//특정회원리뷰 조회
 		public Review getReviewInfo(String reviewContents);
+
+		public boolean ReviewModify(Review review);
+
+		public boolean ReviewDelete(String revCode);
+
+		public boolean ReviewAnswer(Review reviewContents);
+
+		public Review getReviewInfo(String reviewContents, String revCode);
+
+		public boolean regBuyerReviewForm(Review reviewContents);
+
+		public boolean regBuyerReview(Review review);
+
+		public boolean buyerReviewDeleteForm(Review reviewContents);
+
+		public boolean buyerReviewDelete(String revCode);
 		
 		
 

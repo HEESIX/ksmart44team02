@@ -34,24 +34,23 @@
 			</div>
 			<div class="header__top__right__auth">
 				<ul>
-				<li>
-				<a href="#"><i class="fa fa-user"></i> Login</a>
-				</li>
+					<li><a th:href="@{/seller/login/sellerLogin}"><i
+							class="fa fa-user"></i> Login</a></li>
 				</ul>
 			</div>
 		</div>
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
+				<li><a th:href="@{/seller/goods/regGoodsApply}">#상품관리</a>
 					<ul class="header__menu__dropdown">
-						<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
-						<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
+						<li><a th:href="@{/seller/goods/goodsList}">#판매상품조회</a></li>
+						<li><a th:href="@{/seller/goods/regGoodsApply}">#신규등록신청</a></li>
+						<li><a th:href="@{/seller/goods/goodsApplyList}">#상품 등록
+								신청 내역</a></li>
 					</ul></li>
-				<li><a href="#">#주문/배송 관리</a>
-					<ul class="header__menu__dropdown">
-						<li><a href="#">#신규주문</a></li>
-						<li><a href="#">#결제 전</a></li>
-					</ul></li>
+				<li><a
+					th:href="@{/seller/order/seller_order_delivery_all_list}">#주문/배송
+						관리</a></li>
 				<li><a href="#">#정산내역</a></li>
 				<li><a href="#">#고객관리</a>
 					<ul class="header__menu__dropdown">
@@ -86,17 +85,17 @@
 					<div class="col-lg-6">
 						<div class="header__top__right" style="padding: 0 5px 0 5px;">
 							<div class="header__top__right__auth">
-							<nav class="header__menu" style="padding: 0 0 0 0;">	
-							<ul>
-							<li><a href="#"><i class="fa fa-user"></i>#마이페이지</a>
-								<ul class="header__menu__dropdown">
-									<li><a th:href="@{/seller/companypage/company_insert}">#입점신청</a></li>
-									<li><a th:href="@{/seller/companypage/company_modify}">#회사정보</a></li>
-									<li><a th:href="@{/seller/login/seller_login_list}">#회원정보</a></li>
-									<li><a th:href="@{/seller/companypage/company_delete}">#탈퇴신청</a></li>
-								</ul></li>	
-							</ul>	
-							</nav>
+								<nav class="header__menu" style="padding: 0 0 0 0;">
+									<ul>
+										<li><a href="#"><i class="fa fa-user"></i>#마이페이지</a>
+											<ul class="header__menu__dropdown">
+												<li><a th:href="@{/seller/companypage/companyInsert}">#입점신청</a></li>
+												<li><a th:href="@{/seller/companypage/companyModify}">#회사정보</a></li>
+												<li><a th:href="@{/seller/login/sellerLoginList}">#회원정보</a></li>
+												<li><a th:href="@{/seller/companypage/companyDelete}">#탈퇴신청</a></li>
+											</ul></li>
+									</ul>
+								</nav>
 							</div>
 						</div>
 					</div>
@@ -107,23 +106,27 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="header__logo">
-						<a href="./index.html"><img src="/user/img/logo.png" alt=""></a>
+						<a href="/"><img src="/user/img/logo.png" alt=""></a>
 					</div>
 				</div>
 				<div class="col-lg-8" style="text-align: center;">
 					<nav class="header__menu">
 						<ul>
-							<li><a th:href="@{/seller/goods/goods_reg_apply}">#상품관리</a>
+							<li><a th:href="@{/seller/goods/regGoodsApply}">#상품관리</a>
 								<ul class="header__menu__dropdown">
-									<li><a th:href="@{/seller/goods/goods_reg_apply}">#신규등록신청</a></li>
-									<li><a th:href="@{/seller/goods/goods_list_seller}">#판매상품조회</a></li>
+									<li><a th:href="@{/seller/goods/goodsList}">#판매상품조회</a></li>
+									<li><a th:href="@{/seller/goods/regGoodsApply}">#신규등록신청</a></li>
+									<li><a th:href="@{/seller/goods/goodsApplyList}">#상품
+											등록 신청 내역</a></li>
 								</ul></li>
-							<li><a href="#">#주문/배송 관리</a>
+							<li><a th:href="@{/seller/order/sellerOrderDeliveryAllList}">#주문/배송
+									관리</a></li>
+							<li><a href="#">#정산내역</a>
 								<ul class="header__menu__dropdown">
-									<li><a href="#">#신규주문</a></li>
-									<li><a href="#">#결제 전</a></li>
+									<li><a th:href="@{/seller/salespage/sellerSales}">#매출현황</a></li>
+									<li><a th:href="@{/seller/salespage/sellerSalesCalculate}">#정산확인</a></li>
 								</ul></li>
-							<li><a href="#">#정산내역</a></li>
+
 							<li><a href="#">#고객관리</a>
 								<ul class="header__menu__dropdown" style="text-align: left;">
 									<li><a href="#">#문의</a></li>

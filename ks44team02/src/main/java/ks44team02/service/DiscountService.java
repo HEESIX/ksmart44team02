@@ -2,11 +2,14 @@ package ks44team02.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks44team02.dto.BuyerBenefit;
 import ks44team02.dto.OrderDiscount;
 import ks44team02.mapper.DiscountMapper;
 
@@ -48,5 +51,15 @@ public class DiscountService {
 		boolean resultRemove = discountMapper.removeOrderDiscount(orderDiscountCode);
 		return resultRemove;
 	}
+	//구매자별 보유 혜택 목록 조회
+	public List<BuyerBenefit> getBuyerBenefitList(String sessionId){
+		//세션의 아이디 조회
+		//현재 없으므로 fix된 값 사용
+		//String memberId = session.getAttribute("SID");
+		//String memberId = "id002";
+		List<BuyerBenefit> buyerBenefitList = discountMapper.getBuyerBenefitList(sessionId);
+		return buyerBenefitList;
+	}
+	
 
 }

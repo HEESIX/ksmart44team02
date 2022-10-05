@@ -1,7 +1,12 @@
 package ks44team02.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.Complain;
+import ks44team02.dto.MemberMileageAcc;
+import ks44team02.dto.Review;
 import ks44team02.mapper.ComplainMapper;
 
 @Service
@@ -14,13 +19,15 @@ public class ComplainService {
 	}
 	
 	//회원 신고내역 조회
-    public String getComplainList() {
-		return null;
+    public List<Complain> getComplainList() {
+    	List<Complain> complainList = complainMapper.getComplainList();
+		return complainList;
 	}
+	
 
 	//회원 신고내역 삭제
-	public int ComplainDelete() {
-		return 0;
+	public String ComplainDelete(String complainCode) {
+		return null;
 	}
 	
 	//판매자 신고내역 조회
@@ -32,6 +39,22 @@ public class ComplainService {
 	public int regBuyerComplain() {
 		return 0;
 
+	}
+
+	public Complain getComplainInfo(String complainCode) {
+		Complain complainInfo = complainMapper.getComplainInfo();
+		return complainInfo;
+	
+	}
+
+	public Complain getComplainInfo(String complainContent, String complainTitle) {
+		Complain complainInfo = complainMapper.getComplainInfo();
+		return complainInfo;
+	}
+
+	public boolean regBuyerComplain(Complain complain) {
+		boolean result = complainMapper.regBuyerComplain(complain);
+		return result;
 	}
 
 }

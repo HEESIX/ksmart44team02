@@ -1,10 +1,17 @@
 package ks44team02.seller.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import ks44team02.dto.Launching;
 import ks44team02.service.SellerCompanyService;
 
 @Controller
@@ -20,31 +27,36 @@ public class SellerCompanyController {
 	}
 	
 	//업체 정보 등록
-	@GetMapping("/company_insert")
-	public String addCompany() {
-		return "seller/companypage/company_insert";
-	}
+	@GetMapping("/companyInsert")
+	public String addCompany(Model model
+							,HttpSession session) {
+		List<Launching> sellerCompanyInfoList = sellerCompanyService.sellerCompanyInfoList();
 		
+		model.addAttribute("title", "업체 정보 등록");
+		model.addAttribute("sellerCompanyInfoList", sellerCompanyInfoList);	
+		return "seller/companypage/companyInsert";
+	}
+	
 	//업체 정보 검색 및 전체 리스트
-	@GetMapping("/company_list")
+	@GetMapping("/companyList")
 	public String sellerCompanyInfo() {
-		return "seller/companypage/company_list";
+		return "seller/companypage/companyList";
 	}
-		
+	
 	//업체 세부 정보 화면
-	public String company_detail() {
+	public String companyDetail() {
 		return null;
 	}
-		
+	
 	//업체 정보 수정
-	@GetMapping("/company_modify")
+	@GetMapping("/companyModify")
 	public String sellerCompanyModify() {
-		return "seller/companypage/company_modify";
+		return "seller/companypage/companyModify";
 	}
-		
+	
 	//업체 정보 삭제
-	@GetMapping("/company_delete")
+	@GetMapping("/companyDelete")
 	public String sellerCompanyRemove() {
-		return "seller/companypage/company_delete";
+		return "seller/companypage/companyDelete";
 	}
 }

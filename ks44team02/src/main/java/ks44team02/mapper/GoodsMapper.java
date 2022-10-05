@@ -8,11 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
-import ks44team02.dto.Menus;
+import ks44team02.dto.GoodsInfoImage;
+import ks44team02.dto.MenuOrganize;
+import ks44team02.dto.MenuInformation;
 
 @Mapper
 public interface GoodsMapper {
 	
+	//상품 등록 신청 리스트 조회
+	public List<Map<String, Object>> getGoodsRegApplyList();
 	//상품 카테고리 등록
 	public boolean addGoodsCategory(GoodsCategory goodsCategory);
 	
@@ -41,7 +45,6 @@ public interface GoodsMapper {
 	public int addAdminMenu();
 	
 	//식단 리스트
-	//Goods 아님 변경 필요
 	public List<Goods> getAdminMenuList();
 	
 	//식단 수정
@@ -50,27 +53,35 @@ public interface GoodsMapper {
 	//식단 삭제
 	public int removeAdminMenu();
 	
-	//개별 상품 정보
-	public Goods getGoodsInfo();
+	//개별 상품 정보 + 메인이미지 정보
+	public Goods getGoodsInfo(String goodsCode);
+	
+	//소개 이미지 정보
+	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
 	//개별 식단 정보 
-	//Goods 아님 변경 필요
-	public Goods getMenuInfo();
+	public Goods getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록
-	public int addGoodsDiscount();
+	public boolean addGoodsDiscount(GoodsDiscount goodsDiscount);
 	
-	//상품별 할인혜택 리스트(admin: admin이 등록한 할인혜택만)
-	public List<GoodsDiscount> getGoodsDiscountListAdmin();
+	//상품별 할인혜택 리스트(admin: admin이 등록한 것만)
+	public List<GoodsDiscount> getGoodsDiscountListForReg();
 	
 	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
+	//상품별 할인혜택 리스트 제한 X
+	public List<GoodsDiscount> getGoodsDiscountList();
+	
 	//상품별 할인 혜택 수정
-	public int modifyGoodsDiscount();
+	public boolean modifyGoodsDiscount(GoodsDiscount goodsDiscount);
 	
 	//상품별 할인 혜택 삭제
-	public int removeGoodsDiscount();
+	public boolean removeGoodsDiscount(String goodsDiscountCode);
+	
+	//개별 상품별 할인 혜택 조회
+	public GoodsDiscount getGoodsDiscount(String goodsDiscountCode);
 	
 	//상품 등록 신청
 	public int applyGoodsRegister();
@@ -91,7 +102,7 @@ public interface GoodsMapper {
 	public int addBuyerMenu();
 	
 	//개인 맞춤 식단 목록 조회
-	public List<Menus> getBuyerMenuList();
+	public List<MenuInformation> getBuyerMenuList();
 	
 	//개인 맞춤 식단 수정
 	public int modifyBuyerMenu();
@@ -100,10 +111,10 @@ public interface GoodsMapper {
 	public int removeBuyerMenu();
 	
 	//개인 맞춤 식단 정보
-	public Menus getBuyerMenuInfo();
+	public MenuInformation getBuyerMenuInfo();
 	
 	//식단 목록
-	public List<Menus> getMenuList();
+	public List<MenuInformation> getMenuList();
 	
 	//상품 목록(활성화 되어있는 것만)
 	public List<Map<String, Object>> getGoodsList();
@@ -113,5 +124,8 @@ public interface GoodsMapper {
 	
 	//개별 상품 정보
 	/* public Goods getGoodsInfo(); */
+	
+	//메뉴 코드로 어떤 상품이 몇개 포함되어있는지 조회
+	public List<MenuOrganize> getMenuOrganizeList(String menuCode);
 	
 }
