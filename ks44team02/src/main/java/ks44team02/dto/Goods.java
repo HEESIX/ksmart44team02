@@ -1,5 +1,7 @@
 package ks44team02.dto;
 
+import java.util.Arrays;
+
 //상품 객체
 public class Goods {
 	private String goodsCode;
@@ -13,8 +15,8 @@ public class Goods {
 	private String goodsNetWeightUnit;
 	private String goodsProduce;
 	private String goodsProductionExpirationInfo;
-	private String goodsInfoImage;
-	private String goodsMainImage;
+	private String goodsInfoImageCode;
+	private String goodsMainImageCode;
 	private int goodsStock;
 	private int goodsDeliveryCharge;
 	private String goodsRegDatetime;
@@ -27,6 +29,7 @@ public class Goods {
 	private MenuInformation menuInformation;
 	private GoodsMainImage goodsMainImageInfo;
 	private GoodsInfoImage goodsInfoImageInfo;
+	
 	public String getGoodsCode() {
 		return goodsCode;
 	}
@@ -93,17 +96,18 @@ public class Goods {
 	public void setGoodsProductionExpirationInfo(String goodsProductionExpirationInfo) {
 		this.goodsProductionExpirationInfo = goodsProductionExpirationInfo;
 	}
-	public String getGoodsInfoImage() {
-		return goodsInfoImage;
+	
+	public String getGoodsInfoImageCode() {
+		return goodsInfoImageCode;
 	}
-	public void setGoodsInfoImage(String goodsInfoImage) {
-		this.goodsInfoImage = goodsInfoImage;
+	public void setGoodsInfoImageCode(String goodsInfoImageCode) {
+		this.goodsInfoImageCode = goodsInfoImageCode;
 	}
-	public String getGoodsMainImage() {
-		return goodsMainImage;
+	public String getGoodsMainImageCode() {
+		return goodsMainImageCode;
 	}
-	public void setGoodsMainImage(String goodsMainImage) {
-		this.goodsMainImage = goodsMainImage;
+	public void setGoodsMainImageCode(String goodsMainImageCode) {
+		this.goodsMainImageCode = goodsMainImageCode;
 	}
 	public int getGoodsStock() {
 		return goodsStock;
@@ -196,10 +200,10 @@ public class Goods {
 		builder.append(goodsProduce);
 		builder.append(", goodsProductionExpirationInfo=");
 		builder.append(goodsProductionExpirationInfo);
-		builder.append(", goodsInfoImage=");
-		builder.append(goodsInfoImage);
-		builder.append(", goodsMainImage=");
-		builder.append(goodsMainImage);
+		builder.append(", goodsInfoImageCode=");
+		builder.append(goodsInfoImageCode);
+		builder.append(", goodsMainImageCode=");
+		builder.append(goodsMainImageCode);
 		builder.append(", goodsStock=");
 		builder.append(goodsStock);
 		builder.append(", goodsDeliveryCharge=");

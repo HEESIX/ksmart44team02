@@ -34,7 +34,7 @@ public class SellerGoodsController {
 	}
 	
 	//상품 등록 신청 폼
-	@GetMapping("/goods_reg_apply")
+	@GetMapping("/regGoodsApply")
 	public String applyGoodsRegisterForm(Model model
 										,HttpSession session) {
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListUser();
@@ -43,11 +43,11 @@ public class SellerGoodsController {
 		model.addAttribute("title", "상품 등록 신청");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("goodsDiscountList", goodsDiscountList);
-		return "seller/goods/goods_reg_apply";
+		return "seller/goods/regGoodsApply";
 	}
 	
 	//상품 등록 신청 처리
-	@PostMapping("/goods_reg_apply")
+	@PostMapping("/regGoodsApply")
 	public String applyGoodsRegister(@RequestParam MultipartFile[] goodsMainImage
 									,@RequestParam MultipartFile[] goodsInfoImage
 									,Goods goods
@@ -55,34 +55,40 @@ public class SellerGoodsController {
 		//log.info(uploadfile.toString());
 		log.info(goods.toString());
 		log.info(ingredient.toString());
-		return "redirect:/seller/goods/goods_list_apply";
+		return "redirect:/seller/goods/goodsApplyList";
+	}
+	
+	//상품 등록 신청 내역 조회
+	@GetMapping("/goodsApplyList")
+	public String getGoodsApplyList() {
+		return null;
 	}
 	
 	//상품 리스트, seller 본인이 등록한 상품만 조회 가능
-	@GetMapping("/goods_list_seller")
+	@GetMapping("/goodsList")
 	public String getSellerGoodsList() {
-		return "seller/goods/goods_list_seller";
+		return "seller/goods/goodsList";
 	}
 	
 	//기존 데이터 조회(상품 수정 화면): 상품 수정 폼
 	//common 폴더로 admin goods modify와 기능이 모두 같다면 병합해야할까?
 	//그냥 service 하위에서 같이 쓰면 해결되는 문제일까?
 	//요청 주소의 헷갈림 방지를 위해서 나눠놓은 지금이 나을까?
-	@GetMapping("/goods_update_seller/{g_code}")
+	@GetMapping("/updateGoods/{g_code}")
 	public String getSellerGoodsInfo(@PathVariable(value = "g_code") String g_code) {
 		
-		return "seller/goods/goods_update_seller";
+		return "seller/goods/updateGoods";
 	}
 
 	//상품 수정 처리
-	@PostMapping("/goods_update_seller")
+	@PostMapping("/updateGoods")
 	public String modifySellerGoods() {
-		return "redirect:/seller/goods/goods_list_seller";
+		return "redirect:/seller/goods/goodsList";
 	}
 	
 	//상품 삭제 처리
-	@PostMapping("/goods_remove_seller/{g_code}")
+	@PostMapping("/removeGoods/{g_code}")
 	public String removeSellerGoods(@PathVariable(value = "g_code") String g_code) {
-		return "redirect:/seller/goods/goods_list_seller";
+		return "redirect:/seller/goods/removeGoods";
 	}
 }

@@ -42,8 +42,8 @@
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
 				<li class="active"><a href="/index.html">#HOME</a></li>
-				<li><a th:href="@{/buyer/goods/menu/menu_list}">#식단</a></li>
-				<li><a th:href="@{/buyer/goods/goods_list_buyer}">#상품</a></li>
+				<li><a th:href="@{/buyer/goods/menu/menuList}">#식단</a></li>
+				<li><a th:href="@{/buyer/goods/goodsList}">#상품</a></li>
 				<li><a href="#">#고객센터</a>
 					<ul class="header__menu__dropdown">
 						<li><a href="#">#문의내역</a></li>
@@ -107,6 +107,7 @@
 								<i class="fa fa-user"></i> Login</a>
 									<ul class="header__menu__dropdown">
 										<li><a th:href="@{/buyer/login/buyerLoginList}">#회원정보 수정</a></li>
+										<li><a th:href="@{/buyer/goods/myMenuList}">#나만의 식단</a></li>
 										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">#주문 정보</a></li>
 										<li><a href="#">#상품 후기</a></li>
 										<li><a href="#">#상품 문의</a></li>
@@ -134,8 +135,8 @@
 					<nav class="header__menu" style="text-align: right;">
 						<ul> 
 							<li class="active"><a th:href="@{/}">#HOME</a></li>
-							<li><a th:href="@{/buyer/goods/menu/menu_list}">#식단</a></li>
-							<li><a th:href="@{/buyer/goods/goods_list_buyer}">#상품</a></li>
+							<li><a th:href="@{/buyer/goods/menu/menuList}">#식단</a></li>
+							<li><a th:href="@{/buyer/goods/goodsList}">#상품</a></li>
 							<li><a href="#">#고객센터</a>
 								<ul class="header__menu__dropdown">
 									<li><a href="#">#문의내역</a></li>

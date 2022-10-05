@@ -58,8 +58,10 @@
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
 					</ol>
 				</div>
 			</div>
@@ -73,9 +75,8 @@
 					<div class="card-block" style="padding-top: 0;">
 						<div class="col-xl-3 col-lg-3"></div>
 						<div class="col-xl-6 col-lg-6">
-							<form id="addGoodsForm"
-								th:action="@{/admin/goods/menu/regMenu}" method="post"
-								enctype="multipart/form-data">
+							<form id="addGoodsForm" th:action="@{/admin/goods/menu/regMenu}" enctype="multipart/form-data"
+								method="post">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
 								<div class="form-group row">
 									<div class="col-lg-12">
@@ -84,7 +85,7 @@
 												class="col-form-label form-control-label">식단명</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="text"
+											<input class="form-control vailCheck inputObj" type="text"
 												id="goodsName" name="goodsName" placeholder="식단명을 입력해주세요.">
 										</div>
 									</div>
@@ -96,7 +97,7 @@
 												class="col-form-label form-control-label">식단 가격</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
+											<input class="form-control vailCheck inputObj" type="number"
 												id="goodsPrice" name="goodsPrice"
 												placeholder="식단 가격을 입력해주세요.">
 										</div>
@@ -145,7 +146,7 @@
 										</div>
 										<!-- end of modal -->
 										<select id="goodsDiscountCode" name="goodsDiscountCode"
-											class="js-example-basic-single" style="width: 40%;">
+											class="js-example-basic-single inputObj" style="width: 40%;">
 											<option value="">적용 할인 혜택(비적용)</option>
 											<th:block
 												th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
@@ -170,7 +171,7 @@
 													placeholder="식단 썸네일 이미지(*.gif, *.jpg, *.png)"> <label
 													class="label-lg label-default" for="goodsMainImage"
 													style="margin-top: 8px;">파일찾기</label> <input type="file"
-													id="goodsMainImage" class="imageUpload vailCheck"
+													id="goodsMainImage" class="imageUpload vailCheck inputObj"
 													name="goodsMainImage" accept=".gif, .jpg, .png">
 											</div>
 										</div>
@@ -190,7 +191,7 @@
 													placeholder="식단 소개 이미지(*.gif, *.jpg, *.png)"> <label
 													class="label-lg label-default" for="goodsInfoImage"
 													style="margin-top: 8px;">파일찾기</label> <input type="file"
-													id="goodsInfoImage" class="imageUpload vailCheck"
+													id="goodsInfoImage" class="imageUpload vailCheck inputObj"
 													name="goodsInfoImage" accept=".gif, .jpg, .png">
 											</div>
 										</div>
@@ -203,7 +204,7 @@
 												class="col-form-label form-control-label">재고</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
+											<input class="form-control vailCheck inputObj" type="number"
 												id="goodsStock" name="goodsStock" placeholder="재고를 입력해주세요.">
 										</div>
 									</div>
@@ -215,7 +216,7 @@
 												class="col-form-label form-control-label">배송비</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
+											<input class="form-control vailCheck inputObj" type="number"
 												id="goodsDeliveryCharge" name="goodsDeliveryCharge"
 												placeholder="배송비를 입력해주세요.">
 										</div>
@@ -228,7 +229,7 @@
 									</div>
 									<div class="col-md-10 has-danger">
 										<label class="custom-control custom-checkbox"> <input
-											class="custom-control-input" type="checkbox"
+											class="custom-control-input inputObj" type="checkbox"
 											id="goodsActivation" name="goodsActivation" value="1">
 											<span class="custom-control-indicator"></span> <span
 											class="custom-control-description">사용</span>
@@ -284,10 +285,12 @@
 											<!-- end of modal-dialog -->
 										</div>
 										<!-- end of modal -->
-										<div class="row" style="margin-bottom: 10px;">
+										<div class="row goodsItems" style="margin-bottom: 10px;">
 											<div class="col-lg-6 goodsOfMenu" style="padding-left: 0;">
-												<select name="goodsOfMenuCode"
-													class="js-example-basic-single2" style="width: 100%;">
+												<select 
+													class="js-example-basic-single2 goodsOfMenuCode"
+													style="width: 100%;">
+													<option value="">선택해주세요.</option>
 													<th:block th:if="${not #lists.isEmpty(goodsList)}"
 														th:each="gl : ${goodsList}">
 														<option th:value="${gl.goodsCode}"
@@ -295,9 +298,10 @@
 													</th:block>
 												</select>
 											</div>
-											<div class="col-lg-6 inputBox" style="height: 28px; padding-left: 0;">
+											<div class="col-lg-6 inputBox"
+												style="height: 28px; padding-left: 0;">
 												<input class="form-control vailCheck" type="number"
-													name="menuGoodsAmount"
+													value="0"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
 										</div>
@@ -320,7 +324,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </th:block>
 
@@ -372,28 +375,53 @@
 			}
 
 			$(document).on('click', '#submitBtn', function() {
+				//var inputObj = $('.vailCheck');
 
-				var inputObj = $('.vailCheck');
+				//var isValid = validationCheck(inputObj);
 
-				var isValid = validationCheck(inputObj);
+				//console.log(isValid, '아이디 이외의 값 유효성 검사');
+				var goodsItemsObj = $('.goodsItems');
+				var goodsItemsArray = [];
 
-				console.log(isValid, '아이디 이외의 값 유효성 검사');
-
-				if (isValid)
-					$('#').submit();
+				$.each(goodsItemsObj, function(item, index) {
+					var goodsItems = {};
+					var goodsOfMenuCode = $(this).find('select').val();
+					var menuGoodsAmount = $(this).find('input').val();
+					goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
+					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
+					goodsItemsArray.push(goodsItems);
+				});
+				console.log(goodsItemsArray, "<<<<<");
+				var form = $('#addGoodsForm');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				formData.append('goodsMainImage', $('#goodsMainImage'));
+				formData.append('goodsInfoImage', $('#goodsInfoImage'));
+				console.log(formData, "<<<<<<<<<<<<<<");
+				$.ajax({
+					type : 'POST',
+					enctype : "multipart/form-data",
+					url : '/admin/goods/menu/regMenu',
+					processData : false,
+					contentType : false,
+					data : formData,
+				}).done(function(data) {
+					alert(data);
+				}).fail(function(error) {
+					alert(JSON.stringify(error));
+				});
 			});
 
-			$('#moreGoodsBtn').click(
-					function() {
-						$('.select_goods_Of_Menu').append('<div class="row" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
-						var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
-						var $inputBox = $('.inputBox .vailCheck').clone();
-						$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
-						$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
-						$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
-						$(".js-example-basic-single2").select2();
-						$()
-					});
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
+				var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
+				$(".js-example-basic-single2").select2();
+				$()
+			});
 
 		});
 	</script>
