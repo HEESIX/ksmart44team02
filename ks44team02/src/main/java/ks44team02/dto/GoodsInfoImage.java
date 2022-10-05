@@ -5,7 +5,7 @@ public class GoodsInfoImage {
 	private String infoImageOriginalName;
 	private String infoImageNewName;
 	private String infoImagePath;
-	private int infoImageSize;
+	private long infoImageSize;
 	private int infoImageIsLocal;
 	public String getInfoImageIdx() {
 		return infoImageIdx;
@@ -31,10 +31,10 @@ public class GoodsInfoImage {
 	public void setInfoImagePath(String infoImagePath) {
 		this.infoImagePath = infoImagePath;
 	}
-	public int getInfoImageSize() {
+	public long getInfoImageSize() {
 		return infoImageSize;
 	}
-	public void setInfoImageSize(int infoImageSize) {
+	public void setInfoImageSize(long infoImageSize) {
 		this.infoImageSize = infoImageSize;
 	}
 	public int getInfoImageIsLocal() {

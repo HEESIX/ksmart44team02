@@ -6,7 +6,7 @@ public class GoodsMainImage {
 	private String mainImageOriginalName;
 	private String mainImageNewName;
 	private String mainImagePath;
-	private int mainImageSize;
+	private long mainImageSize;
 	private int mainImageIsLocal;
 	public String getMainImageIdx() {
 		return mainImageIdx;
@@ -32,10 +32,10 @@ public class GoodsMainImage {
 	public void setMainImagePath(String mainImagePath) {
 		this.mainImagePath = mainImagePath;
 	}
-	public int getMainImageSize() {
+	public long getMainImageSize() {
 		return mainImageSize;
 	}
-	public void setMainImageSize(int mainImageSize) {
+	public void setMainImageSize(long mainImageSize) {
 		this.mainImageSize = mainImageSize;
 	}
 	public int getMainImageIsLocal() {

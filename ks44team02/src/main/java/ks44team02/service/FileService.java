@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import ks44team02.dto.FileDto;
+import ks44team02.dto.GoodsInfoImage;
+import ks44team02.dto.GoodsMainImage;
 import ks44team02.mapper.FileMapper;
 import ks44team02.util.FileUtil;
 
@@ -23,14 +25,25 @@ public class FileService {
 		this.fileMapper = fileMapper;
 	}
 
-	public String fileUpload(MultipartFile uploadfile, String fileRealPath, boolean isLocalhost) {
+	public String goodsMainImageUpload(MultipartFile uploadfile, String fileRealPath, int isLocalhost) {
 		
-		FileDto fileInfo= fileUtil.parseFileInfo(uploadfile, fileRealPath , isLocalhost);
+		GoodsMainImage goodsMainImage= fileUtil.parseGoodsMainImage(uploadfile, fileRealPath , isLocalhost);
 		
-		if(fileInfo != null) {
-			fileMapper.addFile(fileInfo);
-			String fileIdx = fileInfo.getFileIdx();
-			return fileIdx;
+		if(goodsMainImage != null) {
+			fileMapper.addGoodsMainImage(goodsMainImage);
+			String mainImageIdx = goodsMainImage.getMainImageIdx();
+			return mainImageIdx;
+		}
+		return null;
+	}
+	public String goodsInfoImageUpload(MultipartFile uploadfile, String fileRealPath, int isLocalhost) {
+		
+		GoodsInfoImage goodsInfoImage = fileUtil.parseGoodsInfoImage(uploadfile, fileRealPath , isLocalhost);
+		
+		if(goodsInfoImage != null) {
+			fileMapper.addGoodsInfoImage(goodsInfoImage);
+			String infoImageIdx = goodsInfoImage.getInfoImageIdx();
+			return infoImageIdx;
 		}
 		return null;
 	}
