@@ -383,12 +383,21 @@ public class AdminGoodsController {
 		
 		if(goodsMainImage != null) {
 			if(goodsInfoImage != null) {
+				//goodsMainImage와 goodsInfoImage 모두 수정
+			
 				
 			}else {
+				//goodsMainImage만 수정
 				
 			}
 		}else{
-			
+			if(goodsInfoImage != null) {
+				//goodsInfoImage만 수정
+				
+			}else {
+				//둘다 수정하지 않음
+				
+			}
 		}
 		
 		return "redirect:/admin/goods/menu/menuList";
