@@ -339,6 +339,50 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image;
 	</select>
+	<!-- 상품 등록  -->
+	<insert id="addGoods" parameterType="Goods">
+		INSERT INTO tb_goods(
+			g_code
+			<if test="enterCode != null and enterCode != ''">
+				, enter_code
+			</if>
+			, g_cate_code
+			, g_name
+			, g_price
+			, goods_discount_code
+			, g_discount
+			, g_netweight
+			, g_netweightunit
+			, g_produce
+			, g_production_expiration_info
+			, g_main_image
+			, g_info_image
+			, g_stock
+			, g_delivery_charge
+			, g_reg_datetime
+			, g_activation
+		)VALUES(
+			#{goodsCode}
+			<if test="enterCode != null and enterCode != ''">
+				,#{enterCode}
+			</if>
+			,#{goodsCateCode}
+			,#{goodsName}
+			,${goodsPrice}
+			,#{goodsDiscountCode}
+			,${goodsDiscountedPrice}
+			,${goodsNetWeight}
+			,#{goodsNetWeightUnit}
+			,#{goodsProduce}
+			,#{goodsProductionExpirationInfo}
+			,#{goodsMainImageCode}
+			,#{goodsInfoImageCode}
+			,${goodsStock}
+			,${goodsDeliveryCharge}
+			,NOW()
+			,${goodsActivation}
+		);
+	</insert>
 	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
 	<select id="getGoodsList" resultType="Map">
 		SELECT 
@@ -555,6 +599,36 @@
 		WHERE 
 			mi.menu_code = #{menuCode}
 	</select>
+	<!-- 식단 정보 추가  -->
+	<insert id="addMenuInformation" parameterType="MenuInformation">
+		INSERT INTO tb_menu_information(
+			menu_code
+			,g_code
+			,menu_name
+			,menu_reg_datetime
+			,menu_reg_id
+		)VALUES(
+			#{menuCode}
+			,#{goodsCode}
+			,#{menuName}
+			,NOW()
+			,#{menuRegId}
+		);
+	</insert>
+	<!-- 식단 포함 상품 추가  -->
+	<insert id="addMenuOrganize" parameterType="MenuOrganize">
+		INSERT INTO tb_menu_organize(
+			menu_goods_code
+			,menu_code
+			,g_code
+			,menu_goods_amount
+		)VALUES(
+			#{menuGoodsCode}
+			,#{menuCode}
+			,#{goodsOfMenuCode}
+			,${menuGoodsAmount}
+		);
+	</insert>
 	<select id="getGoodsDiscountList" resultMap="goodsDiscountResultMap">
 		SELECT
 			gdm.goods_discount_code

@@ -70,9 +70,10 @@ public class GoodsService {
 		return resultRemove;
 	}
 
-	// 상품 등록 처리(관리자)
-	public boolean addAdminGoods(Goods goods) {
-		return false;
+	// 상품 등록 처리
+	public boolean addGoods(Goods goods) {
+		boolean result = goodsMapper.addGoods(goods);
+		return result;
 	}
 
 	// 상품 리스트
@@ -89,6 +90,18 @@ public class GoodsService {
 	// 식단 등록
 	public int addAdminMenu() {
 		return 0;
+	}
+	
+	//식단 정보 등록
+	public boolean addMenuInformation(MenuInformation menuInformation) {
+		boolean result = goodsMapper.addMenuInformation(menuInformation);
+		return result;
+	}
+	
+	//식단 포함 상품 등록
+	public boolean addMenuOrganize(MenuOrganize menuOrganize) {
+		boolean result = goodsMapper.addMenuOrganize(menuOrganize);
+		return result;
 	}
 
 	// 식단 리스트
@@ -142,6 +155,12 @@ public class GoodsService {
 	public boolean addGoodsDiscount(GoodsDiscount goodsDiscount) {
 		boolean result = goodsMapper.addGoodsDiscount(goodsDiscount);
 		return result;
+	}
+	
+	//상품별 할인 헤택 조회
+	public GoodsDiscount getGoodsDiscount(String goodsDiscountCode) {
+		GoodsDiscount goodsDiscount = goodsMapper.getGoodsDiscount(goodsDiscountCode);
+		return goodsDiscount;
 	}
 
 	// 상품별 할인 혜택 리스트(admin: admin이 등록한 할인혜택만)

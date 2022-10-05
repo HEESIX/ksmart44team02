@@ -1,7 +1,5 @@
 package ks44team02.admin.controller;
 
-import java.awt.peer.MenuPeer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,25 +7,29 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
-import ks44team02.dto.Ingredient;
+import ks44team02.dto.MenuInformation;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.service.CommonService;
 import ks44team02.service.FileService;
@@ -207,62 +209,139 @@ public class AdminGoodsController {
 	public String addAdminMenuForm(Model model) {
 		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
 		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
-
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		
 		model.addAttribute("title", "식단 등록");
 		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
 		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		return "admin/goods/menu/regMenu";
 	}
 
 	// 식단 등록 처리
 	@PostMapping("/menu/regMenu")
 	@ResponseBody
-	public String addAdminMenu(@RequestBody List<MultipartFile> formData
-							  ,HttpServletRequest request) {
-		log.info(">>>>>>>>>>>>{}", formData);
-		/*
-		log.info(goods.toString());
-		List<MenuOrganize> menuOrganizes = new ArrayList<MenuOrganize>();
-		commonService.getNewCode("tb_");
-		int num = goodsOfMenuCode.length;
-		for(int i = 0; i < num; i++) {
-			MenuOrganize menuOrganize = new MenuOrganize();
-			menuOrganize.setMenuGoodsCode(commonService.getNewCode("tb_menu_organize"));
-			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode[i]);
-			menuOrganize.setMenuGoodsAmount(menuGoodsAmount[i]);
-			menuOrganizes.add(menuOrganize);
-		}
-		System.out.println(menuOrganizes);
+	@Transactional
+	public boolean addAdminMenu(HttpServletRequest request
+							  ,Goods goods
+							  ,@RequestParam(value = "goodsItems") String goodsItems
+							  ,@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage
+							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage
+							  ,HttpSession session) throws ParseException {
 		
-		String serverName = request.getServerName();
-		log.info("{} <<<< serverName", serverName);
-		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
-		String fileRealPath = "";
-		boolean isLocalhost = true;
-
-		if ("localhost".equals(serverName)) {
-			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
-			// fileRealPath =
-			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
-		} else {
-			// fileRealPath =
-			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
-			isLocalhost = false;
-			fileRealPath = System.getProperty("user.dir") + "/resources/";
-		}
-		String goodsMainImageIdx = fileService.fileUpload(goodsMainImage, fileRealPath, isLocalhost);
-		String goodsInfoImageIdx = fileService.fileUpload(goodsInfoImage, fileRealPath, isLocalhost);
+		String menuOfGoods = "{ \"goodsItems\" : " + goodsItems + "}";
+		boolean addAdminMenuResult = true;
+		
+		JSONParser jsonParse = new JSONParser();
+		JSONObject jsonObj = (JSONObject) jsonParse.parse(menuOfGoods);
+		System.out.println(jsonObj);
+		JSONArray goodsItemArray = (JSONArray) jsonObj.get("goodsItems");
+		
+		
+		 String serverName = request.getServerName(); 
+		 log.info("{} <<<< serverName", serverName); 
+		 log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		 String fileRealPath = ""; 
+		 int isLocalhost = 1;
+		 
+		 if ("localhost".equals(serverName)) { 
+			 fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/"; 
+			 //fileRealPath = 
+			 // request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
+		 } else { 
+			 // fileRealPath = 
+			 // request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
+			 isLocalhost = 0; 
+			 fileRealPath = System.getProperty("user.dir") + "/resources/"; 
+		 }
+		 
+		 String goodsMainImageIdx = fileService.goodsMainImageUpload(goodsMainImage, fileRealPath, isLocalhost); 
+		 String goodsInfoImageIdx = fileService.goodsInfoImageUpload(goodsInfoImage, fileRealPath, isLocalhost);
+		 
+		 goods.setGoodsMainImageCode(goodsMainImageIdx);
+		 goods.setGoodsInfoImageCode(goodsInfoImageIdx);
+		
+		// tb_goods INSERT 준비
 		String goodsCode = commonService.getNewCode("tb_goods");
-		String ingredientCode = commonService.getNewCode("tb_ingredient");
-
 		goods.setGoodsCode(goodsCode);
-		//goods.setGoodsMainImage(goodsMainImageIdx);
-		//goods.setGoodsInfoImage(goodsInfoImageIdx);
-		ingredient.setIngredientCode(ingredientCode);
-		ingredient.setGoodsCode(goodsCode);
-		*/
-		return "redirect:/admin/goods/menu/menuList";
+		
+		// 상품별 할인혜택 조회 후 할인된 혹은 할인되지 않은 가격 세팅
+		String goodsDiscountCode = goods.getGoodsDiscountCode();
+		int goodsPrice = goods.getGoodsPrice();
+		int goodsDiscountedPrice = 0;
+		
+		if("noDiscount".equals(goodsDiscountCode)) {
+			goodsDiscountedPrice = goodsPrice;
+		}else {
+			GoodsDiscount goodsDiscount = goodsService.getGoodsDiscount(goodsDiscountCode);
+			int goodsDiscountPrice = goodsDiscount.getGoodsDiscountPrice();
+			int goodsDiscountRate = goodsDiscount.getGoodsDiscountRate();
+			
+			if(goodsDiscountPrice == 0 && goodsDiscountRate == 0) {
+				goodsDiscountedPrice = goodsPrice;
+			}else if(goodsDiscountPrice != 0 && goodsDiscountRate == 0) {
+				goodsDiscountedPrice = (goodsPrice - goodsDiscountPrice);
+			}else {
+				double percent = goodsDiscountRate * 0.01;
+				double discount = goodsPrice * percent;
+				goodsDiscountedPrice = (int) (goodsPrice - discount);
+			}
+		}
+		goods.setGoodsDiscountedPrice(goodsDiscountedPrice);
+		
+		//상품의 원산지와 유통기한 정보 컨텐츠 참조로 세팅
+		String contentsRef = "컨텐츠 참조";
+		goods.setGoodsNetWeight(0);
+		goods.setGoodsNetWeightUnit(contentsRef);
+		goods.setGoodsProduce(contentsRef);
+		goods.setGoodsProductionExpirationInfo(contentsRef);
+		
+		//tb_goods 에 INSERT
+		boolean addGoodsResult = goodsService.addGoods(goods);
+		String menuCode = commonService.getNewCode("tb_menu_information");
+		
+		//INSERT 성공일 경우
+		if(addGoodsResult) {
+			MenuInformation menuInformation = new MenuInformation();
+			
+			menuInformation.setMenuCode(menuCode);
+			menuInformation.setGoodsCode(goodsCode);
+			menuInformation.setMenuName(goods.getGoodsName());
+			
+			//세션 구현될 경우 세션으로 대체 
+			//String memberId = (String) session.getAttribute("SID");
+			//현재는 픽스된 값 사용
+			String memberId = "id001";
+			menuInformation.setMenuRegId(memberId);
+			
+			boolean addMenuInformationResult = goodsService.addMenuInformation(menuInformation);
+			
+			//INSERT 성공일 경우
+			if(addMenuInformationResult) {
+				// 식단의 상품 등록 구성 INSERT
+				 for(int i=0; i < goodsItemArray.size(); i++) {
+		             MenuOrganize menuOrganize = new MenuOrganize();
+		             
+		             JSONObject goodsItemObject = (JSONObject) goodsItemArray.get(i);
+		             menuOrganize.setMenuGoodsCode(commonService.getNewCode("tb_menu_organize"));
+		             menuOrganize.setMenuCode(menuCode);
+		             menuOrganize.setGoodsOfMenuCode((String) goodsItemObject.get("goodsOfMenuCode"));
+		             menuOrganize.setMenuGoodsAmount(Integer.parseInt((String) goodsItemObject.get("menuGoodsAmount")));
+		             log.info(menuOrganize.toString());
+		             goodsService.addMenuOrganize(menuOrganize);
+		         }
+			}else {
+				addAdminMenuResult = false;
+			}
+		
+		//INSERT 실패일 경우
+		}else {
+			addAdminMenuResult = false;
+		}
+
+		return addAdminMenuResult;
 	}
+	
 
 	// 식단 리스트
 	@GetMapping("/menu/menuList")
@@ -275,15 +354,52 @@ public class AdminGoodsController {
 
 	// 식단 수정 폼
 	@GetMapping("/menu/updateMenu/{menuCode}")
-	public String modifyAdminMenuForm(@PathVariable(value = "menuCode") String menuCode) {
+	public String modifyAdminMenuForm(@PathVariable(value = "menuCode") String menuCode
+									 ,Model model) {
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
+		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
+		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
+		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
 		
+		model.addAttribute("menuInfo", menuInfo);
+		model.addAttribute("menuOrganizeList", menuOrganizeList);
+		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		return "admin/goods/menu/updateMenu";
 	}
 
 	// 식단 수정 처리
 	@PostMapping("menu/updateMenu/{menuCode}")
-	public String modifyAdminMenu(@PathVariable(value = "menuCode") String menuCode) {
-
+	public String modifyAdminMenu(@PathVariable(value = "menuCode") String menuCode
+								 ,HttpServletRequest request
+							     ,Goods goods
+							     ,@RequestParam(value = "goodsItems") String goodsItems
+							     ,@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage
+							     ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage
+							     ,HttpSession session) {
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>매핑완료");
+		
+		if(goodsMainImage != null) {
+			if(goodsInfoImage != null) {
+				//goodsMainImage와 goodsInfoImage 모두 수정
+			
+				
+			}else {
+				//goodsMainImage만 수정
+				
+			}
+		}else{
+			if(goodsInfoImage != null) {
+				//goodsInfoImage만 수정
+				
+			}else {
+				//둘다 수정하지 않음
+				
+			}
+		}
+		
 		return "redirect:/admin/goods/menu/menuList";
 	}
 

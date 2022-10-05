@@ -35,6 +35,9 @@ public interface GoodsMapper {
 	//상품 카테고리 삭제
 	public boolean removeGoodsCategory(String goodsCategoryCode);
 	
+	//상품 등록
+	public boolean addGoods(Goods goods);
+	
 	//상품 리스트
 	public List<Goods> getAdminGoodsList();
 	
@@ -43,6 +46,12 @@ public interface GoodsMapper {
 	
 	//식단 등록
 	public int addAdminMenu();
+	
+	//식단 정보 등록
+	public boolean addMenuInformation(MenuInformation menuInformation);
+	
+	//식단 포함 상품 등록
+	public boolean addMenuOrganize(MenuOrganize menuOrganize);
 	
 	//식단 리스트
 	public List<Goods> getAdminMenuList();

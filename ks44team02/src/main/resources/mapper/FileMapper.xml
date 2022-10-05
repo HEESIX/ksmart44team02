@@ -12,24 +12,39 @@
 		<result property="fileIsLocal" 		column="file_islocal"/>
 	</resultMap>
 	
-	<insert id="addFile" parameterType="list">
-		INSERT INTO tb_file
-		(
-			 file_idx
-			,file_new_name
-			,file_original_name
-			,file_path
-			,file_size
-			,file_islocal
-		)VALUES
-		( 
-			 #{data.fileIdx}
-			,#{data.fileNewName}
-			,#{data.fileOriginalName}
-			,#{data.filePath}
-			,#{data.fileSize}
-			,#{data.fileIsLocal}
-		)
+	<insert id="addGoodsMainImage" parameterType="GoodsMainImage">
+		INSERT INTO tb_goods_main_image(
+			main_image_idx
+			,main_image_original_name
+			,main_image_new_name
+			,main_image_path
+			,main_image_size
+			,main_image_islocal
+		)VALUES(
+			#{mainImageIdx}
+			,#{mainImageOriginalName}
+			,#{mainImageNewName}
+			,#{mainImagePath}
+			,${mainImageSize}
+			,${mainImageIsLocal}
+		);
+	</insert>
+	<insert id="addGoodsInfoImage" parameterType="GoodsInfoImage">
+		INSERT INTO tb_goods_info_image(
+			info_image_idx
+			,info_image_original_name
+			,info_image_new_name
+			,info_image_path
+			,info_image_size
+			,info_image_islocal
+		)VALUES(
+			#{infoImageIdx}
+			,#{infoImageOriginalName}
+			,#{infoImageNewName}
+			,#{infoImagePath}
+			,${infoImageSize}
+			,${infoImageIsLocal}
+		);
 	</insert>
 	
 	<select id="getFileList" resultMap="fileResultMap">
