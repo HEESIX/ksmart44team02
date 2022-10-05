@@ -20,8 +20,9 @@ public class DeliveryService {
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 	//list로 변경
-	public String getDelivery() {
-		return null;
+	public List<Map<String, Object>> sellerOrderList(String memberId) {
+		List<Map<String, Object>> sellerOrderList = deliveryMapper.sellerOrderList(memberId);
+		return sellerOrderList;
 	}
 	
 	//구매자 배송처리
