@@ -13,7 +13,7 @@ public interface DeliveryMapper {
 
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 		//list로 해야되나?
-	public String getDelivery() ;
+	public List<Map<String, Object>> sellerOrderList(String memberId) ;
 	
 	//구매자 배송처리
 	public String OrderDeal();
