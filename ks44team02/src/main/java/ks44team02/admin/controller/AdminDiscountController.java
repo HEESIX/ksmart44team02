@@ -42,7 +42,7 @@ public class AdminDiscountController {
 	public void adminDiscountControllerInit() {
 		log.info("AdminDiscountController bean 생성");
 	}
-	//주문서별 할인혜택 목록 조회 폼
+	//주문서별 할인혜택 목록 조회 화면
 	@GetMapping("/orderDiscountList")
 	public String getOrderDiscountList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
@@ -85,8 +85,8 @@ public class AdminDiscountController {
 		model.addAttribute("title", "판매자목록조회");
 		model.addAttribute("orderDiscountList", orderDiscountList);
 		return "admin/orderDiscount/orderDiscountList";
-		}
-	//주문서별 할인혜택 등록 폼
+	}
+	//주문서별 할인혜택 등록 화면
 	@GetMapping("/addOrderDiscount")
 	public String addOrderDiscount(Model model) {
 		
@@ -111,7 +111,7 @@ public class AdminDiscountController {
 		reAttr.addAttribute("msg", msg);
 		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
-	//주문서별 할인혜택 수정 폼
+	//주문서별 할인혜택 수정 화면
 	@GetMapping("/modifyOrderDiscount/{orderDiscountCode}")
 	public String modifyOrderDiscount(@PathVariable(value = "orderDiscountCode") String orderDiscountCode
 									,Model model) {
@@ -137,7 +137,7 @@ public class AdminDiscountController {
 		
 		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
-	//주문서별 할인혜택 삭제 폼
+	//주문서별 할인혜택 삭제 화면
 	@GetMapping("/removeOrderDiscount/{orderDiscountCode}")
 	public String removeOrderDiscount(@PathVariable(value = "orderDiscountCode") String orderDiscountCode
 												   ,Model model) {
@@ -171,4 +171,71 @@ public class AdminDiscountController {
 		}
 		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
+	//전체 회원이 보유한 모든 주문서별 할인혜택 목록 조회 화면 //수정 요망
+	@GetMapping("/orderDiscountList")
+	public String getAllOrderDiscountList(Model model
+									  ,@RequestParam(value = "msg", required = false) String msg) {
+		
+
+		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(null);
+		
+		log.info("할인혜택 목록 조회 :::: {}", orderDiscountList);
+		
+		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
+		model.addAttribute("orderDiscountList", orderDiscountList);
+		if(msg!=null) model.addAttribute("msg", msg);
+		
+		return "admin/orderDiscount/orderDiscountList";
+	}
+	//전체 회원이 보유한 모든 주문서별 할인혜택 목록 조회 처리//수정 요망
+	@PostMapping("/orderDiscountList")
+	public String getAllOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
+			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+			 ,Model model) {
+		
+		//1. searchKey -> memberId, memberName _____ -> db에 있는 컬럼 및 매칭 처리
+		if("discountName".equals(sk)) {
+		sk = "discount_name";
+		}else if("discountRate".equals(sk)) {
+		sk = "discount_rate";
+		}else if("discountPrice".equals(sk)) {
+		sk = "discount_price";
+		}else {
+		sk = "g_production_reg_datetime";
+		}
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sk",sk);
+		paramMap.put("sv",sv);
+		
+		//2. ${} vs #{}	-> ${searchKey} LIKE ${searchValue} : ex) memberId LIKE 'id001'
+		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(paramMap);
+		
+		//3. model 검색된 리스트를 출력하면 된다.
+		model.addAttribute("title", "판매자목록조회");
+		model.addAttribute("orderDiscountList", orderDiscountList);
+		return "admin/orderDiscount/orderDiscountList";
+	}
+	//주문서별 할인혜택 회원한테 부여 화면
+	@GetMapping("/giveOrderDiscount")
+	public String giveOrderDiscount(Model model) {
+		
+		model.addAttribute("title", "할인혜택 부여");
+		
+		return "admin/orderDiscount/giveOrderDiscount";
+	}
+	//주문서별 할인혜택 회원한테 부여 처리
+	@PostMapping("/giveOrderDiscount")
+	public String giveOrderDiscount(OrderDiscount orderDiscount
+			  					   ,RedirectAttributes reAttr) {
+		
+		boolean result = discountService.giveOrderDiscount(orderDiscount);
+		String msg = "";
+		if (result) {
+		msg = "부여 성공";
+		} else {
+		msg = "부여 실패";
+		}
+		reAttr.addAttribute("msg", msg);
+		return "redirect:/admin/orderDiscount/orderDiscountList";
+		}
 }
