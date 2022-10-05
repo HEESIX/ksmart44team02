@@ -75,7 +75,7 @@
 					<div class="card-block" style="padding-top: 0;">
 						<div class="col-xl-3 col-lg-3"></div>
 						<div class="col-xl-6 col-lg-6">
-							<form id="addGoodsForm" th:action="@{/admin/goods/menu/regMenu}"
+							<form id="addGoodsForm" th:action="@{/admin/goods/menu/regMenu}" enctype="multipart/form-data"
 								method="post">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
 								<div class="form-group row">
@@ -287,7 +287,7 @@
 										<!-- end of modal -->
 										<div class="row goodsItems" style="margin-bottom: 10px;">
 											<div class="col-lg-6 goodsOfMenu" style="padding-left: 0;">
-												<select name="goodsOfMenuCode[]"
+												<select 
 													class="js-example-basic-single2 goodsOfMenuCode"
 													style="width: 100%;">
 													<option value="">선택해주세요.</option>
@@ -301,7 +301,7 @@
 											<div class="col-lg-6 inputBox"
 												style="height: 28px; padding-left: 0;">
 												<input class="form-control vailCheck" type="number"
-													name="menuGoodsAmount[]" value="0"
+													value="0"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
 										</div>
@@ -400,13 +400,13 @@
 				console.log(formData, "<<<<<<<<<<<<<<");
 				$.ajax({
 					type : 'POST',
+					enctype : "multipart/form-data",
 					url : '/admin/goods/menu/regMenu',
 					processData : false,
-					contentType : "application/json",
+					contentType : false,
 					data : formData,
 				}).done(function(data) {
-					alert('123');
-					window.location.href = '/';
+					alert(data);
 				}).fail(function(error) {
 					alert(JSON.stringify(error));
 				});

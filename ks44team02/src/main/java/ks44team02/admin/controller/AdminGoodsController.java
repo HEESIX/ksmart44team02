@@ -217,10 +217,9 @@ public class AdminGoodsController {
 	// 식단 등록 처리
 	@PostMapping("/menu/regMenu")
 	@ResponseBody
-	public String addAdminMenu(@RequestBody Map<String, Object> param
+	public String addAdminMenu(@RequestBody List<MultipartFile> formData
 							  ,HttpServletRequest request) {
-		log.info(">>>>>>>>>>>>{}", param);
-		System.out.println(param.toString());
+		log.info(">>>>>>>>>>>>{}", formData);
 		/*
 		log.info(goods.toString());
 		List<MenuOrganize> menuOrganizes = new ArrayList<MenuOrganize>();
