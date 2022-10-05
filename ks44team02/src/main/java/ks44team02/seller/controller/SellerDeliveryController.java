@@ -1,5 +1,10 @@
 package ks44team02.seller.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,7 +29,16 @@ public class SellerDeliveryController {
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 	@GetMapping("/sellerOrderDeliveryAllList")
-	public String getDelivery() {
+	public String sellerOrderList(Model model
+								 ,HttpSession session) {
+			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
+			//String memberId = session.getAttribute("SID");
+			String memberId = "id010";
+			List<Map<String, Object>> sellerOrderList = deliveryservice.sellerOrderList(memberId);
+				model.addAttribute("title", "주문 관리");
+				model.addAttribute("sellerOrderList", sellerOrderList);
+		
+		
 		return "seller/order/sellerOrderDeliveryAllList";
 	}
 

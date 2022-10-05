@@ -10,6 +10,13 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
 <!-- 사용자 정의 js file  -->
 <th:block layout:fragment="customTopJs">
 	<script type="text/javascript" th:inline="javascript">
@@ -30,6 +37,7 @@
 				<div class="card">
 					<div class="card-block">
 						<div class="table-responsive">
+							<div th:include="admin/orderDiscount/searchOrderDiscountList :: searchFragment" style="margin-bottom: 15px;"></div>
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
@@ -73,5 +81,16 @@
 	</div>
 </th:block>
 
+<th:block layout:fragment="customFootJs">
+	<!-- Select 2 js -->
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".js-example-basic-single").select2();
+			$(".js-example-basic-single2").select2();
+		});
+	</script>
+</th:block>
 
 </html>

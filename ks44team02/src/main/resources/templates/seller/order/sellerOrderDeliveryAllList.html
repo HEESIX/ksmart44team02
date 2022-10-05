@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/buyerDefault}">
+	layout:decorate="~{layout/sellerDefault}">
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -29,39 +29,118 @@
 </th:block>
 <!-- end breadcrum section -->
 
+<!-- 사용자 정의 css -->
+<th:block layout:fragment="customCss">
+
+
+
+<style>
+	table {
+    text-align: center;
+    border: 1px solid #fff;
+    border-spacing: 1px;
+    font-family: 'Cairo', sans-serif;
+}
+
+caption {
+    font-weight: bold;
+}
+
+table td {
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+table th {
+    background-color: #555;
+    color: #fff;
+    padding: 10px;
+}
+
+
+.deliNum,
+.orderStatus {
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.deliNum {
+    background-color: #7fad39;
+}
+
+.orderStatus {
+    background-color: #7fad39;
+}
+
+</style>
+</th:block>
+
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 
-	<div class="container-fluid">
+<div class="row">
+		
+	
+	
+		<div class="product__discount">
+		
+		<div class="section-title product__discount__title">
+					<h2 style="font-size: 30px">주문배송처리</h2>
+			</div>
+		
 		<div class="row">
-			<div class="col-xl-12 col-lg-12">
-				<table class="table table-hover">
+				<table>
 					<thead>
-						<tr>
+			            <tr>
 							<th>주문일</th>
 							<th>주문번호</th>
-							<th>주문자</th>
+							<th>상품명</th>
+							<th>구매수량</th>
 							<th>결제금액</th>
-							<th>배송</th>
-							<th></th>
-							<th></th>
+							<th>수령인</th>
+							<th>연락처</th>
+							<th>배송지</th>
+							<th>배송메모</th>
+							<th>운송장번호</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+			            	th:each="sol : ${sellerOrderList}">
+			                <td th:text="${sol.get('orderDatetime')}"></td>
+			                <td th:text="${sol.get('orderDetailCode')}"></td>
+			                <td th:text="${sol.get('goodsName')}"></td>
+			                <td th:text="${sol.get('orderAmount')}"></td>
+			                <td th:text="${sol.get('regularPriceSubltotal')}"></td>
+			                <td th:text="${sol.get('deliGetName')}"></td>
+			                <td th:text="${sol.get('deliPhone')}"></td>
+			                <td th:text="${sol.get('deliGetAddr')}"></td>
+			                <td th:text="${sol.get('deliMemo')}"></td>
+			                <td>
+			                    <button class="deliNum">운송장번호 입력</button>
+			                </td>
 						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>					
+						<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
+							</td>
+						</tr>
+						
+						
+						
+						
+						
+						
 					</tbody>
 				</table>
 			</div>
 		</div>
-	</div>
+
+</div>
+
+
 </th:block>
 
 </html>

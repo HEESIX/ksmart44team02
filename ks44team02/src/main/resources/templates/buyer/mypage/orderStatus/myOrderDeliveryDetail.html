@@ -60,27 +60,26 @@
 				<table class="table table-hover">
 				  <thead>
 				    <tr>
-						<th>상세주문번호</th>
-						<th>주문일자</th>
+						<th></th>
 						<th>ITEM</th>
 						<th>DISCOUNT</th>
 						<th>PRICE</th>
 						<th>수량</th>
+						<th>주문일자</th>
 						<th>주문상태</th>
-						<th>배송업체</th>
-						<th>운송장번호</th>
+						<th>배송상태</th>
+						<th></th>
 					</tr>
 				 </thead>
 					<tbody>
-						<tr th:each="odl : ${getOrderDetailList}">
-							<td th:text="${odl.get('orderGroupCode')}"></td>
-							<td th:text="${odl.get('orderDatetime')}"></td>
+						<tr th:each="odl : ${getOrderDetailList}" style="line-height: 50px;">
+							<td><a href="#"><img th:alt="${odl.mainImageOriName}" th:src="@{'/'+ ${odl.mainImagePath}}" style="height: 50px; border-radius: 10px;"></a></td>
 							<td th:text="${odl.get('goodsName')}"></td>
 							<td th:text="${odl.get('discountPrice')}"></td>
 							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
+							<td th:text="${odl.get('orderDatetime')}"></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
-							<td th:text="${odl.get('deliveryEnter')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
 						</tr>
 					</tbody>

@@ -1,6 +1,8 @@
 package ks44team02.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -44,7 +46,11 @@ public class AdminDiscountController {
 	@GetMapping("/orderDiscountList")
 	public String getOrderDiscountList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
-		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList();
+		
+
+		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(null);
+		
+		log.info("할인혜택 목록 조회 :::: {}", orderDiscountList);
 		
 		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
 		model.addAttribute("orderDiscountList", orderDiscountList);
@@ -52,6 +58,34 @@ public class AdminDiscountController {
 		
 		return "admin/orderDiscount/orderDiscountList";
 	}
+	//주문서별 할인혜택 목록 조회 처리
+	@PostMapping("/orderDiscountList")
+	public String getSearchOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
+			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+			 ,Model model) {
+		
+		//1. searchKey -> memberId, memberName _____ -> db에 있는 컬럼 및 매칭 처리
+		if("discountName".equals(sk)) {
+		sk = "discount_name";
+		}else if("discountRate".equals(sk)) {
+		sk = "discount_rate";
+		}else if("discountPrice".equals(sk)) {
+		sk = "discount_price";
+		}else {
+		sk = "g_production_reg_datetime";
+		}
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sk",sk);
+		paramMap.put("sv",sv);
+		
+		//2. ${} vs #{}	-> ${searchKey} LIKE ${searchValue} : ex) memberId LIKE 'id001'
+		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(paramMap);
+		
+		//3. model 검색된 리스트를 출력하면 된다.
+		model.addAttribute("title", "판매자목록조회");
+		model.addAttribute("orderDiscountList", orderDiscountList);
+		return "admin/orderDiscount/orderDiscountList";
+		}
 	//주문서별 할인혜택 등록 폼
 	@GetMapping("/addOrderDiscount")
 	public String addOrderDiscount(Model model) {

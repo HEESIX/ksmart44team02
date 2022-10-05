@@ -3,12 +3,53 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.DeliveryMapper">
-	
-	
-	
-	
-	
-	
+
+	<!--판매자측면 전체 주문 리스트  -->
+	<select id="sellerOrderList" parameterType="String" resultType="map">
+		SELECT
+		 od.order_datetime AS orderDatetime
+		,od.order_detail_code AS orderDetailCode
+		,od.order_amount AS orderAmount
+		,od.regular_price_subtotal AS regularPriceSubltotal
+		,g.g_name AS goodsName
+		,d.d_get_name AS deliGetName
+		,d.d_get_addr AS deliGetAddr
+		,d.d_get_phone AS deliPhone
+		,d.d_memo AS deliMemo
+		,oss.order_status_standard_details AS orderStatusName
+		,d.delivery_enter AS deliveryEnter
+		,d.delivery_num AS deliveryNumber
+		,gmi.main_image_original_name AS mainImageOriName
+		,gmi.main_image_path AS mainImagePath
+	FROM
+		tb_order_detail AS od
+		INNER join
+		tb_enterprise AS ent
+		ON
+		ent.enter_code = od.enter_code
+		INNER join
+		tb_goods AS g
+		ON
+		od.g_code = g.g_code
+		INNER JOIN 
+		tb_goods_main_image AS gmi
+		ON 
+		gmi.main_image_idx = g.g_main_image
+		LEFT JOIN
+		tb_delivery AS d
+		on
+		d.order_detail_code = od.order_detail_code
+		left join
+		tb_order_status AS os
+		on
+		os.order_status_code = d.order_status_code
+		left JOIN
+		tb_order_status_standard AS oss
+		on
+		os.order_status_standard_code = oss.order_status_standard_code
+	where	
+		ent.member_id = #{memberId}
+	</select>
 	
 	
 	<!-- 주문 리스트 -->
@@ -18,9 +59,9 @@
 			group_concat(g.g_name SEPARATOR ', ') as goodsName,
 			om.final_price as finalPrice,
 			od.order_datetime AS orderDatetime,
-			om.order_group_code AS orderGroupCode
-			,gmi.main_image_original_name AS mainImageOriName
-			,gmi.main_image_path	AS mainImagePath
+			om.order_group_code AS orderGroupCode,
+			om.add_discount_price AS discountAdd,
+			om.regular_price_subtotal AS subPrice
 		FROM
 			tb_order_management AS om
 			INNER join
@@ -31,10 +72,6 @@
 			tb_goods AS g
 			on
 			g.g_code = od.g_code
-			INNER JOIN 
-			tb_goods_main_image AS gmi
-			ON 
-			gmi.main_image_idx = g.g_main_image
 			INNER Join
 			tb_order_status AS os
 			on
@@ -68,6 +105,8 @@
          oss.order_status_standard_details as orderStatusStandardDetails,
          d.delivery_enter as deliveryEnter,
          d.delivery_num as deliveryNumber
+         ,gmi.main_image_original_name AS mainImageOriName
+		,gmi.main_image_path AS mainImagePath
 	FROM
          tb_order_detail AS od
          INNER JOIN
@@ -78,7 +117,11 @@
          tb_goods AS g
          on
          g.g_code = od.g_code
-         INNER Join
+         INNER JOIN 
+		 tb_goods_main_image AS gmi
+		 ON 
+		 gmi.main_image_idx = g.g_main_image
+		 INNER Join
          tb_order_status AS os
          on
          g.g_code = os.g_code
@@ -92,7 +135,6 @@
 		 d.order_detail_code = od.order_detail_code	
 	WHERE
     	od.order_group_code = #{orderGroupCode};
-
 	</select>
 
 	<!-- 결제정보 -->
