@@ -1,6 +1,7 @@
 package ks44team02.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,8 +28,8 @@ public class DiscountService {
 	}
 	
 	//주문서별 할인혜택 목록 조회
-	public List<OrderDiscount> getOrderDiscountList(){
-		List<OrderDiscount> orderDiscount = discountMapper.getOrderDiscountList();
+	public List<OrderDiscount> getOrderDiscountList(Map<String,Object> paramMap){
+		List<OrderDiscount> orderDiscount = discountMapper.getOrderDiscountList(paramMap);
 		return orderDiscount;
 	}
 	//특정 주문서별 할인혜택 조회

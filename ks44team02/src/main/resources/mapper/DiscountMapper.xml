@@ -31,7 +31,7 @@
 	</resultMap>
 	
 	<!-- 주문서별 할인헤택 목록 조회 -->
-	<select id="getOrderDiscountList" resultMap="listResultMap">
+	<select id="getOrderDiscountList" parameterType="map" resultMap="listResultMap" fetchSize="100">
 		SELECT
 			order_discount_code
 			,discount_rate
@@ -41,7 +41,14 @@
 			,ifnull(max_discount_price,0) as max_discount_price	
 			,g_production_reg_datetime
 		FROM
-			tb_order_discount_management;
+			tb_order_discount_management
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+		</trim>
+		ORDER BY
+			g_production_reg_datetime;
 	</select>
 	
 	<!-- 특정 주문서별 할인혜택 조회 -->
