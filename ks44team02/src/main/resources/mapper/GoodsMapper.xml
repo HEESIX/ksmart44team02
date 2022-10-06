@@ -596,6 +596,7 @@
 		order by 
 			ga.ga_reg_apply_datetime;
 	</select>
+	<!-- 식단 조회  -->
 	<select id="getAdminMenuList" parameterType="int" resultMap="goodsResultMap">
 		SELECT 
 			g.g_code
@@ -751,7 +752,7 @@
 		WHERE 
 			mo.menu_code = #{menuCode};
 	</delete>
-	<select id="getGoodsDiscountList" resultMap="goodsDiscountResultMap">
+	<select id="getGoodsDiscountList" parameterType="Map" resultMap="goodsDiscountResultMap">
 		SELECT
 			gdm.goods_discount_code
 			,gdm.discount_price
@@ -768,6 +769,29 @@
 			tb_enterprise AS e
 			ON 
 			e.enter_code = gdm.enter_code
+		<trim prefix="WHERE " prefixOverrides="AND |OR ">
+			<if test="sk != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+			<if test="sk != null and minNum != '' and maxNum != ''">
+				${sk} BETWEEN #{minNum} AND #{maxNum}
+			</if>
+			<if test="sk != null and minNum == '' and maxNum != ''">
+				${sk} <![CDATA[<=]]> #{maxNum}
+			</if>
+			<if test="sk != null and minNum != '' and maxNum == ''">
+				${sk} >= #{minNum}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate != ''">
+				${sk} BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="sk != null and minDate == '' and maxDate != ''">
+				${sk} <![CDATA[<=]]> #{maxDate}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate == ''">
+				${sk} >= #{minDate}
+			</if>
+		</trim>
 	</select>
 	<insert id="addGoodsDiscount" parameterType="GoodsDiscount">
 		INSERT INTO tb_goods_discount_management(
