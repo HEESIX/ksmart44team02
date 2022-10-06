@@ -3,8 +3,6 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 
-<!-- 상품별 할인혜택 목록  -->
-
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
@@ -20,17 +18,24 @@
 <!-- 사용자 정의 js file  -->
 <th:block layout:fragment="customTopJs">
 	<script type="text/javascript" th:inline="javascript">
-		var msg = [[${msg}]]
+
+		var msg = [[${msg}]];
 		
 		if(msg!=null) alert(msg);
+		
+
 	</script>
 </th:block>
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row col-sm-3" style="padding-right: 5;">
 			<h4>주문서별 할인혜택 목록</h4>
+		</div>
+		<div class="col-sm-5">
+		<button type="button" class="btn btn-default waves-effect" 
+		data-toggle="tooltip" data-placement="right" title data-original-title="sellect radio에 검색조건 입력 및 선택, inpot box에 조건 별 검색어 입력 후 검색버튼 클릭, 빈칸일때 검색버튼 누르면 목록 초기화, 수정/삭제/등록 버튼 누르면 각각의 페이지로 이동">사용자 메뉴얼</button> 
 		</div>
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
