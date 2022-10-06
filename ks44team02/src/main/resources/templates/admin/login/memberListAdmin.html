@@ -50,7 +50,7 @@
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(memberListAdmin)}"
 										th:each="mla : ${memberListAdmin}">
-										<th><input type="checkbox" value="che"></th>
+										<td><input type="checkbox" value="che"></td>
 										<td th:text="${mla.memberId}"></td>
 										<td th:text="${mla.memberName}"></td>
 										<td th:text="${mla.memberLevelCode}"></td>
