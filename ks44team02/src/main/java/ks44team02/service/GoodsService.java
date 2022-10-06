@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
+import ks44team02.dto.GoodsInfoImage;
+import ks44team02.dto.GoodsMainImage;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.MenuInformation;
 import ks44team02.mapper.GoodsMapper;
@@ -83,8 +85,33 @@ public class GoodsService {
 	}
 
 	// 상품 삭제
-	public int removeAdminGoods() {
-		return 0;
+	public boolean removeGoods(String goodsCode) {
+		boolean result = goodsMapper.removeGoods(goodsCode);
+		return result;
+	}
+	
+	//상품 메인 이미지 정보 조회
+	public GoodsMainImage getGoodsMainImageInfo(String mainImageIdx) {
+		GoodsMainImage goodsMainImageInfo = goodsMapper.getGoodsMainImageInfo(mainImageIdx);
+		return goodsMainImageInfo;
+	}
+	
+	//상품 소개 이미지 정보 조회
+	public GoodsInfoImage getGoodsInfoImageInfo(String infoImageIdx) {
+		GoodsInfoImage goodsInfoImageInfo = goodsMapper.getGoodsInfoImageInfo(infoImageIdx);
+		return goodsInfoImageInfo;
+	}
+	
+	//상품 메인 이미지 삭제
+	public boolean removeGoodsMainImage(String mainImageIdx) {
+		boolean result = goodsMapper.removeGoodsMainImage(mainImageIdx);
+		return result;
+	}
+	
+	//상품 정보 이미지 삭제
+	public boolean removeGoodsInfoImage(String infoImageIdx) {
+		boolean result = goodsMapper.removeGoodsInfoImage(infoImageIdx);
+		return result;
 	}
 
 	// 식단 등록
@@ -98,22 +125,35 @@ public class GoodsService {
 		return result;
 	}
 	
-	//식단 포함 상품 등록
+	//식단 포함 상품  정보 등록
 	public boolean addMenuOrganize(MenuOrganize menuOrganize) {
 		boolean result = goodsMapper.addMenuOrganize(menuOrganize);
 		return result;
 	}
+	
+	//식단 포함 상품 정보 삭제
+	public boolean removeMenuOrganize(String menuCode) {
+		boolean result = goodsMapper.removeMenuOragnize(menuCode);
+		return result;
+	}
 
 	// 식단 리스트
-	public List<Goods> getAdminMenuList() {
-		List<Goods> adminMenuList = goodsMapper.getAdminMenuList();
+	public List<Goods> getAdminMenuList(int isLocalhost) {
+		List<Goods> adminMenuList = goodsMapper.getAdminMenuList(isLocalhost);
 
 		return adminMenuList;
 	}
 
-	// 식단 수정
-	public int modifyAdminMenu() {
-		return 0;
+	// 식단 정보 수정 처리
+	public boolean modifyMenuInformation(String menuCode, String menuName) {
+		boolean result = goodsMapper.modifyMenuInformation(menuCode, menuName);
+		return result;
+	}
+	
+	//식단 정보 삭제 처리
+	public boolean removeMenuInformation(String menuCode) {
+		boolean result = goodsMapper.removeMenuInformation(menuCode);
+		return result;
 	}
 
 	// 식단 삭제
@@ -127,13 +167,13 @@ public class GoodsService {
 		return goodsInfo;
 	}
 
-	// 개별 식단 정보(식단이 포함하는 상품들의 개수 정보)
+	// 개별 식단 정보(식단이 포함하는 상품들의 개수 정보)조회
 	public List<MenuOrganize> getMenuOrganizeList(String menuCode){
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
 		return menuOrganizeList;
 	}
 
-	// 개별 식단 정보(식단이 포함하는 상품들의 정보)
+	// 개별 식단 정보(식단이 포함하는 상품들의 정보)조회
 	public List<Goods> getMenuOrganizeGoodsInfo(String menuCode) {
 		List<Goods> menuOrganizeGoodsInfo = new ArrayList<Goods>();
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
@@ -180,8 +220,8 @@ public class GoodsService {
 	}
 	
 	//상품 별 할인 혜택 리스트(모든 리스트)
-	public List<GoodsDiscount> getGoodsDiscountList(){
-		List<GoodsDiscount> goodsDiscountList = goodsMapper.getGoodsDiscountList();
+	public List<GoodsDiscount> getGoodsDiscountList(Map<String, Object> map){
+		List<GoodsDiscount> goodsDiscountList = goodsMapper.getGoodsDiscountList(map);
 		return goodsDiscountList;
 	}
 
@@ -225,8 +265,9 @@ public class GoodsService {
 	}
 
 	// 상품 수정
-	public int modifySellerGoods() {
-		return 0;
+	public boolean modifyGoods(Goods goods) {
+		boolean result = goodsMapper.modifyGoods(goods);
+		return result;
 	}
 
 	// 상품 삭제

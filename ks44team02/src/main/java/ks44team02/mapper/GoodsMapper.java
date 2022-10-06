@@ -9,6 +9,7 @@ import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.GoodsInfoImage;
+import ks44team02.dto.GoodsMainImage;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.MenuInformation;
 
@@ -42,7 +43,19 @@ public interface GoodsMapper {
 	public List<Goods> getAdminGoodsList();
 	
 	//상품 삭제
-	public int removeAdminGoods();
+	public boolean removeGoods(String goodsCode);
+	
+	//상품 메인 이미지 정보 조회
+	public GoodsMainImage getGoodsMainImageInfo(String mainImageIdx);
+	
+	//상품 소개 이미지 정보 조회
+	public GoodsInfoImage getGoodsInfoImageInfo(String infoImageIdx);
+	
+	//상품 메인 이미지 삭제
+	public boolean removeGoodsMainImage(String mainImageIdx);
+	
+	//상품 정보 이미지 삭제
+	public boolean removeGoodsInfoImage(String infoImageIdx);
 	
 	//식단 등록
 	public int addAdminMenu();
@@ -50,11 +63,20 @@ public interface GoodsMapper {
 	//식단 정보 등록
 	public boolean addMenuInformation(MenuInformation menuInformation);
 	
-	//식단 포함 상품 등록
+	//식단 정보 수정 처리
+	public boolean modifyMenuInformation(String menuCode, String menuName);
+	
+	//식단 정보 삭제 처리
+	public boolean removeMenuInformation(String menuCode);
+	
+	//식단 포함 상품 정보 등록
 	public boolean addMenuOrganize(MenuOrganize menuOrganize);
 	
+	//식단 포함 상품 정보 삭제
+	public boolean removeMenuOragnize(String menuCode);
+	
 	//식단 리스트
-	public List<Goods> getAdminMenuList();
+	public List<Goods> getAdminMenuList(int isLocalhost);
 	
 	//식단 수정
 	public int modifyAdminMenu();
@@ -81,7 +103,7 @@ public interface GoodsMapper {
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
 	//상품별 할인혜택 리스트 제한 X
-	public List<GoodsDiscount> getGoodsDiscountList();
+	public List<GoodsDiscount> getGoodsDiscountList(Map<String, Object> map);
 	
 	//상품별 할인 혜택 수정
 	public boolean modifyGoodsDiscount(GoodsDiscount goodsDiscount);
@@ -102,7 +124,7 @@ public interface GoodsMapper {
 	public Goods getSellerGoodsInfo();
 	
 	//상품 수정
-	public int modifySellerGoods();
+	public boolean modifyGoods(Goods goods);
 	
 	//상품 삭제
 	public int removeSellerGoods();

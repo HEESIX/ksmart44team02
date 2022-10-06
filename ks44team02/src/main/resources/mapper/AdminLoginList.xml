@@ -17,9 +17,11 @@
 		<result column="member_reg_date" property="memberRegDate"/>
 		<result column="recommender_id" property="recommenderId"/>
 	</resultMap>
+	
+	
 
 	<!-- 회원 정보 리스트 -->
-	<select id="getAdminMemberList" parameterType="String" resultMap="memberResultMap">
+	<select id="getMemberListAdmin" parameterType="Map" resultMap="memberResultMap">
 		select
 			m.member_id
 			,m.member_pw
@@ -35,9 +37,43 @@
 			,m.recommender_id
 		FROM
 			tb_member AS m
-		WHERE
-			member_id = #{memberId};
+		<trim prefix="WHERE">
+			<if test="sk != null and sk != '' and sv != null and sv!= ''">
+				${sk} = #{sv};
+			</if>
+		</trim>
 	</select>
 	
-	<!-- 회원 정보 수정 처리 -->
+	<!-- 특정회원 조회 -->
+	<select id="getMemberInfoById" parameterType="String" resultType="Member">
+		SELECT
+			m.member_id
+			,m.member_pw
+			,m.member_name
+			,m.member_level_code
+			,m.member_mileage
+			,m.member_phone
+			,m.member_email
+			,m.member_gender
+			,m.member_birth
+			,m.member_addr
+			,m.member_reg_date
+		FROM 
+			tb_member AS m
+		WHERE
+			m.member_id = #{memberId}
+	</select>
+	
+		<!-- 회원 아이디 중복체크 -->
+	<select id="idCheck" parameterType="String" resultType="boolean">
+		/* 회원 아이디 중복체크 */
+		SELECT
+			COUNT(m.member_id)
+		FROM 
+			tb_member AS m
+		WHERE 
+			m.member_id = #{memberId};
+	</select>
+	
+
 </mapper>

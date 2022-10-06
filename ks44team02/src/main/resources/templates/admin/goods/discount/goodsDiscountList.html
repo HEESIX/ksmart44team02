@@ -33,7 +33,8 @@
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
 					</ol>
 				</div>
 			</div>
@@ -43,6 +44,8 @@
 				<div class="card">
 					<div class="card-block">
 						<div class="table-responsive">
+							<div th:include="admin/goods/search/searchGoodsDiscount :: searchFragment"
+								style="margin-bottom: 10px;"></div>
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
@@ -80,7 +83,8 @@
 											<td th:text="${gdl.goodsDiscountRegDatetime}"></td>
 											<td><a
 												th:href="@{|/admin/goods/discount/updateGoodsDiscount/${gdl.goodsDiscountCode}|}">수정</a></td>
-											<td><a th:href="@{|/admin/goods/discount/removeGoodsDiscount/${gdl.goodsDiscountCode}|}">삭제</a></td>
+											<td><a
+												th:href="@{|/admin/goods/discount/removeGoodsDiscount/${gdl.goodsDiscountCode}|}">삭제</a></td>
 										</th:block>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(goodsDiscountList)}">
@@ -90,7 +94,7 @@
 								</tbody>
 							</table>
 						</div>
-						<a th:href="@{/admin/goods/discount/goods_discount_reg_form}"><button
+						<a th:href="@{/admin/goods/discount/regGoodsDiscount}"><button
 								style="float: right; margin-top: 10px;"
 								class="btn btn-info waves-effect waves-light" type="button">등록</button></a>
 					</div>
@@ -100,6 +104,29 @@
 	</div>
 </th:block>
 
-
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script type="text/javascript">
+		$(function(){
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'discountRate' || searchKey == 'discountPrice'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'expirationDate' || searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
+</th:block>
 
 </html>

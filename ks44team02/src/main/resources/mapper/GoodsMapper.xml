@@ -198,6 +198,22 @@
 			<result column="info_image_islocal" property="infoImageIsLocal"/>
 		</association>
 	</resultMap>
+	<resultMap type="GoodsMainImage" id="goodsMainImageResultMap">
+		<id column="main_image_idx" property="mainImageIdx"/>
+		<result column="main_image_original_name" property="mainImageOriginalName"/>
+		<result column="main_image_new_name" property="mainImageNewName"/>
+		<result column="main_image_path" property="mainImagePath"/>
+		<result column="main_image_size" property="mainImageSize"/>
+		<result column="main_image_islocal" property="mainImageIsLocal"/>
+	</resultMap>
+	<resultMap type="GoodsInfoImage" id="goodsInfoImageResultMap">
+		<id column="info_image_idx" property="infoImageIdx"/>
+		<result column="info_image_original_name" property="infoImageOriginalName"/>
+		<result column="info_image_new_name" property="infoImageNewName"/>
+		<result column="info_image_path" property="infoImagePath"/>
+		<result column="info_image_size" property="infoImageSize"/>
+		<result column="info_image_islocal" property="infoImageIsLocal"/>
+	</resultMap>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
@@ -339,6 +355,57 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image;
 	</select>
+	<!-- 상품 삭제  -->
+	<delete id="removeGoods" parameterType="String">
+		DELETE 
+		FROM 
+			tb_goods 
+		WHERE 
+			g_code=#{goodsCode};
+	</delete>
+	<!-- 상품 메인 이미지 정보 조회  -->
+	<select id="getGoodsMainImageInfo" parameterType="String" resultMap="goodsMainImageResultMap">
+		SELECT 
+			main_image_idx
+			,main_image_original_name
+			,main_image_new_name
+			,main_image_path
+			,main_image_size
+			,main_image_islocal
+		FROM 
+			tb_goods_main_image
+		WHERE 
+			main_image_idx = #{mainImageIdx};
+	</select>
+	<!-- 상품 소개 이미지 정보 조회  -->
+	<select id="getGoodsInfoImageInfo" parameterType="String" resultMap="goodsInfoImageResultMap">
+		SELECT 
+			info_image_idx
+			,info_image_original_name
+			,info_image_new_name
+			,info_image_path
+			,info_image_size
+			,info_image_islocal
+		FROM 
+			tb_goods_info_image
+		WHERE 
+			info_image_idx = #{infoImageIdx};	
+	</select>
+	<!-- 상품 메인 이미지 삭제  -->
+	<delete id="removeGoodsMainImage" parameterType="String">
+		DELETE 
+		FROM 
+			tb_goods_main_image 
+		WHERE 
+			main_image_idx=#{mainImageIdx};
+	</delete>
+	<delete id="removeGoodsInfoImage" parameterType="String">
+		DELETE 
+		FROM 
+			tb_goods_info_image 
+		WHERE 
+			info_image_idx=#{infoImageIdx};
+	</delete>
 	<!-- 상품 등록  -->
 	<insert id="addGoods" parameterType="Goods">
 		INSERT INTO tb_goods(
@@ -383,6 +450,33 @@
 			,${goodsActivation}
 		);
 	</insert>
+	<!-- 상품 수정  -->
+	<update id="modifyGoods" parameterType="Goods">
+		UPDATE tb_goods
+		SET
+			g_cate_code=#{goodsCateCode}
+			,g_name=#{goodsName}
+			,g_price=#{goodsPrice}
+			,goods_discount_code=#{goodsDiscountCode}
+			,g_discount=#{goodsDiscountedPrice}
+			<if test="goodsNetWeight != null and goodsNetWeight != ''">
+				,g_netweight=#{goodsNetWeight}
+			</if>
+			<if test="goodsNetWeightUnit != null and goodsNetWeightUnit != ''">
+				,g_netweightunit=#{goodsNetWeightUnit}
+			</if>
+			<if test="goodsMainImageCode != null and goodsMainImageCode != ''">
+				,g_main_image=#{goodsMainImageCode}
+			</if>
+			<if test="goodsInfoImageCode != null and goodsInfoImageCode != ''">
+				,g_info_image=#{goodsInfoImageCode}
+			</if>
+			,g_stock=${goodsStock}
+			,g_delivery_charge=${goodsDeliveryCharge}
+			,g_activation=${goodsActivation}
+		WHERE 
+			g_code = #{goodsCode};
+	</update>
 	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
 	<select id="getGoodsList" resultType="Map">
 		SELECT 
@@ -502,7 +596,8 @@
 		order by 
 			ga.ga_reg_apply_datetime;
 	</select>
-	<select id="getAdminMenuList" resultMap="goodsResultMap">
+	<!-- 식단 조회  -->
+	<select id="getAdminMenuList" parameterType="int" resultMap="goodsResultMap">
 		SELECT 
 			g.g_code
 			,mi.menu_code					as mi_menu_code
@@ -538,6 +633,8 @@
 			tb_goods_discount_management AS gdm
 			ON 
 			gdm.goods_discount_code = g.goods_discount_code
+		WHERE
+			gmi.main_image_islocal = ${isLocalhost};
 	</select>
 	<!-- 메뉴 코드를 받아서 어떤 상품이 몇개가 포함되어있는지 확인  -->
 	<select id="getMenuOrganizeList" parameterType="String" resultMap="menuOrganizeResultMap">
@@ -566,8 +663,10 @@
 			,g.g_netweightunit
 			,g.g_produce
 			,g.g_production_expiration_info
+			,gmi.main_image_idx				AS g_main_image
 			,gmi.main_image_original_name 	AS gmi_main_image_original_name
 			,gmi.main_image_path 			AS gmi_main_image_path
+			,gii.info_image_idx				AS g_info_image
 			,gii.info_image_original_name 	AS gii_info_image_original_name
 			,gii.info_image_path 			AS gii_info_image_path
 			,g.g_stock
@@ -629,7 +728,31 @@
 			,${menuGoodsAmount}
 		);
 	</insert>
-	<select id="getGoodsDiscountList" resultMap="goodsDiscountResultMap">
+	<!-- 식단 이름 수정  -->
+	<update id="modifyMenuInformation" parameterType="String">
+		UPDATE tb_menu_information
+		SET
+			menu_name = #{menuName}
+		WHERE 
+			menu_code = #{menuCode};
+	</update>
+	<!-- 식단 정보 삭제  -->
+	<delete id="removeMenuInformation" parameterType="String">
+		DELETE 
+		FROM 
+			tb_menu_information 
+		WHERE 
+			menu_code = #{menuCode};
+	</delete>
+	<!-- 식단 포함 상품 정보 삭제  -->
+	<delete id="removeMenuOragnize" parameterType="String">
+		DELETE 
+		FROM 
+			tb_menu_organize AS mo 
+		WHERE 
+			mo.menu_code = #{menuCode};
+	</delete>
+	<select id="getGoodsDiscountList" parameterType="Map" resultMap="goodsDiscountResultMap">
 		SELECT
 			gdm.goods_discount_code
 			,gdm.discount_price
@@ -646,6 +769,29 @@
 			tb_enterprise AS e
 			ON 
 			e.enter_code = gdm.enter_code
+		<trim prefix="WHERE " prefixOverrides="AND |OR ">
+			<if test="sk != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+			<if test="sk != null and minNum != '' and maxNum != ''">
+				${sk} BETWEEN #{minNum} AND #{maxNum}
+			</if>
+			<if test="sk != null and minNum == '' and maxNum != ''">
+				${sk} <![CDATA[<=]]> #{maxNum}
+			</if>
+			<if test="sk != null and minNum != '' and maxNum == ''">
+				${sk} >= #{minNum}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate != ''">
+				${sk} BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="sk != null and minDate == '' and maxDate != ''">
+				${sk} <![CDATA[<=]]> #{maxDate}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate == ''">
+				${sk} >= #{minDate}
+			</if>
+		</trim>
 	</select>
 	<insert id="addGoodsDiscount" parameterType="GoodsDiscount">
 		INSERT INTO tb_goods_discount_management(
