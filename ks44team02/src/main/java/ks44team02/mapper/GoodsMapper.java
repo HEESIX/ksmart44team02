@@ -103,7 +103,7 @@ public interface GoodsMapper {
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
 	//상품별 할인혜택 리스트 제한 X
-	public List<GoodsDiscount> getGoodsDiscountList();
+	public List<GoodsDiscount> getGoodsDiscountList(Map<String, Object> map);
 	
 	//상품별 할인 혜택 수정
 	public boolean modifyGoodsDiscount(GoodsDiscount goodsDiscount);

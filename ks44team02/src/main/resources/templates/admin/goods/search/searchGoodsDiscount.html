@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- 검색바 -->
+	<div th:fragment="searchFragment">
+		<form th:action="@{/admin/goods/discount/goodsDiscountList}" method="get" id="seachBox">
+			<div class="col-lg-1">
+				<select name="searchKey" id="searchKey">
+					<option value="discountName">할인명</option>
+					<option value="discountRate">할인율</option>
+					<option value="discountPrice">할인금액</option>
+					<option value="expirationDate">유효기간</option>
+					<option value="memberId">등록아이디</option>
+					<option value="regDate">등록일자</option>
+				</select>
+			</div>
+			<div class="col-sm-2 searchValueBox searchText">
+				<input type="text" name="searchValue" placeholder="검색어를 입력해주세요" id="searchValue"/>
+			</div>
+			<div class="col-sm-2 searchValueBox minNum" style="display: none;">
+				<input type="number" placeholder="최솟값" name="minNum">
+			</div>
+			<div class="col-sm-2 searchValueBox maxNum" style="display: none;">
+				<input type="number" placeholder="최댓값" name="maxNum">
+			</div>
+			<div class="col-sm-2 searchValueBox minDate" style="display: none;">
+				<input type="date" placeholder="최소일자" name="minDate" style="width: 200px;">
+			</div>
+			<div class="col-sm-2 searchValueBox maxDate" style="display: none;">
+				<input type="date" placeholder="최대일자" name="maxDate" style="width: 200px;">
+			</div>
+			<div class="col-lg-1">
+				<button type="submit">검색</button>
+			</div>
+		</form>
+	</div>
+</html>

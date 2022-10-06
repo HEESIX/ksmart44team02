@@ -220,8 +220,8 @@ public class GoodsService {
 	}
 	
 	//상품 별 할인 혜택 리스트(모든 리스트)
-	public List<GoodsDiscount> getGoodsDiscountList(){
-		List<GoodsDiscount> goodsDiscountList = goodsMapper.getGoodsDiscountList();
+	public List<GoodsDiscount> getGoodsDiscountList(Map<String, Object> map){
+		List<GoodsDiscount> goodsDiscountList = goodsMapper.getGoodsDiscountList(map);
 		return goodsDiscountList;
 	}
 

@@ -3,6 +3,7 @@ package ks44team02.admin.controller;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -668,8 +669,39 @@ public class AdminGoodsController {
 	// 상품별 할인 혜택 리스트
 	@GetMapping("/discount/goodsDiscountList")
 	public String getGoodsDiscountList(Model model
-									  ,@RequestParam(value = "msg", required = false) String msg) {
-		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountList();
+									  ,@RequestParam(value = "msg", required = false) String msg
+									  ,@RequestParam(value = "searchKey", defaultValue = "discountName") String searchKey
+									  ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+									  ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+									  ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+									  ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+									  ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate
+									  ) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if("discountName".equals(searchKey)) {
+			searchKey = "discount_name";
+		}else if("discountRate".equals(searchKey)) {
+			searchKey = "discount_rate";
+		}else if("discountPrice".equals(searchKey)) {
+			searchKey = "discount_price";
+		}else if("expirationDate".equals(searchKey)) {
+			searchKey = "discount_expiration_date";
+		}else if("memberId".equals(searchKey)) {
+			searchKey = "gdm.member_id";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "g_pro_reg_datetime";
+		}	
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		
+		log.info(">>>>>>>>>{}", map);
+		
+		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountList(map);
 		
 		model.addAttribute("title", "상품별 할인 혜택 목록");
 		model.addAttribute("goodsDiscountList", goodsDiscountList);
