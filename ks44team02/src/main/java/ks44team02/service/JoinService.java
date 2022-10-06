@@ -14,17 +14,17 @@ public class JoinService {
 	}
 	
 	//관리자 회원가입
-	public String adminJoinForm() {
+	public String adminJoin() {
 		return null;
 	}
 	
 	//판매자 회원가입
-	public String sellerJoinForm() {
+	public String sellerJoin() {
 			return null;
 		}
 		
 	//판매자 회원가입
-	public String buyerJoinForm() {
+	public String buyerJoin() {
 		return null;
 	}
 	

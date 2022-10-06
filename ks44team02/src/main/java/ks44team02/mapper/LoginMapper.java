@@ -2,6 +2,7 @@ package ks44team02.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,7 +34,7 @@ public interface LoginMapper {
 	public String adminLogout();	
 	
 	//판매자 회원 정보 리스트 조회 
-	public List<Member> getMemberListAdmin();
+	public List<Member> getMemberListAdmin(Map<String, Object> map);
 	
 	
 }

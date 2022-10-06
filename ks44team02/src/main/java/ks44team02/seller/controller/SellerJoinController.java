@@ -20,9 +20,9 @@ public class SellerJoinController {
 		this.loginService = loginService;
 	}
 	//판매자 회원가입
-	@GetMapping("/seller_join")
+	@GetMapping("/sellerJoin")
 	public String sellerJoin() {
-		return "seller/login/seller_join";
+		return "seller/login/sellerJoin";
 	}
 
 }
