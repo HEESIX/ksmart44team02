@@ -111,6 +111,11 @@
 			order_discount_code = #{orderDiscountCode};
 	</delete>
 	
+	<!-- 전체 회원의 할인 혜택 보유 현황 조회 -->
+	<select id="getAllOrderDiscountList">
+	
+	</select>
+	
 	<!-- 구매자별 보유 혜택 목록 조회 -->
 	<select id="getBuyerBenefitList" parameterType="String" resultMap="buyerBenefitResultMap">
 		SELECT 

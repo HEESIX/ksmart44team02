@@ -52,6 +52,11 @@ public class DiscountService {
 		boolean resultRemove = discountMapper.removeOrderDiscount(orderDiscountCode);
 		return resultRemove;
 	}
+	//전체 회원의 할인 혜택 보유 현황 조회
+		public List<OrderDiscount> getAllOrderDiscountList(Map<String,Object> paramMap){
+			List<OrderDiscount> allOrderDiscount = discountMapper.getAllOrderDiscountList(paramMap);
+			return allOrderDiscount;
+	}
 	//구매자별 보유 혜택 목록 조회
 	public List<BuyerBenefit> getBuyerBenefitList(String sessionId){
 		//세션의 아이디 조회
