@@ -31,7 +31,8 @@
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
 					</ol>
 				</div>
 			</div>
@@ -83,9 +84,13 @@
 										<td th:if="${aml.goodsActivation} == 1">판매중</td>
 										<td th:unless="${aml.goodsActivation} == 1">판매중지</td>
 										<td><a
-											th:href="@{|/admin/goods/menu/updateMenu/${aml.menuInformation.menuCode}|}">수정</a></td>
-										<td><a
-											th:href="@{|/amdin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</a></td>
+											th:href="@{|/admin/goods/menu/updateMenu/${aml.menuInformation.menuCode}|}"><button
+													type="button"
+													class="btn btn-inverse-warning waves-effect waves-light"
+													data-toggle="tooltip" data-placement="top" title="">수정</button></a></td>
+										<td><button type="button"
+												class="btn btn-inverse-danger waves-effect waves-light removeBtn"
+												data-toggle="tooltip" data-placement="top" th:data-location="@{|/admin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -98,6 +103,38 @@
 			</div>
 		</div>
 	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script type="text/javascript">
+		$(function(){
+			$('.removeBtn').click(function(){
+				var memberPw = prompt('비밀번호를 입력해주세요.');
+				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
+				
+				var removeUrl = $(this).attr('data-location');
+				console.log(removeUrl);
+				
+				var request = $.ajax({
+					  url: removeUrl,
+					  method: "POST",
+					  data: { 'memberPw' : memberPw },
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						alert(data.responseText);
+						
+					});
+					 
+					request.fail(function(data) {
+					  	alert(data.responseText);
+					});
+					$(this).parent().parent().remove();
+			});
+		});
+	</script>
 </th:block>
 
 </html>

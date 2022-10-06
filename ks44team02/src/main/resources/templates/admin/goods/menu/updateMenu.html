@@ -376,6 +376,7 @@
 								<button type="button" id="submitBtn"
 									class="btn btn-info waves-effect waves-light"
 									style="float: right; margin-right: 10px;">등록</button>
+								<input type="hidden" id="goodsCode" name="goodsCode" th:value="*{goodsCode}">
 							</form>
 						</div>
 					</div>
@@ -444,6 +445,9 @@
 				var isValid = validationCheck(inputObj);
 
 				console.log(isValid, '아이디 이외의 값 유효성 검사');
+				
+				if(!isValid) return false;
+					
 				var goodsItemsObj = $('.goodsItems');
 				var goodsItemsArray = [];
 
@@ -456,12 +460,16 @@
 					goodsItemsArray.push(goodsItems);
 				});
 				console.log(goodsItemsArray, "<<<<<");
+				
 				var form = $('#addGoodsForm');
 				var formData = new FormData(form[0]);
 				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
 				formData.append('goodsMainImage', $('#goodsMainImage'));
 				formData.append('goodsInfoImage', $('#goodsInfoImage'));
 				console.log(formData, "<<<<<<<<<<<<<<");
+				var mappingUrl = '/admin/goods/menu/updateMenu/' + [[${menuInfo.menuInformation.menuCode}]];
+				console.log(mappingUrl);
+				
 				$.ajax({
 					type : 'POST',
 					url : '/admin/goods/menu/updateMenu/' + [[${menuInfo.menuInformation.menuCode}]],
@@ -477,6 +485,7 @@
 					}
 				}).fail(function(error) {
 					alert('통신 실패');
+					alert(error.toString());
 				});
 			});
 
