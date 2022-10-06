@@ -24,14 +24,21 @@
 		<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
+					<div class="row col-sm-3" style="padding-right: 5;">
 					<h4>할인 혜택 수정</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
 						<li class="breadcrumb-item"><a th:href="@{/admin/orderDiscount/orderDiscountList}">할인 혜택 목록</a>
 						</li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/orderDiscount/addOrderDiscount}">할인 혜택 등록</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/orderDiscount/addOrderDiscount}">할인 혜택 등록</a>
+						</li>
 					</ol>
+					</div>
+					<div class="col-sm-0">
+						<button type="button" class="btn btn-default waves-effect" 
+						data-toggle="tooltip" data-placement="right" title data-original-title="빈칸 모두 작성한 뒤 수정 완료 버튼 클릭하면 전체 목록 조회되는 화면으로 이동하고 수정값이 반영됨">사용자 메뉴얼</button> 
+					</div>
 				</div>
 			</div>
 		</div>
