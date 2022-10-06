@@ -52,6 +52,11 @@ public class CommonService {
 	public boolean buyerReviewDelete(String revCode, String reviewContents) {
 		boolean result = commonMapper.buyerReviewDelete(reviewContents);
 		return result;
+	}
+
+	public boolean deleteBuyerInquery(String qnaCode, String qnaContents) {
+		boolean result = commonMapper.deleteBuyerInquery(qnaCode);
+		return result;
 	};
 	
 	

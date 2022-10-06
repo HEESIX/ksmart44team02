@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team02.admin.controller.AdminqnaController;
-import ks44team02.service.InqueryService;
+import ks44team02.service.QnAservice;
 
 
 	@Controller
@@ -19,10 +19,10 @@ import ks44team02.service.InqueryService;
 		
 		private static final Logger log = LoggerFactory.getLogger(SellerInqueryController.class);
 	
-		private final InqueryService inqueryService;
+		private final QnAservice qnaService;
 		
-		public SellerInqueryController(InqueryService inqueryService) {
-			this.inqueryService = inqueryService;
+		public SellerInqueryController(QnAservice qnaService) {
+			this.qnaService = qnaService;
 		}
 		
 		@PostConstruct

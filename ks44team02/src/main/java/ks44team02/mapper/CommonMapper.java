@@ -17,4 +17,6 @@ public interface CommonMapper {
 	public boolean ReviewDelete(String revCode);
 
 	public boolean buyerReviewDelete(String reviewContents);
+
+	public boolean deleteBuyerInquery(String qnaCode);
 }
