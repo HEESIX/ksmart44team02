@@ -122,7 +122,7 @@
 										<!-- end of modal -->
 										<select id="goodsCateCode" name="goodsCateCode"
 											class="js-example-basic-single inputObj" style="width: 40%;">
-											<option value="noDiscount">적용 할인 혜택(비적용)</option>
+											<option value="">카테고리 선택</option>
 											<th:block
 												th:if="${not #lists.isEmpty(goodsCategoryList)}"
 												th:each="gcl : ${goodsCategoryList}">
@@ -436,6 +436,9 @@
 				var isValid = validationCheck(inputObj);
 
 				console.log(isValid, '아이디 이외의 값 유효성 검사');
+				
+				if(!isValid) return false;
+				
 				var goodsItemsObj = $('.goodsItems');
 				var goodsItemsArray = [];
 
