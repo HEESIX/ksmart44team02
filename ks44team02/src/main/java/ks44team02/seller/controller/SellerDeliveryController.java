@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.OrderDetail;
 import ks44team02.service.DeliveryService;
 
 @Controller
@@ -34,17 +35,21 @@ public class SellerDeliveryController {
 			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
 			//String memberId = session.getAttribute("SID");
 			String memberId = "id010";
-			List<Map<String, Object>> sellerOrderList = deliveryservice.sellerOrderList(memberId);
+			List<OrderDetail> sellerOrderList = deliveryservice.sellerOrderList(memberId);
 				model.addAttribute("title", "주문 관리");
 				model.addAttribute("sellerOrderList", sellerOrderList);
-		
+				log.info(">>>>>>>>>>>>>>>>>>>>{}", sellerOrderList);
 		
 		return "seller/order/sellerOrderDeliveryAllList";
 	}
+	
+	
+	
+	
 
 	
 	//구매자 주문배송처리 폼
-	@GetMapping("/sellerOrderStatusDeal")
+	@GetMapping("/sellerOrderStatusDeal/")
 	public String OrderDeal(Model model) {
 		return null;
 	}
