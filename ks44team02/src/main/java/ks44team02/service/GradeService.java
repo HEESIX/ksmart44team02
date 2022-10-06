@@ -13,14 +13,49 @@ private final GradeMapper gradeMapper;
 public GradeService(GradeMapper gradeMapper) {
 	this.gradeMapper = gradeMapper;
  }
-// 판매자 등급 정의 리스트 조회  
-public List<Grade> getBuyerGradeList() {
-	List<Grade> buyerGradeList = gradeMapper.getBuyerGradeList();
-	return buyerGradeList;
-}
-//구매자 등급 정의 리스트 조회  
-public List<Grade> getSellerGradeList() {
-	List<Grade> sellerGradeList = gradeMapper.getSellerGradeList();
-	return sellerGradeList;
-}
+	// 판매자 등급 정의 리스트 조회  
+	public List<Grade> getBuyerGradeList() {
+		List<Grade> buyerGradeList = gradeMapper.getBuyerGradeList();
+		return buyerGradeList;	
+	}
+	
+	// 판매자 등급 정의 등록
+	public List<Grade> addSellerGrade() {
+		List<Grade> sellerGradeList = gradeMapper.getSellerGradeList();
+		return sellerGradeList;
+			}
+			
+	// 판매자 등급 정의 수정
+	public String modifySellerGrade() {
+		return null;
+			}				
+			
+	// 판매자 등급 정의 삭제
+	public String removeSellerGrade() {
+		return null;
+	}
+	
+	//구매자 등급 정의 리스트 조회  
+	public List<Grade> getSellerGradeList() {
+		List<Grade> sellerGradeList = gradeMapper.getSellerGradeList();
+		return sellerGradeList;
+	}
+	
+	//구매자 등급 정의 등록
+	public String addBuyerGrade() {
+		return null;
+		}
+
+	// 구매자 등급 정의 수정
+	public String modifyBuyerGrade() {
+		return null;
+				}
+		
+	// 구매자 등급 정의 삭제
+	public String removeBuyerGrade() {
+		return null;
+				}
+			
+			
+
 }

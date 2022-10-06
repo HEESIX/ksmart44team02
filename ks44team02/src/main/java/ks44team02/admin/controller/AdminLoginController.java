@@ -1,5 +1,9 @@
 package ks44team02.admin.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -25,18 +29,18 @@ public class AdminLoginController {
 	public AdminLoginController (LoginService loginService) {
 			this.loginService = loginService;
 	}
-	// 판매자 로그인
+	// 관리자 로그인
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
 		return "admin/login/adminLogin";
 	}
 	
-	//판매자 로그아웃
+	//관리자 로그아웃
 	public String adminlogout() {
 		return "redirect:admin/login/adminLoginList";
 	}
 
-	//판매자 회원 정보
+	//관리자 회원 정보
 	@GetMapping("/adminLoginList")
 	public String adminLoginList(Model model
 								,HttpSession session) {
@@ -47,5 +51,26 @@ public class AdminLoginController {
 		//model.addAttribute("memberInfo", memberInfo);
 		return "admin/login/adminLoginList";
 	}
+	
+	
+	//관리자가 전체 회원 정보 
+	@GetMapping("/memberListAdmin")
+	public String getMemberListAdmin (Model model
+									 ,@RequestParam(value = "sk", required = false) String sk
+									 ,@RequestParam(value = "sv", required = false) String sv) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(sk, sv);
+		List<Member> memberListAdmin = loginService.getMemberListAdmin(map);
+		log.info(">>>>>>>>>>>> {}", memberListAdmin);
+		model.addAttribute("title","회원정보리스트");
+		model.addAttribute("memberListAdmin", memberListAdmin);
+		return "admin/login/memberListAdmin";
+		
+		
+		
+	}
+	
+	
 	
 }

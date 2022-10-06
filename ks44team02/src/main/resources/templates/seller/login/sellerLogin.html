@@ -1,15 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
-
-<!--  <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/sellerDefault}">
--->	
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
@@ -248,157 +240,23 @@ footer .copyright-wrap span{
 	font-size: 13px;
 	line-height: 15px;
 }
-.main-container{
-	width:100%;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	margin-top: 21px;
-}
-.main-container .main-wrap{
-	width:768px;
 
-}
-.main-container .main-wrap .sel-lang-wrap .lang-select
-{
-	width: 96px;
-	height: 30px;
-	color: var(--font-color);
-	border: solid 1px var(--border-gray-color);
-}
-.main-container .main-wrap .logo-wrap{
-	padding-top:55px;
-}
-.main-container .main-wrap .logo-wrap img
-{
-	width: 231px;
-	height: 44px;
-}
-
-.main-container .main-wrap header .sel-lang-wrap{
-	display:flex;
-	justify-content:flex-end;
-}
-
-.main-container .main-wrap header .logo-wrap{
-	display:flex;	
-	flex-direction: column;
-	align-items: center;
-}
-.login-input-section-wrap{
-	padding-top: 60px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.login-input-wrap{
-	width: 465px;
-	height :48px;
-	border: solid 1px var(	--border-gray-color );
-	background: white;
-}
-.password-wrap{
-	margin-top: 13px;
-}
-.login-input-wrap input{
-	border: none;
-	width:430px;
-	margin-top: 10px;
-	font-size: 14px;
-	margin-left: 10px;
-	height:30px;
-}
-.login-button-wrap {
-	padding-top: 13px;
-}
-.login-button-wrap button{
-	width: 465px;
-	height :48px;
-	font-size: 18px;
-	background: var(--naver-green-color);
-	color: white;
-	border: solid 1px var(--naver-green-border-color);
-}
-.login-stay-sign-in{
-	width: 465px;
-	height: 52px;
-	
-	display: flex;
-	font-size: 15px;
-	color: #4e4e4e;
-	align-items: center;
-	justify-content: flex-start;
-	border-bottom: solid 1px var(--border-gray-color);
-}
-.login-stay-sign-in i{
-	font-size: 25px;
-	color: #9ba1a3;
-}
-.login-stay-sign-in span{
-	padding-left: 5px;
-	line-height: 25px;
-}
-
-.Easy-sgin-in-wrap{
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 40px;
-
-}
-.Easy-sgin-in-wrap h2{
-	font-size: 20px;
-}
-.Easy-sgin-in-wrap .sign-button-list
-{
-	padding-top:25px;
-	list-style: none;
-	width: 465px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.Easy-sgin-in-wrap .sign-button-list li{
-	padding-bottom: 10px;
-}
-.Easy-sgin-in-wrap .sign-button-list li button{
-	width: 465px;
-	height: 56px;
-	border: solid 1px var(--border-gray-color);
-	text-align: left;
-	background: white;
-}
-.Easy-sgin-in-wrap .sign-button-list li button i{
-	padding-left: 15px;
-	font-size: 20px;
-}
-.fa-qrcode
-{
-	color:var(--naver-green-color);
-}
-.fa-line{
-	color:var(--naver-green-color);
-}
-.fa-facebook-square
-{
-	color:#4064ac;
-}
-.Easy-sgin-in-wrap .sign-button-list li button span{
-	padding-left: 20px;
-	font-size: 18px;
-}
-.Easy-sgin-in-wrap .forget-msg{
-	color:var(--font-color);
-	font-size: 14px;
-	padding-top: 10px;
-
-}
-.hc { width:800px; left:0; right:0; margin-left:auto; margin-right:auto; }
-.hcc {width:200px; left:0; right:0; margin-left:auto; margin-right:auto; }
+.input_fir{
+            width: 400px;
+            height: 40px;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            border: 1px solid #dfe1e5;
+        }
+.input_sec{
+            width: 40px;
+            height: 40px;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            border: 1px solid #dfe1e5;
+        }
 .logcenter{text-align: center;}
-.loginbtn{width:200px; left:0; right:0; margin-left:auto; margin-right:auto; background: #7FAD39; border: solid 1px var(--border-gray-color)}
+.loginbtn{width:200px; left:0; right:0; margin-left:auto; margin-right:auto; background: #7FAD39; border: solid 1px var(--border-gray-color)}        
 </style>
 </th:block>
 
@@ -409,6 +267,8 @@ footer .copyright-wrap span{
 			<form action="#" method="post">
 				<div class="logcenter">
 				<div class="hcc">
+				<div class="logcenter">
+				
 					<h4>판매자 로그인</h4>
 					<br><br><br>
 				</div>
@@ -442,7 +302,7 @@ footer .copyright-wrap span{
   			</div>
   			<br>
   			<div class="logcenter">
-  				<a th:href="@{/seller/login/seller_join}">
+  				<a th:href="@{/seller/login/sellerJoin}">
   					<button type="button" class="loginbtn">회원가입</button>
   				</a>
   			</div>
@@ -456,22 +316,16 @@ footer .copyright-wrap span{
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			
-			$('.imageUpload').change(function(){
+
+			$('.imageUpload').change(function() {
 				var imageName = $(this).val().split('\\');
 				imageName = imageName[imageName.length - 1];
 				console.log(imageName);
 				$(this).parent().find('.upload-name').val(imageName);
 			});
-			
+
 			$('.nice-select li').click(function() {
 				var selectValue = $(this).attr('data-value');
-
-				if (selectValue == 'giText') {
-					$('#goodsIngredient').css('display', 'block');
-				} else {
-					$('#goodsIngredient').css('display', 'none');
-				}
 
 				if (selectValue == 'manuText') {
 					$('#manuText').css('display', 'block');

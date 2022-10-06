@@ -1,9 +1,10 @@
 package ks44team02.seller.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import javax.servlet.http.HttpSession;
+import org.springframework.ui.Model;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,17 @@ public class SellerLoginController {
 	}
 	
 	*/
-
+	
+	//관리자 회원 정보
+		@GetMapping("/sellerLoginList")
+		public String adminLoginList(Model model
+									,HttpSession session) {
+			//세션 있을 경우 아래걸로 대체
+			//String memberId = session.getAttribute("SID");
+			String memberId = "id005";
+			//Member memberInfo = loginService.getMemberListAdmin(memberId);
+			//model.addAttribute("memberInfo", memberInfo);
+			return "seller/login/sellerLoginList";
+		}
 	
 }

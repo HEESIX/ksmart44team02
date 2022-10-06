@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<!-- 회원 정보 리스트 -->
-	<select id="getAdminMemberList" parameterType="String" resultMap="memberResultMap">
+	<select id="getMemberListAdmin" parameterType="Map" resultMap="memberResultMap">
 		select
 			m.member_id
 			,m.member_pw
@@ -35,8 +35,11 @@
 			,m.recommender_id
 		FROM
 			tb_member AS m
-		WHERE
-			member_id = #{memberId};
+		<trim prefix="WHERE">
+			<if test="sk != null and sk != '' and sv != null and sv!= ''">
+				${sk} = #{sv};
+			</if>
+		</trim>
 	</select>
 	
 	<!-- 회원 정보 수정 처리 -->
