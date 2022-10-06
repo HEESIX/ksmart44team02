@@ -51,23 +51,28 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:if="${not #lists.isEmpty(seller_company_check)}"
-										th:each="gcl : ${seller_company_check}">
-										<td><a
-											th:href="@{|/admin/goods/category/goodscate_update/${gcl.goodsCategoryCode}|}">수정</a></td>
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(goodsCategoryList)}">
-										<td colspan="5" style="text-align: center;">입점을 신청한 업체가 없습니다</td>
+									<tr th:if="${not #lists.isEmpty(sellerCompanyCheck)}"
+										th:each="scc : ${sellerCompanyCheck}">
+										<th><input type="checkbox" value="che"></th>
+										<td th:text="${scc.sellerCode}"></td>
+										<td th:text="${scc.sellerId}"></td>
+										<td th:text="${scc.sellerBrand}"></td>
+										<td th:text="${scc.sellerEnter}"></td>
+										<td th:text="${scc.sellerNum}"></td>
+										<td th:text="${scc.sellerManager}"></td>
+										<td th:text="${scc.sellerPhone}"></td>
+										<td th:text="${scc.sellerAdd}"></td>
+										<td th:text="${scc.sellerContent}"></td>
+										<td th:text="${scc.sellerHwp}"></td>
+										<td th:text="${scc.sellerUrl}"></td>
+										<td th:text="${scc.sellerFile}"></td>
+										<td th:text="${scc.sellerDate}"></td>
+										<td th:text="${scc.sellerApp}"></td>
+										<td><a th:href="@{|/admin/companypage/sellerCompanyModify/${scc.sellerId}|}">수정</a></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<!--
-						<a th:href="@{/admin/companypage/seller_company_list}"><button
-								class="btn btn-info waves-effect waves-light"
-								style="float: right;" type="button">등록</button></a>
-						-->
-
 					</div>
 				</div>
 			</div>
