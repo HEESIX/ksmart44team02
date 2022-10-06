@@ -42,7 +42,12 @@
 	.heading2{
 	padding-left: 10px;
 	position: relative;
-	margin: 100px 0 10px;
+	margin: 80px 0 10px;
+	}
+	.heading3{
+	padding-left: 10px;
+	position: relative;
+	margin: 30px 0 10px;
 	}
 </style>
 </th:block>
@@ -62,23 +67,25 @@
 				    <tr>
 						<th></th>
 						<th>ITEM</th>
-						<th>DISCOUNT</th>
-						<th>PRICE</th>
 						<th>수량</th>
-						<th>주문일자</th>
-						<th>주문상태</th>
-						<th>배송상태</th>
+						<th>배송비</th>
+						<th>상품가격</th>
+						<th></th>
+						<th></th>
+						<th></th>
 						<th></th>
 					</tr>
 				 </thead>
 					<tbody>
-						<tr th:each="odl : ${getOrderDetailList}" style="line-height: 50px;">
-							<td><a href="#"><img th:alt="${odl.mainImageOriName}" th:src="@{'/'+ ${odl.mainImagePath}}" style="height: 50px; border-radius: 10px;"></a></td>
+						<tr th:each="odl : ${getOrderDetailList}"  style="line-height: 70px;">
+							<td><a href="#"><img th:src="@{'/' + ${odl.get('mainImagePath')}}"
+											th:alt="${odl.get('mainImageOriName')}" style="width: 100px; border-radius: 10px;"/></a></td>
 							<td th:text="${odl.get('goodsName')}"></td>
-							<td th:text="${odl.get('discountPrice')}"></td>
-							<td th:text="${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
-							<td th:text="${odl.get('orderDatetime')}"></td>
+							<td th:if="${odl.get('deliCharge')} !=0" th:text="'₩' + ${odl.get('deliCharge')}"></td>
+							<td th:if="${odl.get('regularPriceSubtotal')} !=0" th:text="'₩' + ${odl.get('regularPriceSubtotal')}"></td>
+							<td th:text="${odl.get('entName')}"></td>
+							<td></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
 						</tr>
@@ -114,16 +121,13 @@
 							<td th:text="${getDeliveryinfo.get('deliAddress')}"></td>							
 							<td th:text="${getDeliveryinfo.get('deliMemo')}"></td>							
 						</tr>
-					
-						
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 	
-	
-	<div class="heading2">
+	<div class="heading3">
 		<h4>결제정보</h4>
 	</div>
 	<div class="container-fluid">

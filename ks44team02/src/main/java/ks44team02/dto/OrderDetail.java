@@ -11,6 +11,13 @@ public class OrderDetail {
 	private String orderGroupCode;
 	private String enterCode;
 	private int gDeliveryCharge;
+	
+	private Enterprise enterprise;
+	private Goods goods;
+	private GoodsMainImage goodsMainImageInfo;
+	private Delivery delivery;
+	private OrderStatus orderStatus;
+	private OrderStatusStandard orderStatusStandard;
 	public String getOrderDetailCode() {
 		return orderDetailCode;
 	}
@@ -71,6 +78,42 @@ public class OrderDetail {
 	public void setgDeliveryCharge(int gDeliveryCharge) {
 		this.gDeliveryCharge = gDeliveryCharge;
 	}
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+	public GoodsMainImage getGoodsMainImageInfo() {
+		return goodsMainImageInfo;
+	}
+	public void setGoodsMainImageInfo(GoodsMainImage goodsMainImageInfo) {
+		this.goodsMainImageInfo = goodsMainImageInfo;
+	}
+	public Delivery getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public OrderStatusStandard getOrderStatusStandard() {
+		return orderStatusStandard;
+	}
+	public void setOrderStatusStandard(OrderStatusStandard orderStatusStandard) {
+		this.orderStatusStandard = orderStatusStandard;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -94,8 +137,22 @@ public class OrderDetail {
 		builder.append(enterCode);
 		builder.append(", gDeliveryCharge=");
 		builder.append(gDeliveryCharge);
+		builder.append(", enterprise=");
+		builder.append(enterprise);
+		builder.append(", goods=");
+		builder.append(goods);
+		builder.append(", goodsMainImageInfo=");
+		builder.append(goodsMainImageInfo);
+		builder.append(", delivery=");
+		builder.append(delivery);
+		builder.append(", orderStatus=");
+		builder.append(orderStatus);
+		builder.append(", orderStatusStandard=");
+		builder.append(orderStatusStandard);
 		builder.append("]");
 		return builder.toString();
 	}
 	
+	
 }
+

@@ -39,7 +39,7 @@
 				<div class="main-header">
 					<h4>주문리스트</h4>
 					<span style="font-size: 17px; font-style: italic;">
-						주문번호 클릭시 상세주문서내역으로 이동합니다.
+						> 주문한 상품 클릭시 상세주문서내역으로 이동합니다.
 					</span>
 				</div>
 			</div>
@@ -52,8 +52,8 @@
 						<tr>
 							<th>주문번호</th>
 							<th>ITEM</th>
-							<th>가격소계</th>
-							<th>주문서할인</th>
+							<th>총 배송비</th>
+							<th>총 할인금액</th>
 							<th>총 결제금액</th>
 							<th>전체주문일자</th>
 						</tr>
@@ -61,13 +61,13 @@
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
 							th:each="orl, status : ${getOrderList}" style="line-height: 50px;">
+							<td th:text="${status.count}"></td>
 							<td><a
-								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
+								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('goodsName')}">
 							</a></td>
-							<td th:text="${orl.get('goodsName')}"></td>
-							<td th:text="${orl.get('subPrice')}"></td>
-							<td th:text="${orl.get('discountAdd')}"></td>
-							<td th:text="${orl.get('finalPrice')}"></td>
+							<td th:if="${orl.get('deliTotal')} !=0" th:text="'₩' + ${orl.get('deliTotal')}"></td>
+							<td th:if="${orl.get('discountAdd')} !=0" th:text="'₩' + ${orl.get('discountAdd')}"></td>
+							<td th:if="${orl.get('finalPrice')} !=0" th:text="'₩' + ${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
 							
 						</tr>
