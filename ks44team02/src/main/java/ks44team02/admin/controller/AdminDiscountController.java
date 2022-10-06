@@ -172,7 +172,7 @@ public class AdminDiscountController {
 		return "redirect:/admin/orderDiscount/orderDiscountList";
 	}
 	//전체 회원이 보유한 모든 주문서별 할인혜택 목록 조회 화면 //수정 요망
-	@GetMapping("/orderDiscountList")
+	@GetMapping("/allOrderDiscountList")
 	public String getAllOrderDiscountList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		
@@ -188,7 +188,7 @@ public class AdminDiscountController {
 		return "admin/orderDiscount/orderDiscountList";
 	}
 	//전체 회원이 보유한 모든 주문서별 할인혜택 목록 조회 처리//수정 요망
-	@PostMapping("/orderDiscountList")
+	@PostMapping("/allOrderDiscountList")
 	public String getAllOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
 			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
 			 ,Model model) {
