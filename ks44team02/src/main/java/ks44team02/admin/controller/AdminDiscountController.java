@@ -177,17 +177,17 @@ public class AdminDiscountController {
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		
 
-		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(null);
+		List<OrderDiscount> allOrderDiscountList = discountService.getAllOrderDiscountList(null);
 		
-		log.info("할인혜택 목록 조회 :::: {}", orderDiscountList);
+		log.info("할인혜택 보유 현황 조회 :::: {}", allOrderDiscountList);
 		
 		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
-		model.addAttribute("orderDiscountList", orderDiscountList);
+		model.addAttribute("allOrderDiscountList", allOrderDiscountList);
 		if(msg!=null) model.addAttribute("msg", msg);
 		
-		return "admin/orderDiscount/orderDiscountList";
+		return "admin/orderDiscount/allOrderDiscountList";
 	}
-	//전체 회원이 보유한 모든 주문서별 할인혜택 목록 조회 처리//수정 요망
+	//전체 회원의 할인 혜택 보유 현황 조회//수정 요망
 	@PostMapping("/allOrderDiscountList")
 	public String getAllOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
 			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
@@ -208,12 +208,12 @@ public class AdminDiscountController {
 		paramMap.put("sv",sv);
 		
 		//2. ${} vs #{}	-> ${searchKey} LIKE ${searchValue} : ex) memberId LIKE 'id001'
-		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(paramMap);
+		List<OrderDiscount> allOrderDiscountList = discountService.getAllOrderDiscountList(paramMap);
 		
 		//3. model 검색된 리스트를 출력하면 된다.
 		model.addAttribute("title", "판매자목록조회");
-		model.addAttribute("orderDiscountList", orderDiscountList);
-		return "admin/orderDiscount/orderDiscountList";
+		model.addAttribute("allOrderDiscountList", allOrderDiscountList);
+		return "admin/orderDiscount/allOrderDiscountList";
 	}
 	//주문서별 할인혜택 회원한테 부여 화면
 	@GetMapping("/giveOrderDiscount")
