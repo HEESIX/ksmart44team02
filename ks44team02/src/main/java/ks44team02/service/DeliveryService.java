@@ -20,11 +20,25 @@ public class DeliveryService {
 	}
 	
 	//신규 주문 및 배송 현황 조회(구매자 전체)
-	//list로 변경
-	public List<OrderDetail> sellerOrderList(String memberId) {
-		List<OrderDetail> sellerOrderList = deliveryMapper.sellerOrderList(memberId);
+	public List<OrderDetail> sellerOrderList(Map<String,Object> paramMap) {
+		List<OrderDetail> sellerOrderList = deliveryMapper.sellerOrderList(paramMap);
+		
 		return sellerOrderList;
 	}
+	
+	// 판매자측 특정 주문서 조회
+	public OrderDetail getOrderStatusInfo(String orderDetailCode) {
+		OrderDetail orderDetailInfo = deliveryMapper.getOrderStatusInfo(orderDetailCode);
+		return orderDetailInfo;
+	}
+	
+	public boolean modifyOrderStatus(OrderDetail sellerOrderList) {
+		boolean result = deliveryMapper.modifyOrderStatus(sellerOrderList);
+		return result;
+	}
+	
+	
+	
 	
 	//구매자 배송처리
 	public String OrderDeal() {

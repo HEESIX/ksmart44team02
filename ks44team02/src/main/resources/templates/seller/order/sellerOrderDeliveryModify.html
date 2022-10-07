@@ -8,178 +8,54 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-
-<!-- start breadcrum section -->
-<th:block layout:fragment="customBreadCrum">
-	<section class="breadcrumb-section set-bg"
-		data-setbg="/user/img/breadcrumb.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="breadcrumb__text">
-						<h2>주문관리</h2>
-						<div class="breadcrumb__option">
-							<a th:href="@{/}">Home</a><span>Order List</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</th:block>
-<!-- end breadcrum section -->
-
-
-<!-- 사용자 정의 css -->
-<th:block layout:fragment="customCss">
-<style>
-	table {
-    text-align: center;
-    border: 1px solid #fff;
-    border-spacing: 1px;
-    font-family: 'Cairo', sans-serif;
-}
-
-caption {
-    font-weight: bold;
-}
-
-table td {
-    padding: 10px;
-    background-color: #f8f9fa;
-}
-
-table th {
-    background-color: #555;
-    color: #fff;
-    padding: 10px;
-}
-table td, th{
-	width: 200px;
-}
-
-.order_Btn01,
-.order_Btn02,
-.order_Btn03,
-.deliNum,
-.orderStatus {
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-}
-
-.order_Btn01,
-.order_Btn02,
-.order_Btn03,
-.deliNum {
-    background-color: #7fad39;
-}
-
-
-.orderStatus {
-    background-color: #7fad39;
-}
-
-</style>
-</th:block>
+<!-- 사용자 정의 css  -->
 
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
-
-
-<div class="row">
-		<div class="product__discount">
-		<div class="section-title product__discount__title">
-					<h2 style="font-size: 30px">주문배송처리</h2>
-			</div>
-			
+	<div class="container-fluid" style="height: 100%; width: 100%;">
 		<div class="row">
-		
-			<button class="order_Btn01" style="margin: 10px 0 0 10px;">결제완료</button>
-			<button class="order_Btn02" style="margin: 10px 0 0 10px;">배송중</button>
-			<button class="order_Btn03" style="margin: 10px 0 0 10px;">배송완료</button>
-		
-		</div>
-			
-		<div class="row">
-				<table style="margin-top: 15px;">
-					<thead>
-			            <tr>
-							<th>주문번호</th>
-							<th></th>
-							<th>상품명</th>
-							<th>구매수량</th>
-							<th>결제금액</th>
-							<th>주문일</th>
-							<th>주문상태</th>
-							<th>배송</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
-			            	th:each="sol : ${sellerOrderList}">
-			                <td th:text="${#strings.substringAfter(sol.orderDetailCode, 'order_detail')}"></td>
-			                <td><a href="#"><img th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
-											th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px; border-radius: 10px;"/></a></td>
-			                <td th:text="${sol.goods.goodsName}"></td>
-			                <td th:text="${sol.orderAmount}"></td>
-			                <td th:if="${sol.regularPriceSubtotal} !=0" th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
-			                <td th:text="${sol.orderDateTime}"></td>
-			                <td th:text="${sol.orderDateTime}"></td>
-			                
-			                <td>
-			                	<input type="text" placeholder="운송장 번호 입력">
-			                	<button>입력</button>
-			                </td>
-						</tr>
-						<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
-							<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
-							</td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>환불/교환 사유 카테고리 수정</h4>
+				</div>
 			</div>
 		</div>
-</div>
+		<div class="row">
+			<div class="col-xl-2 col-lg-2"></div>
+			<div class="col-xl-8 col-lg-8" style="padding-top: 15px;">
+				<div class="card" th:object="${orderDetailInfo}">
+					<div class="card-header" style="text-align: center;">
+						<h3>할인혜택 수정</h3>
+					</div>
+					<form th:action="@{seller/order/sellerOrderDeliveryModify}"
+						method="post">
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="orderDetailCode"
+									class="col-xs-2 col-form-label form-control-label">카테고리 코드</label>
+								<div class="col-sm-10">
+									<input th:value="*{orderDetailCode}" class="form-control"
+										type="text" id="orderDetailCode" name="orderDetailCode"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="gDeliveryCharge"
+									class="col-xs-2 col-form-label form-control-label">카테고리명</label>
+								<div class="col-sm-10">
+									<input th:value="*{gDeliveryCharge}" class="form-control"
+										type="text" id="gDeliveryCharge" name="gDeliveryCharge">
+								</div>
+							</div>
+							<button id="modifyBtn" type="submit"
+								class="btn btn-info waves-effect waves-light"
+								style="float: right;">수정완료</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </th:block>
-
-<!-- 사용자 정의 js -->
-<th:block layout:fragment="customJs">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-$(document).ready(function() {
-	console.log("111111");
-	delivNumberAdd();
-});
-function delivNumberAdd() {
-	var optionIndex = 1;
-	$("#delivNumberAdd_btn")
-			.on(
-					"click",
-					function() {
-						console.log("dasda");
-						
-						$("#delivNumber")
-								.append(
-										"  <div class='form-group'><input placeholder='송장번호와 택배사' class='form-control' type='text' style='float:left;' name='ordered_delivnum' >"
-					
-												+ "<button type='submit' class='btn btn-round btn-g'>"
-												+ "입력" + "</button></div>"
-
-								);
-
-					});
-}
-</script>
-
-
-
-</th:block>
-
-
-
-
-
 </html>
