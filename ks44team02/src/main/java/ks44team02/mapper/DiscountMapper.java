@@ -27,7 +27,7 @@ public interface DiscountMapper {
 	public boolean removeOrderDiscount(String orderDiscount);
 	
 	//전체 회원의 할인 혜택 보유 현황 조회
-	public List<OrderDiscount> getAllOrderDiscountList(Map<String, Object>	searchMap);
+	public List<BuyerBenefit> getAllBuyerBenefitList(Map<String, Object>	searchMap);
 	
 	//구매자별 보유 혜택 목록 조회(buyer세션 아이디와 일치하는 것만?)
 	public List<BuyerBenefit> getBuyerBenefitList(String memberId);
