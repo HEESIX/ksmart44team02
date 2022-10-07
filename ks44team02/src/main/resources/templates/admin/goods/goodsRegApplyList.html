@@ -8,19 +8,38 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table th, td {
+	max-width: 200px;
+}
+
+.textBox span {
+	display: block;
+}
+</style>
+</th:block>
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
-	<div class="row">
-			<div class="col-sm-12 p-0">
+		<div class="row">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>상품 등록 신청 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/goodsList}">상품 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/goodsList}">상품 목록</a></li>
 						<li class="breadcrumb-item"><a href="#">상품 등록 신청 목록</a></li>
 					</ol>
+				</div>
+				<div class="textBox" style="padding-left: 20px;">
+					<span>승인되거나 거절되지 않은 상품 등록 신청 목록을 조회한다.</span> <span>상품명 또는
+						상품 메인 이미지를 클릭하면 상세정보 페이지로 이동한다. 상세정보 페이지 내에서도 승인/거절이 가능하다.</span> <span>승인버튼을
+						누르면 승인되고 거절 버튼을 누르면 거절 사유를 입력한 후 거절 처리가 완료된다.</span>
 				</div>
 			</div>
 		</div>
@@ -33,10 +52,10 @@
 								<thead>
 									<tr>
 										<th>번호</th>
+										<th>상품명</th>
 										<th>메인이미지</th>
 										<th>판매사</th>
 										<th>카테고리</th>
-										<th>상품명</th>
 										<th>가격</th>
 										<th>적용 할인 혜택</th>
 										<th>할인 혜택 적용 후 가격</th>
@@ -54,11 +73,16 @@
 									<tr th:if="${not #lists.isEmpty(goodsRegApplyList)}"
 										th:each="gral, status : ${goodsRegApplyList}">
 										<td th:text="${status.count}"></td>
-										<td><img th:src="@{'/' + ${gral.goodsMainImageInfo.mainImagePath}}"
-											th:alt="${gral.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px;" /></td>
+										<td><a
+											th:href="@{|/admin/goods/goodsRegApplyDetail/${gral.goodsApplyCode}|}"
+											th:text="${gral.goodsApplyName}"></a></td>
+										<td><a
+											th:href="@{|/admin/goods/goodsRegApplyDetail/${gral.goodsApplyCode}|}"><img
+												th:src="@{'/' + ${gral.goodsMainImageInfo.mainImagePath}}"
+												th:alt="${gral.goodsMainImageInfo.mainImageOriginalName}"
+												style="width: 100px;" /></a></td>
 										<td th:text="${gral.enterprise.enterName}"></td>
 										<td th:text="${gral.goodsCategory.goodsCategoryName}"></td>
-										<td th:text="${gral.goodsApplyName}"></td>
 										<td th:text="${gral.goodsApplyPrice}"></td>
 										<td th:text="${gral.goodsDiscount.goodsDiscountName}"></td>
 										<td th:text="${gral.goodsApplyDiscount}"></td>
@@ -69,10 +93,29 @@
 										<td th:text="${gral.goodsApplyStock}"></td>
 										<td th:text="${gral.goodsApplyDeliveryCharge}"></td>
 										<td th:text="${gral.goodsApplyRegDatetime}"></td>
+										<td><button type="button"
+												class="btn btn-inverse-success waves-effect waves-light approveBtn"
+												th:data-goodsApplyCode="${gral.goodsApplyCode}">승인</button></td>
+										<td><button type="button"
+												class="btn btn-inverse-danger waves-effect waves-light refuseBtn"
+												th:data-goodsApplyCode="${gral.goodsApplyCode}">거절</button></td>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(goodsRegApplyList)}">
 										<td colspan="16" style="text-align: center;">상품 등록 신청이
 											없습니다.</td>
+									</tr>
+									<tr id="refuseReasonBox" style="display: none;">
+										<td colspan="16">
+											<div class="col-lg-12">
+												<div class="row">
+													<textarea placeholder="거절 이유를 입력해주세요." name="refuseReason" class="form-control" style="width: 40%; float: right;"></textarea>
+												</div>
+												<div class="row" style="float: right; margin-top: 10px;">
+													<button class="btn btn-danger waves-effect waves-light realRefuse">거절</button>
+													<button class="btn btn-default waves-effect cancleBtn">취소</button>
+												</div>
+											</div>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -84,4 +127,90 @@
 	</div>
 </th:block>
 
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+			$('.approveBtn').click(function(){
+				var confirmResult = confirm('승인하시겠습니까?');
+				if(!confirmResult) return false;
+				var approveBtn = $(this);
+				var code = $(this).attr('data-goodsApplyCode');
+				
+				var request = $.ajax({
+					  url: "/admin/goods/approveGoodsRegApply",
+					  method: "POST",
+					  data: { 'goodsApplyCode' : code },
+					  dataType: "json"
+				});
+				 
+				request.done(function(data) {
+					if(data){
+						alert('상품 등록 신청이 승인되었습니다.');
+						approveBtn.parent().parent().remove();
+					}
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+			});
+			
+			$('.refuseBtn').click(function(){
+				var refuseBtn = $(this);
+				$('.refuseReasonBox').remove();
+				var refuseBox = $('#refuseReasonBox').clone();
+				var goodsApplyCode = $(this).attr('data-goodsApplyCode');
+				refuseBox.removeAttr('id');
+				refuseBox.addClass('refuseReasonBox');
+				refuseBox.find('textarea').attr('id', 'refuseReason');
+				refuseBox.css('display', 'table-row');
+				refuseBox.find('.realRefuse').attr('data-goodsApplyCode', goodsApplyCode);
+				$(this).parent().parent().after(refuseBox);
+				
+				$('.realRefuse').click(function(){
+					var textValue = $(this).parent().parent().find('textarea').val();
+					console.log(textValue);
+					
+					if(textValue == '' || textValue == 'undefined' || textValue == null) {
+						alert('거절 이유를 입력해주세요.');
+						$('#refuseReason').focus();
+						return false;
+					}
+					var code = $(this).attr('data-goodsApplyCode');
+					
+					var request = $.ajax({
+						  url: "/admin/goods/refuseGoodsRegApply",
+						  method: "POST",
+						  data: { 'refuseReason' : textValue 
+							  	, 'goodsApplyCode' : code },
+						  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('상품 등록 신청이 거절되었습니다.');
+							refuseBtn.parent().parent().remove();
+							$('.refuseReasonBox').remove();
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+				});
+				
+				$('.cancleBtn').click(function(){
+					$('.refuseReasonBox').remove();
+				});
+			});
+			
+			
+		});
+	</script>
+</th:block>
 </html>
