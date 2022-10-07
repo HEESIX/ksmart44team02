@@ -36,26 +36,41 @@ public GradeService(GradeMapper gradeMapper) {
 	}
 	
 	//구매자 등급 정의 리스트 조회  
-	public List<Grade> getSellerGradeList() {
+	public List<Grade> getSellerGradeList(String buyerLevelCode) {
 		List<Grade> sellerGradeList = gradeMapper.getSellerGradeList();
 		return sellerGradeList;
 	}
 	
 	//구매자 등급 정의 등록
-	public String addBuyerGrade() {
-		return null;
+	public boolean addBuyerGrade(Grade buyerGradeList) {
+		boolean result = gradeMapper.addBuyerGrade(buyerGradeList);
+		return result;
 		}
 
 	// 구매자 등급 정의 수정
-	public String modifyBuyerGrade() {
-		return null;
-				}
-		
+	public boolean modifyBuyerGrade(Grade buyerGradeList) {  
+		boolean result = gradeMapper.modifyBuyerGrade();
+		return result;
+	}
 	// 구매자 등급 정의 삭제
-	public String removeBuyerGrade() {
-		return null;
+	public boolean removeBuyerGrade(String buyerLevelCode) {
+		boolean resultRemove = gradeMapper.removeBuyerGrade();
+		return resultRemove;
 				}
 			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			
 
 }

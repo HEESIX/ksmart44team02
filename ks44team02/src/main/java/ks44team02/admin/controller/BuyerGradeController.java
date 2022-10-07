@@ -10,31 +10,50 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import ks44team02.dto.BuyerLevel;
 import ks44team02.dto.Grade;
+import ks44team02.service.CommonService;
 import ks44team02.service.GradeService;
 
 @Controller
 @RequestMapping(value = "/admin/gradeDetails")
 public class BuyerGradeController {
 	
+	
 	private static final Logger log = LoggerFactory.getLogger(BuyerGradeController.class);
 
-	private final GradeService gradeService;
 
-	public BuyerGradeController(GradeService gradeService) {
+	private final GradeService gradeService;
+	private final CommonService commonService;
+	
+	public BuyerGradeController(GradeService gradeService, CommonService commonService) {
 		this.gradeService = gradeService;
+		this.commonService = commonService;
 	}
 	// 구매자 등급 정의 등록 폼 
 	@GetMapping("/buyerGradeForm")
-	public String getBuyerGradeForm() {
+	public String getBuyerGradeForm(Model model) {
+		model.addAttribute("title","구매자 등급 정의 등록");
 		return "admin/gradeDetails/buyerGradeForm";
 	}
 	
 	// 구매자 등급 정의 등록 처리 
 	@PostMapping("/buyerGradeForm")
-	public String getBuyerGrade() {
+	public String getBuyerGrade(Grade buyerGradeList
+								,RedirectAttributes reAttr) {
+		String buyerGradeCode = commonService.getNewCode("tb_buyer_level");
+		BuyerLevel buyerLevel = buyerGradeList.getBuyerLevel();
+		buyerLevel.setBuyerLevelCode(buyerGradeCode);
+		boolean result = gradeService.addBuyerGrade(buyerGradeList);
+		String msg = "";
+		if(result) {
+			msg="등록성공";
+		}else {
+			msg="등록 실패";
+		}
+		reAttr.addAttribute("msg",msg);
 		return "redirect:admin/gradeDetails/buyerGradeForm";
 	}	
 	
