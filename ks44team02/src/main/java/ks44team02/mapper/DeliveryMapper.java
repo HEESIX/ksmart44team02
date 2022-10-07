@@ -13,9 +13,14 @@ import ks44team02.dto.OrderDetail;
 @Mapper
 public interface DeliveryMapper {
 
-	//신규 주문 및 배송 현황 조회(구매자 전체)
-		//list로 해야되나?
-	public List<OrderDetail> sellerOrderList(String memberId) ;
+	//판매자 측 신규 주문 및 배송 현황 조회(구매자 전체)
+	public List<OrderDetail> sellerOrderList(Map<String, Object> searchMap) ;
+	
+	//판매자 측 주문서 주문상태 변경(수정)
+	public boolean modifyOrderStatus(OrderDetail sellerOrderList);
+	
+	//판매자 측 특정 주문서 조회
+	public OrderDetail getOrderStatusInfo(String orderDetailCode);
 	
 	//구매자 배송처리
 	public String OrderDeal();
