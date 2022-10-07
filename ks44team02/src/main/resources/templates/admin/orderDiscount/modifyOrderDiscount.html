@@ -10,6 +10,13 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
 <!-- 사용자 정의 css  -->
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet"
@@ -106,6 +113,44 @@
 								style="float: right;">수정완료</button>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>할인명</th>
+										<th>할인율/할인금액</th>
+										<th>최소주문금액</th>
+										<th>최대할인금액</th>
+										<th>등록일자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(orderDiscountList)}"
+										th:each="odl : ${orderDiscountList}">
+										<td th:text="${odl.discountName}"></td>
+										<td th:if="${odl.discountRate} != 0" th:text="${odl.discountRate}+'%'"></td>
+										<td th:if="${odl.discountPrice} != 0" th:text="'₩'+${odl.discountPrice}"></td>
+										<td th:text="${odl.minOrderPrice}"></td>
+										<td th:text="${odl.maxDiscountPrice}"></td>
+										<td th:text="${odl.gProductionRegDateTime}"></td>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(orderDiscountList)}">
+										<td colspan="5" style="text-align: center;">주문서별 할인혜택이 존재하지
+											않습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

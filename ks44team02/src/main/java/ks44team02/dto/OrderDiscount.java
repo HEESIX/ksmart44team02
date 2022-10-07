@@ -1,4 +1,7 @@
 package ks44team02.dto;
+
+import java.util.List;
+
 //주문서별 할인혜택
 public class OrderDiscount {
 	private String orderDiscountCode;
@@ -9,6 +12,14 @@ public class OrderDiscount {
 	private int maxDiscountPrice;
 	private String gProductionRegDateTime;
 	
+	private List<BuyerBenefit>	buyerBenefitList;
+	
+	public List<BuyerBenefit> getBuyerBenefitList() {
+		return buyerBenefitList;
+	}
+	public void setBuyerBenefit(List<BuyerBenefit> buyerBenefitList) {
+		this.buyerBenefitList = buyerBenefitList;
+	}
 	public String getOrderDiscountCode() {
 		return orderDiscountCode;
 	}
@@ -68,6 +79,8 @@ public class OrderDiscount {
 		builder.append(maxDiscountPrice);
 		builder.append(", gProductionRegDateTime=");
 		builder.append(gProductionRegDateTime);
+		builder.append(", buyerBenefitList=");
+		builder.append(buyerBenefitList);
 		builder.append("]");
 		return builder.toString();
 	}
