@@ -47,9 +47,27 @@ public class AdminCompanyController {
 		return "admin/companypage/sellerCompanyList";
 	}
 	
+	//입점 업체 정보 수정
+	@GetMapping("/sellerCompanyModify")
+	public String companyInfoModify() {
+		return "admin/companypage/sellerCompanyModify";
+	}
+	
 	//업체 정보 삭제 승인 폼
 	@GetMapping("/sellerCompanyDelete")
 	public String companyRemoveSuccess() {
 		return "admin/companypage/sellerCompanyDelete";
+	}
+	
+	//업체 정보 삭제
+	@GetMapping("/sellerCompanyRemove")
+	public String companyInfoRemove() {
+		return "admin/companypage/sellerCompanyRemove";
+	}
+		
+	//입점 업체 탈퇴/승인 상세 정보
+	@GetMapping("/sellerCompanyDetail")
+	public String companyInfoDetail() {
+		return "admin/companypage/sellerCompanyDetail";
 	}
 }

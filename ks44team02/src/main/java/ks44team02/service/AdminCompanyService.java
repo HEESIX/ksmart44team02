@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import ks44team02.dto.Launching;
 import ks44team02.mapper.AdminCompanyMapper;
@@ -28,8 +29,23 @@ public class AdminCompanyService {
 		return sellerCompanyList;
 	}
 	
+	//입점 업체 정보 수정
+	public String companyInfoModify() {
+		return "admin/companypage/sellerCompanyModify";
+	}
+	
 	//업체 정보 삭제 승인 폼
 	public String companyRemoveSuccess() {
 		return "admin/companypage/sellerCompanyDelete";
+	}
+	
+	//업체 정보 삭제
+	public String companyInfoRemove() {
+		return "admin/companypage/sellerCompanyRemove";
+	}
+	
+	//입점 업체 탈퇴/승인 상세 정보
+	public String companyInfoDetail() {
+		return "admin/companypage/sellerCompanyDetail";
 	}
 }

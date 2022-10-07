@@ -70,7 +70,7 @@ SELECT
 	,launching_datetime				AS sellerDate
 	,launching_approval				AS sellerApp
 FROM
-	tb_launching 	AS launching;
+	tb_launching;
 </select>
 <!-- 입점 업체 수정 처리 -->
 <update id="sellerCompanyModify" parameterType="Launching">
