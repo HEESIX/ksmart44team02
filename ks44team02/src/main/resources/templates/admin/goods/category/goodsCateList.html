@@ -25,14 +25,18 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>상품 카테고리 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/category/goodsCateList}">상품 카테고리 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/category/goodsCateList}">상품 카테고리 목록</a></li>
 					</ol>
+				</div>
+				<div style="padding-left: 20px;">
+					<span style="line-height: 100px;">판매자, 구매자에게 보여지는 상품 카테고리 목록을 제어한다. 사용중이 아니라면 판매자 구매자에게 보여지지 않는다.</span>
 				</div>
 			</div>
 		</div>

@@ -52,7 +52,7 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>식단 등록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
@@ -63,6 +63,9 @@
 						<li class="breadcrumb-item"><a
 							th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
 					</ol>
+				</div>
+				<div style="padding-left: 20px;">
+					<span style="line-height: 100px;">식단이 포함되는 상품들과 식단의 정보를 입력한 후 식단을 등록한다.</span>
 				</div>
 			</div>
 		</div>
@@ -122,7 +125,6 @@
 										<!-- end of modal -->
 										<select id="goodsCateCode" name="goodsCateCode"
 											class="js-example-basic-single inputObj" style="width: 40%;">
-											<option value="">카테고리 선택</option>
 											<th:block
 												th:if="${not #lists.isEmpty(goodsCategoryList)}"
 												th:each="gcl : ${goodsCategoryList}">
@@ -201,7 +203,6 @@
 										<!-- end of modal -->
 										<select id="goodsDiscountCode" name="goodsDiscountCode"
 											class="js-example-basic-single inputObj" style="width: 40%;">
-											<option value="noDiscount">적용 할인 혜택(비적용)</option>
 											<th:block
 												th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
 												th:each="gdla : ${goodsDiscountListAdmin}">

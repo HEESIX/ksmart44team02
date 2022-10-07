@@ -10,17 +10,12 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<!-- 사용자 정의 js file  -->
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
-		$(function(){
-			var msg = [[${msg}]];
-			
-			if(msg!=null) alert(msg);
-			
-		});
-	</script>
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 </th:block>
 
 <!-- 사용자 정의 contents  -->
@@ -43,9 +38,9 @@
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
-						<div class="table-responsive">
-							<div th:include="admin/goods/search/searchGoodsDiscount :: searchFragment"
+							<div th:replace="admin/goods/search/searchGoodsDiscountList :: searchFragment"
 								style="margin-bottom: 10px;"></div>
+						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
@@ -106,8 +101,15 @@
 
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootJs">
-	<script type="text/javascript">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
 		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+			$(".js-example-basic-single").select2();
+			
 			$('#searchKey').change(function(){
 				console.log('바뀜');
 				var searchKey = $(this).val();
