@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.standard.expression.OrExpression;
 
 import ks44team02.dto.BuyerBenefit;
 import ks44team02.dto.OrderDiscount;
@@ -50,7 +49,7 @@ public class AdminDiscountController {
 		
 
 		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(null);
-		
+		orderDiscountList = discountService.getOrderDiscountList(null);
 		log.info("할인혜택 목록 조회 :::: {}", orderDiscountList);
 		
 		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
