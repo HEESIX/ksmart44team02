@@ -53,9 +53,9 @@ public class DiscountService {
 		return resultRemove;
 	}
 	//전체 회원의 할인 혜택 보유 현황 조회
-		public List<OrderDiscount> getAllOrderDiscountList(Map<String,Object> paramMap){
-			List<OrderDiscount> allOrderDiscount = discountMapper.getAllOrderDiscountList(paramMap);
-			return allOrderDiscount;
+		public List<BuyerBenefit> getAllBuyerBenefitList(Map<String,Object> paramMap){
+			List<BuyerBenefit> allBuyerBenefitList = discountMapper.getAllBuyerBenefitList(paramMap);
+			return allBuyerBenefitList;
 	}
 	//구매자별 보유 혜택 목록 조회
 	public List<BuyerBenefit> getBuyerBenefitList(String sessionId){
