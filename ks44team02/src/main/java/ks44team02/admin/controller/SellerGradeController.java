@@ -43,7 +43,7 @@ public class SellerGradeController {
 	//판매자 등급 정의 리스트
 	@GetMapping("/sellerGradeList")
 	public String getSellerGradeList (Model model) {
-		List<Grade> sellerGradeList = gradeService.getSellerGradeList();
+		List<Grade> sellerGradeList = gradeService.getSellerGradeList(null);
 		model.addAttribute("title", "판매자 등급 리스트");
 		model.addAttribute("sellerGradeList", sellerGradeList);
 		return "admin/gradeDetails/sellerGradeList";
