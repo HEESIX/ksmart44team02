@@ -1,5 +1,7 @@
 package ks44team02.dto;
 
+import java.util.List;
+
 public class BuyerBenefit {
 	private String memberBenefitCode;
 	private String memberId;
@@ -8,13 +10,14 @@ public class BuyerBenefit {
 	private String benefitIssueDate;
 	private String benefitExpirationDate;
 	
-	private OrderDiscount orderDiscount;
-	
-	public OrderDiscount getOrderDiscount() {
-		return orderDiscount;
+	private List<OrderDiscount> orderDiscountList;
+
+
+	public List<OrderDiscount> getOrderDiscountList() {
+		return orderDiscountList;
 	}
-	public void setOrderDiscount(OrderDiscount orderDiscount) {
-		this.orderDiscount = orderDiscount;
+	public void setOrderDiscountList(List<OrderDiscount> orderDiscountList) {
+		this.orderDiscountList = orderDiscountList;
 	}
 	public String getMemberBenefitCode() {
 		return memberBenefitCode;
@@ -67,8 +70,8 @@ public class BuyerBenefit {
 		builder.append(benefitIssueDate);
 		builder.append(", benefitExpirationDate=");
 		builder.append(benefitExpirationDate);
-		builder.append(", orderDiscount=");
-		builder.append(orderDiscount);
+		builder.append(", orderDiscountList=");
+		builder.append(orderDiscountList);
 		builder.append("]");
 		return builder.toString();
 	}
