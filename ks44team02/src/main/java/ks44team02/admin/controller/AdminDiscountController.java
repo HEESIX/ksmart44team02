@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.standard.expression.OrExpression;
 
+import ks44team02.dto.BuyerBenefit;
 import ks44team02.dto.OrderDiscount;
 import ks44team02.service.DiscountService;
 import ks44team02.service.CommonService; 
@@ -136,8 +137,11 @@ public class AdminDiscountController {
 		
 		OrderDiscount orderDiscountInfo = discountService.getOrderDiscountInfo(orderDiscountCode);
 		
+		List<OrderDiscount> orderDiscountList = discountService.getOrderDiscountList(null);
+		
 		model.addAttribute("title","선택한 주문서별 할인혜택 수정");
 		model.addAttribute("orderDiscountInfo", orderDiscountInfo);
+		model.addAttribute("orderDiscountList", orderDiscountList);
 		return "admin/orderDiscount/modifyOrderDiscount";
 	}
 	//주문서별 할인혜택 수정 처리
@@ -183,31 +187,31 @@ public class AdminDiscountController {
 			//아이디 비번 일치
 			discountService.removeOrderDiscount(orderDiscountCode);
 			reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다.");
+			return "redirect:/admin/orderDiscount/orderDiscountList";
 		}else {
 			//아이디 비번 불일치
 			reAttr.addAttribute("msg", "삭제 실패: 비밀번호가 일치하지 않습니다.");
 		}
-		return "redirect:/admin/orderDiscount/orderDiscountList";
+		return "admin/orderDiscount/removeOrderDiscount"; 
 	}
 	//전체 회원의 할인 혜택 보유 현황 조회
-	@GetMapping("/allOrderDiscountList")
-	public String getAllOrderDiscountList(Model model
+	@GetMapping("/allBuyerBenefitList")
+	public String getAllBuyerBenefitList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		
 
-		List<OrderDiscount> allOrderDiscountList = discountService.getAllOrderDiscountList(null);
-		
-		log.info("할인혜택 보유 현황 조회 :::: {}", allOrderDiscountList);
+		List<BuyerBenefit> allBuyerBenefitList = discountService.getAllBuyerBenefitList(null);
+		log.info("할인혜택 보유 현황 조회 :::: {}", allBuyerBenefitList);
 		
 		model.addAttribute("title", "주문서별 할인혜택 목록 전체 조회");
-		model.addAttribute("allOrderDiscountList", allOrderDiscountList);
+		model.addAttribute("allBuyerBenefitList", allBuyerBenefitList);
 		if(msg!=null) model.addAttribute("msg", msg);
 		
-		return "admin/orderDiscount/allOrderDiscountList";
+		return "admin/orderDiscount/allBuyerBenefitList";
 	}
 	//전체 회원의 할인 혜택 보유 현황 조회 처리
-	@PostMapping("/allOrderDiscountList")
-	public String getAllOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
+	@PostMapping("/allBuyerBenefitList")
+	public String getAllBuyerBenefitList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
 			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
 			 ,Model model) {
 		
@@ -230,12 +234,12 @@ public class AdminDiscountController {
 		paramMap.put("sv",sv);
 		
 		//2. ${} vs #{}	-> ${searchKey} LIKE ${searchValue} : ex) memberId LIKE 'id001'
-		List<OrderDiscount> allOrderDiscountList = discountService.getAllOrderDiscountList(paramMap);
+		List<BuyerBenefit> allBuyerBenefitList = discountService.getAllBuyerBenefitList(paramMap);
 		
 		//3. model 검색된 리스트를 출력하면 된다.
 		model.addAttribute("title", "전체 회원의 할인 혜택 보유 현황 조회");
-		model.addAttribute("allOrderDiscountList", allOrderDiscountList);
-		return "admin/orderDiscount/allOrderDiscountList";
+		model.addAttribute("allBuyerBenefitList", allBuyerBenefitList);
+		return "admin/orderDiscount/allBuyerBenefitList";
 	}
 	//주문서별 할인혜택 회원한테 부여 화면
 	@GetMapping("/giveOrderDiscount")
