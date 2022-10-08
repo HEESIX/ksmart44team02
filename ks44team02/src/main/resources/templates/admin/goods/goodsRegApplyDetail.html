@@ -28,6 +28,15 @@ table td, th {
 	border: 2px solid #d5dade;
 	width: 150px;
 }
+
+#refuseModal {
+	display: none;
+	width: 40%;
+	padding: 20px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
 </style>
 </th:block>
 
@@ -157,13 +166,29 @@ table td, th {
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8">
 						<div class="col-lg-6" style="float: right;">
-							<button type="button" class="btn btn-xlg btn-inverse-danger waves-effect waves-light" style="width: 100%; height: 100%;">거절</button>
+							<button id="refuseBtn" type="button"
+								th:data-goodsApplyCode="*{goodsApplyCode}"
+								class="btn btn-xlg btn-inverse-danger waves-effect waves-light"
+								style="width: 100%; height: 100%;">거절</button>
 						</div>
 						<div class="col-lg-6" style="float: right;">
-							<button type="button" class="btn btn-xlg btn-inverse-success waves-effect waves-light" style="width: 100%; height: 100%;">승인</button>
+							<button id="approveBtn" type="button"
+								th:data-goodsApplyCode="*{goodsApplyCode}"
+								class="btn btn-xlg btn-inverse-success waves-effect waves-light"
+								style="width: 100%; height: 100%;">승인</button>
 						</div>
 					</div>
 					<div class="col-lg-2"></div>
+				</div>
+				<div id="refuseModal">
+					<div class="row">
+						<textarea placeholder="거절 이유를 입력해주세요." name="refuseReason"
+							class="form-control" style="width: 100%; height: 300px;"></textarea>
+					</div>
+					<div class="row" style="float: right; margin-top: 10px;">
+						<button class="btn btn-danger waves-effect waves-light realRefuse">거절</button>
+						<button class="btn btn-default waves-effect cancleBtn">취소</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -185,6 +210,114 @@ table td, th {
 						event.preventDefault();
 						$(this).ekkoLightbox();
 					});
+		
+			function modal(id) {
+			    var zIndex = 9999;
+			    var modal = $('#' + id);
+
+			    // 모달 div 뒤에 희끄무레한 레이어
+			    var bg = $('<div>')
+			        .css({
+			            position: 'fixed',
+			            zIndex: zIndex,
+			            left: '0px',
+			            top: '0px',
+			            width: '100%',
+			            height: '100%',
+			            overflow: 'auto',
+			            // 레이어 색갈은 여기서 바꾸면 됨
+			            backgroundColor: 'rgba(0,0,0,0.4)'
+			        })
+			        .appendTo('body');
+
+			    modal
+			        .css({
+			            position: 'fixed',
+			            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+			            // 시꺼먼 레이어 보다 한칸 위에 보이기
+			            zIndex: zIndex + 1,
+
+			            // div center 정렬
+			            top: '50%',
+			            left: '50%',
+			            transform: 'translate(-50%, -50%)',
+			            msTransform: 'translate(-50%, -50%)',
+			            webkitTransform: 'translate(-50%, -50%)'
+			        })
+			        .show()
+			        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+			        .find('.cancleBtn')
+			        .on('click', function() {
+			            bg.remove();
+			            modal.hide();
+			        });
+			    
+			    $('.realRefuse').click(function(){
+			    	var modalTextArea = $('#refuseModal textarea');
+			    	var text = modalTextArea.val();
+			    	var code = $('#refuseBtn').attr('data-goodsApplyCode');
+			    	
+			    	if(text == null || text == '' || text == 'undefined'){
+			    		alert('승인 거절 이유를 입력해주세요.');
+			    		modalTextArea.focus();
+			    		return false;
+			    	}
+			    	
+			    	var confirmRefuse = confirm('상품 등록 신청을 거절하시겠습니까?');
+			    	if(!confirmRefuse) return false;
+			    	
+			    	var request = $.ajax({
+						  url: "/admin/goods/refuseGoodsRegApply",
+						  method: "POST",
+						  data: { 'refuseReason' : text 
+							  	, 'goodsApplyCode' : code },
+						  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('상품 등록 신청이 거절되었습니다.');
+						 	bg.remove();
+				            modal.hide();
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});			    		
+			    	
+			    });
+			}
+
+			$('#refuseBtn').click(function() {
+				var code = $(this).attr('data-goodsApplyCode');
+				modal('refuseModal');
+				});
+
+			$('#approveBtn').click(function() {
+				var confirmResult = confirm('승인하시겠습니까?');
+				if(!confirmResult) return false;
+				var code = $(this).attr('data-goodsApplyCode');
+				
+				var request = $.ajax({
+					  url: "/admin/goods/approveGoodsRegApply",
+					  method: "POST",
+					  data: { 'goodsApplyCode' : code },
+					  dataType: "json"
+				});
+				 
+				request.done(function(data) {
+					if(data){
+						alert('상품 등록 신청이 승인되었습니다.');
+						window.location.href = '/admin/goods/goodsRegApplyList';
+					}
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+			});
 		});
 	</script>
 </th:block>
