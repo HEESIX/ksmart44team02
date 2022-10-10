@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 검색바 -->
+<div th:fragment="searchFragment">
+	<form th:action="@{/admin/goods/goodsRegApplyList}"
+		method="post" id="seachBox">
+		<div class="col-sm-2" style="padding: 0;">
+			<div class="modal fade modal-flex" id="single-select-Modal"
+				tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h5 class="modal-title">Code Explanation for single select
+								radio</h5>
+						</div>
+						<!-- end of modal-header -->
+						<div class="modal-body">
+							<pre class="brush: html;">
+		    				  	/* For Single Select */
+		    				  	<select class="js-example-basic-single">
+		    				  		<optgroup label="Developer">
+		    				  			<option value="AL">Alabama</option>
+		    				  			<option value="WY">Wyoming</option>
+		    				  		</optgroup>
+		    				  		<optgroup label="Designer">
+		    				  			<option value="WY">Peter</option>
+		    				  			<option value="WY">Hanry Die</option>
+		    				  			<option value="WY">John Doe</option>
+		    				  		</optgroup>
+		    				  	</select>
+							</pre>
+						</div>
+						<!-- end of modal-body -->
+					</div>
+					<!-- end of modal-content -->
+				</div>
+				<!-- end of modal-dialog -->
+			</div>
+			<!-- end of modal -->
+			<select class="js-example-basic-single" name="searchKey"
+				id="searchKey" style="width: 100%;">
+				<optgroup label="Text">
+					<option value="goodsName">상품명</option>
+					<option value="enterName">판매사</option>
+					<option value="goodsCategory">카테고리명</option>
+					<option value="goodsProduce">원산지</option>
+				</optgroup>
+				<optgroup label="Number">
+					<option value="goodsPrice">가격</option>
+					<option value="goodsDiscountPrice">할인 적용 후 가격</option>
+					<option value="goodsStock">재고</option>
+					<option value="goodsDeliveryCharge">배송비</option>
+				</optgroup>
+				<optgroup label="Date">
+					<option value="regDate">신청일자</option>
+				</optgroup>
+			</select>
+		</div>
+		<div class="col-sm-2 searchValueBox searchText">
+			<input class="form-control" type="text" name="searchValue" placeholder="검색어를 입력해주세요"
+				id="searchValue" />
+		</div>
+		<div class="col-sm-2 searchValueBox minNum" style="display: none;">
+			<input class="form-control" type="number" placeholder="최솟값" name="minNum">
+		</div>
+		<div class="col-sm-2 searchValueBox maxNum" style="display: none;">
+			<input class="form-control" type="number" placeholder="최댓값" name="maxNum">
+		</div>
+		<div class="col-sm-2 searchValueBox minDate" style="display: none;">
+			<input class="form-control" type="date" placeholder="최소일자" name="minDate"
+				style="width: 200px;">
+		</div>
+		<div class="col-sm-2 searchValueBox maxDate" style="display: none;">
+			<input class="form-control" type="date" placeholder="최대일자" name="maxDate"
+				style="width: 200px;">
+		</div>
+		<div class="col-lg-1">
+			<button class="btn btn-inverse-success waves-effect waves-light" type="submit">검색</button>
+		</div>
+	</form>
+</div>
+</html>

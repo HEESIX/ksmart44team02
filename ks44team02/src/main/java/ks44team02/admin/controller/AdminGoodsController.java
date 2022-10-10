@@ -67,9 +67,67 @@ public class AdminGoodsController {
 	@GetMapping("/goodsRegApplyList")
 	public String getGoodsRegApplyList(Model model) {
 
-		List<Map<String, Object>> goodsRegApplyList = goodsService.getGoodsRegApplyList();
+		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(null);
 		model.addAttribute("title", "상품 등록 신청 목록");
 		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
+		return "admin/goods/goodsRegApplyList";
+	}
+	
+	//상품 등록 신청 리스트 검색
+	@PostMapping("/goodsRegApplyList")
+	public String getSearchGoodsRegApplyList(Model model
+											,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+										    ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+										    ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+										    ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+										    ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+										    ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate
+										    ,HttpServletRequest request) {
+		String serverName = request.getServerName(); 
+		 log.info("{} <<<< serverName", serverName); 
+		 log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		 int isLocalhost = 0;
+		 
+		 if ("localhost".equals(serverName)) {
+			 isLocalhost = 1; 
+		 }
+											
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "ga_name";
+		}else if("enterName".equals(searchKey)) {
+			searchKey = "e.enter_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "gc.cate_name";
+		}else if("goodsProduce".equals(searchKey)) {
+			searchKey = "ga_produce";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "ga_price";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "ga_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "ga_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "ga_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "ga_reg_apply_datetime";
+		}
+		
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		map.put("isLocalhost", isLocalhost);
+		
+		log.info(">>>>>>>>>>>>>>>>>>>>{}", map);
+		
+		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(map);
+		log.info(">>>>>>>>>>>{}", goodsRegApplyList);
+		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
+		
 		return "admin/goods/goodsRegApplyList";
 	}
 	
@@ -231,7 +289,7 @@ public class AdminGoodsController {
 	@PostMapping("/goodsList")
 	public String getSearchGoodsList(Model model
 										 ,@RequestParam(value = "msg", required = false) String msg
-										 ,@RequestParam(value = "searchKey", defaultValue = "discountName") String searchKey
+										 ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
 										 ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
 										 ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
 										 ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
@@ -474,7 +532,7 @@ public class AdminGoodsController {
 	public String getSearchMenuList(Model model
 								   ,HttpServletRequest request
 								   ,@RequestParam(value = "msg", required = false) String msg
-								   ,@RequestParam(value = "searchKey", defaultValue = "discountName") String searchKey
+								   ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
 								   ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
 								   ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
 								   ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum

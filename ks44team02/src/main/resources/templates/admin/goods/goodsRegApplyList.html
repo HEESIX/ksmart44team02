@@ -10,6 +10,10 @@
 
 <!-- 사용자 정의 css  -->
 <th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 	<style>
 table th, td {
 	max-width: 200px;
@@ -31,8 +35,6 @@ table th, td {
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a
-							th:href="@{/admin/goods/goodsList}">상품 목록</a></li>
 						<li class="breadcrumb-item"><a href="#">상품 등록 신청 목록</a></li>
 					</ol>
 				</div>
@@ -47,6 +49,9 @@ table th, td {
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
+						<div
+							th:include="admin/goods/search/searchGoodsRegApply :: searchFragment"
+							style="margin-bottom: 10px;"></div>
 						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
@@ -108,10 +113,12 @@ table th, td {
 										<td colspan="16">
 											<div class="col-lg-12">
 												<div class="row">
-													<textarea placeholder="거절 이유를 입력해주세요." name="refuseReason" class="form-control" style="width: 40%; float: right;"></textarea>
+													<textarea placeholder="거절 이유를 입력해주세요." name="refuseReason"
+														class="form-control" style="width: 40%; float: right;"></textarea>
 												</div>
 												<div class="row" style="float: right; margin-top: 10px;">
-													<button class="btn btn-danger waves-effect waves-light realRefuse">거절</button>
+													<button
+														class="btn btn-danger waves-effect waves-light realRefuse">거절</button>
 													<button class="btn btn-default waves-effect cancleBtn">취소</button>
 												</div>
 											</div>
@@ -129,11 +136,32 @@ table th, td {
 
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript" th:inline="javascript">
 		$(function(){
 			var msg = [[${msg}]];
 			
 			if(msg!=null) alert(msg);
+			
+			$(".js-example-basic-single").select2();
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
 			
 			$('.approveBtn').click(function(){
 				var confirmResult = confirm('승인하시겠습니까?');

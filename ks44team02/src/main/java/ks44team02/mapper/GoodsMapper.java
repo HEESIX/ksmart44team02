@@ -19,7 +19,7 @@ import ks44team02.dto.MenuInformation;
 public interface GoodsMapper {
 	
 	//상품 등록 신청 리스트 조회
-	public List<Map<String, Object>> getGoodsRegApplyList();
+	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map);
 	
 	//상품 등록 신청 상세 정보
 	public GoodsApply getGoodsRegApplyInfo(String goodsApplyCode);

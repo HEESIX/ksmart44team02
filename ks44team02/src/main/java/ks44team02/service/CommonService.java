@@ -21,6 +21,7 @@ public class CommonService {
 		return result;
 	}
 	
+	//새로운 코드 발행
 	public String getNewCode(String tableName) {
 		String newCode = commonMapper.getNewCode(tableName);
 		return newCode;

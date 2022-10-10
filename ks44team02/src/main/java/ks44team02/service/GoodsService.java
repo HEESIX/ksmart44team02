@@ -37,8 +37,8 @@ public class GoodsService {
 	}
 
 	// 상품 등록 신청 리스트
-	public List<Map<String, Object>> getGoodsRegApplyList() {
-		List<Map<String, Object>> goodsRegApplyList = goodsMapper.getGoodsRegApplyList();
+	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map) {
+		List<GoodsApply> goodsRegApplyList = goodsMapper.getGoodsRegApplyList(map);
 		return goodsRegApplyList;
 	}
 	
