@@ -574,7 +574,7 @@
 			g.g_code = #{goodsCode};
 	</select>
 	<!-- 상품 등록 신청 목록  -->
-	<select id="getGoodsRegApplyList" resultMap="goodsApplyResultMap">
+	<select id="getGoodsRegApplyList" parameterType="Map" resultMap="goodsApplyResultMap">
 		SELECT 
 			gmi.main_image_original_name 		as gmi_main_image_original_name
 			,gmi.main_image_path 				as gmi_main_image_path
@@ -614,8 +614,33 @@
 			tb_goods_discount_management AS gdm
 			on
 			gdm.goods_discount_code = ga.goods_discount_code
-		WHERE 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			ga.ga_approve_refuse = '검토중'
+			<if test="isLocalhost != null">
+				AND gmi.main_image_islocal = ${isLocalhost}
+			</if>
+			<if test="sk != null and sv != ''">
+				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+			<if test="sk != null and minNum != '' and maxNum != ''">
+				AND ${sk} BETWEEN #{minNum} AND #{maxNum}
+			</if>
+			<if test="sk != null and minNum == '' and maxNum != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxNum}
+			</if>
+			<if test="sk != null and minNum != '' and maxNum == ''">
+				AND ${sk} >= #{minNum}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate != ''">
+				AND ${sk} BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="sk != null and minDate == '' and maxDate != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxDate}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate == ''">
+				AND ${sk} >= #{minDate}
+			</if>
+		</trim>
 		order by 
 			ga.ga_reg_apply_datetime
 	</select>
