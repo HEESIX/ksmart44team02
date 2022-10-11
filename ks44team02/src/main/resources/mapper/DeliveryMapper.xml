@@ -84,6 +84,66 @@
 		</association>
 	</resultMap>
 
+	<!-- 특정 주문상태 업데이트(수정) 처리 -->
+	<update id="modifyOrderStatus" parameterType="OrderDetail">
+		UPDATE 
+			tb_order_detail
+		SET
+			g_delivery_charge= #{gDeliveryCharge}
+		WHERE 
+			order_detail_code= #{orderDetailCode};
+	</update>
+	
+
+	<!-- 판매자 측 특정 주문 선택조회 -->
+	<select id="getOrderStatusInfo" parameterType="String" resultMap="detailResultMap">
+		SELECT
+			 od.order_datetime
+			,od.order_detail_code
+			,od.order_amount
+			,od.regular_price_subtotal
+			,g.g_name
+			,d.d_get_name
+			,d.d_get_addr
+			,d.d_get_phone
+			,d.d_memo
+			,oss.order_status_standard_details
+			,d.delivery_enter
+			,d.delivery_num
+			,gmi.main_image_original_name
+			,gmi.main_image_path
+		FROM
+			tb_order_detail AS od
+			INNER join
+			tb_enterprise AS ent
+			ON
+			ent.enter_code = od.enter_code
+			INNER join
+			tb_goods AS g
+			ON
+			od.g_code = g.g_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
+			LEFT JOIN
+			tb_delivery AS d
+			on
+			d.order_detail_code = od.order_detail_code
+			left join
+			tb_order_status AS os
+			on
+			os.order_status_code = d.order_status_code
+			left JOIN
+			tb_order_status_standard AS oss
+			on
+			os.order_status_standard_code = oss.order_status_standard_code
+		where
+			od.order_detail_code = #{orderDetailCode};
+	</select>
+		
+
+
 
 	<!--판매자측면 전체 주문 리스트  -->
 	<select id="sellerOrderList" resultMap="detailResultMap">
@@ -128,25 +188,21 @@
 			tb_order_status_standard AS oss
 			on
 			os.order_status_standard_code = oss.order_status_standard_code
-		where	
-			ent.member_id = #{memberId}
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="memberId != null and memberId != ''">
+				ent.member_id = #{memberId}
+			</if>
+			<if test="sv != null and sv != ''">
+				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+		</trim>
 		order by
 			 od.order_datetime desc;
 			
 	</select>
 	
 	
-	<!-- 판매자 측면 주문상태변경 update -->
-	<update id="modifyOrderStatus">
-		UPDATE 
-			tb_order_status
-		SET
-			order_status_standard_code= #{orderStatusStandardCode},
-			order_status_update_datetime=NOW()
-		WHERE
-			order_status_code= #{orderStatusCode};
-	
-	</update>
+
 	
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" parameterType="String" resultType="map">	

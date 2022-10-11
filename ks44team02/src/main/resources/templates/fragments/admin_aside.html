@@ -32,9 +32,11 @@
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyCheck}"><i
 								class="icon-arrow-right"></i>#입점 업체 승인</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyList}"><i
-								class="icon-arrow-right"></i>#입점 업체 정보</a></li>
+								class="icon-arrow-right"></i>#입점 신청 정보</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyDelete}"><i
-								class="icon-arrow-right"></i>#입점 업체 삭제</a></li>	
+								class="icon-arrow-right"></i>#입점 업체 삭제</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/companypage/sellerCompanyDetail}"><i
+								class="icon-arrow-right"></i>#입점 업체 리스트</a></li>		
 					</ul></li>
 						
 
@@ -102,14 +104,14 @@
 								class="icon-arrow-right"></i>!#주문서별 할인 혜택: 서지석<i
 								class="icon-arrow-down"></i></a>
 							<ul class="treeview-menu">
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/addOrderDiscount}"><i
-										class="icon-arrow-right"></i>!#신규 할인 혜택 등록</a></li>
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/orderDiscountList}"><i
 										class="icon-arrow-right"></i>!#할인 혜택 조회</a></li>
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/addOrderDiscount}"><i
+										class="icon-arrow-right"></i>!#신규 할인 혜택 등록</a></li>
+								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/allBuyerBenefitList}"><i
+										class="icon-arrow-right"></i>!#할인 혜택 보유 현황 조회</a></li>
 								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/giveOrderDiscount}"><i
 										class="icon-arrow-right"></i>#할인 혜택 부여</a></li>
-								<li><a class="waves-effect waves-dark" th:href="@{/admin/orderDiscount/allOrderDiscountList}"><i
-										class="icon-arrow-right"></i>#할인 혜택 보유 현황 조회</a></li>
 							</ul></li>
 					</ul></li>
 				<li class="treeview"><a class="waves-effect waves-dark"

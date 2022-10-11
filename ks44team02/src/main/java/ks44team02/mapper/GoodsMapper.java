@@ -6,10 +6,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.GoodsMainImage;
+import ks44team02.dto.Ingredient;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.MenuInformation;
 
@@ -17,7 +19,26 @@ import ks44team02.dto.MenuInformation;
 public interface GoodsMapper {
 	
 	//상품 등록 신청 리스트 조회
-	public List<Map<String, Object>> getGoodsRegApplyList();
+	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map);
+	
+	//상품 등록 신청 상세 정보
+	public GoodsApply getGoodsRegApplyInfo(String goodsApplyCode);
+	
+	//상품 등록 신청 승인
+	public boolean approveGoodsRegApply(String goodsApplyCode);
+	
+	//상품 등록 신청 정보 기반으로 상품테이블에 인서트
+	public boolean addGoodsRegApplyToGoods(Goods goods);
+	
+	//상품 등록 신청 영양 정보 조회
+	public Ingredient getGoodsApplyIngredient(String goodsApplyCode);
+	
+	//상품 영양 정보 등록
+	public boolean addGoodsIngredient(Ingredient ingredient);
+	
+	//상품 등록 신청 거절
+	public boolean refuseGoodsRegApply(Map<String, Object> map);
+	
 	//상품 카테고리 등록
 	public boolean addGoodsCategory(GoodsCategory goodsCategory);
 	
@@ -40,7 +61,7 @@ public interface GoodsMapper {
 	public boolean addGoods(Goods goods);
 	
 	//상품 리스트
-	public List<Goods> getAdminGoodsList();
+	public List<Goods> getAdminGoodsList(Map<String, Object> map);
 	
 	//상품 삭제
 	public boolean removeGoods(String goodsCode);
@@ -76,7 +97,7 @@ public interface GoodsMapper {
 	public boolean removeMenuOragnize(String menuCode);
 	
 	//식단 리스트
-	public List<Goods> getAdminMenuList(int isLocalhost);
+	public List<Goods> getAdminMenuList(Map<String, Object> map);
 	
 	//식단 수정
 	public int modifyAdminMenu();

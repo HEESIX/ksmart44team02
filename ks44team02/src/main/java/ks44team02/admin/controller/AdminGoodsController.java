@@ -1,7 +1,6 @@
 package ks44team02.admin.controller;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +30,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.GoodsMainImage;
+import ks44team02.dto.Ingredient;
 import ks44team02.dto.MenuInformation;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.service.CommonService;
@@ -66,10 +67,118 @@ public class AdminGoodsController {
 	@GetMapping("/goodsRegApplyList")
 	public String getGoodsRegApplyList(Model model) {
 
-		List<Map<String, Object>> goodsRegApplyList = goodsService.getGoodsRegApplyList();
+		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(null);
 		model.addAttribute("title", "상품 등록 신청 목록");
 		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
 		return "admin/goods/goodsRegApplyList";
+	}
+	
+	//상품 등록 신청 리스트 검색
+	@PostMapping("/goodsRegApplyList")
+	public String getSearchGoodsRegApplyList(Model model
+											,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+										    ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+										    ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+										    ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+										    ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+										    ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate
+										    ,HttpServletRequest request) {
+		String serverName = request.getServerName(); 
+		 log.info("{} <<<< serverName", serverName); 
+		 log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		 int isLocalhost = 0;
+		 
+		 if ("localhost".equals(serverName)) {
+			 isLocalhost = 1; 
+		 }
+											
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "ga_name";
+		}else if("enterName".equals(searchKey)) {
+			searchKey = "e.enter_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "gc.cate_name";
+		}else if("goodsProduce".equals(searchKey)) {
+			searchKey = "ga_produce";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "ga_price";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "ga_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "ga_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "ga_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "ga_reg_apply_datetime";
+		}
+		
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		map.put("isLocalhost", isLocalhost);
+		
+		log.info(">>>>>>>>>>>>>>>>>>>>{}", map);
+		
+		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(map);
+		log.info(">>>>>>>>>>>{}", goodsRegApplyList);
+		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
+		
+		return "admin/goods/goodsRegApplyList";
+	}
+	
+	//상품 등록 신청 승인
+	@PostMapping("/approveGoodsRegApply")
+	@ResponseBody
+	@Transactional
+	public boolean approveGoodsRegApply(@RequestParam(value = "goodsApplyCode") String goodsApplyCode) {
+		
+		// 상품 신청 정보를 승인으로 업데이트 후
+		//상품 등록 신청 정보를 바탕으로 상품 테이블에 INSERT
+		String goodsCode = commonService.getNewCode("tb_goods");
+		
+		boolean approveGoodsRegApplyResult = goodsService.approveGoodsRegApply(goodsApplyCode, goodsCode);
+		if(!approveGoodsRegApplyResult) return false;
+		
+		//발행된 상품 코드를 바탕으로 상품 등록 신청한 영양정보를 INSERT
+		String ingredientCode = commonService.getNewCode("tb_ingredient");
+		
+		Ingredient ingredient = new Ingredient();
+		
+		ingredient.setIngredientCode(ingredientCode);
+		ingredient.setGoodsCode(goodsCode);
+		
+		boolean addIngredientResult = goodsService.addIngredient(ingredient, goodsApplyCode);
+		if(!addIngredientResult) return false;
+		
+		return true;
+	}
+	
+	//상품 등록 신청 거절
+	@PostMapping("/refuseGoodsRegApply")
+	@ResponseBody
+	public boolean refuseGoodsRegApply(@RequestParam(value = "refuseReason") String refuseReason
+									  ,@RequestParam(value = "goodsApplyCode") String goodsApplyCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("refuseReason", refuseReason);
+		map.put("goodsApplyCode", goodsApplyCode);
+		
+		boolean refuseGoodsRegApplyResult = goodsService.refuseGoodsRegApply(map);
+		
+		return refuseGoodsRegApplyResult;
+	}
+	
+	// 상품 등록 신청 상세 정보
+	@GetMapping("/goodsRegApplyDetail/{goodsApplyCode}")
+	public String getGoodsRegApplyInfo(Model model
+										,@PathVariable(value = "goodsApplyCode") String goodsApplyCode) {
+		GoodsApply goodsRegApplyInfo = goodsService.getGoodsRegApplyInfo(goodsApplyCode);
+		model.addAttribute("goodsRegApplyInfo", goodsRegApplyInfo);
+		return "admin/goods/goodsRegApplyDetail";
 	}
 
 	// 상품 카테고리 등록 폼
@@ -169,13 +278,60 @@ public class AdminGoodsController {
 
 	// 상품 리스트
 	@GetMapping("/goodsList")
-	public String getAdminGoodsList(Model model) {
-		List<Goods> goodsList = goodsService.getAdminGoodsList();
+	public String getGoodsList(Model model) {
+		List<Goods> goodsList = goodsService.getAdminGoodsList(null);
 		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goodsList";
 	}
-
+	
+	// 상품 리스트 검색
+	@PostMapping("/goodsList")
+	public String getSearchGoodsList(Model model
+										 ,@RequestParam(value = "msg", required = false) String msg
+										 ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+										 ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+										 ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+										 ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+									     ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+									     ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "g_name";
+		}else if("enterName".equals(searchKey)) {
+			searchKey = "e.enter_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "cate_name";
+		}else if("goodsProduce".equals(searchKey)) {
+			searchKey = "g_produce";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "g_price";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "g_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "g_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "g_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "g_reg_datetime";
+		}	
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		
+		log.info(">>>>>>>>>{}", map);
+		
+		List<Goods> goodsList = goodsService.getAdminGoodsList(map);
+		System.out.println(goodsList.toString());
+		model.addAttribute("goodsList", goodsList);
+		return "admin/goods/goodsList";
+	}
+	
 	// 개별 상품 정보
 	@GetMapping("/goodsDetail/{g_code}")
 	public String getGoodsInfo(@PathVariable(value = "g_code") String goodsCode, Model model) {
@@ -353,6 +509,8 @@ public class AdminGoodsController {
 	@GetMapping("/menu/menuList")
 	public String getAdminMenuList(Model model
 								  ,HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		//image가 관련된 부분은 전부 isLocal test 필요
 		String serverName = request.getServerName(); 
 		log.info("{} <<<< serverName", serverName); 
@@ -362,9 +520,63 @@ public class AdminGoodsController {
 		if (!"localhost".equals(serverName)) { 
 			isLocalhost = 0;
 		}
+		map.put("isLocalhost", isLocalhost);
 		
-		List<Goods> adminMenuList = goodsService.getAdminMenuList(isLocalhost);
+		List<Goods> adminMenuList = goodsService.getAdminMenuList(map);
 		model.addAttribute("adminMenuList", adminMenuList);
+		return "admin/goods/menu/menuList";
+	}
+	
+	//식단 리스트 검색
+	@PostMapping("/menu/menuList")
+	public String getSearchMenuList(Model model
+								   ,HttpServletRequest request
+								   ,@RequestParam(value = "msg", required = false) String msg
+								   ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+								   ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+								   ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+								   ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+							       ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+							       ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 1;
+		
+		if (!"localhost".equals(serverName)) { 
+			isLocalhost = 0;
+		}
+		map.put("isLocalhost", isLocalhost);
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "g_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "gc.cate_name";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "g_price";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "g_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "g_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "g_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "g_reg_datetime";
+		}	
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		
+		log.info(">>>>>>>>>{}", map);
+		
+		List<Goods> adminMenuList = goodsService.getAdminMenuList(map);
+		model.addAttribute("adminMenuList", adminMenuList);
+		
 		return "admin/goods/menu/menuList";
 	}
 

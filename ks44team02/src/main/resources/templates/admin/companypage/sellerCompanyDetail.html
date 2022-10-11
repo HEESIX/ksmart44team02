@@ -27,11 +27,11 @@
 		<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
-				<h4>입점 신청 리스트</h4>
+				<h4>입점 업체 리스트</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 							class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/companypage/sellerCompanyList}">입점 신청 정보</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/companypage/sellerCompanyDetail}">입점 업체 정보</a></li>
 					</ol>
 				</div>
 			</div>
@@ -45,26 +45,22 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>신청코드</th>
-										<th>판매자ID</th>
+										<th>입점업체코드</th>
+										<th>신청ID</th>
 										<th>브랜드</th>
 										<th>업체명</th>
+										<th>주소</th>
+										<th>연락처</th>
+										<th>입점일자</th>
 										<th>사업자등록번호</th>
-										<th>이름</th>
-										<th>전화번호</th>
-										<th>회사주소</th>
-										<th>회사소개</th>
-										<th>상품 신청서</th>
-										<th>홈페이지</th>
-										<th>입점 신청 파일</th>
-										<th>신청일자</th>
-										<th>승인</th>
-										<th>수정</th>
+										<th>판매자 등급</th>
+										<th>등록한 상품</th>
+										<th>탈퇴 상태</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:if="${not #lists.isEmpty(sellerCompanyList)}"
-										th:each="scc, status : ${sellerCompanyList}">
+									<tr th:if="${not #lists.isEmpty(sellerCompanyDetail)}"
+										th:each="scc, status : ${sellerCompanyDetail}">
 										<td th:text="${status.count}"></td>
 										<td th:text="${scc.sellerCode}"></td>
 										<td th:text="${scc.sellerId}"></td>
@@ -80,7 +76,6 @@
 										<td th:text="${scc.sellerFile}"></td>
 										<td th:text="${scc.sellerDate}"></td>
 										<td th:text="${scc.sellerApp}"></td>
-										<td><a th:href="@{|/admin/companypage/sellerCompanyModify/${scc.sellerId}|}">수정</a></td>
 									</tr>
 								</tbody>
 							</table>

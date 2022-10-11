@@ -171,15 +171,15 @@
 			<result column="member_id" property="goodsCategoryRegId"/>
 			<result column="cate_status" property="goodsCategoryStatus"/>
 		</association>
-		<association property="ingredient" javaType="Ingredient" columnPrefix="i_">
-			<id column="ingr_code" property="ingredientCode"/>
-			<result column="g_code" property="goodsCode"/>
-			<result column="ingr_kcal" property="ingredientKCal"/>
-			<result column="ingr_protein" property="ingredientProtein"/>
-			<result column="ingr_carb" property="ingredientCarb"/>
-			<result column="ingr_sugar" property="ingredientSugar"/>
-			<result column="ingr_sodium" property="ingredientSodium"/>
-			<result column="ingr_cholesterol" property="ingredientCholesterol"/>
+		<association property="ingredient" javaType="Ingredient" columnPrefix="gai_">
+			<id column="ap_ingr_code" property="ingredientCode"/>
+			<result column="ga_code" property="goodsCode"/>
+			<result column="ap_ingr_kcal" property="ingredientKCal"/>
+			<result column="ap_ingr_protein" property="ingredientProtein"/>
+			<result column="ap_ingr_carb" property="ingredientCarb"/>
+			<result column="ap_ingr_sugar" property="ingredientSugar"/>
+			<result column="ap_ingr_sodium" property="ingredientSodium"/>
+			<result column="ap_ingr_cholesterol" property="ingredientCholesterol"/>
 		</association>
 		<association property="goodsMainImageInfo" javaType="GoodsMainImage" columnPrefix="gmi_">
 			<id column="main_image_idx" property="mainImageIdx"/>
@@ -295,7 +295,7 @@
 		FROM 
 			tb_goods_discount_management AS gdm
 		WHERE 
-			gdm.enter_code IS NULL;
+			gdm.enter_code IS NULL
 	</select>
 	<!-- 상품별 할인혜택 리스트(seller) -->
 	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
@@ -316,7 +316,7 @@
 			gdm.enter_code IS NULL;
 	</select>
 	<!-- 상품 목록(전부) 하자 없는 것  !! fileIsLocal 들어가줘야함-->
-	<select id="getAdminGoodsList" resultMap="goodsResultMap">
+	<select id="getAdminGoodsList" parameterType="Map" resultMap="goodsResultMap">
 		SELECT
 			g.g_code
 			,gmi.main_image_path			as gmi_main_image_path
@@ -353,7 +353,30 @@
 			INNER JOIN 
 			tb_goods_main_image AS gmi
 			ON 
-			gmi.main_image_idx = g.g_main_image;
+			gmi.main_image_idx = g.g_main_image
+			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="sk != null and sv != ''">
+					${sk} LIKE CONCAT('%', #{sv}, '%')
+				</if>
+				<if test="sk != null and minNum != '' and maxNum != ''">
+					${sk} BETWEEN #{minNum} AND #{maxNum}
+				</if>
+				<if test="sk != null and minNum == '' and maxNum != ''">
+					${sk} <![CDATA[<=]]> #{maxNum}
+				</if>
+				<if test="sk != null and minNum != '' and maxNum == ''">
+					${sk} >= #{minNum}
+				</if>
+				<if test="sk != null and minDate != '' and maxDate != ''">
+					${sk} BETWEEN #{minDate} AND #{maxDate}
+				</if>
+				<if test="sk != null and minDate == '' and maxDate != ''">
+					${sk} <![CDATA[<=]]> #{maxDate}
+				</if>
+				<if test="sk != null and minDate != '' and maxDate == ''">
+					${sk} >= #{minDate}
+				</if>
+			</trim>
 	</select>
 	<!-- 상품 삭제  -->
 	<delete id="removeGoods" parameterType="String">
@@ -551,14 +574,14 @@
 			g.g_code = #{goodsCode};
 	</select>
 	<!-- 상품 등록 신청 목록  -->
-	<select id="getGoodsRegApplyList" resultMap="goodsApplyResultMap">
+	<select id="getGoodsRegApplyList" parameterType="Map" resultMap="goodsApplyResultMap">
 		SELECT 
 			gmi.main_image_original_name 		as gmi_main_image_original_name
 			,gmi.main_image_path 				as gmi_main_image_path
 			,e.enter_name 						as e_enter_name
 			,gc.cate_name						as gc_cate_name
-			,ga.ga_name AS goodsName			
-			,ga.ga_price AS goodsPrice			
+			,ga.ga_name		
+			,ga.ga_price		
 			,gdm.discount_name					as gdm_discount_name
 			,ga.ga_discount						
 			,ga.ga_netweight					
@@ -591,13 +614,194 @@
 			tb_goods_discount_management AS gdm
 			on
 			gdm.goods_discount_code = ga.goods_discount_code
-		WHERE 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			ga.ga_approve_refuse = '검토중'
+			<if test="isLocalhost != null">
+				AND gmi.main_image_islocal = ${isLocalhost}
+			</if>
+			<if test="sk != null and sv != ''">
+				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+			<if test="sk != null and minNum != '' and maxNum != ''">
+				AND ${sk} BETWEEN #{minNum} AND #{maxNum}
+			</if>
+			<if test="sk != null and minNum == '' and maxNum != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxNum}
+			</if>
+			<if test="sk != null and minNum != '' and maxNum == ''">
+				AND ${sk} >= #{minNum}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate != ''">
+				AND ${sk} BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="sk != null and minDate == '' and maxDate != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxDate}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate == ''">
+				AND ${sk} >= #{minDate}
+			</if>
+		</trim>
 		order by 
-			ga.ga_reg_apply_datetime;
+			ga.ga_reg_apply_datetime
 	</select>
+	<!-- 등록 신청한 상품 상세 정보  -->
+	<select id="getGoodsRegApplyInfo" parameterType="String" resultMap="goodsApplyResultMap">
+		SELECT 
+			ga.ga_name
+			,ga.g_apply_code
+			,ga.enter_code
+			,ga.g_cate_code
+			,ga.ga_price
+			,gdm.discount_price 			AS gdm_discount_price
+			,ga.goods_discount_code
+			,gdm.discount_rate 				as gdm_discount_rate
+			,gdm.discount_name 				AS gdm_discount_name
+			,ga.ga_discount
+			,ga.ga_delivery_charge
+			,ga.ga_netweight
+			,ga.ga_netweightunit
+			,ga.ga_produce
+			,ga.ga_production_expiration_info
+			,ga.ga_main_image
+			,ga.ga_info_image
+			,e.enter_name 					AS e_enter_name
+			,gc.cate_name 					AS gc_cate_name
+			,gc.g_cate_code	 				AS gc_g_cate_code
+			,gai.ap_ingr_kcal 				AS gai_ap_ingr_kcal
+			,gai.ap_ingr_protein 			AS gai_ap_ingr_protein
+			,gai.ap_ingr_carb 				AS gai_ap_ingr_carb
+			,gai.ap_ingr_sugar 				AS gai_ap_ingr_sugar
+			,gai.ap_ingr_sodium 			AS gai_ap_ingr_sodium
+			,gai.ap_ingr_cholesterol 		AS gai_ap_ingr_cholesterol
+			,gmi.main_image_original_name 	AS gmi_main_image_original_name
+			,gmi.main_image_path 			AS gmi_main_image_path
+			,gii.info_image_original_name 	AS gii_info_image_original_name
+			,gii.info_image_path 			AS gii_info_image_path
+		FROM 
+			tb_goods_apply AS ga 
+			INNER JOIN 
+			tb_enterprise AS e 
+			ON 
+			e.enter_code = ga.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = ga.g_cate_code
+			INNER JOIN 
+			tb_goods_apply_ingredient AS gai
+			ON 
+			gai.ga_code = ga.g_apply_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi 
+			ON 
+			gmi.main_image_idx = ga.ga_main_image
+			INNER JOIN 
+			tb_goods_info_image AS gii
+			on
+			gii.info_image_idx = ga.ga_info_image
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = ga.goods_discount_code
+		where
+			ga.g_apply_code = #{goodsApplyCode}
+	</select>
+	<!-- 상품 등록 신청 정보 승인으로 변경  -->
+	<update id="approveGoodsRegApply" parameterType="String">
+		UPDATE tb_goods_apply
+		SET
+			ga_approve_refuse='승인'
+			,ga_approve_datetime=NOW()
+		WHERE 
+			g_apply_code = #{goodsApplyCode}
+	</update>
+	<!-- 상품 등록 신청 정보 기반으로 상품테이블에 인서트  -->
+	<insert id="addGoodsRegApplyToGoods" parameterType="Goods">
+		INSERT INTO tb_goods(
+			g_code
+			, enter_code
+			, g_cate_code
+			, g_name
+			, g_price
+			, goods_discount_code
+			, g_discount
+			, g_netweight
+			, g_netweightunit
+			, g_produce
+			, g_production_expiration_info
+			, g_main_image
+			, g_info_image
+			, g_stock
+			, g_delivery_charge
+			, g_reg_datetime
+			, g_activation
+		)VALUES(
+			#{goodsCode}
+			,#{enterCode}
+			,#{goodsCateCode}
+			,#{goodsName}
+			,${goodsPrice}
+			,#{goodsDiscountCode}
+			,${goodsDiscountedPrice}
+			,${goodsNetWeight}
+			,#{goodsNetWeightUnit}
+			,#{goodsProduce}
+			,#{goodsProductionExpirationInfo}
+			,#{goodsMainImageCode}
+			,#{goodsInfoImageCode}
+			,${goodsStock}
+			,${goodsDeliveryCharge}
+			,NOW()
+			,${goodsActivation}
+		);
+	</insert>
+	<!-- 상품 영양 정보 등록  -->
+	<insert id="addGoodsIngredient" parameterType="Ingredient">
+		INSERT INTO tb_ingredient(
+			ingr_code
+			,g_code
+			,ingr_kcal
+			,ingr_protein
+			,ingr_carb
+			,ingr_sugar
+			,ingr_sodium
+			,ingr_cholesterol
+		)VALUES(
+			#{ingredientCode}
+			,#{goodsCode}
+			,${ingredientKCal}
+			,${ingredientProtein}
+			,${ingredientCarb}
+			,${ingredientSugar}
+			,${ingredientSodium}
+			,${ingredientCholesterol}
+		);
+	</insert>
+	<select id="getGoodsApplyIngredient" parameterType="String" resultType="Ingredient">
+		SELECT 
+			ap_ingr_kcal			as ingredientKCal
+			,ap_ingr_protein		as ingredientProtein
+			,ap_ingr_carb			as ingredientCarb
+			,ap_ingr_sugar			as ingredientSugar
+			,ap_ingr_sodium			as ingredientSodium
+			,ap_ingr_cholesterol	as ingredientCholesterol
+		FROM 
+			tb_goods_apply_ingredient
+		WHERE 
+			ga_code = #{goodsApplyCode}
+	</select>
+	<!-- 상품 등록 신청 거절  -->
+	<update id="refuseGoodsRegApply" parameterType="Map">
+		UPDATE tb_goods_apply
+		SET
+			ga_approve_refuse = '거절'
+			,ga_approve_datetime=NOW()
+			,ga_refuse_reason=#{refuseReason}
+		WHERE 
+			g_apply_code = #{goodsApplyCode}
+	</update>
 	<!-- 식단 조회  -->
-	<select id="getAdminMenuList" parameterType="int" resultMap="goodsResultMap">
+	<select id="getAdminMenuList" parameterType="Map" resultMap="goodsResultMap">
 		SELECT 
 			g.g_code
 			,mi.menu_code					as mi_menu_code
@@ -633,8 +837,32 @@
 			tb_goods_discount_management AS gdm
 			ON 
 			gdm.goods_discount_code = g.goods_discount_code
-		WHERE
-			gmi.main_image_islocal = ${isLocalhost};
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="isLocalhost != null">
+				gmi.main_image_islocal = ${isLocalhost}
+			</if>
+			<if test="sk != null and sv != ''">
+				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+			<if test="sk != null and minNum != '' and maxNum != ''">
+				AND ${sk} BETWEEN #{minNum} AND #{maxNum}
+			</if>
+			<if test="sk != null and minNum == '' and maxNum != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxNum}
+			</if>
+			<if test="sk != null and minNum != '' and maxNum == ''">
+				AND ${sk} >= #{minNum}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate != ''">
+				AND ${sk} BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="sk != null and minDate == '' and maxDate != ''">
+				AND ${sk} <![CDATA[<=]]> #{maxDate}
+			</if>
+			<if test="sk != null and minDate != '' and maxDate == ''">
+				AND ${sk} >= #{minDate}
+			</if>
+		</trim>
 	</select>
 	<!-- 메뉴 코드를 받아서 어떤 상품이 몇개가 포함되어있는지 확인  -->
 	<select id="getMenuOrganizeList" parameterType="String" resultMap="menuOrganizeResultMap">

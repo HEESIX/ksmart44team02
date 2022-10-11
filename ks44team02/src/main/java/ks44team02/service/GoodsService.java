@@ -1,35 +1,107 @@
 package ks44team02.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Goods;
+import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
 import ks44team02.dto.GoodsInfoImage;
 import ks44team02.dto.GoodsMainImage;
+import ks44team02.dto.Ingredient;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.MenuInformation;
+import ks44team02.mapper.CommonMapper;
 import ks44team02.mapper.GoodsMapper;
 
 @Service
 public class GoodsService {
+	
+	private static final Logger log = LoggerFactory.getLogger(GoodsService.class);
 
 	private final GoodsMapper goodsMapper;
+	private final CommonMapper commonMapper;
 
-	public GoodsService(GoodsMapper goodsMapper) {
+	public GoodsService(GoodsMapper goodsMapper, CommonMapper commonMapper) {
 		this.goodsMapper = goodsMapper;
+		this.commonMapper = commonMapper;
 	}
 
 	// 상품 등록 신청 리스트
-	public List<Map<String, Object>> getGoodsRegApplyList() {
-		List<Map<String, Object>> goodsRegApplyList = goodsMapper.getGoodsRegApplyList();
+	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map) {
+		List<GoodsApply> goodsRegApplyList = goodsMapper.getGoodsRegApplyList(map);
 		return goodsRegApplyList;
+	}
+	
+	// 상품 등록 신청 상세 정보
+	public GoodsApply getGoodsRegApplyInfo(String goodsApplyCode) {
+		GoodsApply goodsRegApplyInfo = goodsMapper.getGoodsRegApplyInfo(goodsApplyCode);
+		return goodsRegApplyInfo;
+	}
+	
+	//상품 등록 신청 승인
+	public boolean approveGoodsRegApply(String goodsApplyCode, String goodsCode) {
+		
+		//상품 등록 신청 DB의 값을 승인으로 update
+		boolean result = goodsMapper.approveGoodsRegApply(goodsApplyCode);
+		if(!result) return false;
+		
+		//상품 등록 신청한 정보를 기반으로 상품테이블에 INSERT
+		GoodsApply goodsApply = goodsMapper.getGoodsRegApplyInfo(goodsApplyCode);
+		System.out.println(goodsApply.toString());
+		
+		Goods goods = new Goods();
+		
+		goods.setGoodsCode(goodsCode);
+		goods.setEnterCode(goodsApply.getEnterCode());
+		goods.setGoodsCateCode(goodsApply.getGoodsCategoryCode());
+		goods.setGoodsName(goodsApply.getGoodsApplyName());
+		goods.setGoodsPrice(goodsApply.getGoodsApplyPrice());
+		goods.setGoodsDiscountCode(goodsApply.getGoodsDiscountCode());
+		goods.setGoodsDiscountedPrice(goodsApply.getGoodsApplyDiscount());
+		goods.setGoodsNetWeight(goodsApply.getGoodsApplyNetWeight());
+		goods.setGoodsNetWeightUnit(goodsApply.getGoodsApplyNetWeightUnit());
+		goods.setGoodsProduce(goodsApply.getGoodsApplyProduce());
+		goods.setGoodsProductionExpirationInfo(goodsApply.getGoodsApplyProductionExpirationInfo());
+		goods.setGoodsMainImageCode(goodsApply.getGoodsApplyMainImage());
+		goods.setGoodsInfoImageCode(goodsApply.getGoodsApplyInfoImage());
+		goods.setGoodsStock(goodsApply.getGoodsApplyStock());
+		goods.setGoodsDeliveryCharge(goodsApply.getGoodsApplyDeliveryCharge());
+		goods.setGoodsActivation(1);
+		
+		boolean goodsRegApplyToGoodsResult = goodsMapper.addGoodsRegApplyToGoods(goods);
+		if(!goodsRegApplyToGoodsResult) return false;
+		
+		return true;
+	}
+	
+	//상품 영양 정보 상품 신청 영양 정보 기반으로 INSERT
+	public boolean addIngredient(Ingredient ingredient, String goodsApplyCode) {
+		
+		//상품 등록 신청 코드로 해당 상품의 영양 정보 조회
+		Ingredient goodsApplyIngredient = goodsMapper.getGoodsApplyIngredient(goodsApplyCode);
+		
+		goodsApplyIngredient.setIngredientCode(ingredient.getIngredientCode());
+		goodsApplyIngredient.setGoodsCode(ingredient.getGoodsCode());
+		
+		boolean result = goodsMapper.addGoodsIngredient(goodsApplyIngredient);
+		
+		return result;
+	}
+	
+	//상품 등록 신청 거절
+	public boolean refuseGoodsRegApply(Map<String, Object> map) {
+		boolean result = goodsMapper.refuseGoodsRegApply(map);
+		return result;
 	}
 
 	// 상품 카테고리 등록
@@ -79,8 +151,8 @@ public class GoodsService {
 	}
 
 	// 상품 리스트
-	public List<Goods> getAdminGoodsList() {
-		List<Goods> goodsList = goodsMapper.getAdminGoodsList();
+	public List<Goods> getAdminGoodsList(Map<String, Object> map) {
+		List<Goods> goodsList = goodsMapper.getAdminGoodsList(map);
 		return goodsList;
 	}
 
@@ -138,8 +210,8 @@ public class GoodsService {
 	}
 
 	// 식단 리스트
-	public List<Goods> getAdminMenuList(int isLocalhost) {
-		List<Goods> adminMenuList = goodsMapper.getAdminMenuList(isLocalhost);
+	public List<Goods> getAdminMenuList(Map<String, Object> map) {
+		List<Goods> adminMenuList = goodsMapper.getAdminMenuList(map);
 
 		return adminMenuList;
 	}
