@@ -50,7 +50,7 @@ public class BuyerDeliveryController {
 		@GetMapping("/myOrderDeliveryDetail")
 		public String getOrderStatus(Model model
 									,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
-			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderStatus(orderGroupCode);
+			List<Map<String, Object>> getOrderDetailList = deliveryservice.getOrderDetailList(orderGroupCode);
 			Map<String, Object> getPaymentList = deliveryservice.getPaymentDetail(orderGroupCode);
 			Map<String, Object> getDeliveryinfo = deliveryservice.getDeliveryinfo(orderGroupCode);
 			
