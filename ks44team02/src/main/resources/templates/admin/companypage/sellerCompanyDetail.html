@@ -46,7 +46,7 @@
 									<tr>
 										<th>No.</th>
 										<th>입점업체코드</th>
-										<th>신청ID</th>
+										<th>ID</th>
 										<th>브랜드</th>
 										<th>업체명</th>
 										<th>주소</th>
@@ -62,20 +62,17 @@
 									<tr th:if="${not #lists.isEmpty(sellerCompanyDetail)}"
 										th:each="scc, status : ${sellerCompanyDetail}">
 										<td th:text="${status.count}"></td>
-										<td th:text="${scc.sellerCode}"></td>
-										<td th:text="${scc.sellerId}"></td>
-										<td th:text="${scc.sellerBrand}"></td>
-										<td th:text="${scc.sellerEnter}"></td>
-										<td th:text="${scc.sellerNum}"></td>
-										<td th:text="${scc.sellerManager}"></td>
-										<td th:text="${scc.sellerPhone}"></td>
-										<td th:text="${scc.sellerAdd}"></td>
-										<td th:text="${scc.sellerContent}"></td>
-										<td th:text="${scc.sellerHwp}"></td>
-										<td th:text="${scc.sellerUrl}"></td>
-										<td th:text="${scc.sellerFile}"></td>
-										<td th:text="${scc.sellerDate}"></td>
-										<td th:text="${scc.sellerApp}"></td>
+										<td th:text="${scc.enterCode}"></td>
+										<td th:text="${scc.enterId}"></td>
+										<td th:text="${scc.enterBrand}"></td>
+										<td th:text="${scc.enterName}"></td>
+										<td th:text="${scc.enterAdd}"></td>
+										<td th:text="${scc.enterNum}"></td>
+										<td th:text="${scc.enterDate}"></td>
+										<td th:text="${scc.enterBusinessNum}"></td>
+										<td th:text="${scc.enterLevelCode}"></td>
+										<td th:text="${scc.enterProducts}"></td>
+										<td th:text="${scc.enterWithdraw}"></td>
 									</tr>
 								</tbody>
 							</table>

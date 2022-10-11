@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ks44team02.dto.Enterprise;
 import ks44team02.dto.Launching;
 
 @Mapper
@@ -27,5 +28,5 @@ public interface AdminCompanyMapper {
 	public String companyInfoRemove();
 	
 	//입점 업체 탈퇴/승인 상세 정보
-	public String companyInfoDetail();
+	public List<Enterprise> companyInfoDetail(Map<String, Object> map);
 }

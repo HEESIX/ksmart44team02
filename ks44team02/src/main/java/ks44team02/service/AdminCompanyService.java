@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ks44team02.dto.Enterprise;
 import ks44team02.dto.Launching;
 import ks44team02.mapper.AdminCompanyMapper;
 
@@ -45,7 +46,8 @@ public class AdminCompanyService {
 	}
 	
 	//입점 업체 탈퇴/승인 상세 정보
-	public String companyInfoDetail() {
-		return "admin/companypage/sellerCompanyDetail";
+	public List<Enterprise> companyInfoDetail(Map<String, Object> map) {
+		List<Enterprise> sellerCompanyDetail = adminCompanyMapper.companyInfoDetail(map);
+		return sellerCompanyDetail;
 	}
 }
