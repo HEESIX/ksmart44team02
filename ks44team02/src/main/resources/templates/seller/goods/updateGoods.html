@@ -1,10 +1,523 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	상품 수정폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/sellerDefault}">
+
+<!-- 상품 수정 폼  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.nice-select {
+	margin-bottom: 24px;
+}
+
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: middle;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #999999;
+	cursor: pointer;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+}
+
+:root { -
+	-body-background-color: #f5f6f7; -
+	-font-color: #4e4e4e; -
+	-border-gray-color: #dadada; -
+	-naver-green-color: #04c75a; -
+	-naver-green-border-color: #06b350;
+}
+
+body {
+	background: var(- -body-background-color);
+}
+
+.main-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 21px;
+}
+
+.main-container .main-wrap {
+	width: 768px;
+}
+
+.main-container .main-wrap .sel-lang-wrap .lang-select {
+	width: 96px;
+	height: 30px;
+	color: var(- -font-color);
+	border: solid 1px var(- -border-gray-color);
+}
+
+.main-container .main-wrap .logo-wrap {
+	padding-top: 55px;
+}
+
+.main-container .main-wrap .logo-wrap img {
+	width: 231px;
+	height: 44px;
+}
+
+.main-container .main-wrap header .sel-lang-wrap {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.main-container .main-wrap header .logo-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-input-section-wrap {
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-input-wrap {
+	width: 465px;
+	height: 48px;
+	border: solid 1px var(- -border-gray-color);
+	background: white;
+}
+
+.password-wrap {
+	margin-top: 13px;
+}
+
+.login-input-wrap input {
+	border: none;
+	width: 430px;
+	margin-top: 10px;
+	font-size: 14px;
+	margin-left: 10px;
+	height: 30px;
+}
+
+.login-button-wrap {
+	padding-top: 13px;
+}
+
+.login-button-wrap button {
+	width: 465px;
+	height: 48px;
+	font-size: 18px;
+	background: var(- -naver-green-color);
+	color: white;
+	border: solid 1px var(- -naver-green-border-color);
+}
+
+.login-stay-sign-in {
+	width: 465px;
+	height: 52px;
+	display: flex;
+	font-size: 15px;
+	color: #4e4e4e;
+	align-items: center;
+	justify-content: flex-start;
+	border-bottom: solid 1px var(- -border-gray-color);
+}
+
+.login-stay-sign-in i {
+	font-size: 25px;
+	color: #9ba1a3;
+}
+
+.login-stay-sign-in span {
+	padding-left: 5px;
+	line-height: 25px;
+}
+
+.Easy-sgin-in-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 40px;
+}
+
+.Easy-sgin-in-wrap h2 {
+	font-size: 20px;
+}
+
+.Easy-sgin-in-wrap .sign-button-list {
+	padding-top: 25px;
+	list-style: none;
+	width: 465px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Easy-sgin-in-wrap .sign-button-list li {
+	padding-bottom: 10px;
+}
+
+.Easy-sgin-in-wrap .sign-button-list li button {
+	width: 465px;
+	height: 56px;
+	border: solid 1px var(- -border-gray-color);
+	text-align: left;
+	background: white;
+}
+
+.Easy-sgin-in-wrap .sign-button-list li button i {
+	padding-left: 15px;
+	font-size: 20px;
+}
+
+.fa-qrcode {
+	color: var(- -naver-green-color);
+}
+
+.fa-line {
+	color: var(- -naver-green-color);
+}
+
+.fa-facebook-square {
+	color: #4064ac;
+}
+
+.Easy-sgin-in-wrap .sign-button-list li button span {
+	padding-left: 20px;
+	font-size: 18px;
+}
+
+.Easy-sgin-in-wrap .forget-msg {
+	color: var(- -font-color);
+	font-size: 14px;
+	padding-top: 10px;
+}
+
+.copyright-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 15px;
+}
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>상품 수정</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+<th:block layout:fragment="customContents">
+	<section class="checkout spad" style="padding-top: 0;">
+		<div class="container">
+			<form th:action="@{/seller/goods/updateGoods}" method="post"
+				enctype="multipart/form-data">
+				<div class="checkout__form">
+					<h4>상품 등록</h4>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsCateCode">상품 카테고리<span>*</span>
+											</label>
+										</p>
+										<select id="goodsCateCode" name="goodsCateCode">
+											<th:block th:if="${not #lists.isEmpty(goodsCategoryList)}">
+												<option>상품 카테고리를 선택해주세요.</option>
+												<th:block th:each="gcl : ${goodsCategoryList}">
+													<option th:value="${gcl.goodsCategoryCode}"
+														th:text="${gcl.goodsCategoryName}"></option>
+												</th:block>
+											</th:block>
+											<option th:unless="${not #lists.isEmpty(goodsCategoryList)}">카테고리가
+												존재하지 않습니다.</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="checkout__input">
+								<label for="goodsName">
+									<p>
+										상품명<span> *</span>
+									</p>
+								</label> <input type="text" id="goodsName" name="goodsName">
+							</div>
+							<div class="checkout__input">
+								<label for="goodsPrice">
+									<p>
+										상품 가격<span> *</span>
+									</p>
+								</label> <input type="number" id="goodsPrice" name="goodsPrice">
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsDiscountCode"> 적용 할인 혜택 </label>
+										</p>
+										<select name="goodsDiscountCode" id="goodsDiscountCode">
+											<th:block th:if="${not #lists.isEmpty(goodsDiscountList)}">
+												<option>적용하실 혜택을 선택해주세요.</option>
+												<th:block th:each="gdl : ${goodsDiscountList}">
+													<th:block th:if="${gdl.enterCode == null}">
+														<option th:value="${gdl.goodsDiscountCode}"
+															th:text="${gdl.goodsDiscountName}+'(기본)'"></option>
+													</th:block>
+													<th:block th:unless="${gdl.enterCode == null}">
+														<option th:value="${gdl.goodsDiscountCode}"
+															th:text="${gdl.goodsDiscountName}+'(사용자 지정)'"></option>
+													</th:block>
+												</th:block>
+											</th:block>
+											<option th:unless="${not #lists.isEmpty(goodsDiscountList)}">적용
+												가능 할인 혜택이 존재하지 않습니다.</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6 mt10">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsNetWeight">상품 중량<span> *</span></label>
+										</p>
+										<input type="number" name="goodsNetWeight" id="goodsNetWeight">
+									</div>
+								</div>
+								<div class="col-lg-6 mt10">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsNetWeightUnit">상품 중량 단위<span>
+													*</span></label>
+										</p>
+										<input type="text" name="goodsNetWeightUnit"
+											id="goodsNetWeightUnit">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 mt10">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsProduce">원산지<span> *</span></label>
+										</p>
+										<input type="text" name="goodsProduce" id="goodsProduce">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input" style="margin-bottom: 0;">
+										<p>
+											<label for="goodsProductionExpirationDate">제조연월일,
+												유통기한 또는 품질유지기한<span> *</span>
+											</label>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="checkout__input col-lg-3">
+									<select id="goodsProductionExpirationDate">
+										<option value="manuImage">컨텐츠 포함</option>
+										<option value="manuText">직접 작성하기</option>
+									</select>
+								</div>
+								<div id="manuText" class="checkout__input col-lg-9"
+									style="display: none; padding-left: 0;">
+									<input type="text" placeholder="제조연월일, 유통기한 또는 품질유지기한"
+										style="height: 42px;" name="goodsProductionExpirationDate">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsMainImage">상품 썸네일 이미지 업로드<span>
+													*</span></label>
+										</p>
+										<div class="filebox">
+											<input class="upload-name" id="goodsMainImageName"
+												placeholder="상품 썸네일 이미지(*.gif, *.jpg, *.png)"> <label
+												for="goodsMainImage" style="margin-top: 8px;">파일찾기</label> <input
+												type="file" id="goodsMainImage" class="imageUpload"
+												name="goodsMainImage" accept=".gif, .jpg, .png">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsInfoImage">상품 소개 이미지 업로드<span>
+													*</span></label>
+										</p>
+										<div class="filebox">
+											<input class="upload-name" id="goodsInfoImageName"
+												placeholder="상품 소개 이미지(*.gif, *.jpg, *.png)"> <label
+												for="goodsInfoImage" style="margin-top: 8px;">파일찾기</label> <input
+												type="file" id="goodsInfoImage" class="imageUpload"
+												name="goodsInfoImage" accept=".gif, .jpg, .png">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsStock">재고<span> *</span></label>
+										</p>
+										<input type="number" id="goodsStock" name="goodsStock">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											<label for="goodsDeliveryCharge">배송비<span> *</span></label>
+										</p>
+										<input type="number" id="goodsDeliveryCharge"
+											name="goodsDeliveryCharge">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="goodsIngredient" class="checkout__form"
+					style="margin-top: 15px;">
+					<h4>상품 영양 정보</h4>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									<label for="ingredientKCal">열량(Kcal)<span> *</span></label>
+								</p>
+								<input type="number" id="ingredientKCal" name="ingredientKCal">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									<label for="ingredientProtein">단백질(g)<span>*</span></label>
+								</p>
+								<input type="number" id="ingredientProtein"
+									name="ingredientProtein">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									탄수화물(g)<span>*</span>
+								</p>
+								<input type="number">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									당류(g)<span>*</span>
+								</p>
+								<input type="number">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									나트륨(mg)<span>*</span>
+								</p>
+								<input type="number">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="checkout__input">
+								<p>
+									콜레스테롤(mg)<span>*</span>
+								</p>
+								<input type="number">
+							</div>
+						</div>
+					</div>
+					<button type="submit">등록</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs}">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			$('.imageUpload').change(function() {
+				var imageName = $(this).val().split('\\');
+				imageName = imageName[imageName.length - 1];
+				console.log(imageName);
+				$(this).parent().find('.upload-name').val(imageName);
+			});
+
+			$('.nice-select li').click(function() {
+				var selectValue = $(this).attr('data-value');
+
+				if (selectValue == 'manuText') {
+					$('#manuText').css('display', 'block');
+				} else {
+					$('#manuText').css('display', 'none');
+				}
+			});
+		});
+	</script>
+</th:block>
+
 </html>

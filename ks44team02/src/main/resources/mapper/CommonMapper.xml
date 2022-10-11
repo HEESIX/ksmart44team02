@@ -17,4 +17,28 @@
 		SELECT 
 			CONCAT(SUBSTRING_INDEX(#{tableName},'tb_',-1), DATE_FORMAT(NOW(6), '%Y%m%d%H%i%s%f'));
 	</select>
+	<select id="getEnterCodeOfMebmerId" parameterType="String" resultType="String">
+		SELECT
+			e.enter_code
+		FROM 
+			tb_member AS m 
+			INNER JOIN 
+			tb_enterprise AS e 
+			ON
+			e.member_id = m.member_id
+		WHERE 
+			m.member_id = #{memberId}
+	</select>
+	<select id="isExistEnterCode" parameterType="String" resultType="Int">
+		SELECT
+			COUNT(e.enter_code)
+		FROM 
+			tb_member AS m 
+			INNER JOIN 
+			tb_enterprise AS e 
+			ON
+			e.member_id = m.member_id
+		WHERE 
+			m.member_id = #{memberId}
+	</select>
 </mapper>

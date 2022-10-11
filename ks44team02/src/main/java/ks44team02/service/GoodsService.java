@@ -151,8 +151,8 @@ public class GoodsService {
 	}
 
 	// 상품 리스트
-	public List<Goods> getAdminGoodsList(Map<String, Object> map) {
-		List<Goods> goodsList = goodsMapper.getAdminGoodsList(map);
+	public List<Goods> getGoodsList(Map<String, Object> map) {
+		List<Goods> goodsList = goodsMapper.getGoodsList(map);
 		return goodsList;
 	}
 
@@ -322,13 +322,15 @@ public class GoodsService {
 	}
 
 	// 상품 등록 신청
-	public int applyGoodsRegister() {
-		return 0;
+	public boolean addGoodsRegApply(GoodsApply goodsApply) {
+		boolean result = goodsMapper.addGoodsRegApply(goodsApply);
+		return result;
 	}
-
-	// 상품 리스트(판매자)
-	public List<Goods> getSellerGoodsList() {
-		return null;
+	
+	//상품 등록 신청 영양 정보 등록
+	public boolean addGoodsApplyIngredient(Ingredient ingredient) {
+		boolean result = goodsMapper.addGoodsApplyIngredient(ingredient);
+		return result;
 	}
 
 	// 기존 데이터 조회(상품 수정화면 판매자)
@@ -378,8 +380,8 @@ public class GoodsService {
 	}
 
 	// 상품 목록(활성화 되어있는 것만), 식단 제외
-	public List<Map<String, Object>> getGoodsList() {
-		List<Map<String, Object>> goodsList = goodsMapper.getGoodsList();
+	public List<Map<String, Object>> getGoodsListForMenu() {
+		List<Map<String, Object>> goodsList = goodsMapper.getGoodsListForMenu();
 		return goodsList;
 	}
 

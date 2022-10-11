@@ -316,7 +316,7 @@
 			gdm.enter_code IS NULL;
 	</select>
 	<!-- 상품 목록(전부) 하자 없는 것  !! fileIsLocal 들어가줘야함-->
-	<select id="getAdminGoodsList" parameterType="Map" resultMap="goodsResultMap">
+	<select id="getGoodsList" parameterType="Map" resultMap="goodsResultMap">
 		SELECT
 			g.g_code
 			,gmi.main_image_path			as gmi_main_image_path
@@ -355,26 +355,32 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
 				<if test="sk != null and sv != ''">
-					${sk} LIKE CONCAT('%', #{sv}, '%')
+					AND ${sk} LIKE CONCAT('%', #{sv}, '%')
 				</if>
 				<if test="sk != null and minNum != '' and maxNum != ''">
-					${sk} BETWEEN #{minNum} AND #{maxNum}
+					AND ${sk} BETWEEN #{minNum} AND #{maxNum}
 				</if>
 				<if test="sk != null and minNum == '' and maxNum != ''">
-					${sk} <![CDATA[<=]]> #{maxNum}
+					AND ${sk} <![CDATA[<=]]> #{maxNum}
 				</if>
 				<if test="sk != null and minNum != '' and maxNum == ''">
-					${sk} >= #{minNum}
+					AND ${sk} >= #{minNum}
 				</if>
 				<if test="sk != null and minDate != '' and maxDate != ''">
-					${sk} BETWEEN #{minDate} AND #{maxDate}
+					AND ${sk} BETWEEN #{minDate} AND #{maxDate}
 				</if>
 				<if test="sk != null and minDate == '' and maxDate != ''">
-					${sk} <![CDATA[<=]]> #{maxDate}
+					AND ${sk} <![CDATA[<=]]> #{maxDate}
 				</if>
 				<if test="sk != null and minDate != '' and maxDate == ''">
-					${sk} >= #{minDate}
+					AND ${sk} >= #{minDate}
+				</if>
+				<if test="memberId != null and memberId != ''">
+					AND e.member_id = #{memberId}
 				</if>
 			</trim>
 	</select>
@@ -501,7 +507,7 @@
 			g_code = #{goodsCode};
 	</update>
 	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
-	<select id="getGoodsList" resultType="Map">
+	<select id="getGoodsListForMenu" resultType="Map">
 		SELECT 
 			g_code as goodsCode
 			,g_name as goodsName
@@ -573,6 +579,72 @@
 		WHERE 
 			g.g_code = #{goodsCode};
 	</select>
+	<!-- 상품 등록 신청  -->
+	<insert id="addGoodsRegApply" parameterType="GoodsApply">
+		INSERT INTO tb_goods_apply(
+			g_apply_code
+			, enter_code
+			, g_cate_code
+			, ga_name
+			, ga_price
+			, goods_discount_code
+			, ga_discount
+			, ga_netweight
+			, ga_netweightunit
+			, ga_produce
+			, ga_production_expiration_info
+			, ga_main_image
+			, ga_info_image
+			, ga_reg_apply_datetime
+			, ga_stock
+			, ga_delivery_charge
+			, ga_approve_refuse
+			, ga_approve_datetime
+			, ga_refuse_reason
+		)VALUES(
+			#{goodsApplyCode}
+			,#{enterCode}
+			,#{goodsCategoryCode}
+			,#{goodsApplyName}
+			,${goodsApplyPrice}
+			,#{goodsDiscountCode}
+			,${goodsApplyDiscount}
+			,${goodsApplyNetWeight}
+			,#{goodsApplyNetWeightUnit}
+			,#{goodsApplyProduce}
+			,#{goodsApplyProductionExpirationInfo}
+			,#{goodsApplyMainImage}
+			,#{goodsApplyInfoImage}
+			,NOW()
+			,${goodsApplyStock}
+			,${goodsApplyDeliveryCharge}
+			,'검토중'
+			,NULL
+			,NULL
+		)
+	</insert>
+	<!-- 상품 등록 신청 영양 정보 등록  -->
+	<insert id="addGoodsApplyIngredient" parameterType="Ingredient">
+		INSERT INTO tb_goods_apply_ingredient(
+			ap_ingr_code
+			,ga_code
+			,ap_ingr_kcal
+			,ap_ingr_protein
+			,ap_ingr_carb
+			,ap_ingr_sugar
+			,ap_ingr_sodium
+			,ap_ingr_cholesterol
+		)VALUES(
+			#{ingredientCode}
+			,#{goodsCode}
+			,${ingredientKCal}
+			,${ingredientProtein}
+			,${ingredientCarb}
+			,${ingredientSugar}
+			,${ingredientSodium}
+			,${ingredientCholesterol}
+		)
+	</insert>
 	<!-- 상품 등록 신청 목록  -->
 	<select id="getGoodsRegApplyList" parameterType="Map" resultMap="goodsApplyResultMap">
 		SELECT 
@@ -606,6 +678,10 @@
 			tb_enterprise AS e 
 			ON 
 			e.enter_code = ga.enter_code
+			INNER JOIN
+			tb_member as m 
+			on 
+			m.member_id = e.member_id
 			INNER JOIN 
 			tb_goods_cate AS gc
 			ON 
@@ -639,6 +715,9 @@
 			</if>
 			<if test="sk != null and minDate != '' and maxDate == ''">
 				AND ${sk} >= #{minDate}
+			</if>
+			<if test="memberId != null and memberId != ''">
+				AND m.member_id = #{memberId}
 			</if>
 		</trim>
 		order by 

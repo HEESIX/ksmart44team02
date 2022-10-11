@@ -251,7 +251,7 @@ body {
 <th:block layout:fragment="customContents">
 	<section class="checkout spad" style="padding-top: 0;">
 		<div class="container">
-			<form th:action="@{/seller/goods/goods_reg_apply}" method="post"
+			<form id="addGoodsApplyForm" th:action="@{/seller/goods/goods_reg_apply}" method="post"
 				enctype="multipart/form-data">
 				<div class="checkout__form">
 					<h4>상품 등록</h4>
@@ -261,12 +261,11 @@ body {
 								<div class="col-lg-6">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsCateCode"> 상품 카테고리<span>*</span>
+											<label for="goodsCategoryCode"> 상품 카테고리<span>*</span>
 											</label>
 										</p>
-										<select id="goodsCateCode" name="goodsCateCode">
+										<select id="goodsCategoryCode" name="goodsCategoryCode">
 											<th:block th:if="${not #lists.isEmpty(goodsCategoryList)}">
-												<option>상품 카테고리를 선택해주세요.</option>
 												<th:block th:each="gcl : ${goodsCategoryList}">
 													<option th:value="${gcl.goodsCategoryCode}"
 														th:text="${gcl.goodsCategoryName}"></option>
@@ -280,28 +279,27 @@ body {
 							</div>
 
 							<div class="checkout__input">
-								<label for="goodsName">
-									<p>
-										상품명<span> *</span>
-									</p>
-								</label> <input type="text" id="goodsName" name="goodsName">
+								<p>
+									<label for="goodsApplyName">상품명</label><span>*</span>
+								</p>
+								<input class="vailCheck" placeholder="상품명을 입력해주세요." type="text"
+									id="goodsApplyName" name="goodsApplyName">
 							</div>
 							<div class="checkout__input">
-								<label for="goodsPrice">
-									<p>
-										상품 가격<span> *</span>
-									</p>
-								</label> <input type="number" id="goodsPrice" name="goodsPrice">
+								<p>
+									<label for="goodsApplyPrice">상품 가격 </label><span> *</span>
+								</p>
+								<input class="vailCheck" placeholder="상품 가격을 입력해주세요."
+									type="number" id="goodsApplyPrice" name="goodsApplyPrice">
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsDiscountCode"> 적용 할인 혜택 </label>
+											<label for="goodsDiscountCode">적용 할인 혜택</label><span>*</span>
 										</p>
 										<select name="goodsDiscountCode" id="goodsDiscountCode">
 											<th:block th:if="${not #lists.isEmpty(goodsDiscountList)}">
-												<option>적용하실 혜택을 선택해주세요.</option>
 												<th:block th:each="gdl : ${goodsDiscountList}">
 													<th:block th:if="${gdl.enterCode == null}">
 														<option th:value="${gdl.goodsDiscountCode}"
@@ -323,19 +321,22 @@ body {
 								<div class="col-lg-6 mt10">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsNetWeight">상품 중량<span> *</span></label>
+											<label for="goodsApplyNetWeight">상품 중량</label><span>*</span>
 										</p>
-										<input type="number" name="goodsNetWeight" id="goodsNetWeight">
+										<input placeholder="상품 중량(ex. 1, 100)을 입력해주세요." type="number"
+											name="goodsApplyNetWeight" id="goodsApplyNetWeight"
+											class="vailCheck">
 									</div>
 								</div>
 								<div class="col-lg-6 mt10">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsNetWeightUnit">상품 중량 단위<span>
-													*</span></label>
+											<label for="goodsApplyNetWeightUnit">상품 중량 단위</label><span>
+												*</span>
 										</p>
-										<input type="text" name="goodsNetWeightUnit"
-											id="goodsNetWeightUnit">
+										<input type="text" name="goodsApplyNetWeightUnit"
+											class="vailCheck" id="goodsApplyNetWeightUnit"
+											placeholder="상품 중량 단위(ex.mg, g, Kg)를 입력해주세요.">
 									</div>
 								</div>
 							</div>
@@ -343,9 +344,11 @@ body {
 								<div class="col-lg-12 mt10">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsProduce">원산지<span> *</span></label>
+											<label for="goodsApplyProduce">원산지</label><span>*</span>
 										</p>
-										<input type="text" name="goodsProduce" id="goodsProduce">
+										<input type="text" name="goodsApplyProduce" class="vailCheck"
+											id="goodsApplyProduce"
+											placeholder="원산지를 입력해주세요.(상세 이미지에 포함되어있으면 컨텐츠 참조)">
 									</div>
 								</div>
 							</div>
@@ -353,39 +356,33 @@ body {
 								<div class="col-lg-12">
 									<div class="checkout__input" style="margin-bottom: 0;">
 										<p>
-											<label for="goodsProductionExpirationDate">제조연월일,
-												유통기한 또는 품질유지기한<span> *</span>
-											</label>
+											<label for="goodsApplyProductionExpirationInfo">제조연월일, 유통기한 또는 품질유지기한</label><span>*</span>
 										</p>
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="checkout__input col-lg-3">
-									<select id="goodsProductionExpirationDate">
-										<option value="manuImage">컨텐츠 포함</option>
-										<option value="manuText">직접 작성하기</option>
-									</select>
-								</div>
-								<div id="manuText" class="checkout__input col-lg-9"
-									style="display: none; padding-left: 0;">
+								<div id="manuText" class="checkout__input col-lg-12">
 									<input type="text" placeholder="제조연월일, 유통기한 또는 품질유지기한"
-										style="height: 42px;" name="goodsProductionExpirationDate">
+										class="vailCheck" style="height: 42px;"
+										id="goodsApplyProductionExpirationInfo"
+										name="goodsApplyProductionExpirationInfo">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsMainImage">상품 썸네일 이미지 업로드<span>
-													*</span></label>
+											<label for="goodsMainImage">상품 썸네일 이미지 업로드</label><span>
+													*</span>
 										</p>
 										<div class="filebox">
 											<input class="upload-name" id="goodsMainImageName"
 												placeholder="상품 썸네일 이미지(*.gif, *.jpg, *.png)"> <label
 												for="goodsMainImage" style="margin-top: 8px;">파일찾기</label> <input
-												type="file" id="goodsMainImage" class="imageUpload"
-												name="goodsMainImage" accept=".gif, .jpg, .png">
+												type="file" id="goodsMainImage"
+												class="imageUpload vailCheck" name="goodsMainImage"
+												accept=".gif, .jpg, .png">
 										</div>
 									</div>
 								</div>
@@ -394,15 +391,16 @@ body {
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsInfoImage">상품 소개 이미지 업로드<span>
-													*</span></label>
+											<label for="goodsInfoImage">상품 소개 이미지 업로드</label><span>
+													*</span>
 										</p>
 										<div class="filebox">
 											<input class="upload-name" id="goodsInfoImageName"
 												placeholder="상품 소개 이미지(*.gif, *.jpg, *.png)"> <label
 												for="goodsInfoImage" style="margin-top: 8px;">파일찾기</label> <input
-												type="file" id="goodsInfoImage" class="imageUpload"
-												name="goodsInfoImage" accept=".gif, .jpg, .png">
+												type="file" id="goodsInfoImage"
+												class="imageUpload vailCheck" name="goodsInfoImage"
+												accept=".gif, .jpg, .png">
 										</div>
 									</div>
 								</div>
@@ -411,18 +409,21 @@ body {
 								<div class="col-lg-6">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsStock">재고<span> *</span></label>
+											<label for="goodsApplyStock">재고</label><span>*</span>
 										</p>
-										<input type="number" id="goodsStock" name="goodsStock">
+										<input class="vailCheck" type="number" id="goodsApplyStock"
+											name="goodsApplyStock" placeholder="상품의 재고를 입력해주세요.">
 									</div>
 								</div>
 								<div class="col-lg-6">
 									<div class="checkout__input">
 										<p>
-											<label for="goodsDeliveryCharge">배송비<span> *</span></label>
+											<label for="goodsApplyDeliveryCharge">배송비</label><span>
+													*</span>
 										</p>
-										<input type="number" id="goodsDeliveryCharge"
-											name="goodsDeliveryCharge">
+										<input class="vailCheck" type="number"
+											id="goodsApplyDeliveryCharge" name="goodsApplyDeliveryCharge"
+											placeholder="상품의 배송비를 입력해주세요.">
 									</div>
 								</div>
 							</div>
@@ -436,18 +437,19 @@ body {
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									<label for="ingredientKCal">열량(Kcal)<span> *</span></label>
+									<label for="ingredientKCal">열량(Kcal)</label><span> *</span>
 								</p>
-								<input type="number" id="ingredientKCal" name="ingredientKCal">
+								<input class="vailCheck" type="number" id="ingredientKCal"
+									name="ingredientKCal" placeholder="상품의 열량을 입력해주세요.">
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									<label for="ingredientProtein">단백질(g)<span>*</span></label>
+									<label for="ingredientProtein">단백질(g)</label><span>*</span>
 								</p>
-								<input type="number" id="ingredientProtein"
-									name="ingredientProtein">
+								<input class="vailCheck" type="number" id="ingredientProtein"
+									placeholder="상품의 단백질 함유량을 입력해주세요." name="ingredientProtein">
 							</div>
 						</div>
 					</div>
@@ -455,17 +457,19 @@ body {
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									탄수화물(g)<span>*</span>
+									<label for="ingredientCarb">탄수화물(g)</label><span>*</span>
 								</p>
-								<input type="number">
+								<input class="vailCheck" type="number" id="ingredientCarb"
+									name="ingredientCarb" placeholder="상품의 탄수화물 함유량을 입력해주세요.">
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									당류(g)<span>*</span>
+									<label for="ingredientSugar">당류(g)</label><span>*</span>
 								</p>
-								<input type="number">
+								<input class="vailCheck" type="number" id="ingredientSugar"
+									name="ingredientSugar" placeholder="상품의 당 함유량을 입력해주세요.">
 							</div>
 						</div>
 					</div>
@@ -473,21 +477,27 @@ body {
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									나트륨(mg)<span>*</span>
+									<label for="ingredientSodium">나트륨(mg)</label><span>*</span>
 								</p>
-								<input type="number">
+								<input class="vailCheck" type="number" id="ingredientSodium"
+									placeholder="상품의 나트륨 함유량을 입력해주세요." name="ingredientSodium">
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="checkout__input">
 								<p>
-									콜레스테롤(mg)<span>*</span>
+									<label for="ingredientCholesterol">콜레스테롤(mg)</label><span>*</span>
 								</p>
-								<input type="number">
+								<input class="vailCheck" type="number"
+									id="ingredientCholesterol" placeholder="상품의 콜레스테롤 함유량을 입력해주세요."
+									name="ingredientCholesterol">
 							</div>
 						</div>
 					</div>
-					<button type="submit">등록</button>
+					<div style="float: right;">
+						<button id="submitBtn" type="button" class="site-btn">등록</button>
+						<a th:href="@{/seller/goods/goodsList}"><button type="button" class="site-btn" style="background: #6f6f6f">취소</button></a>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -500,6 +510,66 @@ body {
 	<script type="text/javascript">
 		$(function() {
 
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == '') {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]')
+									.text();
+							alert(alertMsg + '을(를) 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof data == 'undefined' || data == null
+							|| data == '') {
+						isValid = false;
+					}
+				}
+				return isValid;
+			}
+
+			$(document).on('click', '#submitBtn', function() {
+				var inputObj = $('.vailCheck');
+
+				var isValid = validationCheck(inputObj);
+
+				if (!isValid) return false;
+				
+				var form = $('#addGoodsApplyForm');
+				var formData = new FormData(form[0]);
+				formData.append('goodsMainImage', $('#goodsMainImage'));
+				formData.append('goodsInfoImage', $('#goodsInfoImage'));
+				console.log(formData, "<<<<<<<<<<<<<<");
+
+				$.ajax({
+					type : 'POST',
+					url : '/seller/goods/regGoodsApply',
+					processData : false,
+					contentType : false,
+					data : formData,
+				}).done(function(data) {
+					if (data) {
+						alert('상품 등록 신청이 정상적으로 완료되었습니다.');
+						window.location.href = '/seller/goods/goodsApplyList';
+					} else {
+						alert('오류!');
+					}
+				}).fail(function(error) {
+					alert('통신 실패');
+				});
+			});
+
 			$('.imageUpload').change(function() {
 				var imageName = $(this).val().split('\\');
 				imageName = imageName[imageName.length - 1];
@@ -507,15 +577,6 @@ body {
 				$(this).parent().find('.upload-name').val(imageName);
 			});
 
-			$('.nice-select li').click(function() {
-				var selectValue = $(this).attr('data-value');
-
-				if (selectValue == 'manuText') {
-					$('#manuText').css('display', 'block');
-				} else {
-					$('#manuText').css('display', 'none');
-				}
-			});
 		});
 	</script>
 </th:block>

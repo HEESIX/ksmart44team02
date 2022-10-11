@@ -61,7 +61,7 @@ public interface GoodsMapper {
 	public boolean addGoods(Goods goods);
 	
 	//상품 리스트
-	public List<Goods> getAdminGoodsList(Map<String, Object> map);
+	public List<Goods> getGoodsList(Map<String, Object> map);
 	
 	//상품 삭제
 	public boolean removeGoods(String goodsCode);
@@ -136,10 +136,10 @@ public interface GoodsMapper {
 	public GoodsDiscount getGoodsDiscount(String goodsDiscountCode);
 	
 	//상품 등록 신청
-	public int applyGoodsRegister();
+	public boolean addGoodsRegApply(GoodsApply goodsApply);
 	
-	//상품 리스트(판매자) - 다른 권한이랑 합치는 방안 고민
-	public List<Goods> getSellerGoodsList();
+	//상품 등록 신청 영양 정보 등록
+	public boolean addGoodsApplyIngredient(Ingredient ingredient);
 	
 	//기존 데이터 조회(판매자 상품 수정화면)
 	public Goods getSellerGoodsInfo();
@@ -169,7 +169,7 @@ public interface GoodsMapper {
 	public List<MenuInformation> getMenuList();
 	
 	//상품 목록(활성화 되어있는 것만)
-	public List<Map<String, Object>> getGoodsList();
+	public List<Map<String, Object>> getGoodsListForMenu();
 	
 	//개별 식단 정보
 	/* public Menus getMenuInfo(); */
