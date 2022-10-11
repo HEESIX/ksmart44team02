@@ -234,7 +234,6 @@ public class AdminDiscountController {
 		
 		//2. ${} vs #{}	-> ${searchKey} LIKE ${searchValue} : ex) memberId LIKE 'id001'
 		List<BuyerBenefit> allBuyerBenefitList = discountService.getAllBuyerBenefitList(paramMap);
-		
 		//3. model 검색된 리스트를 출력하면 된다.
 		model.addAttribute("title", "전체 회원의 할인 혜택 보유 현황 조회");
 		model.addAttribute("allBuyerBenefitList", allBuyerBenefitList);
