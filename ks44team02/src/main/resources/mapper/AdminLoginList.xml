@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 특정회원 조회 -->
-	<select id="getMemberInfoById" parameterType="String" resultType="Member">
+	<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
 		SELECT
 			m.member_id
 			,m.member_pw
@@ -64,7 +64,7 @@
 			m.member_id = #{memberId}
 	</select>
 	
-		<!-- 회원 아이디 중복체크 -->
+	<!-- 회원 아이디 중복체크 -->
 	<select id="idCheck" parameterType="String" resultType="boolean">
 		/* 회원 아이디 중복체크 */
 		SELECT
@@ -75,5 +75,11 @@
 			m.member_id = #{memberId};
 	</select>
 	
-
+	<!-- 회원 가입 -->
+	<insert id="addMember" parameterType="Member">
+		INSERT INTO tb_member
+			(member_id,member_pw,member_name,member_level_code,member_mileage,member_phone,member_email,member_gender,member_birth,member_addr,member_reg_date,recommender_id)
+		VALUES 
+			(#{memberId},#{memberPw},#{memberName},#{memberLevelCode},#{memberMileage},#{memberPhone},#{memberEmail},#{memberGender},#{memberBirth},#{memberAddr},#{memberRegDate},#{recommenderId});	
+	</insert>
 </mapper>

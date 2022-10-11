@@ -260,6 +260,99 @@ footer .copyright-wrap span{
 </style>
 </th:block>
 
+	  	<th:block layout:fragment="customTopJs">
+	  		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  		<script>
+ 	  			$(function(){
+ 	  				
+	  				function vaildationCheck(data) {
+						var isValid = true;	  					
+	  					//유효성검사
+	  					if(typeof data == 'object'){
+	  						$.each(data, function(){
+	  							var inputValue = $(this).val();
+	  							if(typeof inputValue == 'undefined' || inputValue == null || inputValue == '') {
+	  								isValid = false;
+	  								var inputId = $(this).attr('id');
+	  								var alertMsg = $('label[for="'+ inputId +'"]').text();
+	  								alert(alertMsg + '를 입력해주세요');
+	  								$(this).focus();
+	  								return false; //이벤트를 종료시키기 위함
+	  							}
+	  						});
+	  					}
+	  					
+	  					if(typeof data == 'string'){
+	  						if(typeof data == 'undefined' || data == null || data == '') {
+  								isValid = false;
+  								return false;
+  							}
+	  					}
+	  					return isValid;
+	  				}
+	  				
+	  				$('#memberId').on('keydown change input keyup blur', function(){
+	  					$('#idCheckBtn').attr('data-isChecked', false);
+	  				});
+	  						
+	  				$(document).on('click', '#joinBtn', function(){
+	  					
+	  					var isChecked = $('#idCheckBtn').attr('data-ischecked');
+	  					 
+	  					isChecked = (isChecked == 'true');
+	  					
+	  					if(!isChecked) {
+	  						alert('아이디 중복체크 후 회원가입이 가능합니다.');
+	  						return false;
+	  					}
+	  					
+	  					var inputObj = $('#addMemberForm input');
+
+	  					var isValid = vaildationCheck(inputObj);
+	  					
+	  					if(isValid) $('#addMemberForm').submit();
+	  				});
+	  				
+	  				$('#idCheckBtn').click(function(){
+	  					//var isChecked = $(this).attr('data-isChecked');
+	  					var memberId = $('#memberId').val();
+	  					var result = vaildationCheck(memberId);
+	  					
+	  					if(!result) {
+	  						alert('회원아이디를 입력해주세요');
+	  						return false;
+	  					}
+	  					
+	  					console.log(typeof memberId);
+	  					
+	  					var request = $.ajax({
+	  					  url: '/seller/login/sellerLoginIdCheck', 
+	  					  method: 'GET',
+	  					  data: { 'memberId' : memberId },
+	  					  dataType: "json"  //String이면 text   //text, json, xml, html
+	  					});
+	  					 
+ 	  					request.done(function( data ) {
+	  						if(data) {
+	  							alert('가입된 회원입니다.');
+	  							$('#memberId').focus();
+	  						}else {
+	  							$('#idCheckBtn').attr('data-isChecked', true);
+	  							$('#sellerLogin input').prop('disabled', false);
+	  							$('#sellerLogin select').prop('disabled', false);
+	  							$('#sellerLogin button').prop('disabled', false);
+
+	  						}	
+	  					});
+	  					
+	  					request.fail(function( jqXHR, textStatus ) {
+	  					  alert( "Request failed: " + textStatus );
+	  					});
+	  				});
+ 	  			});
+	  		</script>
+	  	</th:block>
+
 
 <th:block layout:fragment="customContents">
 	<section class="checkout spad">
@@ -277,7 +370,7 @@ footer .copyright-wrap span{
 										<p>아이디<span>*</span></p>
 										<div class="checkout__input d-flex">
 											<input class="upload-name" id="goodsInfoImageName"> 
-											<button type="submit" class="col-md-2 img-btn">중복확인</button>
+												<button type="button" class="col-md-2 img-btn" id="idCheckBtn">중복확인</button>
 										</div>
 									</div>
 								</div>
