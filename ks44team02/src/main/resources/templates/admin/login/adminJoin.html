@@ -326,10 +326,10 @@ footer .copyright-wrap span{
 	  					console.log(typeof memberId);
 	  					
 	  					var request = $.ajax({
-	  					  url: '/admin/login/adminLoginIdCheck', //http://localhost/member/idCheck
+	  					  url: '/admin/login/adminJoin', //http://localhost/member/idCheck
 	  					  method: 'GET',
 	  					  data: { 'memberId' : memberId },
-	  					  dataType: "json"  //String이면 text   //text, json, xml, html
+	  					  dataType: "text"  //String이면 text   //text, json, xml, html
 	  					});
 	  					 
  	  					request.done(function( data ) {
@@ -364,7 +364,7 @@ footer .copyright-wrap span{
 									<div class="checkout__input">
 										<p>아이디<span>*</span></p>
 											<input type="text" name="goodsProduce" id="goodsProduce">
-											<button type="submit" id="idCheckBtn">중복확인</button>
+											<button type="button" id="idCheckBtn">중복확인</button>
 									</div>
 								</div>			
 							</div>
@@ -426,11 +426,13 @@ footer .copyright-wrap span{
 					</div>
 				</div>	
 				<br>
-				<a th:href="@{/admin}">
+				
 					<div class="logcenter">	
-	  					<button type="button" class="loginbtn">등록완료</button>
+						<a th:href="@{/admin/login/adminLogin}">
+	  						<button type="button" class="loginbtn">등록완료</button>
+						</a>	  				
 	  				</div>
-	  			</a>	
+	  				
 	  	
 	</section>
 </th:block>
