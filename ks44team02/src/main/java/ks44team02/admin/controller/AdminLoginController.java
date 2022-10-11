@@ -45,7 +45,7 @@ public class AdminLoginController {
 		log.info("로그인 memberPw ::: {}", memberPw);
 		
 		Member member = loginService.getMemberInfoById(memberId);
-		
+		log.info("member {}");
 		if(member != null) {
 			String checkPw = member.getMemberPw();
 			

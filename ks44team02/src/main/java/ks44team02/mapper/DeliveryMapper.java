@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import ks44team02.dto.OrderDetail;
+import ks44team02.dto.OrderStatus;
+import ks44team02.dto.OrderStatusStandard;
 
 @Mapper
 public interface DeliveryMapper {
@@ -21,6 +23,13 @@ public interface DeliveryMapper {
 	
 	//판매자 측 특정 주문서 조회
 	public OrderDetail getOrderStatusInfo(String orderDetailCode);
+	
+	//추가1 상품현황
+	public OrderStatus getOrderStatus(String orderDetailCode);
+	
+	//추가2 상품현황정의
+	public List<OrderStatusStandard> getOrderStatusStandard();
+	
 	
 	//구매자 배송처리
 	public String OrderDeal();

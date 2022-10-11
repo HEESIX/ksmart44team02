@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ks44team02.dto.OrderDetail;
 import ks44team02.dto.OrderRecordList;
 import ks44team02.dto.OrderRefund;
+import ks44team02.dto.OrderStatus;
+import ks44team02.dto.OrderStatusStandard;
 import ks44team02.mapper.DeliveryMapper;
 
 @Service
@@ -25,6 +27,19 @@ public class DeliveryService {
 		
 		return sellerOrderList;
 	}
+	
+	//추가1 상품현황
+	public OrderStatus getOrderStatus(String orderDetailCode){
+		OrderStatus	getOrderStatusInfo = deliveryMapper.getOrderStatus(orderDetailCode);
+		return getOrderStatusInfo;
+	}
+	
+	//추가2 상품현황정의
+	public List<OrderStatusStandard> getOrderStatusStandard() {
+		List<OrderStatusStandard> standardList = deliveryMapper.getOrderStatusStandard();
+		return standardList;
+	}
+	
 	
 	// 판매자측 특정 주문서 조회
 	public OrderDetail getOrderStatusInfo(String orderDetailCode) {
@@ -52,7 +67,7 @@ public class DeliveryService {
 	}
 	
 	// 상세주문현황
-	public List<Map<String, Object>> getOrderStatus(String orderGroupCode) {
+	public List<Map<String, Object>> getOrderDetailList(String orderGroupCode) {
 		List<Map<String, Object>> getOrderDetailList = deliveryMapper.getOrderDetailList(orderGroupCode);
 		return getOrderDetailList;
 	}
@@ -67,6 +82,7 @@ public class DeliveryService {
 		Map<String, Object> getDeliveryinfo = deliveryMapper.getDeliveryinfo(orderGroupCode);
 		return getDeliveryinfo;
 	}
+	
 	
 	
 	// 환불 신청

@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.OrderDetail;
+import ks44team02.dto.OrderStatus;
+import ks44team02.dto.OrderStatusStandard;
 import ks44team02.service.DeliveryService;
 
 @Controller
@@ -90,9 +92,17 @@ public class SellerDeliveryController {
 	@GetMapping("/sellerOrderDeliveryModify/{orderDetailCode}")
 	public String modifyOrderStatus(@PathVariable(value = "orderDetailCode") String orderDetailCode
 									,Model model){
-		OrderDetail orderDetailInfo = deliveryservice.getOrderStatusInfo(orderDetailCode);			
+		OrderDetail orderDetailInfo = deliveryservice.getOrderStatusInfo(orderDetailCode);	
+		List<OrderStatusStandard> standardList = deliveryservice.getOrderStatusStandard();
+		OrderStatus getOrderStatusInfo = deliveryservice.getOrderStatus(orderDetailCode);
+		log.info(">>>>>>>>>>>>>>>{}", orderDetailInfo);
+		log.info(">>>>>>>>>>>>>>>{}", standardList);
+		log.info(">>>>>>>>>>>>>>>{}", getOrderStatusInfo);
+		
 		model.addAttribute("title", "선택한 주문서 주문상태 변경");
 		model.addAttribute("orderDetailInfo", orderDetailInfo);
+		model.addAttribute("standardList", standardList);
+		model.addAttribute("getOrderStatusInfo", getOrderStatusInfo);
 		
 		return "seller/order/sellerOrderDeliveryModify";
 	}

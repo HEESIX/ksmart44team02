@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ks44team02.dto.Enterprise;
 import ks44team02.dto.Launching;
 import ks44team02.service.AdminCompanyService;
 
@@ -42,7 +43,7 @@ public class AdminCompanyController {
 		map.put(sk, sv);
 		List<Launching> sellerCompanyList = adminCompanyService.companyInfoList(map);
 		log.info(">>>>>>>>>>>> {}", sellerCompanyList);
-		model.addAttribute("title", "회원정보리스트");
+		model.addAttribute("title", "입점 신청 업체 리스트");
 		model.addAttribute("sellerCompanyList", sellerCompanyList);
 		return "admin/companypage/sellerCompanyList";
 	}
@@ -67,7 +68,15 @@ public class AdminCompanyController {
 		
 	//입점 업체 탈퇴/승인 상세 정보
 	@GetMapping("/sellerCompanyDetail")
-	public String companyInfoDetail() {
+	public String companyInfoDetail		(Model model
+										,@RequestParam(value = "sk", required = false) String sk
+										,@RequestParam(value = "sv", required = false) String sv) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(sk, sv);
+		List<Enterprise> sellerCompanyDetail = adminCompanyService.companyInfoDetail(map);
+		log.info(">>>>>>>>>>>> {}", sellerCompanyDetail);
+		model.addAttribute("title", "입점 업체 정보 리스트");
+		model.addAttribute("sellerCompanyDetail", sellerCompanyDetail);
 		return "admin/companypage/sellerCompanyDetail";
 	}
 }

@@ -72,8 +72,10 @@
 		<association property="orderStatus" javaType="OrderStatus">
 			<id column="order_status_code" property="orderStatusCode"/>
 			<result column="member_id" property="memberId"/>
-			<result column="g_code" property="goodsCode"/>
 			<result column="order_status_standard_code" property="orderStatusStandardCode"/>
+			<result column="order_detail_code" property="orderDetailCode"/>
+			<result column="enter_code" property="enterCode"/>
+			<result column="g_code" property="goodsCode"/>
 			<result column="order_status_update_datetime" property="orderStatusUpdateDatetime"/>
 		</association>
 		<association property="orderStatusStandard" javaType="OrderStatusStandard">
@@ -83,18 +85,68 @@
 			<result column="order_status_standard_registration_datetime" property="orderStatusStandardRegDatetime"/>
 		</association>
 	</resultMap>
-
+	
+	<resultMap type="OrderStatus" id="statusResultMap">
+		<id column="order_status_code" property="orderStatusCode"/>
+		<result column="member_id" property="memberId"/>
+		<result column="order_status_standard_code" property="orderStatusStandardCode"/>
+		<result column="order_detail_code" property="orderDetailCode"/>
+		<result column="enter_code" property="enterCode"/>
+		<result column="g_code" property="goodsCode"/>
+		<result column="order_status_update_datetime" property="orderStatusUpdateDatetime"/>
+		<association property="orderStatusStandard" javaType="OrderStatusStandard">
+			<id column="order_status_standard_code" property="orderStatusStandardCode"/>
+			<result column="order_status_standard_details" property="orderStatusStandardDetails"/>
+			<result column="member_id" property="memberId"/>
+			<result column="order_status_standard_registration_datetime" property="orderStatusStandardRegDatetime"/>
+		</association>
+	</resultMap>
+	
+	<!-- 주문현황 정의 리스트 (seller)-->
+	<select id="getOrderStatusStandard" resultMap="statusResultMap">
+	SELECT 
+	    order_status_standard_code
+		,order_status_standard_details
+		,member_id
+		,order_status_standard_registration_datetime
+	FROM 
+		tb_order_status_standard;
+	</select>
+	
+	<!-- 주문 현황 테이블 -->
+	<select id="getOrderStatus" parameterType="String" resultMap="statusResultMap">
+			SELECT 
+		 os.order_status_code
+		,os.member_id
+		,os.order_status_standard_code
+		,os.order_detail_code
+		,os.enter_code
+		,os.g_code
+		,os.order_status_update_datetime
+		,oss.order_status_standard_details
+	FROM 
+		tb_order_status AS os
+		INNER JOIn
+		tb_order_status_standard AS oss
+		on
+		os.order_status_standard_code = oss.order_status_standard_code
+	WHERE
+		order_detail_code = #{orderDetailCode};
+	</select>
+	
+	
+	
 	<!-- 특정 주문상태 업데이트(수정) 처리 -->
-	<update id="modifyOrderStatus" parameterType="OrderDetail">
+	<update id="modifyOrderStatus" parameterType="OrderStatus">
 		UPDATE 
-			tb_order_detail
+			tb_order_status
 		SET
-			g_delivery_charge= #{gDeliveryCharge}
+			order_status_standard_code = #{standardCode},
+			order_status_update_datetime = NOW()
 		WHERE 
-			order_detail_code= #{orderDetailCode};
+			order_status_code = #{orderStatusCode}
 	</update>
 	
-
 	<!-- 판매자 측 특정 주문 선택조회 -->
 	<select id="getOrderStatusInfo" parameterType="String" resultMap="detailResultMap">
 		SELECT
@@ -157,6 +209,7 @@
 			,d.d_get_addr
 			,d.d_get_phone
 			,d.d_memo
+			,os.order_status_standard_code
 			,oss.order_status_standard_details
 			,d.delivery_enter
 			,d.delivery_num
@@ -198,7 +251,6 @@
 		</trim>
 		order by
 			 od.order_datetime desc;
-			
 	</select>
 	
 	
@@ -207,41 +259,37 @@
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" parameterType="String" resultType="map">	
 		SELECT
-			om.order_code as orderCode,
-			group_concat(g.g_name SEPARATOR ', ') as goodsName,
-			om.final_price as finalPrice,
-			od.order_datetime AS orderDatetime,
-			om.order_group_code AS orderGroupCode,
-			om.add_discount_price AS discountAdd,
-			om.regular_price_subtotal AS subPrice,
-			om.g_delivery_charge_total as deliTotal
-		FROM
-			tb_order_management AS om
-			INNER join
-			tb_order_detail AS od
-			on
-			od.order_group_code = om.order_group_code
-			INNER join
-			tb_goods AS g
-			on
-			g.g_code = od.g_code
-			INNER Join
-			tb_order_status AS os
-			on
-			g.g_code = os.g_code
-			INNER join
-			tb_order_status_standard AS oss
-			on
-			oss.order_status_standard_code = os.order_status_standard_code
-			left Join
-			tb_delivery AS d
-			on
-			d.order_detail_code = od.order_detail_code
-		WHERE
-			od.member_id = #{memberId}
-		GROUP BY om.order_code
-		ORDER BY
-			os.order_status_update_datetime;
+	om.order_code as orderCode,
+	group_concat(g.g_name SEPARATOR ', ') as goodsName,
+	om.final_price as finalPrice,
+	od.order_datetime AS orderDatetime,
+	om.order_group_code AS orderGroupCode,
+	om.add_discount_price AS discountAdd,
+	om.regular_price_subtotal AS subPrice,
+	om.g_delivery_charge_total as deliTotal
+FROM
+	tb_order_management AS om
+	INNER JOIN
+	tb_order_detail AS od
+	ON 
+	od.order_group_code = om.order_group_code
+	LEFT JOIN
+	tb_goods AS g
+	on
+	g.g_code = od.g_code
+	inner JOIN
+	tb_order_status AS os
+	on
+	os.order_detail_code = od.order_detail_code
+	INNER JOIN
+	tb_order_status_standard AS oss
+	on
+	oss.order_status_standard_code = os.order_status_standard_code
+WHERE
+	od.member_id = #{memberId}
+GROUP BY om.order_code
+ORDER BY
+	os.order_status_update_datetime;
 	</select>
 	
 	
@@ -281,7 +329,7 @@
 			 	INNER Join
 	         tb_order_status AS os
 	         on
-	         g.g_code = os.g_code
+	        os.order_detail_code = od.order_detail_code
 	         INNER join
 	         tb_order_status_standard AS oss
 	         on
@@ -331,7 +379,9 @@
 			on
 			d.order_detail_code = od.order_detail_code
 		WHERE
-			od.order_group_code = #{orderGroupCode};
+			od.order_group_code = #{orderGroupCode}
+		GROUP by
+			od.order_group_code;
 	</select>
 
 

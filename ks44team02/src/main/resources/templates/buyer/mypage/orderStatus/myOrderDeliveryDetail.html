@@ -56,7 +56,7 @@
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="heading1">
-		<h4>주문서</h4>
+		<h4>상세주문서</h4>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -70,10 +70,9 @@
 						<th>수량</th>
 						<th>배송비</th>
 						<th>상품가격</th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
+						<th>업체</th>
+						<th>주문상태</th>
+						<th>운송장번호</th>
 					</tr>
 				 </thead>
 					<tbody>
@@ -85,7 +84,6 @@
 							<td th:if="${odl.get('deliCharge')} !=0" th:text="'₩' + ${odl.get('deliCharge')}"></td>
 							<td th:if="${odl.get('regularPriceSubtotal')} !=0" th:text="'₩' + ${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('entName')}"></td>
-							<td></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
 						</tr>
@@ -158,14 +156,7 @@
 		</div>
 	</div>
 	
-	
-	
-	
-	
-	
-	
+
 	
 </th:block>
-
-
 </html>
