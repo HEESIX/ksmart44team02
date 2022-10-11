@@ -51,11 +51,13 @@
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(buyerBenefitList)}"
 										th:each="bl : ${buyerBenefitList}">
-										<td th:text="${bl.orderDiscount.discountName}"></td>
-										<td th:if="${bl.orderDiscount.discountRate} != 0" th:text="${bl.orderDiscount.discountRate}+'%'"></td>
-										<td th:if="${bl.orderDiscount.discountPrice} != 0" th:text="'₩'+${bl.orderDiscount.discountPrice}"></td>
-										<td th:text="${bl.benefitIssueDate}"></td>
-										<td th:text="${bl.benefitExpirationDate}"></td>
+										<th:block th:if="${not #lists.isEmpty(bl.orderDiscountList)}" th:each="dl : ${bl.orderDiscountList}">
+											<td th:text="${dl.discountName}"></td>
+											<td th:if="${dl.discountRate} != 0" th:text="${dl.discountRate}+'%'"></td>
+											<td th:if="${dl.discountPrice} != 0" th:text="${'₩'+dl.discountPrice}"></td>
+											<td th:text="${bl.benefitIssueDate}"></td>
+											<td th:text="${bl.benefitExpirationDate}"></td>
+										</th:block>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(buyerBenefitList)}">
 										<td colspan="5" style="text-align: center;">보유한 혜택이 없습니다.</td>
