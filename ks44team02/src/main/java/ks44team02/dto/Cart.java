@@ -7,9 +7,25 @@ public class Cart {
 	private int regularPrice;
 	private int discountPrice;
 	private int orderAmount;
-	private int regularPriceSubtotal;
+	private int priceSubtotal;
 	private String orderDatetime;
 	private String enterCode;
+	
+	private Goods goods;
+	private GoodsMainImage goodsMainImage;
+	
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+	public GoodsMainImage getGoodsMainImage() {
+		return goodsMainImage;
+	}
+	public void setGoodsMainImage(GoodsMainImage goodsMainImage) {
+		this.goodsMainImage = goodsMainImage;
+	}
 	public String getCartListCode() {
 		return cartListCode;
 	}
@@ -46,11 +62,11 @@ public class Cart {
 	public void setOrderAmount(int orderAmount) {
 		this.orderAmount = orderAmount;
 	}
-	public int getRegularPriceSubtotal() {
-		return regularPriceSubtotal;
+	public int getPriceSubtotal() {
+		return priceSubtotal;
 	}
-	public void setRegularPriceSubtotal(int regularPriceSubtotal) {
-		this.regularPriceSubtotal = regularPriceSubtotal;
+	public void setPriceSubtotal(int regularPriceSubtotal) {
+		this.priceSubtotal = priceSubtotal;
 	}
 	public String getOrderDatetime() {
 		return orderDatetime;
@@ -79,12 +95,16 @@ public class Cart {
 		builder.append(discountPrice);
 		builder.append(", orderAmount=");
 		builder.append(orderAmount);
-		builder.append(", regularPriceSubtotal=");
-		builder.append(regularPriceSubtotal);
+		builder.append(", priceSubtotal=");
+		builder.append(priceSubtotal);
 		builder.append(", orderDatetime=");
 		builder.append(orderDatetime);
 		builder.append(", enterCode=");
 		builder.append(enterCode);
+		builder.append(", goods=");
+		builder.append(goods);
+		builder.append(", goodsMainImage=");
+		builder.append(goodsMainImage);
 		builder.append("]");
 		return builder.toString();
 	}
