@@ -30,7 +30,7 @@ public interface DiscountMapper {
 	public List<BuyerBenefit> getAllBuyerBenefitList(Map<String, Object>	searchMap);
 	
 	//구매자별 보유 혜택 목록 조회(buyer세션 아이디와 일치하는 것만?)
-	public List<BuyerBenefit> getBuyerBenefitList(String memberId);
+	public List<BuyerBenefit> getBuyerBenefitList(String sessionId);
 
 	//주문서별 할인혜택 부여
 	public boolean giveOrderDiscount(OrderDiscount orderDiscount);

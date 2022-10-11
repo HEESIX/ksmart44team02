@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
 				.excludePathPatterns("/css/**")
 				.excludePathPatterns("/images/**")
 				.excludePathPatterns("/js/**")
+				.excludePathPatterns("/admin/assets/**")
 				.excludePathPatterns("/favicon.ico");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}

@@ -24,6 +24,7 @@ public class SellerJoinController {
 	public String sellerJoin() {
 		return "seller/login/sellerJoin";
 	}
+	
 
 }
  

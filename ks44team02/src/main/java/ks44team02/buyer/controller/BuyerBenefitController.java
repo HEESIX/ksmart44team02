@@ -1,6 +1,8 @@
 package ks44team02.buyer.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks44team02.dto.BuyerBenefit;
 import ks44team02.service.DiscountService;
@@ -26,7 +30,7 @@ public class BuyerBenefitController {
 		this.discountService = discountService;
 	}
 	
-	// 구매자별 보유 혜택 목록 조회, 본인이 소지한 혜택만 조회 가능
+	//회원별 보유 혜택 목록 조회, 본인이 소지한 혜택만 조회 가능
 	@GetMapping("/buyer/mypage/buyerBenefit/buyerBenefitList")
 	public String getBenefitList(Model model
 								,HttpSession session) {
@@ -40,5 +44,4 @@ public class BuyerBenefitController {
 		
 		return "buyer/mypage/buyerBenefit/buyerBenefitList";
 	}
-	
 }

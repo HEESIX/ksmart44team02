@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import ks44team02.service.MemberInfoservice;
+import ks44team02.service.LoginService;
+
+
 
 @Controller
 @RequestMapping(value = "buyer/login")
@@ -16,36 +20,34 @@ public class BuyerRegController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BuyerRegController.class);
 
-	private final MemberInfoservice memberInfoservice;
+	private final LoginService loginService;
 	
-	public BuyerRegController (MemberInfoservice memberInfoservice) {
-		this.memberInfoservice = memberInfoservice;
+	public BuyerRegController (LoginService loginService) {
+		this.loginService = loginService;
 	}
 	
-	// 구매자 회원 리스트 
-	@GetMapping("/buyer_login_list")
-	public String BuyerInsertlist() {
-		return "buyer/login/buyer_login_list";
-	}
+	
 
 	//구매자 회원 등록 폼 
-	@GetMapping("/buyer_login_reg")
+	@GetMapping("/buyerLoginReg")
 	public String addBuyerInsertForm() {
-		return "buyer/login/buyer_login_reg";
+		return "buyer/login/buyerLoginReg";
 	}
 	
 	//구매자 회원 등록 처리
-	@PostMapping("/buyer_login_reg")
+	@PostMapping("/buyerLoginReg")
 	public String addBuyerInsert() {
-		return "redirect:buyer/login/buyer_login_list";
+		return "redirect:buyer/login/buyerLoginReg";
 	}
 	//구매자 등록시 아이디 중복 체크 
-	@GetMapping("/buyer_login_idcheck")
-	public String CheckBuyerId() {
-		return "buyer/login/buyer_login_idcheck";
+	@GetMapping("/buyerLoginIdcheck")
+	@ResponseBody
+	public boolean CheckBuyerId(@RequestParam(name="MemberId")String memberId) {
+		boolean result = loginService.idCheck(memberId);
+		return result;
 	}
 	//구매자 등록시 핸드폰 중복 체크 
-	@GetMapping("/buyer_login_numcheck")
+	@GetMapping("/buyerLoginNumcheck")
 	public String CheckBuyerNum() {
 		return "buyer/login/buyer_login_numcheck";
 		}

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.AdminCompanyMapper">
-	<resultMap type="Launching" id="admincompanyResultMap">
+	<resultMap type="Launching" id="launchingResultMap">
 		<id column="launching_code" property="sellerCode"/>
 		<result column="member_id" property="sellerId"/>
 		<result column="launching_brand" property="sellerBrand"/>
@@ -19,25 +19,93 @@
 		<result column="launching_datetime" property="sellerDate"/>
 		<result column="launching_approval" property="sellerApp"/>
 	</resultMap>
-	<!-- 입점 업체 리스트 -->
-<select id="companyInfoList" parameterType="Map" resultMap="admincompanyResultMap">
+	<resultMap type="Enterprise" id="enterpriseResultMap">
+		<id column="enter_code" property="enterCode"/>
+		<result column="member_id" property="enterId"/>
+		<result column="launching_brand" property="enterBrand"/>
+		<result column="enter_name" property="enterName"/>
+		<result column="enter_address" property="enterAdd"/>
+		<result column="enter_number" property="enterNum"/>
+		<result column="enter_sign_datetime" property="enterDate"/>
+		<result column="enter_business_reg_num" property="enterBusinessNum"/>
+		<result column="seller_level_code" property="enterLevelCode"/>
+		<result column="reg_products_amt" property="enterProducts"/>
+		<result column="enter_withdraw_status" property="enterWithdraw"/>
+	</resultMap>
+<!-- 입점 업체 등록 -->
+<insert id="addCompany" parameterType="Launching">
+INSERT INTO tb_launching(
+		launching_code,
+		member_id,
+		launching_brand,
+		launching_enter,
+		launching_business_reg_num,
+		launching_manager,
+		launching_phone,
+		launching_address,
+		launching_content,
+		launching_hwp,
+		launching_url,
+		launching_file,
+		launching_datetime,
+		launching_approval
+)VALUES(
+		#{sellerCode}
+		,'id010'
+		,#{sellerBrand}
+		,#{sellerEnter}
+		,#{sellerNum}
+		,#{sellerManager}
+		,#{sellerPhone}
+		,#{sellerAdd}
+		,#{sellerContent}
+		,#{sellerHwp}
+		,#{sellerUrl}
+		,#{sellerFile}
+		,NOW()
+		,#{sellerApp};
+</insert>		
+<!-- 입점 업체 신청 리스트 -->
+<select id="companyInfoList" parameterType="Map" resultMap="launchingResultMap">
 SELECT
-	launching_code				
+	launching_code					
 	,member_id					
-	,launching_brand			
-	,launching_enter			
-	,launching_Business_reg_num		
+	,launching_brand				
+	,launching_enter				
+	,launching_Business_reg_num
 	,launching_manager			
-	,launching_phone			
-	,launching_address				
-	,launching_content			
-	,launching_hwp					
-	,launching_url				
+	,launching_phone				
+	,launching_address		
+	,launching_content				
+	,launching_hwp				
+	,launching_url					
 	,launching_file				
 	,launching_datetime			
-	,launching_approval				
+	,launching_approval		
 FROM
-	tb_launching AS l
+	tb_launching	AS l
+<trim prefix="WHERE">
+	<if test="sk != null and sk != '' and sv != null and sv!= ''">
+		${sk} = #{sv};
+	</if>
+</trim>
+</select>
+<!-- 입점 업체 정보 리스트 -->
+<select id="companyInfoDetail" parameterType="Map" resultMap="enterpriseResultMap">
+SELECT
+	enter_code						
+	,member_id						
+	,launching_brand			
+	,enter_name					
+	,enter_address				
+	,enter_number				
+	,enter_sign_datetime			
+	,enter_business_reg_num		
+	,seller_level_code			
+	,reg_products_amt				
+	,enter_withdraw_status		
+FROM
+	tb_enterprise 	AS e
 <trim prefix="WHERE">
 	<if test="sk != null and sk != '' and sv != null and sv!= ''">
 		${sk} = #{sv};
