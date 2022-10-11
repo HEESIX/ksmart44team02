@@ -61,9 +61,9 @@ public class LoginService {
 	
 	//특정회원 조회
 	public Member getMemberInfoById(String memberId) {
-			Member member = loginMapper.getMemberInfoById(memberId);
-			return member;
-		}
+		Member member = loginMapper.getMemberInfoById(memberId);
+		return member;
+	}
 	
 	//회원 아이디 중복체크
 	public boolean idCheck(String memberId) {

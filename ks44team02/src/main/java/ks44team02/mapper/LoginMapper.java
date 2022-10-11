@@ -27,10 +27,10 @@ public interface LoginMapper {
 	//구매자 로그아웃
 	public String sellerLogout();	
 	
-	//구매자 로그인
+	//관리자 로그인
 	public String adminLogin();
 
-	//구매자 로그아웃
+	//관리자 로그아웃
 	public String adminLogout();	
 	
 	//판매자 회원 정보 리스트 조회 
