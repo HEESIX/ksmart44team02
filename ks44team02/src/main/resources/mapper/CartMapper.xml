@@ -32,8 +32,6 @@
 			<result column="g_reg_datetime" 				property="goodsRegDatetime"/>
 			<result column="g_activation" 					property="goodsActivation"/>
 		</collection>
-		<collection property="goodsMainImage"	javaType="GoodsMainImege">
-		</collection>
 	</resultMap>
 	<!-- 장바구니 목록 조회 -->
 	<select id="getCartList" parameterType="String" resultMap="cartResultMap">
