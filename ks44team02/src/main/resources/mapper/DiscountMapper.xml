@@ -145,8 +145,10 @@
 	
 	<!-- 회원별 본인의 보유 혜택 목록 조회 -->
 	<select id="getBuyerBenefitList" parameterType="String" resultMap="buyerBenefitResultMap">
-		SELECT 
-			m.discount_name
+		SELECT
+			 b.member_id
+			,b.member_benefit_code
+			,m.discount_name
 			,m.discount_price
 			,m.discount_rate
 			,b.benefit_issue_date
@@ -158,6 +160,8 @@
 			ON 
 			m.order_discount_code = b.order_discount_code
 		WHERE 
-			b.member_id = #{SID};
+			b.member_id = #{SID}
+		ORDER BY
+			b.benefit_expiration_date;
 	</select>
 </mapper>
