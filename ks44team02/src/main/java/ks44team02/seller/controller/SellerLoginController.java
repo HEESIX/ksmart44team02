@@ -102,9 +102,9 @@ public class SellerLoginController {
 	
 	*/
 	
-	//관리자 회원 정보
+	//판매자 회원 정보
 		@GetMapping("/sellerLoginList")
-		public String adminLoginList(Model model
+		public String sellerLoginList(Model model
 									,HttpSession session) {
 			//세션 있을 경우 아래걸로 대체
 			//String memberId = session.getAttribute("SID");

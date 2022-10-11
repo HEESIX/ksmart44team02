@@ -326,10 +326,10 @@ footer .copyright-wrap span{
 	  					console.log(typeof memberId);
 	  					
 	  					var request = $.ajax({
-	  					  url: '/seller/login/sellerLoginIdCheck', 
+	  					  url: '/seller/login/sellerJoin', 
 	  					  method: 'GET',
 	  					  data: { 'memberId' : memberId },
-	  					  dataType: "json"  //String이면 text   //text, json, xml, html
+	  					  dataType: "text"  //String이면 text   //text, json, xml, html
 	  					});
 	  					 
  	  					request.done(function( data ) {
@@ -355,6 +355,7 @@ footer .copyright-wrap span{
 
 
 <th:block layout:fragment="customContents">
+<form id="sellerJoin" th:action="@{/seller/join/sellerJoin}" method="post">
 	<section class="checkout spad">
 		<div class="container">
 				<div class="checkout__form">
@@ -482,7 +483,7 @@ footer .copyright-wrap span{
 						  			<input type='checkbox'/>위치 정보 제공 동의
 						  			<br><br>
 						  			<div class="logcenter">	
-										<a th:href="@{/buyer/login/buyer_login}">
+										<a th:href="@{/seller/login/sellerLogin}">
 						  					<button type="button" class="loginbtn">회원 가입 완료</button>		  			
 						  				</a>	
 						  			</div>
@@ -492,6 +493,7 @@ footer .copyright-wrap span{
 				</div>	
 				</div>	
 	</section>
+	</form>
 </th:block>
 
 <!-- 사용자 정의 js 하단  -->
