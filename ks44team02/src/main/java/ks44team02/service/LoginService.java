@@ -76,4 +76,26 @@ public class LoginService {
 		boolean result = loginMapper.idCheckBuyer(memberId);
 		return result;
 	}
+	
+	//회원 아이디 중복체크 판매자
+	public boolean idCheckSeller(String memberId) {
+		boolean result = loginMapper.idCheckSeller(memberId);
+		return result;
+		}
+		
+	//판매자 회원가입
+	public void addAdmin(Member member) {
+	       int result = loginMapper.addAdmin(member);
+	       System.out.println("회원가입 결과:" + result);
+	    }	
+	public List<Member> getAddAdmin(){
+		List<Member>addAdmin = loginMapper.getAddAdmin();
+		return addAdmin;
+	}
+		
+		
+		
+		
+		
+		
 }
