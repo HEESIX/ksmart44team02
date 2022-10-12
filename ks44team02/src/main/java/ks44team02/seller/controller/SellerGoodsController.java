@@ -156,9 +156,10 @@ public class SellerGoodsController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId", memberId);
 		
-		List<GoodsApply> goodsApplyList = goodsService.getGoodsRegApplyList(map);
+		List<GoodsApply> goodsApplyList = goodsService.getGoodsRegApplyListForSeller(map);
 		log.info(">>>>>>>>>>{}", goodsApplyList);
 		
+		model.addAttribute("title", "상품 등록 신청 내역");
 		model.addAttribute("goodsApplyList", goodsApplyList);
 		return "seller/goods/goodsApplyList";
 	}
@@ -186,6 +187,7 @@ public class SellerGoodsController {
 		List<Goods> sellerGoodsList = goodsService.getGoodsList(map);
 		log.info(">>>>>>>>>>>>{}", sellerGoodsList);
 		
+		model.addAttribute("title", "상품 목록");
 		model.addAttribute("sellerGoodsList", sellerGoodsList);
 		return "seller/goods/goodsList";
 	}
@@ -201,30 +203,135 @@ public class SellerGoodsController {
 	}
 	
 	//기존 데이터 조회(상품 수정 화면): 상품 수정 폼
-	//common 폴더로 admin goods modify와 기능이 모두 같다면 병합해야할까?
-	//그냥 service 하위에서 같이 쓰면 해결되는 문제일까?
-	//요청 주소의 헷갈림 방지를 위해서 나눠놓은 지금이 나을까?
 	@GetMapping("/updateGoods/{goodsCode}")
 	public String getSellerGoodsInfo(@PathVariable(value = "goodsCode") String goodsCode
-									,HttpSession session) {
+									,HttpSession session
+									,Model model) {
+		
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListUser();
-		List<GoodsDiscount> goodsDicountList = goodsService.getGoodsDiscountListSeller(session);
+		List<GoodsDiscount> goodsDiscountList = goodsService.getGoodsDiscountListSeller(session);
 		
+		model.addAttribute("title", "상품 수정");
+		model.addAttribute("goodsInfo", goodsInfo);
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goodsDiscountList", goodsDiscountList);
 		
+		log.info(">>>>>>>>>>>{}", goodsInfo);
 		
 		return "seller/goods/updateGoods";
 	}
 
 	//상품 수정 처리
-	@PostMapping("/updateGoods")
-	public String modifySellerGoods() {
-		return "redirect:/seller/goods/goodsList";
+	@PostMapping("/updateGoods/{goodsCode}")
+	@ResponseBody
+	@Transactional
+	public boolean modifySellerGoods(@PathVariable(value = "goodsCode") String goodsCode
+								   ,Goods goods
+								   ,Ingredient ingredient
+								   ,@RequestParam(value = "goodsMainImage", required = false) MultipartFile goodsMainImage
+								   ,@RequestParam(value = "goodsInfoImage", required = false) MultipartFile goodsInfoImage
+								   ,HttpSession session
+								   ,HttpServletRequest request) {
+		log.info(">>>>>>>{}", goods);
+		log.info(">>>>>>>{}", ingredient);
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		String fileRealPath = ""; 
+		int isLocalhost = 1;
+		 
+		if ("localhost".equals(serverName)) { 
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/"; 
+			//fileRealPath = 
+			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
+			} else { 
+			// fileRealPath = 
+			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
+			isLocalhost = 0; 
+			fileRealPath = System.getProperty("user.dir") + "/resources/"; 
+		}
+		
+		String goodsMainImageIdx = "";
+		String goodsInfoImageIdx = "";
+		
+		if(!goodsMainImage.isEmpty()) {
+			if(!goodsInfoImage.isEmpty()) {
+				//goodsMainImage와 goodsInfoImage 모두 수정
+				goodsMainImageIdx = fileService.goodsMainImageUpload(goodsMainImage, fileRealPath, isLocalhost); 
+				goodsInfoImageIdx = fileService.goodsInfoImageUpload(goodsInfoImage, fileRealPath, isLocalhost);
+				goods.setGoodsMainImageCode(goodsMainImageIdx);
+				goods.setGoodsInfoImageCode(goodsInfoImageIdx);
+			}else {
+				//goodsMainImage만 수정
+				goodsMainImageIdx = fileService.goodsMainImageUpload(goodsMainImage, fileRealPath, isLocalhost); 
+				goods.setGoodsMainImageCode(goodsMainImageIdx);
+			}
+		}else{
+			if(!goodsInfoImage.isEmpty()) {
+				//goodsInfoImage만 수정
+				goodsInfoImageIdx = fileService.goodsInfoImageUpload(goodsInfoImage, fileRealPath, isLocalhost);
+				goods.setGoodsInfoImageCode(goodsInfoImageIdx);
+			}
+		}
+		
+		log.info(">>>>>>{}",goodsMainImage);
+		
+		// 상품별 할인혜택 조회 후 할인된 혹은 할인되지 않은 가격 세팅
+		String goodsDiscountCode = goods.getGoodsDiscountCode();
+		int goodsPrice = goods.getGoodsPrice();
+		int goodsDiscountedPrice = 0;
+		
+		if("noDiscount".equals(goodsDiscountCode)) {
+			goodsDiscountedPrice = goodsPrice;
+		}else {
+			GoodsDiscount goodsDiscount = goodsService.getGoodsDiscount(goodsDiscountCode);
+			int goodsDiscountPrice = goodsDiscount.getGoodsDiscountPrice();
+			int goodsDiscountRate = goodsDiscount.getGoodsDiscountRate();
+			
+			if(goodsDiscountPrice == 0 && goodsDiscountRate == 0) {
+				goodsDiscountedPrice = goodsPrice;
+			}else if(goodsDiscountPrice != 0 && goodsDiscountRate == 0) {
+				goodsDiscountedPrice = (goodsPrice - goodsDiscountPrice);
+			}else {
+				double percent = goodsDiscountRate * 0.01;
+				double discount = goodsPrice * percent;
+				goodsDiscountedPrice = (int) (goodsPrice - discount);
+			}
+		}
+		goods.setGoodsDiscountedPrice(goodsDiscountedPrice);
+		log.info(">>>>>>>> {}", goods);
+		
+		//상품 수정
+		boolean modifyGoodsResult = goodsService.modifyGoods(goods);
+		if(!modifyGoodsResult) return false;
+		
+		//상품 영양 정보 수정
+		ingredient.setGoodsCode(goodsCode);
+		log.info(">>>>>>>>>{}", ingredient);
+		
+		boolean modifyIngredientResult = goodsService.modifyIngredient(ingredient);
+		if(!modifyIngredientResult) return false;
+		
+		return true;
 	}
 	
 	//상품 삭제 처리
-	@PostMapping("/removeGoods/{g_code}")
-	public String removeSellerGoods(@PathVariable(value = "g_code") String g_code) {
-		return "redirect:/seller/goods/removeGoods";
+	@PostMapping("/removeGoods/{goodsCode}")
+	@ResponseBody
+	public boolean removeSellerGoods(@PathVariable(value = "goodsCode") String goodsCode
+								   ,@RequestParam(value = "memberPw") String memberPw
+								   ,HttpSession session) {
+		//String memberId = (String) session.getAttribute("SID");
+		String memberId = "id010";
+		
+		boolean idCheckResult = commonService.sessionIdPwCheck(memberId, memberPw);
+		if(!idCheckResult) return false;
+		
+		boolean removeGoodsResult = goodsService.removeGoods(goodsCode);
+		if(!removeGoodsResult) return false;
+		
+		return true;
 	}
 }

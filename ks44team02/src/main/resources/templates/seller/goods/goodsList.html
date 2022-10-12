@@ -3,6 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/sellerDefault}">
 
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
 <!-- 사용자 정의 css  -->
 <th:block layout:fragment="customCss">
 	<style>
@@ -42,7 +47,8 @@ table th {
 .orderStatus {
 	background-color: #7fad39;
 }
-table th,td{
+
+table th, td {
 	max-width: 200px;
 }
 
@@ -91,6 +97,7 @@ table th,td{
 				<th>재고</th>
 				<th>배송비</th>
 				<th>등록일자</th>
+				<th>판매여부</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
@@ -98,9 +105,11 @@ table th,td{
 		<tbody>
 			<tr th:if="${not #lists.isEmpty(sellerGoodsList)}"
 				th:each="sgl, status : ${sellerGoodsList}">
-				<td><a th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"
+				<td><a
+					th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"
 					th:text="${sgl.goodsName}"></a></td>
-				<td><a th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"><img
+				<td><a
+					th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"><img
 						th:src="@{'/' + ${sgl.goodsMainImageInfo.mainImagePath}}"
 						th:alt="${sgl.goodsMainImageInfo.mainImageOriginalName}"
 						style="width: 100px;" /></a></td>
@@ -115,11 +124,46 @@ table th,td{
 				<td th:text="${sgl.goodsStock}"></td>
 				<td th:text="${sgl.goodsDeliveryCharge}"></td>
 				<td th:text="${sgl.goodsRegDatetime}"></td>
-				<td><a th:href="@{|/seller/goods/updateGoods/${sgl.goodsCode}|}">수정</a></td>
-				<td><a>삭제</a></td>
+				<td th:if="${sgl.goodsActivation} == 1">판매중</td>
+				<td th:if="${sgl.goodsActivation} == 0">판매중지</td>
+				<td><a
+					th:href="@{|/seller/goods/updateGoods/${sgl.goodsCode}|}">수정</a></td>
+				<td><a href="javascript:void(0)" class="removeBtn"
+					th:data-goodsCode="${sgl.goodsCode}">삭제</a></td>
 			</tr>
 		</tbody>
 	</table>
 </th:block>
 
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script>
+		$(function(){
+			$('.removeBtn').click(function(){
+				var memberPw = prompt('비밀번호를 입력해주세요.', 'pw010');
+				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
+					
+				var removeGoodsCode = $(this).attr('data-goodsCode');
+				
+				var request = $.ajax({
+					  url: '/seller/goods/removeGoods/' + removeGoodsCode,
+					  method: "POST",
+					  data: { 'memberPw' : memberPw },
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('상품 삭제 처리가 정상적으로 완료되었습니다.');
+							location.reload();
+						}
+					});
+					 
+					request.fail(function(data) {
+					  	alert('통신 오류');
+					});
+			});
+		});
+	</script>
+</th:block>
 </html>

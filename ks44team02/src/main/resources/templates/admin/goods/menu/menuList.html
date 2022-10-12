@@ -160,13 +160,12 @@ table th, td {
 					 
 					request.done(function(data) {
 						alert(data.responseText);
-						
+						$(this).parent().parent().remove();
 					});
 					 
 					request.fail(function(data) {
-					  	alert(data.responseText);
+					  	alert('삭제 실패');
 					});
-					$(this).parent().parent().remove();
 			});
 		});
 	</script>

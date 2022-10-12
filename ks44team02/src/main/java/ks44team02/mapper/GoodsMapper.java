@@ -21,6 +21,9 @@ public interface GoodsMapper {
 	//상품 등록 신청 리스트 조회
 	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map);
 	
+	//상품 등록 신청 내역 조회
+	public List<GoodsApply> getGoodsRegApplyListForSeller(Map<String, Object> map);
+	
 	//상품 등록 신청 상세 정보
 	public GoodsApply getGoodsRegApplyInfo(String goodsApplyCode);
 	
@@ -146,6 +149,9 @@ public interface GoodsMapper {
 	
 	//상품 수정
 	public boolean modifyGoods(Goods goods);
+	
+	//상품 영양 정보 수정
+	public boolean modifyIngredient(Ingredient ingredient);
 	
 	//상품 삭제
 	public int removeSellerGoods();

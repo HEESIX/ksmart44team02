@@ -42,6 +42,12 @@ public class GoodsService {
 		return goodsRegApplyList;
 	}
 	
+	//상품 등록 신청 내역
+	public List<GoodsApply> getGoodsRegApplyListForSeller(Map<String, Object> map){
+		List<GoodsApply> goodsRegApplyListForSeller = goodsMapper.getGoodsRegApplyListForSeller(map);
+		return goodsRegApplyListForSeller;
+	}
+	
 	// 상품 등록 신청 상세 정보
 	public GoodsApply getGoodsRegApplyInfo(String goodsApplyCode) {
 		GoodsApply goodsRegApplyInfo = goodsMapper.getGoodsRegApplyInfo(goodsApplyCode);
@@ -341,6 +347,12 @@ public class GoodsService {
 	// 상품 수정
 	public boolean modifyGoods(Goods goods) {
 		boolean result = goodsMapper.modifyGoods(goods);
+		return result;
+	}
+	
+	//상품 영양 정보 수정
+	public boolean modifyIngredient(Ingredient ingredient) {
+		boolean result = goodsMapper.modifyIngredient(ingredient);
 		return result;
 	}
 
