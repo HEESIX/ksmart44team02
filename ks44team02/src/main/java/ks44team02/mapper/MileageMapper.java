@@ -14,6 +14,10 @@ public interface MileageMapper {
 	    //회원 적립금 조회
 		public List<MemberMileageAcc> getMileageList();
 
+	    //회원 적립금 검색
+		public List<MemberMileageAcc> getMileageListSearch(String memberId);
+		
+		
 		//회원 적립금 적립
 		public boolean giveMileage(MemberMileageAcc memberMileageAcc);
 		
@@ -29,4 +33,6 @@ public interface MileageMapper {
 		public MemberMileageAcc getMemberMileageAccInfo(String mMileageCode, String currentMileage);
 
 		public boolean MileageExtinction(String mMileageCode);
+		
+		public MemberMileageAcc getMileageInfo(String mMileageCode, String currentMileage, String memberId);
 }
