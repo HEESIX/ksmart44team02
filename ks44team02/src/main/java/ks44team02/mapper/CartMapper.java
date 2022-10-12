@@ -12,4 +12,6 @@ public interface CartMapper {
 	//장바구니 목록 조회
 	public List<Cart> getCartList(String sessionId);
 	
+	//장바구니 상품 삭제 처리
+	public void removeCartGoods(String cartListCode);
 }

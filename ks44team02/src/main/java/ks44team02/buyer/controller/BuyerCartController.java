@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Cart;
 import ks44team02.dto.OrderDiscount;
@@ -63,7 +64,9 @@ public class BuyerCartController {
 
 	//장바구니에 담긴 상품 삭제 처리
 	@PostMapping("/removeCart")
-	public String removeCartGoods() {
+	public String removeCartGoods(@RequestParam(value = "cartListCode") String cartListCode) {
+		
+		cartService.removeCartGoods(cartListCode);
 		return "redirect:/buyer/mypage/cart/cartList";
 	}
 	//장바구니에 담긴 상품 주문화면으로 선택 이동

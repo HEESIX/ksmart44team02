@@ -23,5 +23,9 @@ public class CartService {
 		
 		return cartList;
 	}
+	//장바구니 특정 상품 삭제 처리
+	public void removeCartGoods(String cartListCode) {
+		cartMapper.removeCartGoods(cartListCode);
+	}
 
 }
