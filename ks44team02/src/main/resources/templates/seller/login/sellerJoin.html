@@ -326,21 +326,22 @@ footer .copyright-wrap span{
 	  					console.log(typeof memberId);
 	  					
 	  					var request = $.ajax({
-	  					  url: '/seller/login/sellerJoin', 
-	  					  method: 'GET',
+	  					  url: '/seller/login/sellerLoginIdcheck', 
+	  					  method: 'get',
 	  					  data: { 'memberId' : memberId },
-	  					  dataType: "text"  //String이면 text   //text, json, xml, html
+	  					  dataType: "json"  //String이면 text   //text, json, xml, html
 	  					});
 	  					 
- 	  					request.done(function( data ) {
+	  					request.done(function( data ) {
 	  						if(data) {
 	  							alert('가입된 회원입니다.');
 	  							$('#memberId').focus();
 	  						}else {
+	  							alert('사용 가능한 아이디입니다.');
 	  							$('#idCheckBtn').attr('data-isChecked', true);
-	  							$('#sellerLogin input').prop('disabled', false);
-	  							$('#sellerLogin select').prop('disabled', false);
-	  							$('#sellerLogin button').prop('disabled', false);
+	  							$('#addMemberForm input').prop('disabled', false);
+	  							$('#addMemberForm select').prop('disabled', false);
+	  							$('#addMemberForm button').prop('disabled', false);
 
 	  						}	
 	  					});

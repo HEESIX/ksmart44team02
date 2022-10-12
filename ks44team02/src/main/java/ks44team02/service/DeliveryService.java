@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.Delivery;
 import ks44team02.dto.OrderDetail;
 import ks44team02.dto.OrderRecordList;
 import ks44team02.dto.OrderRefund;
@@ -47,10 +48,18 @@ public class DeliveryService {
 		return orderDetailInfo;
 	}
 	
+	//판매자측 주문상태 업데이트
 	public boolean modifyOrderStatus(OrderDetail sellerOrderList) {
 		boolean result = deliveryMapper.modifyOrderStatus(sellerOrderList);
 		return result;
 	}
+	
+	//판매자측 운송장번호 등록
+	public boolean addDeliNumber(Delivery delivery) {
+		boolean result = deliveryMapper.addDeliNumber(delivery);
+		return result;
+	}
+	
 	
 	
 	

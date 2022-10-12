@@ -8,12 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import ks44team02.dto.Member;
 
-
-
-
 @Mapper
 public interface LoginMapper {
-
 
 	//구매자 로그인
 	public String buyerLogin();
@@ -53,6 +49,9 @@ public interface LoginMapper {
 
 	//아이디 중복체크
 	public boolean idCheck(String memberId);
+	
+	//아이디 중복체크 구매자
+	public boolean idCheckBuyer(String memberId);
 		
 	//회원 가입
 	public int addMember(Member member);
