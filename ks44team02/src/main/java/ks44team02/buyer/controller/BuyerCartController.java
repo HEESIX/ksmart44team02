@@ -64,9 +64,15 @@ public class BuyerCartController {
 
 	//장바구니에 담긴 상품 삭제 처리
 	@PostMapping("/removeCart")
-	public String removeCartGoods(@RequestParam(value = "cartListCode") String cartListCode) {
+	public String removeCartGoods(Cart cart,RedirectAttributes reAttr) {
+		log.info(">>>>>>>>>삭제{}", cart);
 		
-		cartService.removeCartGoods(cartListCode);
+		boolean result = cartService.removeCartGoods(cart);
+		if(result) {
+			reAttr.addAttribute("msg", "수정 완료");
+		}else {
+			reAttr.addAttribute("msg", "수정 실패");
+		}
 		return "redirect:/buyer/mypage/cart/cartList";
 	}
 	//장바구니에 담긴 상품 주문화면으로 선택 이동
