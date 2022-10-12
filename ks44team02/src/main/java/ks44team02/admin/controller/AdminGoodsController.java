@@ -724,28 +724,25 @@ public class AdminGoodsController {
 	@PostMapping("menu/removeMenu/{menuCode}")
 	@ResponseBody
 	@Transactional
-	public String removeAdminMenu(@PathVariable(value = "menuCode") String menuCode
+	public boolean removeAdminMenu(@PathVariable(value = "menuCode") String menuCode
 								 ,@RequestParam(value = "memberPw") String memberPw
 								 ,HttpSession session
 								 ,HttpServletRequest request) {
-		String msg = "식단 삭제가 정상적으로 완료되었습니다.";
 		
 		//String memberId = (String) session.getAttribute("SID");
 		String memberId = "id001";
 		boolean checkResult = commonService.sessionIdPwCheck(memberId, memberPw);
 		log.info(">>>>>>>>>>>>>>>>>{}",checkResult);
 		if(!checkResult) {
-			msg = "삭제 실패: 비밀번호를 확인해주세요.";
-			return msg;
+			return false;
 		}
 		
 		boolean removeGoodsResult = goodsService.removeMenu(menuCode);
 		if(!removeGoodsResult) {
-			msg = "삭제 실패: 상품 정보를 삭제하지 못했습니다.";
-			return msg;
+			return false;
 		}
 		
-		return msg;
+		return true;
 	}
 
 	// 개별 식단 정보

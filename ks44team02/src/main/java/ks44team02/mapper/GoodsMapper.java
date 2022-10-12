@@ -70,7 +70,7 @@ public interface GoodsMapper {
 	public boolean removeGoods(String goodsCode);
 	
 	//메뉴 코드로 상품 삭제
-	public boolean removeMenu(String menuCode);
+	public boolean removeMenu(Map<String, Object> map);
 	
 	//상품 메인 이미지 정보 조회
 	public GoodsMainImage getGoodsMainImageInfo(String mainImageIdx);

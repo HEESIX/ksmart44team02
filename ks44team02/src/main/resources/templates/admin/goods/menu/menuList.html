@@ -54,7 +54,6 @@ table th, td {
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
-										<th>번호</th>
 										<th>상품명</th>
 										<th>메인이미지</th>
 										<th>카테고리</th>
@@ -74,7 +73,6 @@ table th, td {
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(adminMenuList)}"
 										th:each="aml, status : ${adminMenuList}">
-										<td th:text="${status.count}"></td>
 										<td th:text="${aml.goodsName}"></td>
 										<td><a
 											th:href="@{|/admin/goods/menu/menuDetail/${aml.menuInformation.menuCode}|}"><img
@@ -149,7 +147,8 @@ table th, td {
 				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
 				
 				var removeUrl = $(this).attr('data-location');
-				console.log(removeUrl);
+				
+				var toRemove = $(this).parents('tr');
 				
 				var request = $.ajax({
 					  url: removeUrl,
@@ -159,12 +158,14 @@ table th, td {
 					});
 					 
 					request.done(function(data) {
-						alert(data.responseText);
-						$(this).parent().parent().remove();
+						if(data){
+							alert('식단 삭제가 정상적으로 완료되었습니다.');
+							toRemove.remove();
+						}
 					});
 					 
 					request.fail(function(data) {
-					  	alert('삭제 실패');
+					  	alert('?');
 					});
 			});
 		});
