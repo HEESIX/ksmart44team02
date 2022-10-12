@@ -26,8 +26,6 @@ public class BuyerRegController {
 		this.loginService = loginService;
 	}
 	
-	
-
 	//구매자 회원 등록 폼 
 	@GetMapping("/buyerLoginReg")
 	public String addBuyerInsertForm() {
@@ -43,9 +41,12 @@ public class BuyerRegController {
 	@GetMapping("/buyerLoginIdcheck")
 	@ResponseBody
 	public boolean CheckBuyerId(@RequestParam(name="memberId")String memberId) {
-		boolean result = loginService.idCheckBuyer(memberId);
+		boolean result = loginService.idCheck(memberId);
 		return result;
 	}
+		
+	
+	
 	//구매자 등록시 핸드폰 중복 체크 
 	@GetMapping("/buyerLoginNumcheck")
 	public String CheckBuyerNum() {
