@@ -65,7 +65,7 @@
 	</select>
 	
 	<!-- 회원 아이디 중복체크 -->
-	<select id="idCheck" parameterType="String" resultType="boolean">
+	<select id="idCheck" resultType="boolean" parameterType="string">
 		/* 회원 아이디 중복체크 */
 		SELECT
 			COUNT(m.member_id)
