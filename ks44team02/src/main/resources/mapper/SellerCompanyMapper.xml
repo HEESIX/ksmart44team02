@@ -95,9 +95,9 @@ WHERE
 
 <!-- 입점 신청 아이디 일치 -->
 <!--
-<select id="addCompany" parameterType="com.mygg.dto.CompanyDTO" resultType="int">
+<select id="" parameterType="" resultType="int">
 SELECT
-COUNT(*)
+COUNT(member_id)
 
 FROM
 tb_launching
@@ -109,9 +109,9 @@ member_id = #{sellerId}
  
 <!-- 입점 신청 브랜드 중복체크 -->
 <!--
-<select id="addCompany" parameterType="com.mygg.dto.CompanyDTO" resultType="int">
+<select id="" parameterType="" resultType="int">
 SELECT
-COUNT(*)
+COUNT(launching_brand)
 
 FROM
 tb_launching
@@ -123,9 +123,9 @@ launching_brand = #{sellerBrand}
  
 <!-- 입점 신청 사업자등록번호 중복체크 -->
 <!--
-<select id="addCompany" parameterType="com.mygg.dto.CompanyDTO" resultType="int">
+<select id="" parameterType="" resultType="int">
 SELECT
-COUNT(*)
+COUNT(launching_Business_reg_num)
 
 FROM
 tb_launching
