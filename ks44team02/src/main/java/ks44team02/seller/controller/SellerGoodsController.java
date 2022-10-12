@@ -164,6 +164,77 @@ public class SellerGoodsController {
 		return "seller/goods/goodsApplyList";
 	}
 	
+	//상품 등록 신청 내역 검색
+	@PostMapping("/goodsApplyList")
+	public String getSearchGoodsApplyList(Model model
+										 ,HttpServletRequest request
+										 ,HttpSession session
+										 ,@RequestParam(value = "msg", required = false) String msg
+										 ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+										 ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+										 ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+										 ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+									     ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+									     ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate
+									     ,@RequestParam(value = "approveRefuse", required = false, defaultValue = "") String approveRefuse) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 1;
+		
+		if (!"localhost".equals(serverName)) { 
+			isLocalhost = 0;
+		}
+		map.put("isLocalhost", isLocalhost);
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "ga.ga_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "gc.cate_name";
+		}else if("goodsProduce".equals(searchKey)) {
+			searchKey = "ga.ga_produce";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "ga.ga_price";
+		}else if("goodsDiscountName".equals(searchKey)) {
+			searchKey = "gdm.discount_name";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "ga.ga_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "ga.ga_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "ga.ga_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "ga.ga_reg_apply_datetime";
+		}else if("approveRefuse".equals(searchKey)) {
+			searchKey = "ga.ga_approve_refuse";
+		}		
+		
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		map.put("approveRefuse", approveRefuse);
+		
+		//String memberId = (String) session.getAttribute("SID");
+		String memberId = "id010";
+		map.put("memberId", memberId);
+		
+		log.info(">>>>>>>>>{}", map);
+		
+		List<GoodsApply> goodsApplyList = goodsService.getGoodsRegApplyListForSeller(map);
+		log.info(">>>>>>>>>>{}", goodsApplyList);
+		
+		model.addAttribute("title", "상품 등록 신청 내역");
+		model.addAttribute("goodsApplyList", goodsApplyList);
+		
+		return "seller/goods/goodsApplyList";
+	}
+	
 	//상품 리스트, seller 본인이 등록한 상품만 조회 가능
 	@GetMapping("/goodsList")
 	public String getSellerGoodsList(Model model
@@ -189,6 +260,73 @@ public class SellerGoodsController {
 		
 		model.addAttribute("title", "상품 목록");
 		model.addAttribute("sellerGoodsList", sellerGoodsList);
+		return "seller/goods/goodsList";
+	}
+	
+	//상품 목록 검색
+	@PostMapping("/goodsList")
+	public String getSearchSellerGoodsList(Model model
+										  ,HttpServletRequest request
+										  ,HttpSession session
+										  ,@RequestParam(value = "msg", required = false) String msg
+										  ,@RequestParam(value = "searchKey", defaultValue = "goodsName") String searchKey
+										  ,@RequestParam(value = "searchValue", required = false, defaultValue = "") String searchValue
+										  ,@RequestParam(value = "minNum", required = false, defaultValue = "") String minNum
+										  ,@RequestParam(value = "maxNum", required = false, defaultValue = "") String maxNum
+									      ,@RequestParam(value = "minDate", required = false, defaultValue = "") String minDate
+									      ,@RequestParam(value = "maxDate", required = false, defaultValue = "") String maxDate) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 1;
+		
+		if (!"localhost".equals(serverName)) { 
+			isLocalhost = 0;
+		}
+		map.put("isLocalhost", isLocalhost);
+		
+		if("goodsName".equals(searchKey)) {
+			searchKey = "g.g_name";
+		}else if("goodsCategory".equals(searchKey)) {
+			searchKey = "gc.cate_name";
+		}else if("goodsProduce".equals(searchKey)) {
+			searchKey = "g.g_produce";
+		}else if("goodsPrice".equals(searchKey)) {
+			searchKey = "g.g_price";
+		}else if("goodsDiscountName".equals(searchKey)) {
+			searchKey = "gdm.discount_name";
+		}else if("goodsDiscountPrice".equals(searchKey)) {
+			searchKey = "g.g_discount";
+		}else if("goodsStock".equals(searchKey)) {
+			searchKey = "g.g_stock";
+		}else if("goodsDeliveryCharge".equals(searchKey)) {
+			searchKey = "g.g_delivery_charge";
+		}else if("regDate".equals(searchKey)) {
+			searchKey = "g.g_reg_datetime";
+		}
+		
+		map.put("sk", searchKey);
+		map.put("sv", searchValue);
+		map.put("minNum", minNum);
+		map.put("maxNum", maxNum);
+		map.put("minDate", minDate);
+		map.put("maxDate", maxDate);
+		
+		//String memberId = (String) session.getAttribute("SID");
+		String memberId = "id010";
+		map.put("memberId", memberId);
+		
+		log.info(">>>>>>>>>{}", map);
+		
+		List<Goods> sellerGoodsList = goodsService.getGoodsList(map);
+		log.info(">>>>>>>>>>>>{}", sellerGoodsList);
+		
+		model.addAttribute("title", "상품 목록");
+		model.addAttribute("sellerGoodsList", sellerGoodsList);
+		
 		return "seller/goods/goodsList";
 	}
 	
