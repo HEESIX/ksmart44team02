@@ -21,18 +21,8 @@
 					</div>
 					<form th:action="@{/admin/mileageManage/mileage_give}"
 						method="post">
-						<div class="card-block">
-							<div class="form-group row">
-								<label for="mMileageCode"
-									class="col-xs-2 col-form-label form-control-label">회원별 적립금 누적 코드
-                               </label>
-								<div class="col-sm-10">
-									<input th:value="*{mMileageCode}" class="form-control"
-										type="text" id="mMileageCode" name="mMileageCode"
-										readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group row">
+						
+						<div class="form-group row">
 								<label for="currentMileage"
 									class="col-xs-2 col-form-label form-control-label">수정 마일리지 금액</label>
 								<div class="col-sm-10">
@@ -46,6 +36,67 @@
 								<div class="col-sm-10">
 									<input th:value="*{memberId}" class="form-control"
 										type="text" id="memberId" name="memberId">
+								</div>
+							</div>
+						<div class="card-block">
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">회원별 적립금 누적 코드
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*{mMileageCode}" class="form-control"
+										type="text" id="mMileageCode" name="mMileageCode"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">상세 주문서코드
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*{orderDetailCode}" class="form-control"
+										type="text" id="orderDetailCode" name="orderDetailCode"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">마일리지 구분
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*{mileageDistinct}" class="form-control"
+										type="text" id="mileageDistinct" name="mileageDistinct"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">적립/소멸마일리지
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*{addedUsedMileage}" class="form-control"
+										type="text" id="addedUsedMileage" name="addedUsedMileage"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">마일리지 소계
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*{mileageSubtotal}" class="form-control"
+										type="text" id="mileageSubtotal" name="mileageSubtotal"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="mMileageCode"
+									class="col-xs-2 col-form-label form-control-label">회원별 적립금 누적 코드
+                               </label>
+								<div class="col-sm-10">
+									<input th:value="*NOW()" class="form-control"
+										type="text" id="mileageUpdateDatetime" name="mileageUpdateDatetime"
+										readonly="readonly">
 								</div>
 							</div>
 							<button id="updateBtn" type="submit"

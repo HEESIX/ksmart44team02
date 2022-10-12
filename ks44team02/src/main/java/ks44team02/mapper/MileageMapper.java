@@ -21,6 +21,8 @@ public interface MileageMapper {
 		//회원 적립금 적립
 		public boolean giveMileage(MemberMileageAcc memberMileageAcc);
 		
+		public List<MemberMileageAcc> giveMileageForm(MemberMileageAcc memberMileageAcc);
+		
 		//회원 적립금 소멸
 		public int MileageExtinction();
 		
@@ -35,4 +37,6 @@ public interface MileageMapper {
 		public boolean MileageExtinction(String mMileageCode);
 		
 		public MemberMileageAcc getMileageInfo(String mMileageCode, String currentMileage, String memberId);
+
+		
 }

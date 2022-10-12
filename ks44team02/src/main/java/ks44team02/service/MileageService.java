@@ -29,7 +29,13 @@ public class MileageService {
 		List<MemberMileageAcc> mileageList = mileageMapper.getMileageList();
 		return mileageList;
 	}
-
+	
+	//마일리지 적립 폼
+	public List<MemberMileageAcc> giveMileageForm(MemberMileageAcc memberMileageAcc) {
+		List<MemberMileageAcc> mileageList = mileageMapper.giveMileageForm(memberMileageAcc);
+		return mileageList;
+	}
+	
 	// 회원 적립금 검색
 	public List<MemberMileageAcc> getMileageListSearch(String memberId) {
 		List<MemberMileageAcc> mileageList = mileageMapper.getMileageListSearch(memberId);
@@ -65,7 +71,7 @@ public class MileageService {
 
 	}
 
-	public MemberMileageAcc getMileageInfo(String mMileageCode, String currentMileage, String memberId) {
+	public MemberMileageAcc getMileageInfo(MemberMileageAcc memberMileageAcc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
