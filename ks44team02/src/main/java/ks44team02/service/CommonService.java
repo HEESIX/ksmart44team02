@@ -27,6 +27,18 @@ public class CommonService {
 		return newCode;
 	}
 	
+	//
+	public int isExistEnterCode(String memberId) {
+		int result = commonMapper.isExistEnterCode(memberId);
+		return result;
+	}
+	
+	//회원 아이디로 입점업체코드 가져오기
+	public String getEnterCodeOfMebmerId(String memberId) {
+		String enterCode = commonMapper.getEnterCodeOfMebmerId(memberId);
+		return enterCode;
+	}
+	
 	//회원 마일리지 부여
 	public boolean giveMileage(String mMileageCode) {
 		boolean result =commonMapper.getNewCode(mMileageCode) != null;

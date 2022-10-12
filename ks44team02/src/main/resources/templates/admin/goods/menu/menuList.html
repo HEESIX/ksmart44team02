@@ -15,17 +15,17 @@
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 	<style>
-		table th,td{
-			max-width: 200px;
-		}
-	</style>
+table th, td {
+	max-width: 200px;
+}
+</style>
 </th:block>
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0"  style="display: flex;">
 				<div class="main-header">
 					<h4>식단 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
@@ -35,14 +35,21 @@
 							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
 					</ol>
 				</div>
+				<div style="padding-left: 20px;">
+					<span>판매여부에 상관없이 등록되어 있는 식단을 조회한다.</span><br>
+					<span>식단명, 카테고리명, 가격, 할인 적용 후 가격, 재고, 배송비, 등록일자로 검색이 가능하다.</span><br>
+					<span>등록된 식단을 수정하거나 삭제가 가능하고 새로운 식단 또한 등록이 가능하다.</span><br>
+					<span>삭제를 원할 경우 로그인된 계정의 비밀번호를 입력받고 비밀번호가 확인되면 삭제가 진행된다.</span>
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
-						<div th:include="admin/goods/search/searchMenuList :: searchFragment"
-								style="margin-bottom: 10px;"></div>
+						<div
+							th:include="admin/goods/search/searchMenuList :: searchFragment"
+							style="margin-bottom: 10px;"></div>
 						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
@@ -92,7 +99,8 @@
 													data-toggle="tooltip" data-placement="top" title="">수정</button></a></td>
 										<td><button type="button"
 												class="btn btn-inverse-danger waves-effect waves-light removeBtn"
-												data-toggle="tooltip" data-placement="top" th:data-location="@{|/admin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</button></td>
+												data-toggle="tooltip" data-placement="top"
+												th:data-location="@{|/admin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -137,7 +145,7 @@
 			});
 			
 			$('.removeBtn').click(function(){
-				var memberPw = prompt('비밀번호를 입력해주세요.');
+				var memberPw = prompt('비밀번호를 입력해주세요.', 'pw001');
 				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
 				
 				var removeUrl = $(this).attr('data-location');
@@ -152,13 +160,12 @@
 					 
 					request.done(function(data) {
 						alert(data.responseText);
-						
+						$(this).parent().parent().remove();
 					});
 					 
 					request.fail(function(data) {
-					  	alert(data.responseText);
+					  	alert('삭제 실패');
 					});
-					$(this).parent().parent().remove();
 			});
 		});
 	</script>
