@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ks44team02.dto.Delivery;
 import ks44team02.dto.OrderDetail;
 import ks44team02.dto.OrderStatus;
 import ks44team02.dto.OrderStatusStandard;
@@ -29,6 +30,9 @@ public interface DeliveryMapper {
 	
 	//추가2 상품현황정의
 	public List<OrderStatusStandard> getOrderStatusStandard();
+	
+	//판매자측 운송장 번호 등록
+	public boolean addDeliNumber(Delivery delivery);
 	
 	
 	//구매자 배송처리

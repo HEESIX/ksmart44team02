@@ -3,8 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.DeliveryMapper">
-
-	
 	<resultMap type="OrderDetail" id="detailResultMap">
 		<id column="order_detail_code" property="orderDetailCode"/>
 		<result column="member_id" property="memberId"/>
@@ -146,6 +144,16 @@
 		WHERE 
 			order_status_code = #{orderStatusCode}
 	</update>
+	
+	<!-- 주문서 운송장 등록 처리 -->
+	<update id="addDeliNumber" parameterType="Delivery">
+		UPDATE tb_delivery
+		SET 
+			delivery_num = #{deliveryNum}
+		WHERE
+			order_detail_code = #{orderDetailCode};
+	</update>
+	
 	
 	<!-- 판매자 측 특정 주문 선택조회 -->
 	<select id="getOrderStatusInfo" parameterType="String" resultMap="detailResultMap">
@@ -382,11 +390,5 @@ ORDER BY
 			od.order_group_code = #{orderGroupCode}
 		GROUP by
 			od.order_group_code;
-	</select>
-
-
-
-
-
-	
+	</select>	
 </mapper>

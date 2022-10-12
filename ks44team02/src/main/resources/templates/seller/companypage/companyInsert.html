@@ -51,6 +51,46 @@
 
 
 
+<!-- 아이디 일치 불일치 -->
+<th:block layout:fragment="customScript">
+	<script>
+		$(function(){
+			function validationCheck(data){				
+				if(typeof data == 'undefined' || data == null || data == ''){
+					return true;
+				}
+					return false;
+			}
+			
+			
+		    window.addEventListener('load', () => {
+			      const forms = document.getElementsByClassName('validation-form');
+
+			      Array.prototype.filter.call(forms, (form) => {
+			        form.addEventListener('submit', function (event) {
+			          if (form.checkValidity() === false) {
+			            event.preventDefault();
+			            event.stopPropagation();
+			          }
+
+			          form.classList.add('was-validated');
+			        }, false);
+			      });
+			    }, false);
+			  var IdCheck  =$('#IdCheck')
+				IdCheck.focusout(function(){
+					
+					var sellerId = $('#sellerId').val();
+					var sellerIdCheck = $('#sellerIdCheck').val();
+					if(sellerId != sellerIdCheck){
+						alert('아이디가 일치하지 않습니다.');
+						return;
+					}else{}
+				});	  
+	</script>
+</th:block>
+
+
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -82,11 +122,11 @@
 					<div class="checkout__input">
 						<p>
 							판매자 아이디<span>*</span>
-						</p>		
+						</p>
 						<div class="checkout__input d-flex">
-						<input type="text" class="mr-auto" placeholder="가입하신 아이디를 입력해주세요">
+						<input type="text" class="mr-auto" id="IdCheck" name="sellerIdCheck" placeholder="가입하신 아이디를 입력해주세요" value="" required>
 						<button type="submit" class="col-md-2 img-btn">확인</button>
-					</div>
+					</div>	
 					</div>
 					<div class="checkout__input">
 						<p>
