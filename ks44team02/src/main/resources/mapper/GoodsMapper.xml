@@ -394,7 +394,7 @@
 			AND g.g_isdel = 0
 	</select>
 	<!-- 식단코드로 상품 삭제  -->
-	<update id="removeMenu" parameterType="String">
+	<update id="removeMenu" parameterType="Map">
 		<selectKey keyProperty="goodsCode" resultType="String" order="BEFORE">
 			SELECT 
 				mi.g_code as goodsCode
