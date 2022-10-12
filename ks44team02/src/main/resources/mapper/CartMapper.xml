@@ -63,4 +63,11 @@
 		WHERE
 			member_id = #{SID};
 	</select>
+	<delete id="removeCartGoods" parameterType="String">
+	DELETE
+	FROM
+		tb_cart_list
+	WHERE
+		cart_list_code = #{cartListCode};
+	</delete>
 </mapper>
