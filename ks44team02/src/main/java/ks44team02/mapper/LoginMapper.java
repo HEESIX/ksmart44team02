@@ -52,13 +52,23 @@ public interface LoginMapper {
 	
 	//아이디 중복체크 구매자
 	public boolean idCheckBuyer(String memberId);
-		
-	//회원 가입
-	public int addMember(Member member);
+	
+	//아이디 중복체크 판매자
+	public boolean idCheckSeller(String memberId);
 	
 
 	//회원 목록 조회
 	public List<Member> getMemberList();
+
+	//관리자회원 가입???
+	public List<Member> getAddAdmin();
+	
+	//관리자회원 가입
+	public int addAdmin(Member member);
+
+
+
+	
 	
 	
 }
