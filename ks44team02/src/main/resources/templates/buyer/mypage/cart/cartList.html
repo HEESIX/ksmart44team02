@@ -11,94 +11,76 @@
 <!-- 사용자 정의 css -->
 <th:block layout:fragment="customCss">
 <style>
-	table {
-    text-align: center;
-    border: 1px solid #fff;
-    border-spacing: 1px;
-    font-family: 'Cairo', sans-serif;
+
+.modal-content.modal-80size {
+ position: relative;
+  height: auto;
+  min-height: 80%;
 }
 
-table td {
-    padding: 10px;
-    background-color: #f8f9fa;
+.modal.modal-center {
+  text-align: center;
 }
 
-table th {
-    background-color: #555;
-    color: #fff;
-    padding: 10px;
-}
-table td, th{
-	width: 200px;
-}
-
-.orderBtn01,
-.orderBtn02,
-.orderBtn03,
-.orderStatus {
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-     background-color: #7fad39;
-}
-.orderBtn04{
-	border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-    width: 100%;
-    background-color: #DFE0E0;
-}
-.orderBtn05{
-	border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-    background-color: #555;
-    float: right;
-}
-.orderStatus {
-    background-color: #7fad39;
+@media screen and (min-width: 768px) {
+  .modal.modal-center:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
 }
 
-#modal {
-  position:relative;
+.modal-dialog.modal-center {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+li {
+  list-style: none;
+  cursor: pointer;
+}
+
+/* STYLE */
+.main_con_form {
+  text-align: left;
+  padding: 20px;
+}
+
+.form_inner {
+  width: 100%;
+  height: 100%;
+}
+.main_con_form h1 {
+  font-size: 28px;
+}
+.form_list_input {
+  height: 100%;
+  margin-top: 20px;
+}
+.form_list_input li {
+  height: 54px;
+}
+.form_list_input input {
+  padding: 0 1em; 
+  border: solid #555;
+  height: 38px;
+  width: 100%;
+  border-radius: 30px;
+}
+.form_list_input input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #DFE0E0;
+}
+.form_list_input input::placeholder {
+  font-weight: 300;
+  color: #aaa;
+}
+.form_list_input label {
+  float: left;
   display: none;
-  width:100%;
-  height:100%;
-  z-index:1;
-}
-
-#modal h2 {
-  margin:0;   
-}
-
-#modal button {
-  display:inline-block;
-  width:100px;
-  margin-left:calc(100% - 100px - 10px);
-}
-
-#modal .modal_content {
-  width:300px;
-  margin:100px auto;
-  padding:20px 10px;
-  background:#fff;
-  border:2px solid #666;
-}
-
-#modal .modal_layer {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0, 0, 0, 0.5);
-  z-index:-1;
-}   
-
-
 
 </style>
 </th:block>
@@ -162,7 +144,34 @@ table td, th{
 	                                	</td>
 	                                	<td th:text="${cl.priceSubtotal}"></td>
 	                                    <td class="shoping__cart__item__close">
-	                                        <span class="icon_close"></span></td>
+	                                        <span class="icon_close modalBtn"></span>
+					                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
+												  <div class="modal-dialog modal-80size modal-center" role="document">
+												    <div class="modal-content modal-80size">
+												      <div class="modal-header">
+												        <h4 class="modal-title" id="myModalLabel"></h4>
+												        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												      </div>
+												      <div class="modal-body">
+												       <div class="main_con_form">
+														  <div class="form_inner">
+															  <div>
+															    <ul class="form_list_input">											    	
+															      <li>
+															      	선택한 상품을 장바구니에서 삭제하시겠습니까?
+															      </li>
+															    </ul>
+															  </div>
+														  </div>
+														</div>
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-default addDeliNum" data-dismiss="modal">확인</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+	                                        </td>
                                 </tr>
                                	<tr th:unless="${not #lists.isEmpty(cartList)}">
 									<td colspan="5" style="text-align: center;">상품을 담아주세요.</td>
@@ -204,4 +213,48 @@ table td, th{
     </section>
     </th:block>
     <!-- Shoping Cart Section End -->    
+<th:block layout:fragment="customFootjs">
+<script type="text/javascript">
+	$(function(){
+		$(document).on('click', '.modalBtn', function(){
+			let orderCode = $(this).parents('tr').children('td').eq(0).text();
+			$('#modal').modal("show"); //열기
+			//
+		});	
+		
+		$(document).on('click', '.addDeliNum', function(){
+			let orderDetailCode = $('#orderDetailCodeModal').val();
+			let deliNumInput = $('#deliNum_input').val();
+			//ajax
+			var request = $.ajax({
+						  url: "/buyer/mypage/cart/removeCart",
+						  method: "POST",
+						  data: { 
+							  	   'orderDetailCode' : orderDetailCode 
+							  	  ,'deliveryNum' : deliNumInput
+							  	},
+						  dataType: "text"
+						});
+						 
+			request.done(function( data ) {
+				if(data){
+					alert('장바구니에서 상품이 삭제되었습니다.')
+					$('#modal').modal("hide"); //닫기 
+					location.reload();
+				}else{
+					alert('삭제 실패.')
+				}
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+			
+		});
+		
+	});
+ 
+</script>
+
+</th:block>
 </html>
