@@ -27,19 +27,12 @@ public class SellerCompanyService {
 		*/
 	}
 	
+	
+	//브랜드 중복체크
 	/*
-	//아이디 중복 체크
-	public String addCompany(String id) throws Exception {
-        CompanyMapper dao = sqlSession.getMapper(ComapanyMapper.class);
-
-        member_List abc = dao.addCompany(id);
-
-        if(abc == null)
-            return "null";
-        else
-            return "success";
-    }
-    */
+	public int brandChk(Seller seller) throws Exception;
+	*/
+	
 	
 	//업체 정보 검색 및 전체 리스트
 	public List<Launching> sellerCompanyInfoList() {
