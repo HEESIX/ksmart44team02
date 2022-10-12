@@ -39,7 +39,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th class="shoping__product">Products</th>
+                                    <th>Products</th>
+                                    <th></th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -47,16 +48,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:if="${not #lists.isEmpty(cartList)}"
-                                	th:each="cl, status : ${cartList}">
-                                	<td th:text="${status.count}"></td>
-                                	<td><a
-                                		href="#"
-                                		th:text="${cl.g
-                                   
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
+                                <tr th:if="${not #lists.isEmpty(cartList)}" th:each="cl, status : ${cartList}">
+	                                	<td th:text="${status.count}"></td>
+	                                	<td><a th:href="@{|/buyer/goods/goodsDetail${cl.goods.goodsCode}|}"><img
+											th:src="@{'/' + ${cl.goodsMainImage.mainImagePath}}"
+											th:alt="${cl.goodsMainImage.mainImageOriginalName}"
+											style="width: 100px;" /></a></td>
+	                                	<td th:text="${cl.goods.goodsName}">
+	                                	<td th:text="${cl.discountPrice}"></td>
+	                                	<td class="shoping_cart_quantity">
+	                                		<div class="quantity">
+	                                			<div class="pro-qty">
+		                                			<span calss="dec qtybtn" style="width: 10px;"></span>
+		                                			<input th:value="${cl.orderAmount}" style=" width: 40px;">
+		                                			<span class="inc qtybtn" style="width: 10px;"></span>
+	                                			</div>
+	                                		</div>
+	                                	</td>
+	                                	<td th:text="${cl.priceSubtotal}"></td>
+	                                    <td class="shoping__cart__item__close">
+	                                        <span class="icon_close"></span></td>
+                                </tr>
+                               	<tr th:unless="${not #lists.isEmpty(cartList)}">
+									<td colspan="5" style="text-align: center;">상품을 담아주세요.</td>
                                 </tr>
                             </tbody>
                         </table>

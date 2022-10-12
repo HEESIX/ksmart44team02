@@ -278,8 +278,20 @@ public class AdminGoodsController {
 
 	// 상품 리스트
 	@GetMapping("/goodsList")
-	public String getGoodsList(Model model) {
-		List<Goods> goodsList = goodsService.getAdminGoodsList(null);
+	public String getGoodsList(Model model
+							  ,HttpServletRequest request) {
+		String serverName = request.getServerName(); 
+		int isLocalhost = 0;
+		 
+		if ("localhost".equals(serverName)) { 
+			isLocalhost = 1;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("isLocalhost", isLocalhost);
+		
+		List<Goods> goodsList = goodsService.getGoodsList(map);
 		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goodsList";
@@ -326,7 +338,7 @@ public class AdminGoodsController {
 		
 		log.info(">>>>>>>>>{}", map);
 		
-		List<Goods> goodsList = goodsService.getAdminGoodsList(map);
+		List<Goods> goodsList = goodsService.getGoodsList(map);
 		System.out.println(goodsList.toString());
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goodsList";
@@ -370,7 +382,7 @@ public class AdminGoodsController {
 	@GetMapping("/menu/regMenu")
 	public String addAdminMenuForm(Model model) {
 		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
-		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
 		
 		model.addAttribute("title", "식단 등록");
@@ -587,7 +599,7 @@ public class AdminGoodsController {
 		Goods menuInfo = goodsService.getMenuInfo(menuCode);
 		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
 		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
-		List<Map<String, Object>> goodsList = goodsService.getGoodsList();
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
 		
 		model.addAttribute("menuInfo", menuInfo);
