@@ -31,11 +31,12 @@ public class AdminJoinController {
 	}
 	*/
 	//관리자 회원 가입 처리
+	
 	@GetMapping("/adminJoin")
 	public String adminJoin() {
 		return "admin/login/adminJoin";
 	}
-	
+
 }
 	
 	
