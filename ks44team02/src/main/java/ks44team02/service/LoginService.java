@@ -68,7 +68,12 @@ public class LoginService {
 	//회원 아이디 중복체크
 	public boolean idCheck(String memberId) {
 		boolean result = loginMapper.idCheck(memberId);
-		System.out.println("id 중복체크 : " + result);
+		return result;
+	}
+
+	//회원 아이디 중복체크 구매자
+	public boolean idCheckBuyer(String memberId) {
+		boolean result = loginMapper.idCheckBuyer(memberId);
 		return result;
 	}
 }

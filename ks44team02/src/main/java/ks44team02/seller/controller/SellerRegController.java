@@ -41,7 +41,7 @@ public class SellerRegController {
 	//판매 회원 등록시 아이디 중복 체크
 	@GetMapping("/sellerLoginCheck")
 	@ResponseBody
-	public boolean CheckSellerId(@RequestParam(name="MemberId")String memberId) {
+	public boolean CheckSellerId(@RequestParam(name="memberId")String memberId) {
 		boolean result = loginService.idCheck(memberId);
 		return result;
 	}	
