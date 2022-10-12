@@ -46,7 +46,7 @@ public class AdminMileageAddExtinctionController {
 
 	
 	//적립금 적립 폼
-		@GetMapping("/mileage_give/{currentMileage}")
+		@GetMapping("/mileageGiveExtinct/{currentMileage}")
 		public String giveMileageForm(@PathVariable(value = "mMileageCode") String mMileageCode,
 				                  @PathVariable(value = "currentMileage") String currentMileage,
 				                  @PathVariable(value = "memberId") String memberId
@@ -56,11 +56,11 @@ public class AdminMileageAddExtinctionController {
 	     System.out.println(memberMileageAccInfo.toString());
 			model.addAttribute("title", "회원 적립금 적립 폼");
 			model.addAttribute("memberMileageAccInfo", memberMileageAccInfo);
-	     		return "admin/mileageManage/mileage_give";
+	     		return "admin/mileageManage/mileageGiveExtinct";
 		}
 		
 		//적립금 적립 처리
-		@PostMapping("/mileage_give")
+		@PostMapping("/mileageGiveExtinct")
 		public String giveMileage(MemberMileageAcc memberMileageAcc, RedirectAttributes reAttr) {
 			String mMileageCode = commonService.getNewCode("tb_member_mileage_acc");
 			memberMileageAcc.setmMileageCode(mMileageCode);
@@ -73,11 +73,11 @@ public class AdminMileageAddExtinctionController {
 			}
 			reAttr.addAttribute("msg", msg);
 
-			return "redirect:admin/mileageManage/mileage_give";
+			return "redirect:admin/mileageManage/mileageGiveExtinct";
 		}
 		
 		//적립금 소멸 폼
-		@GetMapping("/mileage_extinct/{currentMileage}")
+		@GetMapping("/mileageGiveExtinct/{currentMileage}")
 		public String MileageExtinctionForm(@PathVariable(value = "currentMileage") String currentMileage,
 											@PathVariable(value = "mMileageCode") String mMileageCode
 				,Model model
@@ -85,11 +85,11 @@ public class AdminMileageAddExtinctionController {
 			 MemberMileageAcc mileageExtinct = mileageService.getMileageInfo(currentMileage, mMileageCode);
 			 model.addAttribute("title", "회원 적립금 소멸 폼");
 				model.addAttribute("mileageExtinct", mileageExtinct);
-			return "admin/mileageManage/mileage_extinct";
+			return "admin/mileageManage/mileageGiveExtinct";
 		}
 		
 		//적립금 소멸처리
-		@PostMapping("/mileage_extinct")
+		@PostMapping("/mileageGiveExtinct")
 		public String MileageExtinction(@RequestParam(value = "mMileageCode") String mMileageCode,
 				@RequestParam(value = "currentMileage") String currentMileage, HttpSession session, RedirectAttributes reAttr) {
 				mMileageCode = "m_acc_id001";
@@ -102,7 +102,7 @@ public class AdminMileageAddExtinctionController {
 				//아이디 비번 불일치
 				reAttr.addAttribute("msg", "소멸 실패: 적립금이 존재하지 않습니다.");
 			}
-			return "redirect:admin/mileageManage/mileage_extinct";
+			return "redirect:admin/mileageManage/mileageGiveExtinct";
 			
 			
 			

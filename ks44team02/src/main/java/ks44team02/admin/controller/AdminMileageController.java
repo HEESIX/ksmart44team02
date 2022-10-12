@@ -48,7 +48,7 @@ public class AdminMileageController<Mileage> {
 	}
 	
 	//회원 적립금 조회 화면
-	@GetMapping("/mileage_management")
+	@GetMapping("/mileageManagement")
 	public String getMileageList(Model model) {
 		log.info("/mileageManage/mileage_management getMileageList AdminMileageController");
 		System.out.println("/mileageManage/mileage_management getMileageList AdminMileageController");
@@ -64,11 +64,11 @@ public class AdminMileageController<Mileage> {
 		System.out.println(mileageList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
-		return "admin/mileageManage/mileage_management";
+		return "admin/mileageManage/mileageManagement";
 	}
 	
 	//회원 적립금 조회
-	@PostMapping("/mileage_management")
+	@PostMapping("/mileageManagement")
 	public String getMileageListSearch(Model model
 									  ,@RequestParam(value = "memberId") String memberId) {
 		log.info("PostMapping /mileage_management getMileageListSearch AdminMileageController");
@@ -84,7 +84,7 @@ public class AdminMileageController<Mileage> {
 
 		model.addAttribute("title","적립금 조회");
 		model.addAttribute("mileageList", mileageList);
-		return "admin/mileageManage/mileage_management";
+		return "admin/mileageManage/mileageManagement";
 	}
 	
 	
