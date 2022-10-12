@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 검색바 -->
+<div th:fragment="searchFragment">
+	<form th:action="@{/seller/goods/goodsApplyList}" method="post" id="seachBox">
+		<div class="row">
+			<div style="padding: 0;">
+				<select class="js-example-basic-single" name="searchKey"
+					id="searchKey" style="width: 100%;">
+					<option value="goodsName">상품명</option>
+					<option value="goodsCategory">카테고리명</option>
+					<option value="goodsProduce">원산지</option>
+					<option value="goodsPrice">가격</option>
+					<option value="goodsDiscountName">할인명</option>
+					<option value="goodsDiscountPrice">할인 적용 후 가격</option>
+					<option value="goodsStock">재고</option>
+					<option value="goodsDeliveryCharge">배송비</option>
+					<option value="regDate">신청일자</option>
+					<option value="approveRefuse">승인여부</option>
+				</select>
+			</div>
+			<div class="col-sm-2 searchValueBox searchText">
+				<input class="form-control" type="text" name="searchValue"
+					placeholder="검색어를 입력해주세요" id="searchValue" />
+			</div>
+			<div class="col-sm-2 searchValueBox minNum" style="display: none;">
+				<input class="form-control" type="number" placeholder="최솟값"
+					name="minNum">
+			</div>
+			<div class="col-sm-2 searchValueBox maxNum" style="display: none;">
+				<input class="form-control" type="number" placeholder="최댓값"
+					name="maxNum">
+			</div>
+			<div class="col-sm-2 searchValueBox minDate" style="display: none;">
+				<input class="form-control" type="date" placeholder="최소일자"
+					name="minDate" style="width: 200px;">
+			</div>
+			<div class="col-sm-2 searchValueBox maxDate" style="display: none;">
+				<input class="form-control" type="date" placeholder="최대일자"
+					name="maxDate" style="width: 200px;">
+			</div>
+			<div class="col-sm-1 searchValueBox selectBox" style="display: none;">
+				<select name="approveRefuse">
+					<option value="검토중">검토중</option>
+					<option value="승인">승인</option>
+					<option value="거절">거절</option>
+				</select>
+			</div>
+			<div class="col-sm-1">
+				<button class="site-btn"
+					type="submit">검색</button>
+			</div>
+		</div>
+	</form>
+</div>
+</html>
