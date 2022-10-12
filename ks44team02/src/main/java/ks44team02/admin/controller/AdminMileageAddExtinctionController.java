@@ -44,7 +44,7 @@ public class AdminMileageAddExtinctionController {
 			log.info("adminMileageControllerInit bean 생성");
 		}
 
-	
+	/*
 	//적립금 적립 폼
 		@GetMapping("/mileageGiveExtinct/{currentMileage}")
 		public String giveMileageForm(@PathVariable(value = "mMileageCode") String mMileageCode,
@@ -108,7 +108,7 @@ public class AdminMileageAddExtinctionController {
 			
 		
 		}
-		
+		*/
 	}
 	
 
