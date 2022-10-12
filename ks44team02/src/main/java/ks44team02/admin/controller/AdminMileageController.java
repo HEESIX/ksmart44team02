@@ -24,7 +24,7 @@ import ks44team02.service.MileageService;
 
 @Controller
 
-@RequestMapping(value="/admin/mileageManage", method=RequestMethod.GET)
+@RequestMapping(value="/admin/mileageManage")
 public class AdminMileageController<Mileage> {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
@@ -48,86 +48,45 @@ public class AdminMileageController<Mileage> {
 	}
 	
 	//회원 적립금 조회 화면
-	@GetMapping("/mileage_management")
+	@GetMapping("/mileageManagement")
 	public String getMileageList(Model model) {
 		log.info("/mileageManage/mileage_management getMileageList AdminMileageController");
 		System.out.println("/mileageManage/mileage_management getMileageList AdminMileageController");
+		
+		//처음에 아이디값 없다면 전체 조회
+		
+		//아이디가 있다면 아래 메서드 호출로 처리 하면 됩니다.
+		
+		// 또는 mapper 에서 select 쿼리 조건 처리 하면 쉽게 해결 됩니다. 
+		
 		List<MemberMileageAcc> mileageList = mileageService.getMileageList();
+		log.info("mileageList : ", mileageList);
 		System.out.println(mileageList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
-		return "admin/mileageManage/mileage_management";
+		return "admin/mileageManage/mileageManagement";
 	}
 	
 	//회원 적립금 조회
-	@PostMapping("/mileage_management")
+	@PostMapping("/mileageManagement")
 	public String getMileageListSearch(Model model
 									  ,@RequestParam(value = "memberId") String memberId) {
-		List<MemberMileageAcc> mileageList = mileageService.getMileageList();
+		log.info("PostMapping /mileage_management getMileageListSearch AdminMileageController");
+		List<MemberMileageAcc> mileageList = null;
+		
+		if(memberId == null || memberId.equals("")){
+			mileageList = mileageService.getMileageList();
+
+		}else {
+			mileageList = mileageService.getMileageListSearch(memberId);
+		}
+			
 
 		model.addAttribute("title","적립금 조회");
 		model.addAttribute("mileageList", mileageList);
-		return "admin/mileageManagement/mileage_management";
+		return "admin/mileageManage/mileageManagement";
 	}
 	
-	//적립금 적립 폼
-	@GetMapping("/mileage_give/{currentMileage}")
-	public String giveMileageForm(@PathVariable(value = "mMileageCode") String mMileageCode,
-			                  @PathVariable(value = "currentMileage") String currentMileage
-			,Model model
-			,Model model1) {
-     MemberMileageAcc memberMileageAccInfo = mileageService.getMileageInfo(mMileageCode, currentMileage);
-     System.out.println(memberMileageAccInfo.toString());
-     		return "admin/mileageManage/mileage_give";
-	}
-	
-	//적립금 적립 처리
-	@PostMapping("/mileage_give")
-	public String giveMileage(MemberMileageAcc memberMileageAcc, RedirectAttributes reAttr) {
-		String mMileageCode = commonService.getNewCode("tb_member_mileage_acc");
-		memberMileageAcc.setmMileageCode(mMileageCode);
-		boolean result = mileageService.giveMileage(memberMileageAcc);
-		String msg = "";
-		if (result) {
-			msg = "적립 성공";
-		} else {
-			msg = "적립 실패";
-		}
-		reAttr.addAttribute("msg", msg);
-
-		return "redirect:admin/mileageManage/mileage_give";
-	}
-	
-	//적립금 소멸 폼
-	@GetMapping("/mileage_extinct/{currentMileage}")
-	public String MileageExtinctionForm(@PathVariable(value = "currentMileage") String currentMileage,
-										@PathVariable(value = "mMileageCode") String mMileageCode
-			,Model model
-			,Model model1) {
-		 MemberMileageAcc mileageExtinct = mileageService.getMileageInfo(currentMileage, mMileageCode);
-		return "admin/mileageManage/mileage_extinct";
-	}
-	
-	//적립금 소멸처리
-	@PostMapping("/mileage_extinct")
-	public String MileageExtinction(@RequestParam(value = "mMileageCode") String mMileageCode,
-			@RequestParam(value = "currentMileage") String currentMileage, HttpSession session, RedirectAttributes reAttr) {
-			mMileageCode = "m_acc_id001";
-		boolean mileageExtinct = commonService.MileageExtinction(mMileageCode, currentMileage);
-		if(mileageExtinct) {
-			//
-			mileageService.MileageExtinction(mMileageCode);
-			reAttr.addAttribute("msg", "적립금 소멸이 정상적으로 완료되었습니다.");
-		}else {
-			//아이디 비번 불일치
-			reAttr.addAttribute("msg", "소멸 실패: 적립금이 존재하지 않습니다.");
-		}
-		return "redirect:admin/mileageManage/mileage_extinct";
-		
-		
-		
-	
-	}
 	
 }
 
