@@ -39,7 +39,7 @@ public class AdminRegController {
 	//관리자 아이디 중복 검사
 	@GetMapping ("/adminLoginIdcheck")
 	@ResponseBody
-	public boolean CheckAdminId(@RequestParam(name="MemberId")String memberId) {
+	public boolean CheckAdminId(@RequestParam(name="memberId") String memberId) {
 		boolean result = loginService.idCheck(memberId);
 		return result;
 	}
