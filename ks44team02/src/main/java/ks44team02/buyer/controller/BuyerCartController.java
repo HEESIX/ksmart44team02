@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,17 +53,18 @@ public class BuyerCartController {
 		System.out.println(cartList.toString());
 		
 		model.addAttribute("title","장바구니 목록 조회");
-		model.addAttribute("cartList","cartList");
+		model.addAttribute("cartList",cartList);
 		
 		if (msg != null)
 			model.addAttribute("msg", msg);
 		
 		return "buyer/mypage/cart/cartList";
 	}
-	//장바구니에 담긴 상품 선택 삭제
-	@PostMapping("/cartList")
+
+	//장바구니에 담긴 상품 삭제 처리
+	@PostMapping("/removeCart")
 	public String removeCartGoods() {
-		return "buyer/mypage/cart/cartList";
+		return "redirect:/buyer/mypage/cart/cartList";
 	}
 	//장바구니에 담긴 상품 주문화면으로 선택 이동
 	@PostMapping("/cartMove")

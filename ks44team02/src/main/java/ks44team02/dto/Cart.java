@@ -65,7 +65,7 @@ public class Cart {
 	public int getPriceSubtotal() {
 		return priceSubtotal;
 	}
-	public void setPriceSubtotal(int regularPriceSubtotal) {
+	public void setPriceSubtotal(int priceSubtotal) {
 		this.priceSubtotal = priceSubtotal;
 	}
 	public String getOrderDatetime() {
