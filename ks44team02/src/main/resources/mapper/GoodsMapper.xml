@@ -239,7 +239,9 @@
 			,member_id
 			,cate_status
 		FROM
-			tb_goods_cate;
+			tb_goods_cate
+		WHERE
+			cate_isdel = 0
 	</select>
 	<!-- 상품 카테고리 리스트(사용중지된 카테고리 제외)  -->	
 	<select id="getGoodsCategoryListUser" resultMap="categoryResultMap">
@@ -249,7 +251,9 @@
 		FROM
 			tb_goods_cate
 		WHERE
-			cate_status = 1;
+			cate_status = 1
+			AND
+			cate_isdel = 0
 	</select>
 	<!-- 특정 상품 카테고리 정보 조회(상품 카테고리 수정화면) -->
 	<select id="getGoodsCategoryInfo" parameterType="String" resultMap="categoryResultMap">
@@ -274,13 +278,13 @@
 			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
 	<!-- 상품 카테고리 삭제 처리 -->
-	<delete id="removeGoodsCategory" parameterType="String">
-		DELETE 
-		FROM 
-			tb_goods_cate AS gc
+	<update id="removeGoodsCategory" parameterType="String">
+		UPDATE tb_goods_cate
+		SET
+			cate_isdel = 1
 		WHERE 
 			gc.g_cate_code = #{goodsCategoryCode};
-	</delete>
+	</update>
 	<!-- 상품별 할인혜택 리스트(admin)   -->
 	<select id="getGoodsDiscountListForReg" resultMap="goodsDiscountResultMap">
 		SELECT
@@ -296,6 +300,8 @@
 			tb_goods_discount_management AS gdm
 		WHERE 
 			gdm.enter_code IS NULL
+			AND
+			gdm.discount_isdel = 0
 	</select>
 	<!-- 상품별 할인혜택 리스트(seller) -->
 	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
@@ -313,7 +319,9 @@
 		WHERE 
 			gdm.member_id = #{memberId}
 			OR 
-			gdm.enter_code IS NULL;
+			gdm.enter_code IS NULL
+			AND
+			gdm.discount_isdel = 0
 	</select>
 	<!-- 상품 목록(전부) 하자 없는 것  !!-->
 	<select id="getGoodsList" parameterType="Map" resultMap="goodsResultMap">
@@ -385,14 +393,30 @@
 			</trim>
 			AND g.g_isdel = 0
 	</select>
+	<!-- 식단코드로 상품 삭제  -->
+	<update id="removeMenu" parameterType="Map">
+		<selectKey keyProperty="goodsCode" resultType="String" order="BEFORE">
+			SELECT 
+				mi.g_code as goodsCode
+			FROM 
+				tb_menu_information AS mi
+			WHERE 
+				mi.menu_code = #{menuCode}
+		</selectKey>
+		UPDATE tb_goods
+		SET 
+			g_isdel = 1
+		WHERE 
+			g_code = #{goodsCode}
+	</update>
 	<!-- 상품 삭제  -->
-	<delete id="removeGoods" parameterType="String">
-		DELETE 
-		FROM 
-			tb_goods 
+	<update id="removeGoods" parameterType="String">
+		UPDATE tb_goods 
+		SET
+			g_isdel = 1
 		WHERE 
 			g_code=#{goodsCode};
-	</delete>
+	</update>
 	<!-- 상품 메인 이미지 정보 조회  -->
 	<select id="getGoodsMainImageInfo" parameterType="String" resultMap="goodsMainImageResultMap">
 		SELECT 
@@ -421,21 +445,6 @@
 		WHERE 
 			info_image_idx = #{infoImageIdx};	
 	</select>
-	<!-- 상품 메인 이미지 삭제  -->
-	<delete id="removeGoodsMainImage" parameterType="String">
-		DELETE 
-		FROM 
-			tb_goods_main_image 
-		WHERE 
-			main_image_idx=#{mainImageIdx};
-	</delete>
-	<delete id="removeGoodsInfoImage" parameterType="String">
-		DELETE 
-		FROM 
-			tb_goods_info_image 
-		WHERE 
-			info_image_idx=#{infoImageIdx};
-	</delete>
 	<!-- 상품 등록  -->
 	<insert id="addGoods" parameterType="Goods">
 		INSERT INTO tb_goods(
@@ -458,6 +467,7 @@
 			, g_delivery_charge
 			, g_reg_datetime
 			, g_activation
+			,g_isdel
 		)VALUES(
 			#{goodsCode}
 			<if test="enterCode != null and enterCode != ''">
@@ -478,6 +488,7 @@
 			,${goodsDeliveryCharge}
 			,NOW()
 			,${goodsActivation}
+			,0
 		);
 	</insert>
 	<!-- 상품 수정  -->
@@ -550,7 +561,7 @@
 		WHERE 
 			g_code = #{goodsCode}
 	</update>
-	<!-- 상품 목록(활성화되어있는 것, 식단 제외): 식단 등록 화면 -->
+	<!-- 상품 목록(활성화되어있는 것, 삭제처리되지 않은 것): 식단 등록 화면 -->
 	<select id="getGoodsListForMenu" resultType="Map">
 		SELECT 
 			g_code as goodsCode
@@ -563,8 +574,8 @@
 			gc.g_cate_code = g.g_cate_code
 		WHERE 
 			g.g_activation = 1
-			AND 
-			gc.cate_name not LIKE CONCAT('%','식단','%'); 
+			AND
+			g.g_isdel = 0
 	</select>
 	<!-- 상품 상세 정보  -->
 	<select id="getGoodsInfo" parameterType="String" resultMap="goodsResultMap">
@@ -846,10 +857,13 @@
 			<if test="sk != null and minDate != '' and maxDate == ''">
 				AND ${sk} >= #{minDate}
 			</if>
+			<if test="sk == 'ga.ga_approve_refuse' and approveRefuse != null and approveRefuse != ''">
+				AND ${sk} LIKE CONCAT('%', #{approveRefuse}, '%')
+			</if>
 		</trim>
 			AND m.member_id = #{memberId}
 		order by 
-			ga.ga_reg_apply_datetime
+			ga.ga_reg_apply_datetime DESC;
 	</select>
 	<!-- 등록 신청한 상품 상세 정보  -->
 	<select id="getGoodsRegApplyInfo" parameterType="String" resultMap="goodsApplyResultMap">
@@ -1069,6 +1083,7 @@
 			<if test="sk != null and minDate != '' and maxDate == ''">
 				AND ${sk} >= #{minDate}
 			</if>
+			AND g.g_isdel = 0
 		</trim>
 	</select>
 	<!-- 메뉴 코드를 받아서 어떤 상품이 몇개가 포함되어있는지 확인  -->
@@ -1132,6 +1147,8 @@
 			gii.info_image_idx = g.g_info_image
 		WHERE 
 			mi.menu_code = #{menuCode}
+			AND
+			g.g_isdel = 0
 	</select>
 	<!-- 식단 정보 추가  -->
 	<insert id="addMenuInformation" parameterType="MenuInformation">
@@ -1171,22 +1188,6 @@
 		WHERE 
 			menu_code = #{menuCode};
 	</update>
-	<!-- 식단 정보 삭제  -->
-	<delete id="removeMenuInformation" parameterType="String">
-		DELETE 
-		FROM 
-			tb_menu_information 
-		WHERE 
-			menu_code = #{menuCode};
-	</delete>
-	<!-- 식단 포함 상품 정보 삭제  -->
-	<delete id="removeMenuOragnize" parameterType="String">
-		DELETE 
-		FROM 
-			tb_menu_organize AS mo 
-		WHERE 
-			mo.menu_code = #{menuCode};
-	</delete>
 	<select id="getGoodsDiscountList" parameterType="Map" resultMap="goodsDiscountResultMap">
 		SELECT
 			gdm.goods_discount_code
@@ -1209,23 +1210,24 @@
 				${sk} LIKE CONCAT('%', #{sv}, '%')
 			</if>
 			<if test="sk != null and minNum != '' and maxNum != ''">
-				${sk} BETWEEN #{minNum} AND #{maxNum}
+				AND ${sk} BETWEEN #{minNum} AND #{maxNum}
 			</if>
 			<if test="sk != null and minNum == '' and maxNum != ''">
-				${sk} <![CDATA[<=]]> #{maxNum}
+				AND ${sk} <![CDATA[<=]]> #{maxNum}
 			</if>
 			<if test="sk != null and minNum != '' and maxNum == ''">
-				${sk} >= #{minNum}
+				AND ${sk} >= #{minNum}
 			</if>
 			<if test="sk != null and minDate != '' and maxDate != ''">
-				${sk} BETWEEN #{minDate} AND #{maxDate}
+				AND ${sk} BETWEEN #{minDate} AND #{maxDate}
 			</if>
 			<if test="sk != null and minDate == '' and maxDate != ''">
-				${sk} <![CDATA[<=]]> #{maxDate}
+				AND ${sk} <![CDATA[<=]]> #{maxDate}
 			</if>
 			<if test="sk != null and minDate != '' and maxDate == ''">
-				${sk} >= #{minDate}
+				AND ${sk} >= #{minDate}
 			</if>
+			AND gdm.discount_isdel = 0
 		</trim>
 	</select>
 	<insert id="addGoodsDiscount" parameterType="GoodsDiscount">
@@ -1266,7 +1268,9 @@
 		FROM 
 			tb_goods_discount_management
 		WHERE
-			goods_discount_code = #{goodsDiscountCode};
+			goods_discount_code = #{goodsDiscountCode}
+			AND
+			discount_isdel = 0
 	</select>
 	<update id="modifyGoodsDiscount" parameterType="GoodsDiscount">
 		UPDATE tb_goods_discount_management AS gdm
@@ -1278,11 +1282,11 @@
 		WHERE 
 			gdm.goods_discount_code = #{goodsDiscountCode}
 	</update>
-	<delete id="removeGoodsDiscount" parameterType="String">
-		DELETE 
-		FROM 
-			tb_goods_discount_management
+	<update id="removeGoodsDiscount" parameterType="String">
+		UPDAET tb_goods_discount_management
+		SET
+			discount_isdel = 1
 		WHERE 
 			goods_discount_code = #{goodsDiscountCode};
-	</delete>
+	</update>
 </mapper>

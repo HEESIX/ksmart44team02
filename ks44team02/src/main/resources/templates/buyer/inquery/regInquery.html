@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<form>
+	
+	<div class="form-group">
+	    <label for="exampleFormControlInput1">문의 제목</label>
+	    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력해주세요.">
+  </div>
+		 <div class="form-group">
+		    <label for="exampleFormControlTextarea1">문의 내용</label>
+		    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">문의사항을 적어주세요.</textarea>
+  		 </div>
+    </form>
+ 
+</th:block>
+</html>

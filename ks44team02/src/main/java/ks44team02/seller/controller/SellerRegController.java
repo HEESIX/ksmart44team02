@@ -15,7 +15,7 @@ import ks44team02.service.LoginService;
 
 
 @Controller
-@RequestMapping(value = "seller/login")
+@RequestMapping(value = "/seller/login")
 public class SellerRegController {
 	
 	private static final Logger log = LoggerFactory.getLogger(SellerRegController.class);
@@ -38,13 +38,14 @@ public class SellerRegController {
 		return "redirect:seller/login/sellerLoginReg";
 	}
 	
-	//판매 회원 등록시 아이디 중복 체크
-	@GetMapping("/sellerLoginCheck")
-	@ResponseBody
-	public boolean CheckSellerId(@RequestParam(name="memberId")String memberId) {
-		boolean result = loginService.idCheck(memberId);
-		return result;
-	}	
+	//판매자 아이디 중복 체크 
+		@GetMapping("/sellerLoginIdcheck")
+		@ResponseBody
+		public boolean CheckSellerId(@RequestParam(name="memberId")String memberId) {
+			boolean result = loginService.idCheck(memberId);
+			return result;
+		}	
+	
 		
 	//판매 회원 등록시 핸드폰 중복 체크
 	@GetMapping("/sellerLoginNumcheck")

@@ -297,7 +297,6 @@ footer .copyright-wrap span{
 	  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	  	<script>
  	  			$(function(){
- 	  				
 	  				function vaildationCheck(data) {
 						var isValid = true;	  					
 	  					//유효성검사
@@ -358,13 +357,16 @@ footer .copyright-wrap span{
 	  					
 	  					console.log(typeof memberId);
 	  					
+	  					
 	  					var request = $.ajax({
-	  					  url: '/buyer/login/buyerLoginIdCheck', //http://localhost/member/idCheck
-	  					  method: 'get',
+	  					  url: '/buyer/login/buyerLoginIdcheck', //http://localhost/member/idCheck
+	  					  method: "get",
 	  					  data: { 'memberId' : memberId },
 	  					  dataType: "json"  //String이면 text   //text, json, xml, html
 	  					});
-	  					 
+	  					
+	
+	 
  	  					request.done(function( data ) {
 	  						if(data) {
 	  							alert('가입된 회원입니다.');

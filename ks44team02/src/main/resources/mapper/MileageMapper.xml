@@ -28,16 +28,36 @@
 			,mileage_update_datetime
 		FROM
 			tb_member_mileage_acc
+				
+	</select>
+	
+		<!-- 회원 마일리지 검색 -->
+	<select id="getMileageListSearch" parameterType="String" resultMap="mileageResultMap">
+		SELECT
+			member_id
+			,order_detail_code
+			,present_mileage
+			,mileage_distinct
+			,added_used_mileage
+			,mileage_subtotal
+			,mileage_update_datetime
+		FROM
+			tb_member_mileage_acc
+			
+			
 		WHERE
 			member_id = #{memberId};
 				
 	</select>
 	
+	
+	
 	<!-- 회뤈 마일리지 적립 -->
-	<insert id="giveMileage" parameterType="MemberMileageAcc">
+	<insert id="giveMileageForm" parameterType="MemberMileageAcc">
 		INSERT INTO tb_member_mileage_acc
-		(member_id
-		,oerder_detail_code
+		(m_mileage_acc_code
+		,member_id
+		,order_detail_code
 		,present_mileage
 		,mileage_distinct
 		,added_used_mileage

@@ -81,13 +81,14 @@ table th,td{
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
+	<div th:include="seller/goods/search/searchGoodsApplyList :: searchFragment"
+		style="margin-bottom: 10px; padding-left: 15px;"></div>
 	<table style="width: 100%;">
 		<thead>
 			<tr>
 				<th>상품명</th>
 				<th>메인이미지</th>
 				<th>카테고리</th>
-				<th>판매사</th>
 				<th>가격</th>
 				<th>적용 할인 혜택</th>
 				<th>할인 혜택 적용 후 가격</th>
@@ -96,7 +97,7 @@ table th,td{
 				<th>제조일/유통기한</th>
 				<th>재고</th>
 				<th>배송비</th>
-				<th>등록일자</th>
+				<th>신청일자</th>
 				<th>승인여부</th>
 				<th>승인/거절 날짜</th>
 				<th>거절 이유</th>
@@ -112,7 +113,6 @@ table th,td{
 						th:alt="${gal.goodsMainImageInfo.mainImageOriginalName}"
 						style="width: 100px;" /></a></td>
 				<td th:text="${gal.goodsCategory.goodsCategoryName}"></td>
-				<td th:text="${gal.enterprise.enterName}"></td>
 				<td th:text="${gal.goodsApplyPrice}"></td>
 				<td th:text="${gal.goodsDiscount.goodsDiscountName}"></td>
 				<td th:text="${gal.goodsApplyDiscount}"></td>
@@ -130,6 +130,39 @@ table th,td{
 			</tr>
 		</tbody>
 	</table>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script>
+		$(function(){
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				
+				$('.searchValueBox input').val('');
+				$('.searchValueBox select').prop("selected", false);
+				
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else if(searchKey == 'approveRefuse'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.selectBox').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
 </th:block>
 
 </html>

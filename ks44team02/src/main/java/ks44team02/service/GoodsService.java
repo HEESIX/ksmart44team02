@@ -168,6 +168,14 @@ public class GoodsService {
 		return result;
 	}
 	
+	//메뉴 코드로 상품 삭제
+	public boolean removeMenu(String menuCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("menuCode", menuCode);
+		boolean result = goodsMapper.removeMenu(map);
+		return result;
+	}
+	
 	//상품 메인 이미지 정보 조회
 	public GoodsMainImage getGoodsMainImageInfo(String mainImageIdx) {
 		GoodsMainImage goodsMainImageInfo = goodsMapper.getGoodsMainImageInfo(mainImageIdx);

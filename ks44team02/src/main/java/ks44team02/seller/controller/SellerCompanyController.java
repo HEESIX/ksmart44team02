@@ -2,6 +2,7 @@ package ks44team02.seller.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Launching;
 import ks44team02.service.SellerCompanyService;
@@ -39,17 +41,21 @@ public class SellerCompanyController {
 		model.addAttribute("title", "업체 정보 등록");
 		model.addAttribute("sellerCompanyInfoList", sellerCompanyInfoList);	
 		return "seller/companypage/companyInsert";
-	}	
+	}
 	
+	
+	
+	//브랜드 중복체크
 	/*
-	//아이디 중복 체크
-	@RequestMapping("/companyInsert")
-	public String companyInsert(@RequestParam("member_id") String member_id) throws Exception
-	{
-		System.out.println("닉네임 중복 체크 확인하기");
-			return us.companyInsert(member_id);
+	@ResponseBody
+	@RequestMapping(value = "/brandChk", method = RequestMethod.POST)
+	public int brandChk(Seller seller) throws Exception {
+		int result = SellerCompanyService.brandChk(seller);
+		return result;
 	}
 	*/
+	
+	
 	
 	//업체 정보 검색 및 전체 리스트
 	@GetMapping("/companyList")

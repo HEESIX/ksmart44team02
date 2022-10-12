@@ -81,13 +81,14 @@ table th, td {
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
+	<div th:include="seller/goods/search/searchGoodsList :: searchFragment"
+		style="margin-bottom: 10px; padding-left: 15px;"></div>
 	<table style="width: 100%;">
 		<thead>
 			<tr>
 				<th>상품명</th>
 				<th>메인이미지</th>
 				<th>카테고리</th>
-				<th>판매사</th>
 				<th>가격</th>
 				<th>적용 할인 혜택</th>
 				<th>할인 혜택 적용 후 가격</th>
@@ -114,7 +115,6 @@ table th, td {
 						th:alt="${sgl.goodsMainImageInfo.mainImageOriginalName}"
 						style="width: 100px;" /></a></td>
 				<td th:text="${sgl.goodsCategory.goodsCategoryName}"></td>
-				<td th:text="${sgl.enterprise.enterName}"></td>
 				<td th:text="${sgl.goodsPrice}"></td>
 				<td th:text="${sgl.goodsDiscount.goodsDiscountName}"></td>
 				<td th:text="${sgl.goodsDiscountedPrice}"></td>
@@ -162,6 +162,24 @@ table th, td {
 					request.fail(function(data) {
 					  	alert('통신 오류');
 					});
+			});
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
 			});
 		});
 	</script>

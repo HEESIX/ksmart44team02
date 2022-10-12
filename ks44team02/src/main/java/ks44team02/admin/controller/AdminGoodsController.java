@@ -1,7 +1,5 @@
 package ks44team02.admin.controller;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +31,6 @@ import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.GoodsDiscount;
-import ks44team02.dto.GoodsInfoImage;
-import ks44team02.dto.GoodsMainImage;
 import ks44team02.dto.Ingredient;
 import ks44team02.dto.MenuInformation;
 import ks44team02.dto.MenuOrganize;
@@ -728,113 +724,25 @@ public class AdminGoodsController {
 	@PostMapping("menu/removeMenu/{menuCode}")
 	@ResponseBody
 	@Transactional
-	public String removeAdminMenu(@PathVariable(value = "menuCode") String menuCode
+	public boolean removeAdminMenu(@PathVariable(value = "menuCode") String menuCode
 								 ,@RequestParam(value = "memberPw") String memberPw
 								 ,HttpSession session
 								 ,HttpServletRequest request) {
-		String msg = "식단 삭제가 정상적으로 완료되었습니다.";
-		Goods goods = goodsService.getMenuInfo(menuCode);
 		
 		//String memberId = (String) session.getAttribute("SID");
 		String memberId = "id001";
 		boolean checkResult = commonService.sessionIdPwCheck(memberId, memberPw);
 		log.info(">>>>>>>>>>>>>>>>>{}",checkResult);
 		if(!checkResult) {
-			msg = "삭제 실패: 비밀번호를 확인해주세요.";
-			return msg;
+			return false;
 		}
 		
-		boolean removeMenuOranizeResult =  goodsService.removeMenuOrganize(menuCode);
-		if(!removeMenuOranizeResult) {
-			msg = "삭제 실패: 식단 포함 상품 정보 삭제를 하지 못했습니다.";
-			return msg;
-		}
-		
-		boolean removeMenuInformationResult = goodsService.removeMenuInformation(menuCode);
-		if(!removeMenuInformationResult) {
-			msg = "삭제 실패: 식단 정보 삭제를 하지 못했습니다.";
-			return msg;
-		}
-		
-		String goodsCode = goods.getGoodsCode();
-		boolean removeGoodsResult = goodsService.removeGoods(goodsCode);
+		boolean removeGoodsResult = goodsService.removeMenu(menuCode);
 		if(!removeGoodsResult) {
-			msg = "삭제 실패: 상품 정보를 삭제하지 못했습니다.";
-			return msg;
+			return false;
 		}
 		
-		String serverName = request.getServerName(); 
-		log.info("{} <<<< serverName", serverName); 
-		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
-		String fileRealPath = ""; 
-		int isLocalhost = 1;
-		 
-		if ("localhost".equals(serverName)) { 
-			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/"; 
-			//fileRealPath = 
-			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
-			} else { 
-			// fileRealPath = 
-			// request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/"); 
-			isLocalhost = 0; 
-			fileRealPath = System.getProperty("user.dir") + "/resources/"; 
-		}
-		
-		//실제 상품 메인 이미지 삭제
-		String goodsMainImageCode = goods.getGoodsMainImageCode();
-		
-		GoodsMainImage goodsMainImageInfo = goodsService.getGoodsMainImageInfo(goodsMainImageCode);
-		String goodsMainImagePath = goodsMainImageInfo.getMainImagePath();
-		
-		String mainImageRealPath = Paths.get(fileRealPath + goodsMainImagePath).toString();
-		File mainImage = new File(mainImageRealPath);
-		if(mainImage.exists()) {
-			if(mainImage.delete()) {
-				log.info(">>>>>>>>>메인 이미지 삭제 성공");
-			}else {
-				msg = "삭제 실패: 메인 이미지 삭제가 실패하였습니다.";
-				return msg;
-			}
-		}else {
-			msg = "삭제 실패: 메인 이미지를 찾을 수 없습니다.";
-			return msg;
-		}
-		
-		//실제 상품 정보 이미지 삭제
-		String goodsInfoImageCode = goods.getGoodsInfoImageCode();
-		
-		GoodsInfoImage goodsInfoImageInfo = goodsService.getGoodsInfoImageInfo(goodsInfoImageCode);
-		String goodsInfoImagePath = goodsInfoImageInfo.getInfoImagePath();
-		
-		String infoImageRealPath = Paths.get(fileRealPath +  goodsInfoImagePath).toString();
-		File infoImage = new File(infoImageRealPath);
-		if(infoImage.exists()) {
-			if(infoImage.delete()) {
-				log.info(">>>>>>>>>소개 이미지 삭제 성공");
-			}else {
-				msg = "삭제 실패: 정보 이미지 삭제가 실패하였습니다.";
-				return msg;
-			}
-		}else {
-			msg = "삭제 실패: 정보 이미지를 찾을 수 없습니다.";
-			return msg;
-		}
-		
-		//DB의 상품 메인 이미지 정보 삭제
-		boolean removeGoodsMainImageResult = goodsService.removeGoodsMainImage(goodsMainImageCode);
-		if(!removeGoodsMainImageResult) {
-			msg = "삭제 실패: 상품 메인 이미지를 삭제하지 못했습니다.";
-			return msg;
-		}
-		
-		//DB의 상품 정보 이미지 정보 삭제 
-		boolean removeGoodsInfoImageResult = goodsService.removeGoodsInfoImage(goodsInfoImageCode);
-		if(!removeGoodsInfoImageResult) {
-			msg = "삭제 실패: 상품 정보 이미지를 삭제하지 못했습니다.";
-			return msg;
-		}
-		
-		return msg;
+		return true;
 	}
 
 	// 개별 식단 정보
