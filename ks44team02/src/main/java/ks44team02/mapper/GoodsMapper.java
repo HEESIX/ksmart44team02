@@ -66,6 +66,12 @@ public interface GoodsMapper {
 	//상품 리스트
 	public List<Goods> getGoodsList(Map<String, Object> map);
 	
+	//구매자 상품 리스트
+	public List<Goods> getGoodsListBuyer(Map<String, Object> map);
+	
+	//구매자 상품 리스트 페이징
+	public int getGoodsListCount(Map<String, Object> map);
+	
 	//상품 삭제
 	public boolean removeGoods(String goodsCode);
 	
