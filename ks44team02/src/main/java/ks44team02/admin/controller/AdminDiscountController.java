@@ -118,6 +118,7 @@ public class AdminDiscountController {
 		String newCode = commonService.getNewCode("tb_order_discount_management");
 		orderDiscount.setOrderDiscountCode(newCode);
 		log.info(">>>>>>>>>>>{}",orderDiscount);
+		
 		boolean result = discountService.addOrderDiscount(orderDiscount);
 		String msg = "";
 		
@@ -182,16 +183,19 @@ public class AdminDiscountController {
 		//현재 없으므로 픽스된 값 입력
 		String memberId = "id001";
 		boolean idCheckResult = commonService.sessionIdPwCheck(memberId, memberPw);
+		
 		if(idCheckResult) {
 			//아이디 비번 일치
-			discountService.removeOrderDiscount(orderDiscountCode);
-			reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다.");
-			return "redirect:/admin/orderDiscount/orderDiscountList";
+			boolean result2 = discountService.removeOrderDiscount(orderDiscountCode);
+			if(result2) {
+				reAttr.addAttribute("msg", "삭제가 정상적으로 완료되었습니다");
+			}else {
+				reAttr.addAttribute("msg", "삭제 실패 : DiscountMapper 확인");
+			}
 		}else {
-			//아이디 비번 불일치
-			reAttr.addAttribute("msg", "삭제 실패: 비밀번호가 일치하지 않습니다.");
+			reAttr.addAttribute("msg", "삭제 실패: 비밀번호를 확인해주세요.");
 		}
-		return "admin/orderDiscount/removeOrderDiscount"; 
+		return "redirect:/admin/orderDiscount/orderDiscountList"; 
 	}
 	//전체 회원의 할인 혜택 보유 현황 조회
 	@GetMapping("/allBuyerBenefitList")
