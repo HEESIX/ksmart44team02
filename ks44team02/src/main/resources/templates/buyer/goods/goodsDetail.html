@@ -91,12 +91,12 @@ table td, th {
 				<div class="product__details__quantity">
 					<div class="quantity">
 						<div class="pro-qty">
-							<span class="dec qtybtn"></span> <input type="text" value="1">
+							<span class="dec qtybtn"></span> <input type="text" value="1" id="goodsAmount" name="goodsAmount">
 							<span class="inc qtybtn"></span>
 						</div>
 					</div>
 				</div>
-				<a class="primary-btn">장바구니 담기</a>
+				<button id="addCartBtn" type="button" class="site-btn">장바구니 담기</button>
 				<ul>
 					<li><b>배송비</b> <span th:text="*{goodsDeliveryCharge} + '원'"></span>
 					</li>
@@ -164,6 +164,35 @@ table td, th {
 </th:block>
 
 <!-- 사용자 정의 js 하단  -->
-<th:block layout:fragment="customFootJs">
+<th:block layout:fragment="customFootjs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			$('#addCartBtn').click(function(){
+				var goodsCode = [[${goodsInfo.goodsCode}]];
+				var goodsAmount = $('#goodsAmount').val();
+				
+				var request = $.ajax({
+					  url: "",
+					  method: "POST",
+					  data: { 'goodsCode' : goodsCode,
+						  	  'goodsAmount' : goodsAmount},
+					  dataType: "json"
+					});
+					 
+					request.done(function( data ) {
+						if(data){
+							var confirmMove = confirm('장바구니로 이동하시겠습니까?');
+							if(confirmMove){
+								window.location.href = '';
+							}
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+			});
+		});
+	</script>
 </th:block>
 </html>
