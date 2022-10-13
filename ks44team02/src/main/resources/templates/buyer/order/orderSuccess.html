@@ -32,11 +32,11 @@
                 <h4>Congratulations</h4>
                     <div class="checkout__order">
                         <h4>주문이 정상적으로 완료되었습니다.</h4>
-                        <div class="row">
-                        	<div class="col-lg-6" style="padding: 0; display: flex;">
-		                        <a th:href="@{/buyer/goods/goodsList}" type="button" class="site-btn" style="flex:auto;">계속쇼핑하기</a>
+                        <div class="row" style="display: flex;">
+                        	<div class="col-lg-6" style="padding: 0; display:flex; justify-content: center;">
+		                        <a th:href="@{/buyer/goods/goodsList}" type="button" class="site-btn">계속쇼핑하기</a>
                         	</div>
-                        	<div class="col-lg-6" style="padding: 0;">
+                        	<div class="col-lg-6" style="padding: 0; display:flex; justify-content: center;">
 		                        <a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}" type="button" class="site-btn">주문상세보기</a>
                         	</div>
                         </div>
