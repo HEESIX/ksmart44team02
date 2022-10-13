@@ -74,13 +74,17 @@
 		<div class="header__top">
 			<div class="container">
 				<div class="row" style="height: 35px;">
-					<div class="col-lg-6">
+					<div class="col-lg-10">
 						<div class="header__top__left" style="padding: 5px 0 0 0;">
 							<ul>
-								<li>알쓸혼밥 : 알아두면 쓸데 있는혼밥 플랫폼</li>
+								<!-- <li>알쓸혼밥 : 알아두면 쓸데 있는혼밥 플랫폼</li> -->
+								<li>배포시각: 2022-10-13 0916</li>
+								<li><a th:href="@{/seller}">MacketPlace : 판매자 페이지</a></li>
+								<li><a th:href="@{/admin}">AdminPlace : 관리자 페이지</a></li>
+							</ul>
 						</div>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-2">
 						<div class="header__top__right" style="padding: 3px 0 0 0;">
 						<!--
 							<div class="header__top__right__social">
@@ -99,7 +103,6 @@
 								</ul>
 							</div>
 							-->	
-
 							<div class="header__top__right__auth">
 							<nav class="header__menu" style="padding: 0 0 0 0;">	
 							<ul>
@@ -107,7 +110,7 @@
 								<i class="fa fa-user"></i> Login</a>
 									<ul class="header__menu__dropdown">
 										<li><a th:href="@{/buyer/login/buyerLoginList}">#회원정보 수정</a></li>
-										<li><a th:href="@{/buyer/goods/myMenuList}">#나만의 식단</a></li>
+										<li><a th:href="@{/buyer/goods/buyerMenu/myMenuList}">#나만의 식단</a></li>
 										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">#주문 정보</a></li>
 										<li><a href="#">#상품 후기</a></li>
 										<li><a href="#">#상품 문의</a></li>

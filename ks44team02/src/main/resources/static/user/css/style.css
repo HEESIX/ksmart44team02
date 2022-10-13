@@ -1132,6 +1132,7 @@ ol {
 	width: 5px;
 	background: #dd2222;
 	content: "";
+	margin-left: 15px;
 }
 
 .price-range-wrap .range-slider .price-input input {
