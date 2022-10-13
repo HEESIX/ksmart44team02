@@ -390,8 +390,125 @@
 				<if test="memberId != null and memberId != ''">
 					AND e.member_id = #{memberId}
 				</if>
+				AND g.g_isdel = 0
 			</trim>
-			AND g.g_isdel = 0
+	</select>
+	<!-- 구매자 상품 목록  -->
+	<select id="getGoodsListBuyer" parameterType="Map" resultMap="goodsResultMap">
+		SELECT
+			g.g_code
+			,gmi.main_image_path			as gmi_main_image_path
+			,gmi.main_image_original_name	as gmi_main_image_original_name
+			,gmi.main_image_new_name		as gmi_main_image_new_name
+			,e.enter_name					as e_enter_name
+			,gc.g_cate_code					as gc_g_cate_code
+			,gc.cate_name					as gc_cate_name
+			,g.g_name
+			,g.g_price
+			,gdm.discount_price				as gdm_discount_price
+			,gdm.discount_rate				as gdm_discount_rate
+			,gdm.discount_name				as gdm_discount_name
+			,g.g_discount
+			,g.g_netweight
+			,g.g_netweightunit
+			,g.g_produce
+			,g.g_production_expiration_info
+			,g.g_stock
+			,g.g_delivery_charge
+			,g.g_reg_datetime
+			,g.g_activation
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_enterprise AS e
+			ON 
+			e.enter_code = g.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
+			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
+				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
+					AND g.g_cate_code = #{goodsCategoryCode}
+				</if>
+				<if test="priceRange != null and priceRange != ''">
+					AND g.g_discount <![CDATA[<=]]> ${priceRange}
+				</if>
+				<if test="goodsName != null and goodsName != ''">
+					AND g.g_name LIKE CONCAT('%', #{goodsName}, '%')
+				</if>
+				AND g.g_isdel = 0
+			</trim>
+		<if test="limitNum > 0">
+			LIMIT ${skip}, ${amount}
+		</if>
+	</select>
+	<!-- 구매자 상품 목록을 위한 COUNT  -->
+	<select id="getGoodsListCount" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_enterprise AS e
+			ON 
+			e.enter_code = g.enter_code
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
+			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
+				<if test="sk != null and sv != ''">
+					AND ${sk} LIKE CONCAT('%', #{sv}, '%')
+				</if>
+				<if test="sk != null and minNum != '' and maxNum != ''">
+					AND ${sk} BETWEEN #{minNum} AND #{maxNum}
+				</if>
+				<if test="sk != null and minNum == '' and maxNum != ''">
+					AND ${sk} <![CDATA[<=]]> #{maxNum}
+				</if>
+				<if test="sk != null and minNum != '' and maxNum == ''">
+					AND ${sk} >= #{minNum}
+				</if>
+				<if test="sk != null and minDate != '' and maxDate != ''">
+					AND ${sk} BETWEEN #{minDate} AND #{maxDate}
+				</if>
+				<if test="sk != null and minDate == '' and maxDate != ''">
+					AND ${sk} <![CDATA[<=]]> #{maxDate}
+				</if>
+				<if test="sk != null and minDate != '' and maxDate == ''">
+					AND ${sk} >= #{minDate}
+				</if>
+				<if test="memberId != null and memberId != ''">
+					AND e.member_id = #{memberId}
+				</if>
+				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
+					AND g.g_cate_code = #{goodsCategoryCode}
+				</if>
+				AND g.g_isdel = 0
+			</trim>
 	</select>
 	<!-- 식단코드로 상품 삭제  -->
 	<update id="removeMenu" parameterType="Map">

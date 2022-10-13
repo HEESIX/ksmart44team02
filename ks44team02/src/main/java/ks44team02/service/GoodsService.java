@@ -161,6 +161,18 @@ public class GoodsService {
 		List<Goods> goodsList = goodsMapper.getGoodsList(map);
 		return goodsList;
 	}
+	
+	//구매자 상품 리스트
+	public List<Goods> getGoodsListBuyer(Map<String, Object> map){
+		List<Goods> goodsListBuyer = goodsMapper.getGoodsListBuyer(map);
+		return goodsListBuyer;
+	}
+	
+	//구매자 상품 리스트 페이징
+	public int getGoodsListCount(Map<String, Object> map) {
+		int goodsListCount = goodsMapper.getGoodsListCount(map);
+		return goodsListCount;
+	}
 
 	// 상품 삭제
 	public boolean removeGoods(String goodsCode) {

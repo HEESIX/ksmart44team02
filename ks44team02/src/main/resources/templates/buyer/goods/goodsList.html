@@ -9,6 +9,65 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.product__item__text span {
+	font-size: 14px;
+	color: #b2b2b2;
+	display: block;
+	margin-bottom: 4px;
+}
+
+.product__item__pic .product__discount__percent {
+	height: 45px;
+	width: 45px;
+	background: #dd2222;
+	border-radius: 50%;
+	font-size: 14px;
+	color: #ffffff;
+	line-height: 45px;
+	text-align: center;
+	position: absolute;
+	left: 15px;
+	top: 15px;
+}
+
+.pageInfo {
+	list-style: none;
+	display: inline-block;
+	margin: 50px 0 0 100px;
+}
+
+.pageInfo li {
+	float: left;
+	font-size: 20px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+#searchBox{
+	float: right;
+	margin-top: 20px;
+}
+</style>
+</th:block>
+
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -36,135 +95,27 @@
 			<div class="sidebar">
 				<div class="sidebar__item">
 					<h4>Categories</h4>
-					<ul th:if="${not #lists.isEmpty(goodsCategoryList)}" th:each="gcl : ${goodsCategoryList}">
-						<li><a th:text="${gcl.goodsCategoryName}" th:href="@{|/buyer/goods/goods_list_buyer/${gcl.goodsCategoryCode}|}"></a></li>
+					<ul>
+						<li><a th:href="@{/buyer/goods/goodsList}">전체</a></li>
+						<th:block th:if="${not #lists.isEmpty(goodsCategoryList)}"
+							th:each="gcl : ${goodsCategoryList}">
+							<li><a th:text="${gcl.goodsCategoryName}"
+								th:href="@{/buyer/goods/goodsList(goodsCategoryCode=${gcl.goodsCategoryCode})}"></a></li>
+						</th:block>
 					</ul>
 				</div>
 				<div class="sidebar__item">
 					<h4>Price</h4>
-					<div class="price-range-wrap">
-						<div
-							class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-							data-min="1000" data-max="100000">
-							<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-							<span tabindex="0"
-								class="ui-slider-handle ui-corner-all ui-state-default"></span>
-							<span tabindex="0"
-								class="ui-slider-handle ui-corner-all ui-state-default"></span>
-						</div>
-						<div class="range-slider">
+					<div>
+						<div>
 							<div class="price-input">
-								<input type="text" id="minamount" style="width: 20%;"> 
-								<input type="text" id="maxamount" style="width: 70%; padding-left: 10px;">
+								<input id="priceRange" name="priceRange" type="range" style="width: 100%; accent-color: red;" min="10000" max="100000" step="10000" value="10000">
+								<span>10000원 이하</span>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="sidebar__item sidebar__item__color--option">
-					<h4>Colors</h4>
-					<div class="sidebar__item__color sidebar__item__color--white">
-						<label for="white"> White <input type="radio" id="white">
-						</label>
-					</div>
-					<div class="sidebar__item__color sidebar__item__color--gray">
-						<label for="gray"> Gray <input type="radio" id="gray">
-						</label>
-					</div>
-					<div class="sidebar__item__color sidebar__item__color--red">
-						<label for="red"> Red <input type="radio" id="red">
-						</label>
-					</div>
-					<div class="sidebar__item__color sidebar__item__color--black">
-						<label for="black"> Black <input type="radio" id="black">
-						</label>
-					</div>
-					<div class="sidebar__item__color sidebar__item__color--blue">
-						<label for="blue"> Blue <input type="radio" id="blue">
-						</label>
-					</div>
-					<div class="sidebar__item__color sidebar__item__color--green">
-						<label for="green"> Green <input type="radio" id="green">
-						</label>
-					</div>
-				</div>
-				<div class="sidebar__item">
-					<h4>Popular Size</h4>
-					<div class="sidebar__item__size">
-						<label for="large"> Large <input type="radio" id="large">
-						</label>
-					</div>
-					<div class="sidebar__item__size">
-						<label for="medium"> Medium <input type="radio"
-							id="medium">
-						</label>
-					</div>
-					<div class="sidebar__item__size">
-						<label for="small"> Small <input type="radio" id="small">
-						</label>
-					</div>
-					<div class="sidebar__item__size">
-						<label for="tiny"> Tiny <input type="radio" id="tiny">
-						</label>
-					</div>
-				</div>
-				<div class="sidebar__item">
-					<div class="latest-product__text">
-						<h4>Latest Products</h4>
-						<div class="latest-product__slider owl-carousel">
-							<div class="latest-prdouct__slider__item">
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-1.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-2.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-3.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
-							<div class="latest-prdouct__slider__item">
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-1.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-2.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="img/latest-product/lp-3.jpg" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
+						<div id="searchBox">
+							<input type="text" style="width: 170px; height: 46px;" placeholder="상품명" id="goodsName" name="goodsName">
+							<button type="button" id="searchBtn" class="site-btn">검색</button>
 						</div>
 					</div>
 				</div>
@@ -177,138 +128,40 @@
 				</div>
 				<div class="row">
 					<div class="product__discount__slider owl-carousel">
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-1.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Dried Fruit</span>
-									<h5>
-										<a href="#">Raisin’n’nuts</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
+						<th:block th:if="${not #lists.isEmpty(goodsList)}"
+							th:each="gl : ${goodsList}">
+							<th:block
+								th:if="${gl.goodsDiscount.goodsDiscountPrice} != 0 or ${gl.goodsDiscount.goodsDiscountRate} != 0">
+								<div class="col-lg-4">
+									<div class="product__discount__item">
+										<div class="product__discount__item__pic">
+											<img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+												th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}">
+											<div class="product__discount__percent"
+												th:if="${gl.goodsDiscount.goodsDiscountPrice} != 0"
+												th:text="'-' + ${gl.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+											<div class="product__discount__percent"
+												th:if="${gl.goodsDiscount.goodsDiscountRate} != 0"
+												th:text="'-' + ${gl.goodsDiscount.goodsDiscountRate} + '%'"></div>
+											<ul class="product__item__pic__hover">
+												<li><a><i class="fa fa-shopping-cart"></i></a></li>
+											</ul>
+										</div>
+										<div class="product__discount__item__text">
+											<span th:text="${gl.goodsCategory.goodsCategoryName}"></span>
+											<h5>
+												<a href="#" th:text="${gl.goodsName}"></a>
+											</h5>
+											<div class="product__item__price"
+												th:if="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
+												<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
+												<span th:text="${gl.goodsPrice}"></span>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-2.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Vegetables</span>
-									<h5>
-										<a href="#">Vegetables’package</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-3.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Dried Fruit</span>
-									<h5>
-										<a href="#">Mixed Fruitss</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-4.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Dried Fruit</span>
-									<h5>
-										<a href="#">Raisin’n’nuts</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-5.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Dried Fruit</span>
-									<h5>
-										<a href="#">Raisin’n’nuts</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="product__discount__item">
-								<div class="product__discount__item__pic set-bg"
-									data-setbg="img/product/discount/pd-6.jpg">
-									<div class="product__discount__percent">-20%</div>
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__discount__item__text">
-									<span>Dried Fruit</span>
-									<h5>
-										<a href="#">Raisin’n’nuts</a>
-									</h5>
-									<div class="product__item__price">
-										$30.00 <span>$36.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
+							</th:block>
+						</th:block>
 					</div>
 				</div>
 			</div>
@@ -325,7 +178,7 @@
 					<div class="col-lg-4 col-md-4">
 						<div class="filter__found">
 							<h6>
-								<span>16</span> Products found
+								<span th:text="${pageMake.total}">16</span> Products found
 							</h6>
 						</div>
 					</div>
@@ -337,228 +190,132 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-1.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-2.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-3.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
+				<th:block th:if="${not #lists.isEmpty(goodsList)}"
+					th:each="gl, status : ${goodsList}">
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="product__item">
+							<div class="product__item__pic">
+								<img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+									th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}">
+								<div class="product__discount__percent"
+									th:if="${gl.goodsDiscount.goodsDiscountPrice} != 0"
+									th:text="'-' + ${gl.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+								<div class="product__discount__percent"
+									th:if="${gl.goodsDiscount.goodsDiscountRate} != 0"
+									th:text="'-' + ${gl.goodsDiscount.goodsDiscountRate} + '%'"></div>
+								<ul class="product__item__pic__hover">
+									<li><a><i class="fa fa-shopping-cart"></i></a></li>
+								</ul>
+							</div>
+							<div class="product__discount__item__text">
+								<span th:text="${gl.goodsCategory.goodsCategoryName}"></span>
+								<h5>
+									<a th:href="@{|/buyer/goods/goodsDetail/${gl.goodsCode}|}" th:text="${gl.goodsName}"></a>
+								</h5>
+								<div class="product__item__price"
+									th:if="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
+									<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
+									<span th:text="${gl.goodsPrice}"></span>
+								</div>
+								<div class="product__item__price"
+									th:unless="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
+									<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-4.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-5.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-6.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-7.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-8.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-9.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-10.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-11.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg"
-							data-setbg="img/product/product-12.jpg">
-							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a th:href="@{/buyer/mypage/cart/cartList}"><i class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="product__item__text">
-							<h6>
-								<a href="#">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
+				</th:block>
+			</div>
+			<div class="pageInfo_wrap">
+				<div class="pageInfo_area">
+					<ul id="pageInfo" class="pageInfo">
+					</ul>
 				</div>
 			</div>
 			<div class="product__pagination">
-				<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#"><i
-					class="fa fa-long-arrow-right"></i></a>
+				<form id="moveForm" th:action="@{/buyer/goods/goodsList}"
+					method="get">
+					<input type="hidden" name="pageNum"
+						th:value="${pageMake.cri.pageNum }"> <input type="hidden"
+						name="amount" th:value="${pageMake.cri.amount }">
+				</form>
 			</div>
 		</div>
 	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var startPage = [[${pageMake.startPage}]];
+			var endPage = [[${pageMake.endPage}]];
+			var next = endPage + 1;
+			var previous = startPage - 1;
+			var moveForm = $('#moveForm');
+			
+			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn previous\"><a href=\"'+ previous +'\">previous</a></li>');
+			for(var i = 1; startPage <= endPage; startPage++){
+				$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"'+ i +'\">'+ i +'</a></li>');
+			}
+			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn next\"><a href=\"'+ next +'\">next</a></li>');
+			
+		 	
+			
+			$(".pageInfo a").on("click", function(e){
+			 
+		        e.preventDefault();
+		        var movePage = $(this).attr("href");
+		       
+		        if(movePage <= 0) {
+		        	alert('이전 페이지가 없습니다.');
+		        	movePage = 1;
+		        }
+		        
+		        if(movePage > endPage) {
+		        	alert('다음 페이지가 없습니다.');
+		        	movePage = endPage;
+		        }
+		       
+		        moveForm.find("input[name='pageNum']").val(movePage);
+		        moveForm.submit();
+		        
+		    });
+			
+			$('#priceRange').change(function(){
+				var price = $(this).val();
+				$(this).parent().find('span').text(price + '원 이하');
+			});
+			
+			$('#searchBtn').click(function(){
+				var priceValue = $('#priceRange').val();
+				var goodsNameValue = $('#goodsName').val();
+				
+				var nowUrl = window.location.href;
+				
+				const url = new URL(nowUrl);
+				const urlParam = url.searchParams;
+				
+				if(urlParam.has('priceRange')){
+					if(urlParam.has('goodsNameValue')){
+						urlParam.set('priceRange', priceValue);
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.set('priceRange', priceValue);	
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}else{
+					if(urlParam.has('goodsNameValue')){
+						urlParam.append('priceRange', priceValue);	
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.append('priceRange', priceValue);
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}
+				window.location.href = url;
+			});
+		});
+	</script>
 </th:block>
 </html>
