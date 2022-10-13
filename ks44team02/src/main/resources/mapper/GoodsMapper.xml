@@ -439,32 +439,14 @@
 				<if test="isLocalhost != null and isLocalhost != ''">
 					gmi.main_image_islocal = ${isLocalhost}
 				</if>
-				<if test="sk != null and sv != ''">
-					AND ${sk} LIKE CONCAT('%', #{sv}, '%')
-				</if>
-				<if test="sk != null and minNum != '' and maxNum != ''">
-					AND ${sk} BETWEEN #{minNum} AND #{maxNum}
-				</if>
-				<if test="sk != null and minNum == '' and maxNum != ''">
-					AND ${sk} <![CDATA[<=]]> #{maxNum}
-				</if>
-				<if test="sk != null and minNum != '' and maxNum == ''">
-					AND ${sk} >= #{minNum}
-				</if>
-				<if test="sk != null and minDate != '' and maxDate != ''">
-					AND ${sk} BETWEEN #{minDate} AND #{maxDate}
-				</if>
-				<if test="sk != null and minDate == '' and maxDate != ''">
-					AND ${sk} <![CDATA[<=]]> #{maxDate}
-				</if>
-				<if test="sk != null and minDate != '' and maxDate == ''">
-					AND ${sk} >= #{minDate}
-				</if>
-				<if test="memberId != null and memberId != ''">
-					AND e.member_id = #{memberId}
-				</if>
 				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 					AND g.g_cate_code = #{goodsCategoryCode}
+				</if>
+				<if test="priceRange != null and priceRange != ''">
+					AND g.g_discount <![CDATA[<=]]> ${priceRange}
+				</if>
+				<if test="goodsName != null and goodsName != ''">
+					AND g.g_name LIKE CONCAT('%', #{goodsName}, '%')
 				</if>
 				AND g.g_isdel = 0
 			</trim>

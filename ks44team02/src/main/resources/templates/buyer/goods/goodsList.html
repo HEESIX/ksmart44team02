@@ -106,21 +106,11 @@ a:hover {
 				</div>
 				<div class="sidebar__item">
 					<h4>Price</h4>
-					<div class="price-range-wrap">
-						<div
-							class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-							data-min="1000" data-max="100000">
-							<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-							<span tabindex="0"
-								class="ui-slider-handle ui-corner-all ui-state-default"></span>
-							<span tabindex="0"
-								class="ui-slider-handle ui-corner-all ui-state-default"></span>
-						</div>
-						<div class="range-slider">
+					<div>
+						<div>
 							<div class="price-input">
-								<input type="text" id="minamount" style="width: 30%;"> <input
-									type="text" id="maxamount"
-									style="width: 60%;">
+								<input id="priceRange" name="priceRange" type="range" style="width: 100%; accent-color: red;" min="10000" max="100000" step="10000" value="10000">
+								<span>10000원 이하</span>
 							</div>
 						</div>
 						<div id="searchBox">
@@ -291,6 +281,40 @@ a:hover {
 		        moveForm.submit();
 		        
 		    });
+			
+			$('#priceRange').change(function(){
+				var price = $(this).val();
+				$(this).parent().find('span').text(price + '원 이하');
+			});
+			
+			$('#searchBtn').click(function(){
+				var priceValue = $('#priceRange').val();
+				var goodsNameValue = $('#goodsName').val();
+				
+				var nowUrl = window.location.href;
+				
+				const url = new URL(nowUrl);
+				const urlParam = url.searchParams;
+				
+				if(urlParam.has('priceRange')){
+					if(urlParam.has('goodsNameValue')){
+						urlParam.set('priceRange', priceValue);
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.set('priceRange', priceValue);	
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}else{
+					if(urlParam.has('goodsNameValue')){
+						urlParam.append('priceRange', priceValue);	
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.append('priceRange', priceValue);
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}
+				window.location.href = url;
+			});
 		});
 	</script>
 </th:block>

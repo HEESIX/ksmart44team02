@@ -94,7 +94,9 @@ public class BuyerGoodsController {
 	public String getGoodsList(Model model
 							  ,HttpServletRequest request
 							  ,Criteria cri
-							  ,@RequestParam(value = "goodsCategoryCode", required = false) String goodsCategoryCode) {
+							  ,@RequestParam(value = "goodsCategoryCode", required = false) String goodsCategoryCode
+							  ,@RequestParam(value = "priceRange", required = false) String priceRange
+							  ,@RequestParam(value = "goodsNameValue", required = false) String goodsName) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -111,6 +113,8 @@ public class BuyerGoodsController {
 		map.put("skip", cri.getSkip());
 		map.put("amount", cri.getAmount());
 		if(goodsCategoryCode != null) map.put("goodsCategoryCode", goodsCategoryCode);
+		if(priceRange != null) map.put("priceRange", priceRange);
+		if(goodsName != null) map.put("goodsName", goodsName);
 		
 		List<Goods> goodsList = goodsService.getGoodsListBuyer(map);
 		log.info(">>>>>>>>>>>>>>>>>>>>>{}", goodsList);
