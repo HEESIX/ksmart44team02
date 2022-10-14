@@ -115,6 +115,7 @@ public class GoodsService {
 		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
 		return result;
 	}
+	
 
 	// 상품 카테고리 리스트: 사용 중지된 것도 포함
 	public List<GoodsCategory> getGoodsCategoryList() {
@@ -131,7 +132,13 @@ public class GoodsService {
 
 		return goodsCategoryList;
 	}
-
+	
+	//'식단'이 포함된 카테고리 명 목록
+	public List<GoodsCategory> getMenuCategoryList(){
+		List<GoodsCategory> menuCategoryList = goodsMapper.getMenuCategoryList();
+		return menuCategoryList;
+	}
+	
 	// 기존 데이터 조회(상품 카테고리 수정 화면)
 	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode) {
 		GoodsCategory goodsCategoryInfo = goodsMapper.getGoodsCategoryInfo(goodsCategoryCode);
@@ -172,6 +179,12 @@ public class GoodsService {
 	public int getGoodsListCount(Map<String, Object> map) {
 		int goodsListCount = goodsMapper.getGoodsListCount(map);
 		return goodsListCount;
+	}
+	
+	//구매자 식단 리스트 페이징
+	public int getMenuListCount(Map<String, Object> map) {
+		int menuListCount = goodsMapper.getMenuListCount(map);
+		return menuListCount;
 	}
 
 	// 상품 삭제
@@ -240,6 +253,12 @@ public class GoodsService {
 		List<Goods> adminMenuList = goodsMapper.getAdminMenuList(map);
 
 		return adminMenuList;
+	}
+	
+	//식단 리스트: 구매자
+	public List<Goods> getMenuList(Map<String, Object> map){
+		List<Goods> result = goodsMapper.getMenuList(map);
+		return result;
 	}
 
 	// 식단 정보 수정 처리

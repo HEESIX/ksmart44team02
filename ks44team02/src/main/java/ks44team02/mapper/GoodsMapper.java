@@ -51,6 +51,9 @@ public interface GoodsMapper {
 	//상품 카테고리 리스트(사용중인 것만)
 	public List<GoodsCategory> getGoodsCategoryListUser();
 	
+	//'식단'이 포함된 카테고리명 조회
+	public List<GoodsCategory> getMenuCategoryList();
+	
 	//기존 데이터 조회(상품 카테고리 수정화면)
 	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode);
 	
@@ -71,6 +74,9 @@ public interface GoodsMapper {
 	
 	//구매자 상품 리스트 페이징
 	public int getGoodsListCount(Map<String, Object> map);
+	
+	//구매자 식단 리스트 페이징
+	public int getMenuListCount(Map<String, Object> map);
 	
 	//상품 삭제
 	public boolean removeGoods(String goodsCode);
@@ -110,6 +116,9 @@ public interface GoodsMapper {
 	
 	//식단 리스트
 	public List<Goods> getAdminMenuList(Map<String, Object> map);
+	
+	//식단 리스트: 구매자
+	public List<Goods> getMenuList(Map<String, Object> map);
 	
 	//식단 수정
 	public int modifyAdminMenu();

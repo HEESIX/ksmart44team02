@@ -135,8 +135,8 @@ a:hover {
 								<div class="col-lg-4">
 									<div class="product__discount__item">
 										<div class="product__discount__item__pic">
-											<img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
-												th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}">
+											<a th:href="@{|/buyer/goods/goodsDetail/${gl.goodsCode}|}"><img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+												th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}"></a>
 											<div class="product__discount__percent"
 												th:if="${gl.goodsDiscount.goodsDiscountPrice} != 0"
 												th:text="'-' + ${gl.goodsDiscount.goodsDiscountPrice} + '원'"></div>
@@ -150,7 +150,7 @@ a:hover {
 										<div class="product__discount__item__text">
 											<span th:text="${gl.goodsCategory.goodsCategoryName}"></span>
 											<h5>
-												<a href="#" th:text="${gl.goodsName}"></a>
+												<a th:href="@{|/buyer/goods/goodsDetail/${gl.goodsCode}|}" th:text="${gl.goodsName}"></a>
 											</h5>
 											<div class="product__item__price"
 												th:if="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
@@ -195,8 +195,8 @@ a:hover {
 					<div class="col-lg-4 col-md-6 col-sm-6">
 						<div class="product__item">
 							<div class="product__item__pic">
-								<img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
-									th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}">
+								<a th:href="@{|/buyer/goods/goodsDetail/${gl.goodsCode}|}"><img th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+									th:src="'/' + ${gl.goodsMainImageInfo.mainImagePath}"></a>
 								<div class="product__discount__percent"
 									th:if="${gl.goodsDiscount.goodsDiscountPrice} != 0"
 									th:text="'-' + ${gl.goodsDiscount.goodsDiscountPrice} + '원'"></div>
@@ -255,8 +255,12 @@ a:hover {
 			var moveForm = $('#moveForm');
 			
 			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn previous\"><a href=\"'+ previous +'\">previous</a></li>');
-			for(var i = 1; startPage <= endPage; startPage++){
-				$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"'+ i +'\">'+ i +'</a></li>');
+			if(endPage == 0){
+				$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"1\">1</a></li>');
+			}else{
+				for(var i = 1; startPage <= endPage; startPage++){
+					$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"'+ i +'\">'+ i +'</a></li>');
+			}
 			}
 			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn next\"><a href=\"'+ next +'\">next</a></li>');
 			
@@ -269,12 +273,12 @@ a:hover {
 		       
 		        if(movePage <= 0) {
 		        	alert('이전 페이지가 없습니다.');
-		        	movePage = 1;
+		        	return false;
 		        }
 		        
 		        if(movePage > endPage) {
 		        	alert('다음 페이지가 없습니다.');
-		        	movePage = endPage;
+        			return false;
 		        }
 		       
 		        moveForm.find("input[name='pageNum']").val(movePage);

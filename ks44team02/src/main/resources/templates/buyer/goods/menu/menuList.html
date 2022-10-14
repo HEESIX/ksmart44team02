@@ -2,16 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/buyerDefault}">
-
-<!-- 구매자 판매 식단 목록 조회  -->
-
-<!-- 사용자 정의 css  -->
-<th:block layout:fragment="customCss">
-</th:block>
+<!-- 구매자 상품 리스트 -->
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.product__item__text span {
+	font-size: 14px;
+	color: #b2b2b2;
+	display: block;
+	margin-bottom: 4px;
+}
+
+.product__item__pic .product__discount__percent {
+	height: 45px;
+	width: 45px;
+	background: #dd2222;
+	border-radius: 50%;
+	font-size: 14px;
+	color: #ffffff;
+	line-height: 45px;
+	text-align: center;
+	position: absolute;
+	left: 15px;
+	top: 15px;
+}
+
+.pageInfo {
+	list-style: none;
+	display: inline-block;
+	margin: 50px 0 0 100px;
+}
+
+.pageInfo li {
+	float: left;
+	font-size: 20px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+#searchBox{
+	float: right;
+	margin-top: 20px;
+}
+</style>
 </th:block>
 
 <!-- start breadcrum section -->
@@ -36,9 +90,257 @@
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
+	<div class="row">
+		<div class="col-lg-3 col-md-5">
+			<div class="sidebar">
+				<div class="sidebar__item">
+					<h4>Categories</h4>
+					<ul>
+						<li><a th:href="@{/buyer/goods/goodsList}">전체</a></li>
+						<th:block th:if="${not #lists.isEmpty(menuCategoryList)}"
+							th:each="mcl : ${menuCategoryList}">
+							<li><a th:text="${mcl.goodsCategoryName}"
+								th:href="@{/buyer/goods/goodsList(goodsCategoryCode=${mcl.goodsCategoryCode})}"></a></li>
+						</th:block>
+					</ul>
+				</div>
+				<div class="sidebar__item">
+					<h4>Price</h4>
+					<div>
+						<div>
+							<div class="price-input">
+								<input id="priceRange" name="priceRange" type="range" style="width: 100%; accent-color: red;" min="10000" max="100000" step="10000" value="10000">
+								<span>10000원 이하</span>
+							</div>
+						</div>
+						<div id="searchBox">
+							<input type="text" style="width: 170px; height: 46px;" placeholder="상품명" id="goodsName" name="goodsName">
+							<button type="button" id="searchBtn" class="site-btn">검색</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-9 col-md-7">
+			<div class="product__discount">
+				<div class="section-title product__discount__title">
+					<h2>Sale Off</h2>
+				</div>
+				<div class="row">
+					<div class="product__discount__slider owl-carousel">
+						<th:block th:if="${not #lists.isEmpty(menuList)}"
+							th:each="ml : ${menuList}">
+							<th:block
+								th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0 or ${ml.goodsDiscount.goodsDiscountRate} != 0">
+								<div class="col-lg-4">
+									<div class="product__discount__item">
+										<div class="product__discount__item__pic">
+											<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
+												th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
+											<div class="product__discount__percent"
+												th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
+												th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+											<div class="product__discount__percent"
+												th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
+												th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+											<ul class="product__item__pic__hover">
+												<li><a><i class="fa fa-shopping-cart"></i></a></li>
+											</ul>
+										</div>
+										<div class="product__discount__item__text">
+											<span th:text="${ml.goodsCategory.goodsCategoryName}"></span>
+											<h5>
+												<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}" th:text="${ml.goodsName}"></a>
+											</h5>
+											<div class="product__item__price"
+												th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+												<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+												<span th:text="${ml.goodsPrice}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${not #lists.isEmpty(menuList)}">
+							<div class="col-lg-4">
+									<div class="product__discount__item">
+										<div class="product__discount__item__pic">
+											<img alt="상품준비중"></a>
+											<ul class="product__item__pic__hover">
+												<li><a><i class="fa fa-shopping-cart"></i></a></li>
+											</ul>
+										</div>
+										<div class="product__discount__item__text">
+											<span>상품카테고리명</span>
+											<h5>
+												상품명
+											</h5>
+											<div class="product__item__price">
+												<span>상품가격</span>
+											</div>
+										</div>
+									</div>
+								</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+			<div class="filter__item">
+				<div class="row">
+					<div class="col-lg-4 col-md-5">
+						<div class="filter__sort">
+							<span>Sort By</span> <select>
+								<option value="0">Default</option>
+								<option value="0">Default</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4">
+						<div class="filter__found">
+							<h6>
+								<span th:text="${pageMake.total}">16</span> Products found
+							</h6>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-3">
+						<div class="filter__option">
+							<span class="icon_grid-2x2"></span> <span class="icon_ul"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<th:block th:if="${not #lists.isEmpty(menuList)}"
+					th:each="ml, status : ${menuList}">
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="product__item">
+							<div class="product__item__pic">
+								<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
+									th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
+								<div class="product__discount__percent"
+									th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
+									th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+								<div class="product__discount__percent"
+									th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
+									th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+								<ul class="product__item__pic__hover">
+									<li><a><i class="fa fa-shopping-cart"></i></a></li>
+								</ul>
+							</div>
+							<div class="product__discount__item__text">
+								<span th:text="${ml.goodsCategory.goodsCategoryName}"></span>
+								<h5>
+									<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}" th:text="${ml.goodsName}"></a>
+								</h5>
+								<div class="product__item__price"
+									th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+									<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+									<span th:text="${ml.goodsPrice}"></span>
+								</div>
+								<div class="product__item__price"
+									th:unless="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+									<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+			<div class="pageInfo_wrap">
+				<div class="pageInfo_area">
+					<ul id="pageInfo" class="pageInfo">
+					</ul>
+				</div>
+			</div>
+			<div class="product__pagination">
+				<form id="moveForm" th:action="@{/buyer/goods/menuList}"
+					method="get">
+					<input type="hidden" name="pageNum"
+						th:value="${pageMake.cri.pageNum }"> <input type="hidden"
+						name="amount" th:value="${pageMake.cri.amount }">
+				</form>
+			</div>
+		</div>
+	</div>
 </th:block>
 
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootjs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var startPage = [[${pageMake.startPage}]];
+			var endPage = [[${pageMake.endPage}]];
+			var next = endPage + 1;
+			var previous = startPage - 1;
+			var moveForm = $('#moveForm');
+			
+			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn previous\"><a href=\"'+ previous +'\">previous</a></li>');
+			if(endPage == 0){
+				$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"1\">1</a></li>');
+			}else{
+				for(var i = 1; startPage <= endPage; startPage++){
+					$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn\"><a href=\"'+ i +'\">'+ i +'</a></li>');
+			}
+			}
+			$('.pageInfo_wrap .pageInfo_area ul').append('<li class=\"pageInfo_btn next\"><a href=\"'+ next +'\">next</a></li>');
+			
+		 	
+			
+			$(".pageInfo a").on("click", function(e){
+			 
+		        e.preventDefault();
+		        var movePage = $(this).attr("href");
+		       
+		        if(movePage <= 0) {
+		        	alert('이전 페이지가 없습니다.');
+		        	return false;
+		        }
+		        
+		        if(movePage > endPage) {
+		        	alert('다음 페이지가 없습니다.');
+        			return false;
+		        }
+		       
+		        moveForm.find("input[name='pageNum']").val(movePage);
+		        moveForm.submit();
+		        
+		    });
+			
+			$('#priceRange').change(function(){
+				var price = $(this).val();
+				$(this).parent().find('span').text(price + '원 이하');
+			});
+			
+			$('#searchBtn').click(function(){
+				var priceValue = $('#priceRange').val();
+				var goodsNameValue = $('#goodsName').val();
+				
+				var nowUrl = window.location.href;
+				
+				const url = new URL(nowUrl);
+				const urlParam = url.searchParams;
+				
+				if(urlParam.has('priceRange')){
+					if(urlParam.has('goodsNameValue')){
+						urlParam.set('priceRange', priceValue);
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.set('priceRange', priceValue);	
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}else{
+					if(urlParam.has('goodsNameValue')){
+						urlParam.append('priceRange', priceValue);	
+						urlParam.set('goodsNameValue', goodsNameValue);
+					}else{
+						urlParam.append('priceRange', priceValue);
+						urlParam.append('goodsNameValue', goodsNameValue);
+					}
+				}
+				window.location.href = url;
+			});
+		});
+	</script>
 </th:block>
 </html>

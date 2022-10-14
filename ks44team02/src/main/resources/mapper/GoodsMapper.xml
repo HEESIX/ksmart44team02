@@ -254,6 +254,22 @@
 			cate_status = 1
 			AND
 			cate_isdel = 0
+			AND
+			cate_name NOT LIKE CONCAT('%', '식단', '%')
+	</select>
+	<!-- '식단'이 포함된 카테고리명 조회 -->
+	<select id="getMenuCategoryList" resultMap="categoryResultMap">
+		SELECT
+			g_cate_code
+			,cate_name
+		FROM
+			tb_goods_cate
+		WHERE
+			cate_status = 1
+			AND
+			cate_isdel = 0
+			AND
+			cate_name LIKE CONCAT('%', '식단', '%')
 	</select>
 	<!-- 특정 상품 카테고리 정보 조회(상품 카테고리 수정화면) -->
 	<select id="getGoodsCategoryInfo" parameterType="String" resultMap="categoryResultMap">
@@ -510,6 +526,41 @@
 				AND g.g_isdel = 0
 			</trim>
 	</select>
+	<!-- 구매자 식단 페이징을 위한 count  -->
+	<select id="getMenuListCount" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
+		<trim prefix="WHERE " prefixOverrides="AND |OR ">
+			<if test="isLocalhost != null and isLocalhost != ''">
+				gmi.main_image_islocal = ${isLocalhost}
+			</if>
+			<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
+				AND g.g_cate_code = #{goodsCategoryCode}
+			</if>
+			<if test="priceRange != null and priceRange != ''">
+				AND g.g_discount <![CDATA[<=]]> ${priceRange}
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				AND g.g_name LIKE CONCAT('%', #{goodsName}, '%')
+			</if>
+			AND g.g_isdel = 0
+			AND gc.cate_name LIKE CONCAT('%', '식단', '%')
+		</trim>
+	</select>	
 	<!-- 식단코드로 상품 삭제  -->
 	<update id="removeMenu" parameterType="Map">
 		<selectKey keyProperty="goodsCode" resultType="String" order="BEFORE">
@@ -693,6 +744,8 @@
 			g.g_activation = 1
 			AND
 			g.g_isdel = 0
+			AND
+			gc.cate_name NOT LIKE CONCAT('%', '식단', '%')
 	</select>
 	<!-- 상품 상세 정보  -->
 	<select id="getGoodsInfo" parameterType="String" resultMap="goodsResultMap">
@@ -1202,6 +1255,63 @@
 			</if>
 			AND g.g_isdel = 0
 		</trim>
+	</select>
+	<!-- 식단 조회: 구매자  -->
+	<select id="getMenuList" parameterType="Map" resultMap="goodsResultMap">
+		SELECT
+			g.g_code
+			,gmi.main_image_path			as gmi_main_image_path
+			,gmi.main_image_original_name	as gmi_main_image_original_name
+			,gmi.main_image_new_name		as gmi_main_image_new_name
+			,gc.g_cate_code					as gc_g_cate_code
+			,gc.cate_name					as gc_cate_name
+			,g.g_name
+			,g.g_price
+			,gdm.discount_price				as gdm_discount_price
+			,gdm.discount_rate				as gdm_discount_rate
+			,gdm.discount_name				as gdm_discount_name
+			,g.g_discount
+			,g.g_netweight
+			,g.g_netweightunit
+			,g.g_produce
+			,g.g_production_expiration_info
+			,g.g_stock
+			,g.g_delivery_charge
+			,g.g_reg_datetime
+			,g.g_activation
+		FROM 
+			tb_goods AS g 
+			INNER JOIN 
+			tb_goods_cate AS gc
+			ON 
+			gc.g_cate_code = g.g_cate_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+			INNER JOIN 
+			tb_goods_main_image AS gmi
+			ON 
+			gmi.main_image_idx = g.g_main_image
+			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
+				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
+					AND g.g_cate_code = #{goodsCategoryCode}
+				</if>
+				<if test="priceRange != null and priceRange != ''">
+					AND g.g_discount <![CDATA[<=]]> ${priceRange}
+				</if>
+				<if test="goodsName != null and goodsName != ''">
+					AND g.g_name LIKE CONCAT('%', #{goodsName}, '%')
+				</if>
+				AND g.g_isdel = 0
+				AND gc.cate_name LIKE CONCAT('%', '식단', '%')
+			</trim>
+		<if test="limitNum > 0">
+			LIMIT ${skip}, ${amount}
+		</if>
 	</select>
 	<!-- 메뉴 코드를 받아서 어떤 상품이 몇개가 포함되어있는지 확인  -->
 	<select id="getMenuOrganizeList" parameterType="String" resultMap="menuOrganizeResultMap">
