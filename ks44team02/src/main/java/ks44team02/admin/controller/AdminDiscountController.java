@@ -58,7 +58,7 @@ public class AdminDiscountController {
 		
 		return "admin/orderDiscount/orderDiscountList";
 	}
-	//주문서별 할인혜택 목록 조회 처리
+	//주문서별 할인혜택 목록 검색 처리
 	@PostMapping("/orderDiscountList")
 	public String getSearchOrderDiscountList(@RequestParam(name="searchKey", defaultValue = "discountName") String sk
 			 ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
