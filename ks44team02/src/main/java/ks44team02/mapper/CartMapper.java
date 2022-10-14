@@ -13,5 +13,5 @@ public interface CartMapper {
 	public List<Cart> getCartList(String sessionId);
 	
 	//장바구니 상품 삭제 처리
-	public boolean removeCartGoods(Cart cart);
+	public boolean removeCartGoods(String cartListCode);
 }

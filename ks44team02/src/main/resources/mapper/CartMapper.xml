@@ -63,11 +63,12 @@
 		WHERE
 			member_id = #{SID};
 	</select>
+	<!-- 장바구니 특정 상품 삭제 -->
 	<delete id="removeCartGoods" parameterType="String">
-	DELETE
-	FROM
-		tb_cart_list
-	WHERE
-		cart_list_code = #{cartListCode};
+		DELETE
+		FROM
+			tb_cart_list
+		WHERE
+			cart_list_code = #{cartListCode};
 	</delete>
 </mapper>

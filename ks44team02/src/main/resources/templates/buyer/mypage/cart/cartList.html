@@ -136,7 +136,7 @@ li {
 	                                	<td class="shoping_cart_quantity">
 	                                		<div class="quantity">
 	                                			<div class="pro-qty">
-		                                			<span calss="dec qtybtn" style="width: 10px;"></span>
+		                                			<span class="dec qtybtn" style="width: 5px;"></span>
 		                                			<input th:value="${cl.orderAmount}" style=" width: 40px;">
 		                                			<span class="inc qtybtn" style="width: 10px;"></span>
 	                                			</div>
@@ -157,7 +157,8 @@ li {
 														  <div class="form_inner">
 															  <div>
 															    <ul class="form_list_input">											    	
-															      <li>
+															      <li >
+															      	<input type="hidden" id="cartListCodeModal">
 															      	선택한 상품을 장바구니에서 삭제하시겠습니까?
 															      </li>
 															    </ul>
@@ -166,7 +167,7 @@ li {
 														</div>
 												      </div>
 												      <div class="modal-footer">
-												        <button type="button" class="btn btn-default addDeliNum" data-dismiss="modal">확인</button>
+												        <button type="button" class="btn btn-default removeGoods" data-dismiss="modal">확인</button>
 												      </div>
 												    </div>
 												  </div>
@@ -184,18 +185,7 @@ li {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a th:href="@{/buyer/goods/goods_list_buyer}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
+                        <a th:href="@{/buyer/goods/goodsList}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -205,7 +195,7 @@ li {
                             <li>Subtotal <span>$454.98</span></li>
                             <li>Total <span>$454.98</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a th:href="@{/buyer/order/order}" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -222,16 +212,14 @@ li {
 			//
 		});	
 		
-		$(document).on('click', '.addDeliNum', function(){
-			let orderDetailCode = $('#orderDetailCodeModal').val();
-			let deliNumInput = $('#deliNum_input').val();
+		$(document).on('click', '.removeGoods', function(){
+			let cartListCode = $('#cartListCodeModal').val();
 			//ajax
 			var request = $.ajax({
 						  url: "/buyer/mypage/cart/removeCart",
 						  method: "POST",
 						  data: { 
-							  	   'orderDetailCode' : orderDetailCode 
-							  	  ,'deliveryNum' : deliNumInput
+							  	   'cartListCode' : cartListCode 
 							  	},
 						  dataType: "text"
 						});

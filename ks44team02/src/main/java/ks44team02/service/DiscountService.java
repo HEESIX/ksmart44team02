@@ -32,7 +32,7 @@ public class DiscountService {
 		List<OrderDiscount> orderDiscount = discountMapper.getOrderDiscountList(paramMap);
 		return orderDiscount;
 	}
-	//특정 주문서별 할인혜택 조회
+	//특정 주문서별 할인혜택 정보 조회
 	public OrderDiscount getOrderDiscountInfo(String orderDiscountCode) {
 		OrderDiscount orderDiscountInfo = discountMapper.getOrderDiscountInfo(orderDiscountCode);
 		return orderDiscountInfo;
