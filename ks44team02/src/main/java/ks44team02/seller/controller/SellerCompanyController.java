@@ -46,15 +46,13 @@ public class SellerCompanyController {
 	
 	
 	//브랜드 중복체크
-	/*
+	@GetMapping("/companyBrandCheck")
 	@ResponseBody
-	@RequestMapping(value = "/brandChk", method = RequestMethod.POST)
-	public int brandChk(Seller seller) throws Exception {
-		int result = SellerCompanyService.brandChk(seller);
+	public boolean SellerBrand(@RequestParam(name="sellerBrand")String sellerBrand) {
+		boolean result = sellerCompanyService.BrandCheck(sellerBrand);
 		return result;
 	}
-	*/
-	
+		
 	
 	
 	//업체 정보 검색 및 전체 리스트

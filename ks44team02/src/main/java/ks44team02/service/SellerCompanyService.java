@@ -29,9 +29,10 @@ public class SellerCompanyService {
 	
 	
 	//브랜드 중복체크
-	/*
-	public int brandChk(Seller seller) throws Exception;
-	*/
+	public boolean BrandCheck(String sellerBrand) {
+		boolean result = sellerCompanyMapper.BrandCheck(sellerBrand);
+		return result;
+	}
 	
 	
 	//업체 정보 검색 및 전체 리스트
