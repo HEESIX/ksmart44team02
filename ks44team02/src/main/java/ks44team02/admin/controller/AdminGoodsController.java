@@ -396,8 +396,7 @@ public class AdminGoodsController {
 							  ,Goods goods
 							  ,@RequestParam(value = "goodsItems") String goodsItems
 							  ,@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage
-							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage
-							  ,HttpSession session) throws ParseException {
+							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage) throws ParseException {
 		
 		String menuOfGoods = "{ \"goodsItems\" : " + goodsItems + "}";
 		boolean addAdminMenuResult = true;
