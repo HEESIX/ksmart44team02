@@ -147,7 +147,17 @@ public class AdminDiscountController {
 	//주문서별 할인혜택 수정 처리
 	@PostMapping("/modifyOrderDiscount")
 	public String modifyOrderDiscount(OrderDiscount orderDiscount
-									 ,RedirectAttributes reAttr) {
+									 ,RedirectAttributes reAttr
+									 ,@RequestParam(value = "selectRatePrice") String selectRatePrice
+									 ,@RequestParam(value = "discountNumber") int discountNumber) {
+		
+		if("rate".equals(selectRatePrice)) {
+			orderDiscount.setDiscountRate(discountNumber);
+			orderDiscount.setDiscountPrice(0);
+		}else if("price".equals(selectRatePrice)) {
+			orderDiscount.setDiscountPrice(discountNumber);
+			orderDiscount.setDiscountRate(0);
+		}
 		
 		boolean result = discountService.modifyOrderDiscount(orderDiscount);
 		
