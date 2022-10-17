@@ -472,4 +472,42 @@ public class SellerGoodsController {
 		
 		return true;
 	}
+	
+	//상품별 할인혜택 등록
+	@GetMapping("/discount/regGoodsDiscount")
+	public String addGoodsDiscount(Model model) {
+		
+		model.addAttribute("title", "상품별 할인혜택 등록");
+		
+		return "seller/goods/discount/regGoodsDiscount";
+	}
+	
+	//상품별 할인헤택 목록(관리자가 등록한 할인혜택 제외, 판매자 본인이 등록한 할인혜택만 조회)
+	@GetMapping("/discount/goodsDiscountList")
+	public String getSellerGoodsDiscount(Model model
+										,HttpSession session) {
+		
+		//String memberId = (String) session.getAttribute("SID");
+		String memberId = "id010";
+		
+		List<GoodsDiscount> sellerGoodsDiscount = goodsService.getSellerGoodsDiscount(memberId);
+		
+		model.addAttribute("title", "상품별 할인혜택 목록");
+		model.addAttribute("sellerGoodsDiscount", sellerGoodsDiscount);
+		
+		return "seller/goods/discount/goodsDiscountList";
+	}
+	
+	//상품별 할인혜택 수정 폼
+	@GetMapping("/discount/modifyGoodsDiscount/{goodsDiscountCode}")
+	public String modfiyGoodsDiscount(Model model
+									 ,@PathVariable(value = "goodsDiscountCode") String goodsDiscountCode) {
+		
+		GoodsDiscount goodsDiscount = goodsService.getGoodsDiscount(goodsDiscountCode);
+		
+		model.addAttribute("title", "상품별 할인혜택 수정");
+		model.addAttribute("goodsDiscount", goodsDiscount);
+		
+		return "seller/goods/discount/modifyGoodsDiscount";
+	}
 }

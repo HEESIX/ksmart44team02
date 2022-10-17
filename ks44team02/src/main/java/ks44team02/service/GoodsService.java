@@ -326,7 +326,7 @@ public class GoodsService {
 		return goodsDiscountAdmin;
 	}
 
-	// 상품별 할인 혜택 리스트(seller: seller가 접속한 session id와 일치하는 목록 출력)
+	// 상품별 할인 혜택 리스트(seller: 상품 등록 신청에 필요한 판매자가 정의한 상품별 할인혜택과 관리자가 정의한 상품별할인혜택 모두 GET)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session) {
 		// 세션의 아이디 조회
 		// 현재 없으므로 fix된 값 사용
@@ -334,6 +334,12 @@ public class GoodsService {
 		String memberId = "id010";
 		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
 		return goodsDiscountListSeller;
+	}
+	
+	// 상품별 할인 혜택 리스트(seller: 판매자가 등록한 상품별 할인헤택만 GET)
+	public List<GoodsDiscount> getSellerGoodsDiscount(String memberId){
+		List<GoodsDiscount> sellerGoodsDiscount = goodsMapper.getSellerGoodsDiscount(memberId);
+		return sellerGoodsDiscount;
 	}
 	
 	//상품 별 할인 혜택 리스트(모든 리스트)
