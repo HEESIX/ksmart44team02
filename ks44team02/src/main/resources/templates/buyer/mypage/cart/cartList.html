@@ -144,7 +144,7 @@ li {
 	                                	</td>
 	                                	<td th:text="${cl.priceSubtotal}"></td>
 	                                    <td class="shoping__cart__item__close">
-	                                        <span class="icon_close modalBtn"></span>
+	                                        <span class="icon_close modalBtn" th:data-cartListCode="${cl.cartListCode}"></span>
 					                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
 												  <div class="modal-dialog modal-80size modal-center" role="document">
 												    <div class="modal-content modal-80size">
@@ -167,7 +167,7 @@ li {
 														</div>
 												      </div>
 												      <div class="modal-footer">
-												        <button type="button" class="btn btn-default removeGoods" data-dismiss="modal">확인</button>
+												        <button type="button" class="btn btn-default removeGoods" th:data-cartListCode="${cartListCode}">확인</button>
 												      </div>
 												    </div>
 												  </div>
@@ -207,13 +207,14 @@ li {
 <script type="text/javascript">
 	$(function(){
 		$(document).on('click', '.modalBtn', function(){
-			let orderCode = $(this).parents('tr').children('td').eq(0).text();
+			let orderCode = $(this).attr('data-cartListCode');
+			$('.removeGoods').attr('data-cartListCode',orderCode);
 			$('#modal').modal("show"); //열기
 			//
 		});	
 		
 		$(document).on('click', '.removeGoods', function(){
-			let cartListCode = $('#cartListCodeModal').val();
+			let cartListCode = $(this).attr('data-cartListCode');
 			//ajax
 			var request = $.ajax({
 						  url: "/buyer/mypage/cart/removeCart",
@@ -221,7 +222,7 @@ li {
 						  data: { 
 							  	   'cartListCode' : cartListCode 
 							  	},
-						  dataType: "text"
+						  dataType: "json"
 						});
 						 
 			request.done(function( data ) {
