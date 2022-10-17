@@ -209,6 +209,7 @@
 	         od.order_detail_code AS orderDetailCode,
 	         g.g_main_image as goodsMainImage,
 	         g.g_name as goodsName,
+	         g.g_code as goodsCode,
 	         om.add_discount_price AS disPricAdd,
 	         od.discount_price AS discountPrice,
 	         od.regular_price_subtotal as regularPriceSubtotal,
@@ -281,6 +282,7 @@
 			,d.d_get_addr
 			,d.d_get_phone
 			,d.d_memo
+			,g.g_code
 			,os.order_status_standard_code
 			,oss.order_status_standard_details
 			,d.delivery_enter
@@ -326,8 +328,6 @@
 	</select>
 	
 	
-
-	
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" parameterType="String" resultType="map">	
 		SELECT
@@ -339,6 +339,8 @@
 	om.add_discount_price AS discountAdd,
 	om.regular_price_subtotal AS subPrice,
 	om.g_delivery_charge_total as deliTotal
+	,gmi.main_image_original_name AS mainImageOriName
+	,gmi.main_image_path AS mainImagePath
 FROM
 	tb_order_management AS om
 	INNER JOIN
@@ -357,6 +359,10 @@ FROM
 	tb_order_status_standard AS oss
 	on
 	oss.order_status_standard_code = os.order_status_standard_code
+		INNER JOIN 
+	tb_goods_main_image AS gmi
+	ON 
+	gmi.main_image_idx = g.g_main_image
 WHERE
 	od.member_id = #{memberId}
 GROUP BY om.order_code
@@ -371,6 +377,7 @@ ORDER BY
 	         od.order_group_code as orderGroupCode,
 	         g.g_main_image as goodsMainImage,
 	         g.g_name as goodsName,
+	         g.g_code AS goodsCode,
 	         om.add_discount_price AS disPricAdd,
 	         od.discount_price AS discountPrice,
 	         od.regular_price_subtotal as regularPriceSubtotal,
