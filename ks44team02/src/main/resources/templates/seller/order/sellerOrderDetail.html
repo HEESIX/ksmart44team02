@@ -74,13 +74,13 @@ table th {
 			</thead>
 			<tbody>
 				<tr th:if="${not #lists.isEmpty(getSellerOrderDetail)}">
-					<td style="width: 200px;"><a href="#"><img
+					<td style="width: 200px;"><a th:href="@{|/seller/goods/goodsDetail/${getSellerOrderDetail.goodsCode}|}"><img
 							th:src="@{'/' + ${getSellerOrderDetail.get('mainImagePath')}}"
 							th:alt="${getSellerOrderDetail.get('mainImageOriName')}"
 							style="width: 100px; border-radius: 10px;" /></a></td>
 					<td th:text="${getSellerOrderDetail.get('goodsName')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderAmount')}" style="width: 200px;"></td>
-					<td th:text="${getSellerOrderDetail.get('regularPriceSubtotal')}" style="width: 200px;"></td>
+					<td th:text="'₩' + ${getSellerOrderDetail.get('regularPriceSubtotal')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderDatetime')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderStatusStandardDetails')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('deliveryNumber')}" style="width: 200px;"></td>
