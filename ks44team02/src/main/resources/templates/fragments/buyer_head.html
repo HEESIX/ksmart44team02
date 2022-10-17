@@ -25,7 +25,30 @@
 	<link rel="stylesheet" th:href="@{/user/css/owl.carousel.min.css}" type="text/css">
 	<link rel="stylesheet" th:href="@{/user/css/slicknav.min.css}" type="text/css">
 	<link rel="stylesheet" th:href="@{/user/css/style.css}" type="text/css">
-	
+	<style type="text/css">
+		.nice-select{
+			height: 48px;
+			z-index: 20;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    background-color: #fff;
+		    border: none;
+		    font-size: 12px;
+		    font-weight: normal;
+		    width: 138px;
+		    border: 0;
+		    border-right: 1px solid #ddd;
+		    border-radius: inherit;
+		    overflow: visible;
+		}
+		.hero__search{
+			overflow: visible;
+		}
+		.current{
+			line-height: 48px;
+		}
+	</style>
 	<!-- 사용자 정의 css  -->
 	<th:block layout:fragment="customCss"></th:block>
 	
