@@ -135,14 +135,14 @@
 	
 	
 	<!-- 특정 주문상태 업데이트(수정) 처리 -->
-	<update id="modifyOrderStatus" parameterType="OrderStatus">
+	<update id="modifyOrderStatus" parameterType="Map">
 		UPDATE 
 			tb_order_status
 		SET
-			order_status_standard_code = #{standardCode},
+			order_status_standard_code = #{orderStatusStandardCode},
 			order_status_update_datetime = NOW()
 		WHERE 
-			order_status_code = #{orderStatusCode}
+			order_detail_code = #{orderDetailCode}
 	</update>
 	
 	<!-- 주문서 운송장 등록 처리 -->
