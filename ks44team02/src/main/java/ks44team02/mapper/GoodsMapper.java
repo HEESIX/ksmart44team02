@@ -144,6 +144,9 @@ public interface GoodsMapper {
 	//상푸별 할인혜택 리스트(seller: seller의 세션의 아이디와 일치하는 부분, admin이 등록한 부분)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(String memberId);
 	
+	//상품별 할인혜택 리스트(seller가 등록한 할인혜택만) 
+	public List<GoodsDiscount> getSellerGoodsDiscount(String memberId);
+	
 	//상품별 할인혜택 리스트 제한 X
 	public List<GoodsDiscount> getGoodsDiscountList(Map<String, Object> map);
 	
