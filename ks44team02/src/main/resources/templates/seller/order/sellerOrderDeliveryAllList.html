@@ -174,20 +174,32 @@ li {
 <div class="row">
 		<div class="product__discount">
 		<div class="section-title product__discount__title">
-					<h2 style="font-size: 30px">주문배송처리</h2>
-			
+		<div>
+		
+				
+		<div style=" border:1px dashed; padding:10px; margin-bottom: 30px;">
+			1. 주문번호 클릭 - 상세주문서열람가능	/	
+			2. 상품명, 배송상태별 검색 가능.<br>
+			3. 운송장등록버튼 클릭 - 모달창에서 새로운 운송장 등록(수정)가능	/	
+			4. 상태변경 버튼 클릭 - 주문서의 주문상태를 변경가능<br>
+		</div>
+		<div class="row">
+			<h2 style="font-size: 30px">주문배송처리</h2>
+		</div>
+		
 		<div class="row" style="margin-bottom: 30px; margin-top: 30px;">
 		
 			<button class="orderBtn01" style="margin: 10px 0 0 10px;">결제완료</button>
 			<button class="orderBtn02" style="margin: 10px 0 0 10px;">배송중</button>
 			<button class="orderBtn03" style="margin: 10px 0 0 10px;">배송완료</button>
 			<button class="orderBtn05" style="margin: 10px 0 0 10px;">취소/환불</button>
-		
 		</div>
+	
 		
 		
 		<div class="row">
-		<div th:include="seller/order/searchOrderStatusList :: searchFragment" style="margin-bottom: 15px;"></div>
+		<div th:include="seller/order/searchOrderStatusList :: searchFragment" style="margin-bottom: 10px; padding-left: 15px;"></div>
+				
 				<table style="margin-top: 15px;">
 					<thead>
 			            <tr>
@@ -206,7 +218,8 @@ li {
 			        <tbody>
 			            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
 			            	th:each="sol : ${sellerOrderList}">
-			                <td th:text="${sol.orderDetailCode}"></td>
+			                <td><a
+			                	th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"  th:text="${sol.orderDetailCode}"></a></td>
 			                <td><a href="#"><img th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
 											th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px; border-radius: 10px;"/></a></td>
 			                <td th:text="${sol.goods.goodsName}"></td>
