@@ -60,7 +60,11 @@ public class DeliveryService {
 		return result;
 	}
 	
-	
+	//판매자측 주문 상세정보보기
+	public Map<String, Object> getSellerOrderDetail(String orderDetailCode){
+		Map<String, Object> getSellerOrderDetail = deliveryMapper.getSellerOrderDetail(orderDetailCode);
+		return getSellerOrderDetail;
+	}
 	
 	
 	
