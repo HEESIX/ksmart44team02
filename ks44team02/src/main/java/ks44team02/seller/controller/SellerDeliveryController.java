@@ -42,17 +42,20 @@ public class SellerDeliveryController {
 	//신규 주문 및 배송 현황 조회(구매자 전체)
 	@GetMapping("/sellerOrderDeliveryAllList")
 	public String sellerOrderList(Model model
-								 ,HttpSession session) {
-			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
-			//String memberId = session.getAttribute("SID");
-			String memberId = "id010";
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("memberId", memberId);
-			List<OrderDetail> sellerOrderList = deliveryservice.sellerOrderList(paramMap);
-			
-				model.addAttribute("title", "주문 관리");
-				model.addAttribute("sellerOrderList", sellerOrderList);
-				log.info(">>>>>>>>>>>>>>>>>>>>{}", sellerOrderList);
+								 ,HttpSession session
+								 ,@RequestParam(value = "msg", required = false) String msg) {
+		// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
+		//String memberId = session.getAttribute("SID");
+		String memberId = "id010";
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("memberId", memberId);
+		List<OrderDetail> sellerOrderList = deliveryservice.sellerOrderList(paramMap);
+		
+		if(msg!=null) model.addAttribute("msg", msg);
+		
+		model.addAttribute("title", "주문 관리");
+		model.addAttribute("sellerOrderList", sellerOrderList);
+		log.info(">>>>>>>>>>>>>>>>>>>>{}", sellerOrderList);
 		
 		return "seller/order/sellerOrderDeliveryAllList";
 	}
@@ -110,11 +113,19 @@ public class SellerDeliveryController {
 		return "seller/order/sellerOrderDeliveryModify";
 	}
 	
+	
 	//주문서 주문상태 업데이트 처리
 	@PostMapping("/sellerOrderDeliveryModify")
-	public String modifyOrderStatus(OrderDetail sellerOrderList
-									,RedirectAttributes reAttr) {
-		boolean result = deliveryservice.modifyOrderStatus(sellerOrderList);
+	public String modifyOrderStatus(@RequestParam(value = "orderDetailCode") String orderDetailCode
+								   ,@RequestParam(value = "orderStatusStandardCode") String orderStatusStandardCode
+								   ,RedirectAttributes reAttr) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("orderDetailCode", orderDetailCode);
+		map.put("orderStatusStandardCode", orderStatusStandardCode);
+		
+		boolean result = deliveryservice.modifyOrderStatus(map);
 		if(result) {
 			reAttr.addAttribute("msg", "수정 완료");
 		}else {

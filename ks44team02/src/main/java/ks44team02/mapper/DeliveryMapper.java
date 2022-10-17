@@ -20,7 +20,7 @@ public interface DeliveryMapper {
 	public List<OrderDetail> sellerOrderList(Map<String, Object> searchMap) ;
 	
 	//판매자 측 주문서 주문상태 변경(수정)
-	public boolean modifyOrderStatus(OrderDetail sellerOrderList);
+	public boolean modifyOrderStatus(Map<String, Object> map);
 	
 	//판매자 측 특정 주문서 조회
 	public OrderDetail getOrderStatusInfo(String orderDetailCode);
