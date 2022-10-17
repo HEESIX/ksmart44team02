@@ -3,22 +3,19 @@ package ks44team02.admin.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team02.dto.MemberMileageAcc;
-import ks44team02.mapper.MileageMapper;
 import ks44team02.service.CommonService;
 import ks44team02.service.MileageService;
 
@@ -47,6 +44,13 @@ public class AdminMileageController<Mileage> {
 		log.info("adminMileageControllerInit bean 생성");
 	}
 	
+	@GetMapping("/mileageList")
+	@ResponseBody
+	public List<MemberMileageAcc> getMileageList(@RequestParam(name="memberId") String memberId){
+		List<MemberMileageAcc> mileageList = mileageService.getMileageListSearch(memberId);
+		return mileageList;
+	}
+	
 	//회원 적립금 조회 화면
 	@GetMapping("/mileageManagement")
 	public String getMileageList(Model model) {
@@ -64,13 +68,16 @@ public class AdminMileageController<Mileage> {
 		System.out.println(mileageList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
+		
+		
+		
 		return "admin/mileageManage/mileageManagement";
 	}
 	
 	//회원 적립금 조회
 	@PostMapping("/mileageManagement")
 	public String getMileageListSearch(Model model
-									  ,@RequestParam(value = "memberId") String memberId) {
+									  ,@RequestParam(value = "memberId") String memberId) throws ParseException {
 		log.info("PostMapping /mileage_management getMileageListSearch AdminMileageController");
 		List<MemberMileageAcc> mileageList = null;
 		
@@ -84,6 +91,7 @@ public class AdminMileageController<Mileage> {
 
 		model.addAttribute("title","적립금 조회");
 		model.addAttribute("mileageList", mileageList);
+		
 		return "admin/mileageManage/mileageManagement";
 	}
 	
