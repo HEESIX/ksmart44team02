@@ -319,7 +319,7 @@
 			AND
 			gdm.discount_isdel = 0
 	</select>
-	<!-- 상품별 할인혜택 리스트(seller) -->
+	<!-- 상품별 할인혜택 리스트(seller, admin 모두) -->
 	<select id="getGoodsDiscountListSeller" parameterType="String" resultMap="goodsDiscountResultMap">
 		SELECT
 			gdm.goods_discount_code
@@ -336,6 +336,26 @@
 			gdm.member_id = #{memberId}
 			OR 
 			gdm.enter_code IS NULL
+			AND
+			gdm.discount_isdel = 0
+	</select>
+	<!-- 상품별 할인혜택 리스트(seller만)  -->
+	<select id="getSellerGoodsDiscount" parameterType="String" resultMap="goodsDiscountResultMap">
+		SELECT
+			gdm.goods_discount_code
+			,gdm.discount_price
+			,gdm.discount_rate
+			,gdm.discount_name
+			,gdm.discount_expiration_date
+			,gdm.member_id
+			,gdm.g_pro_reg_datetime
+			,gdm.enter_code
+		FROM 
+			tb_goods_discount_management AS gdm
+		WHERE 
+			gdm.member_id = #{memberId}
+			AND
+			gdm.enter_code IS NOT NULL
 			AND
 			gdm.discount_isdel = 0
 	</select>

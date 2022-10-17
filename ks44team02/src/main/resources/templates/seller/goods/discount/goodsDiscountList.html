@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/sellerDefault}">
+
+<!-- 판매자 정의 상품별 할인혜택 조회 화면  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+caption {
+	font-weight: bold;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+table th, td {
+	max-width: 200px;
+}
+
+.modifyBtn{
+	font-size: 14px;
+    color: #555;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    background: white;
+    border: 1px solid #555;
+}
+
+.modifyBtn:hover{
+	color: white;
+	background: #ff7b08;
+	border: 1px solid #ff7b08;
+}
+
+.removeBtn{
+	font-size: 14px;
+    color: #ffffff;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    background: #555;
+    border: 1px solid #555;
+}
+
+.removeBtn:hover {
+	color: white;
+	background: #c70d00;
+	border: 1px solid #c70d00;
+}
+
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>상품별 할인혜택 조회</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<table style="width: 100%;">
+		<thead>
+			<tr>
+				<th>상품별 할인혜택명</th>
+				<th>할인률/할인가격</th>
+				<th>만료기한</th>
+				<th>등록일자</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(sellerGoodsDiscount)}" th:each="sgd,status : ${sellerGoodsDiscount}">
+				<td th:text="${sgd.goodsDiscountName}"></td>
+				<td th:if="${sgd.goodsDiscountPrice} == 0 and ${sgd.goodsDiscountRate} == 0">N/A</td>
+				<td th:if="${sgd.goodsDiscountPrice} != 0 and ${sgd.goodsDiscountRate} == 0" th:text="${sgd.goodsDiscountPrice} + '원'"></td>
+				<td th:if="${sgd.goodsDiscountPrice} == 0 and ${sgd.goodsDiscountRate} != 0" th:text="${sgd.goodsDiscountRate} + '%'"></td>
+				<td th:text="${sgd.goodsDiscountExpirationDate}"></td>
+				<td th:text="${sgd.goodsDiscountRegDatetime}"></td>
+				<td><a class="modifyBtn" th:href="@{|/seller/goods/discount/modifyGoodsDiscount/${sgd.goodsDiscountCode}|}">수정</a></td>
+				<td><a class="removeBtn" th:href="@{|/seller/goods/discount/removeGoodsDiscount/${sgd.goodsDiscountCode}|}">삭제</a></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<td colspan="6"><button type="button" class="site-btn" style="width: 15%;">등록</button></td>
+		</tfoot>
+	</table>
+</th:block>
+<!-- end breadcrum section -->
+
+
+
+</html>
