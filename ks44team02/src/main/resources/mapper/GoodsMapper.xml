@@ -441,9 +441,9 @@
 			,gc.cate_name					as gc_cate_name
 			,g.g_name
 			,g.g_price
-			,gdm.discount_price				as gdm_discount_price
-			,gdm.discount_rate				as gdm_discount_rate
-			,gdm.discount_name				as gdm_discount_name
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_price)				as gdm_discount_price
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_rate)				as gdm_discount_rate
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_name)				as gdm_discount_name
 			,g.g_discount
 			,g.g_netweight
 			,g.g_netweightunit
@@ -516,32 +516,14 @@
 				<if test="isLocalhost != null and isLocalhost != ''">
 					gmi.main_image_islocal = ${isLocalhost}
 				</if>
-				<if test="sk != null and sv != ''">
-					AND ${sk} LIKE CONCAT('%', #{sv}, '%')
-				</if>
-				<if test="sk != null and minNum != '' and maxNum != ''">
-					AND ${sk} BETWEEN #{minNum} AND #{maxNum}
-				</if>
-				<if test="sk != null and minNum == '' and maxNum != ''">
-					AND ${sk} <![CDATA[<=]]> #{maxNum}
-				</if>
-				<if test="sk != null and minNum != '' and maxNum == ''">
-					AND ${sk} >= #{minNum}
-				</if>
-				<if test="sk != null and minDate != '' and maxDate != ''">
-					AND ${sk} BETWEEN #{minDate} AND #{maxDate}
-				</if>
-				<if test="sk != null and minDate == '' and maxDate != ''">
-					AND ${sk} <![CDATA[<=]]> #{maxDate}
-				</if>
-				<if test="sk != null and minDate != '' and maxDate == ''">
-					AND ${sk} >= #{minDate}
-				</if>
-				<if test="memberId != null and memberId != ''">
-					AND e.member_id = #{memberId}
-				</if>
 				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 					AND g.g_cate_code = #{goodsCategoryCode}
+				</if>
+				<if test="priceRange != null and priceRange != ''">
+					AND g.g_discount <![CDATA[<=]]> ${priceRange}
+				</if>
+				<if test="goodsName != null and goodsName != ''">
+					AND g.g_name LIKE CONCAT('%', #{goodsName}, '%')
 				</if>
 				AND g.g_isdel = 0
 			</trim>
@@ -785,6 +767,7 @@
 			,g.g_stock
 			,g.g_delivery_charge
 			,g.g_activation
+			,e.enter_code as enter_code
 			,e.enter_name AS e_enter_name
 			,gc.cate_name AS gc_cate_name
 			,gc.g_cate_code AS gc_g_cate_code
@@ -1521,11 +1504,16 @@
 	</select>
 	<update id="modifyGoodsDiscount" parameterType="GoodsDiscount">
 		UPDATE tb_goods_discount_management AS gdm
-		SET
+		<trim prefix="SET" prefixOverrides=",">
 			gdm.discount_price = ${goodsDiscountPrice}
 			,gdm.discount_rate = ${goodsDiscountRate}
-			,gdm.discount_name = #{goodsDiscountName}
-			,gdm.discount_expiration_date = #{goodsDiscountExpirationDate}
+			<if test="goodsDiscountName != null and goodsDiscountName != ''">
+				,gdm.discount_name = #{goodsDiscountName}
+			</if>
+			<if test="goodsDiscountExpirationDate != null and goodsDiscountExpirationDate != ''">
+				,gdm.discount_expiration_date = #{goodsDiscountExpirationDate}
+			</if>
+		</trim>
 		WHERE 
 			gdm.goods_discount_code = #{goodsDiscountCode}
 	</update>
