@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Cart;
+import ks44team02.dto.Goods;
 import ks44team02.dto.OrderDiscount;
 import ks44team02.service.CartService;
+import ks44team02.service.CommonService;
 
 @Controller
 @RequestMapping(value = "/buyer/mypage/cart")
@@ -28,14 +31,27 @@ public class BuyerCartController {
 	private static final Logger log = LoggerFactory.getLogger(BuyerCartController.class);
 
 	private final CartService cartService;
+	private final CommonService commonService;
 	
-	public BuyerCartController(CartService cartService) {
+	public BuyerCartController(CartService cartService, CommonService commonService) {
 		this.cartService = cartService;
+		this.commonService = commonService;
 	}
 	
 	@PostConstruct
 	public void buyerCartController() {
 		log.info("BuyerCartController bean 생성");
+	}
+	
+	//장바구니에 상품 담는 처리
+	@PostMapping("/addCart")
+	public String addCart(Goods goods, Cart cart) {
+		
+		String newCode = commonService.getNewCode("tb_cart_list");
+		cart.setCartListCode(newCode);
+		
+		boolean result = cartService.addCart(cart);
+		return "redirect:/buyer/mypage/cart/cartList";
 	}
 	
 	//장바구니에 담긴 상품 목록 조회
@@ -64,18 +80,15 @@ public class BuyerCartController {
 
 	//장바구니에 담긴 상품 삭제 처리
 	@PostMapping("/removeCart")
-	public String removeCartGoods(@RequestParam(value = "cartListCode") String cartListCode
-								 ,RedirectAttributes reAttr) {
+	@ResponseBody
+	public boolean removeCartGoods(@RequestParam(value = "cartListCode") String cartListCode ) {
 		log.info(">>>>>>>>>삭제{}", cartListCode);
 		
 		boolean result = cartService.removeCartGoods(cartListCode);
-		if(result) {
-			reAttr.addAttribute("msg", "수정 완료");
-		}else {
-			reAttr.addAttribute("msg", "수정 실패");
-		}
-		return "redirect:/buyer/mypage/cart/cartList";
+		
+		return result;
 	}
+	
 	//장바구니에 담긴 상품 주문화면으로 선택 이동
 	@PostMapping("/cartMove")
 	public String moveCartGoods() {

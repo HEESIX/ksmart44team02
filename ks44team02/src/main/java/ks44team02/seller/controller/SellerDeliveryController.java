@@ -60,6 +60,23 @@ public class SellerDeliveryController {
 		return "seller/order/sellerOrderDeliveryAllList";
 	}
 	
+	//주문서 상세정보
+	@GetMapping("/sellerOrderDetail")
+	public String getSellerOrderDetail(Model model
+									 ,@RequestParam(value = "orderDetailCode") String orderDetailCode) {
+		Map<String, Object> getSellerOrderDetail = deliveryservice.getSellerOrderDetail(orderDetailCode);
+		
+		model.addAttribute("title", "상세주문정보");
+		model.addAttribute("getSellerOrderDetail", getSellerOrderDetail);
+		return "seller/order/sellerOrderDetail";
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	//주문서 상태별 조회 처리

@@ -24,7 +24,6 @@
 			,present_mileage
 			,mileage_distinct
 			,added_used_mileage
-			,mileage_subtotal
 			,mileage_update_datetime
 		FROM
 			tb_member_mileage_acc
@@ -39,14 +38,14 @@
 			,present_mileage
 			,mileage_distinct
 			,added_used_mileage
-			,mileage_subtotal
 			,mileage_update_datetime
 		FROM
-			tb_member_mileage_acc
-			
-			
-		WHERE
-			member_id = #{memberId};
+			tb_member_mileage_acc			
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="membeId != null and memberId != ''">
+				member_id = #{memberId};
+			</if>
+		</trim>
 				
 	</select>
 	

@@ -8,6 +8,22 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 css -->
+<th:block layout:fragment="customCss">
+<style>
+
+a:link {
+  color : black;
+}
+a:visited {
+  color : black;
+}
+a:hover {
+  color : #7fad39;
+}
+
+</style>
+</th:block>
 
 
 
@@ -50,7 +66,7 @@
 				<table class="table table-hover" style="margin-top: 10px;">
 					<thead>
 						<tr>
-							<th>주문번호</th>
+							<th></th>
 							<th>ITEM</th>
 							<th>총 배송비</th>
 							<th>총 할인금액</th>
@@ -60,14 +76,17 @@
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
-							th:each="orl, status : ${getOrderList}" style="line-height: 50px;">
-							<td th:text="${status.count}"></td>
+							th:each="orl : ${getOrderList}" style="line-height: 50px;">
+							<td style="width: 200px;"><a href="#"><img
+								th:src="@{'/' + ${orl.get('mainImagePath')}}"
+								th:alt="${orl.get('mainImageOriName')}"
+								style="width: 100px; border-radius: 10px;" /></a></td>
 							<td><a
 								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('goodsName')}">
 							</a></td>
-							<td th:if="${orl.get('deliTotal')} !=0" th:text="'₩' + ${orl.get('deliTotal')}"></td>
-							<td th:if="${orl.get('discountAdd')} !=0" th:text="'₩' + ${orl.get('discountAdd')}"></td>
-							<td th:if="${orl.get('finalPrice')} !=0" th:text="'₩' + ${orl.get('finalPrice')}"></td>
+							<td th:text="'₩' + ${orl.get('deliTotal')}"></td>
+							<td th:text="'₩' + ${orl.get('discountAdd')}"></td>
+							<td th:text="'₩' + ${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
 							
 						</tr>
