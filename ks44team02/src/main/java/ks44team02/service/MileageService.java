@@ -54,7 +54,7 @@ public class MileageService {
 	}
 
 	// buyer 적립금 조회
-	public String getBuyerMileageList() {
+	public List<MemberMileageAcc> getBuyerMileageList() {
 		return null;
 	}
 

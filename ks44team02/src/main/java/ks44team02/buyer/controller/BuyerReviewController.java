@@ -39,7 +39,7 @@ public class BuyerReviewController {
 	public void adminMileageControllerInit() {
 		log.info("adminMileageControllerInit bean 생성");
 	}
-	
+	/*
 	//구매자 리뷰 등록 폼
 	@GetMapping("/regReview/{reviewContents}")
 	public String regBuyerReviewForm(@PathVariable(value = "reviewTitle") String reviewTitle,
@@ -121,4 +121,5 @@ public class BuyerReviewController {
 			}
 			return "redirect:/buyer/review/deleteReview";
 		}
+		*/
 }

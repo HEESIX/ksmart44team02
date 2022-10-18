@@ -36,7 +36,7 @@ public class BuyerMileageController {
 	public String getBuyerMileageList(Model model) {
 		log.info("/Mileage/mileageList getBuyerMileageList BuyerMileageController");
 		System.out.println("/Mileage/mileageList getBuyerMileageList BuyerMileageController");
-		List<MemberMileageAcc> mileageList = mileageService.getMileageList();
+		List<MemberMileageAcc> mileageList = mileageService.getBuyerMileageList();
 		System.out.println(mileageList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
