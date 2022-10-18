@@ -767,6 +767,7 @@
 			,g.g_stock
 			,g.g_delivery_charge
 			,g.g_activation
+			,e.enter_code as enter_code
 			,e.enter_name AS e_enter_name
 			,gc.cate_name AS gc_cate_name
 			,gc.g_cate_code AS gc_g_cate_code

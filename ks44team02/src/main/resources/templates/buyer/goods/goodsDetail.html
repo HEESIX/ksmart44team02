@@ -217,10 +217,10 @@ table td, th {
 				$('.cartInfo').css('top', startY);
 				 
 				var request = $.ajax({
-					  url: "",
+					  url: "/buyer/mypage/cart/addCart",
 					  method: "POST",
 					  data: { 'goodsCode' : goodsCode,
-						  	  'goodsAmount' : goodsAmount},
+						  	  'orderAmount' : goodsAmount},
 					  dataType: "json"
 					});
 					 
