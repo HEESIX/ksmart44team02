@@ -83,7 +83,9 @@
 			,order_amount
 			,price_subtotal
 			,cart_reg_datetime
-			,enter_code
+			<if test="enterCode != null and enterCode != ''">
+				,enter_code
+			</if>
 		)VALUES(
 			#{cartListCode}
 			,#{memberId}
@@ -92,8 +94,10 @@
 			,#{discountPrice}
 			,#{orderAmount}
 			,#{priceSubtotal}
-			,#{orderDatetime}
-			,#{enterCode}
+			,NOW()
+			<if test="enterCode != null and enterCode != ''">
+				,#{enterCode}
+			</if>
 		);
 	</insert>
 </mapper>
