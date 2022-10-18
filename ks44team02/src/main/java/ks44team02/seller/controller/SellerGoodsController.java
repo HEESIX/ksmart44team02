@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
@@ -473,19 +474,59 @@ public class SellerGoodsController {
 		return true;
 	}
 	
-	//상품별 할인혜택 등록
+	//상품별 할인혜택 등록 폼
 	@GetMapping("/discount/regGoodsDiscount")
-	public String addGoodsDiscount(Model model) {
+	public String addGoodsDiscountForm(Model model) {
 		
 		model.addAttribute("title", "상품별 할인혜택 등록");
 		
 		return "seller/goods/discount/regGoodsDiscount";
 	}
 	
+	//상품별 할인혜택 등록 처리
+	@PostMapping("/discount/regGoodsDiscount")
+	public String addGoodsDiscount(HttpSession session
+								  ,@RequestParam(value = "priceOrRate") String priceOrRate
+								  ,GoodsDiscount goodsDiscount
+								  ,@RequestParam(value = "goodsDiscountNumber") int goodsDiscountNumber
+								  ,RedirectAttributes reAttr) {
+		
+		if("discountRate".equals(priceOrRate)) {
+			goodsDiscount.setGoodsDiscountRate(goodsDiscountNumber);
+		}else if("discountPrice".equals(priceOrRate)) {
+			goodsDiscount.setGoodsDiscountPrice(goodsDiscountNumber);
+		}else {
+			reAttr.addAttribute("msg", "등록 실패: 예기치 않은 오류가 발생했습니다.");
+			return "redirect:/seller/goods/discount/goodsDiscountList";
+		}
+		
+		String goodsDiscountCode = commonService.getNewCode("tb_goods_discount_management");
+		
+		//String memberId = (String) session.getAttribute("SID");
+		String memberId = "id010";
+		
+		String enterCode = commonService.getEnterCodeOfMebmerId(memberId);
+		
+		goodsDiscount.setGoodsDiscountCode(goodsDiscountCode);
+		goodsDiscount.setGoodsDiscountRegistrant(memberId);
+		goodsDiscount.setEnterCode(enterCode);
+		
+		boolean addGoodsDiscountResult = goodsService.addGoodsDiscount(goodsDiscount);
+		
+		if(!addGoodsDiscountResult) {
+			reAttr.addAttribute("msg", "등록 실패: 등록과정에 오류가 있습니다.");
+		}else {
+			reAttr.addAttribute("msg", "할인혜택 등록이 정상적으로 완료되었습니다.");
+		}
+		
+		return "redirect:/seller/goods/discount/goodsDiscountList";
+	}
+	
 	//상품별 할인헤택 목록(관리자가 등록한 할인혜택 제외, 판매자 본인이 등록한 할인혜택만 조회)
 	@GetMapping("/discount/goodsDiscountList")
 	public String getSellerGoodsDiscount(Model model
-										,HttpSession session) {
+										,HttpSession session
+										,@RequestParam(value = "msg", required = false) String msg) {
 		
 		//String memberId = (String) session.getAttribute("SID");
 		String memberId = "id010";
@@ -494,13 +535,14 @@ public class SellerGoodsController {
 		
 		model.addAttribute("title", "상품별 할인혜택 목록");
 		model.addAttribute("sellerGoodsDiscount", sellerGoodsDiscount);
+		if(msg!=null) model.addAttribute("msg", msg);
 		
 		return "seller/goods/discount/goodsDiscountList";
 	}
 	
 	//상품별 할인혜택 수정 폼
 	@GetMapping("/discount/modifyGoodsDiscount/{goodsDiscountCode}")
-	public String modfiyGoodsDiscount(Model model
+	public String modfiyGoodsDiscountForm(Model model
 									 ,@PathVariable(value = "goodsDiscountCode") String goodsDiscountCode) {
 		
 		GoodsDiscount goodsDiscount = goodsService.getGoodsDiscount(goodsDiscountCode);
@@ -509,5 +551,19 @@ public class SellerGoodsController {
 		model.addAttribute("goodsDiscount", goodsDiscount);
 		
 		return "seller/goods/discount/modifyGoodsDiscount";
+	}
+	
+	//상품별 할인혜택 수정 처리
+	@PostMapping("/discount/modifyGoodsDiscount")
+	public String modifyGoodsDiscount(RedirectAttributes reAttr
+									 ,GoodsDiscount goodsDiscount) {
+		
+		String msg = "수정이 정상적으로 완료되었습니다.";
+		
+		boolean modifyGoodsDiscountResult = goodsService.modifyGoodsDiscount(goodsDiscount);
+		if(!modifyGoodsDiscountResult) msg = "수정 실패: 예기치 않은 오류가 발생하였습니다.";
+		
+		reAttr.addAttribute("msg", msg);
+		return "redirect:/seller/goods/discount/goodsDiscountList";
 	}
 }
