@@ -44,7 +44,8 @@
 	<!-- 장바구니 목록 조회 -->
 	<select id="getCartList" parameterType="String" resultMap="cartResultMap">
 		SELECT
-			i.main_image_path
+			 c.cart_list_code
+			,i.main_image_path
 			,g.g_name
 			,c.discount_price
 			,c.order_amount
@@ -63,11 +64,40 @@
 		WHERE
 			member_id = #{SID};
 	</select>
+	<!-- 장바구니 특정 상품 삭제 -->
 	<delete id="removeCartGoods" parameterType="String">
-	DELETE
-	FROM
-		tb_cart_list
-	WHERE
-		cart_list_code = #{cartListCode};
+		DELETE
+		FROM
+			tb_cart_list
+		WHERE
+			cart_list_code = #{cartListCode};
 	</delete>
+	<!-- 장바구니에 상품 담는 처리 -->
+	<insert id="addCart" parameterType="Cart">
+	INSERT INTO tb_cart_list (
+			cart_list_code
+			,member_id
+			,g_code
+			,regular_price
+			,discount_price
+			,order_amount
+			,price_subtotal
+			,cart_reg_datetime
+			<if test="enterCode != null and enterCode != ''">
+				,enter_code
+			</if>
+		)VALUES(
+			#{cartListCode}
+			,#{memberId}
+			,#{goodsCode}
+			,#{regularPrice}
+			,#{discountPrice}
+			,#{orderAmount}
+			,#{priceSubtotal}
+			,NOW()
+			<if test="enterCode != null and enterCode != ''">
+				,#{enterCode}
+			</if>
+		);
+	</insert>
 </mapper>

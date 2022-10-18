@@ -19,8 +19,11 @@ public interface DeliveryMapper {
 	//판매자 측 신규 주문 및 배송 현황 조회(구매자 전체)
 	public List<OrderDetail> sellerOrderList(Map<String, Object> searchMap) ;
 	
+	//판매자측 주문 상세정보 보기
+	public Map<String, Object> getSellerOrderDetail(String orderDetailCode);
+	
 	//판매자 측 주문서 주문상태 변경(수정)
-	public boolean modifyOrderStatus(OrderDetail sellerOrderList);
+	public boolean modifyOrderStatus(Map<String, Object> map);
 	
 	//판매자 측 특정 주문서 조회
 	public OrderDetail getOrderStatusInfo(String orderDetailCode);
@@ -33,10 +36,6 @@ public interface DeliveryMapper {
 	
 	//판매자측 운송장 번호 등록
 	public boolean addDeliNumber(Delivery delivery);
-	
-	
-	//구매자 배송처리
-	public String OrderDeal();
 			
 	// 주문 목록 조회 list<>
 	public List<Map<String, Object>> getOrderList(String memberId);
@@ -59,6 +58,8 @@ public interface DeliveryMapper {
 	
 	//취소,환불,교환 조회 list<>
 	public String getRefundExchangeList();
-	
+
+	//구매자 배송처리
+	public String OrderDeal();
 
 }

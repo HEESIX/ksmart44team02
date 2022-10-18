@@ -56,7 +56,7 @@
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="heading1">
-		<h4>상세주문서</h4>
+		<h4>주문상세정보</h4>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -77,12 +77,12 @@
 				 </thead>
 					<tbody>
 						<tr th:each="odl : ${getOrderDetailList}"  style="line-height: 70px;">
-							<td><a href="#"><img th:src="@{'/' + ${odl.get('mainImagePath')}}"
+							<td><a th:href="@{|/buyer/goods/goodsDetail/${odl.goodsCode}|}"><img th:src="@{'/' + ${odl.get('mainImagePath')}}"
 											th:alt="${odl.get('mainImageOriName')}" style="width: 100px; border-radius: 10px;"/></a></td>
 							<td th:text="${odl.get('goodsName')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
-							<td th:if="${odl.get('deliCharge')} !=0" th:text="'₩' + ${odl.get('deliCharge')}"></td>
-							<td th:if="${odl.get('regularPriceSubtotal')} !=0" th:text="'₩' + ${odl.get('regularPriceSubtotal')}"></td>
+							<td th:text="'₩' + ${odl.get('deliCharge')}"></td>
+							<td th:text="'₩' + ${odl.get('regularPriceSubtotal')}"></td>
 							<td th:text="${odl.get('entName')}"></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
@@ -94,69 +94,47 @@
 		</div>
 	</div>
 	
-	<div class="heading2">
-		<h4>배송정보</h4>
-	</div>
-	<div class="container-fluid">
+	<div class="card-block">
 		<div class="row">
-			<div class="col-xl-12 col-lg-12">
-			
-			<table class="table" style="float: left;">
-				  <thead>
-				    <tr>
-						<th>TYPE</th>
-						<th>수령인</th>
-						<th>연락처</th>
-						<th>배송지</th>
-						<th>배송메모</th>
-					</tr>
-				 </thead>
-					<tbody>
-						<tr th:if="${not #lists.isEmpty(getDeliveryinfo)}">
-							<td th:text="${getDeliveryinfo.get('deliType')}"></td>							
-							<td th:text="${getDeliveryinfo.get('deliName')}"></td>							
-							<td th:text="${getDeliveryinfo.get('deliPhone')}"></td>							
-							<td th:text="${getDeliveryinfo.get('deliAddress')}"></td>							
-							<td th:text="${getDeliveryinfo.get('deliMemo')}"></td>							
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	
-	<div class="heading3">
-		<h4>결제정보</h4>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xl-12 col-lg-12">
-			
+			<div class="col-lg-6">
+			<h4 style="margin-top: 30px;">배송정보</h4>
 				<table class="table" style="float: left;">
-				  <thead>
+				  <tbody>
 				    <tr>
-						<th>결제정보</th>
-						<th>은행사</th>
-						<th>결제금액</th>
-						<th>결제자명 </th>
-						<th>결제일자</th>
+						<th>수령인</th>
+						<td th:text="${getDeliveryinfo.get('deliName')}"></td>	
+						<th>연락처</th>
+						<td th:text="${getDeliveryinfo.get('deliPhone')}"></td>			
 					</tr>
-				 </thead>
+					<tr>
+						<th>배송지</th>
+						<td th:text="${getDeliveryinfo.get('deliAddress')}"></td>		
+						<th>배송메모</th>
+						<td th:text="${getDeliveryinfo.get('deliMemo')}"></td>	
+					</tr>
+			      </tbody>
+				</table>
+			</div>
+			<div class="col-lg-6">
+				<h4 style="margin-top: 30px;">결제정보</h4>
+				<table class="table table-hover"  style="width: 100%; float: left;">
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(getPaymentList)}">
+					    <tr>
+							<th>결제정보</th>
 							<td th:text="${getPaymentList.get('paymentInputNumber')}"></td>
+							<th>은행사</th>
 							<td th:text="${getPaymentList.get('paymentBank')}"></td>
-							<td th:text="${getPaymentList.get('paymentCash')}"></td>
-							<td th:text="${getPaymentList.get('paymentPayer')}"></td>
-							<td th:text="${getPaymentList.get('paymentDate')}"></td>
 						</tr>
-					</tbody>
+						<tr>
+							<th>결제금액</th>
+							<td th:text="'₩ '+ ${getPaymentList.get('paymentCash')}"></td>
+							<th>결제자명 </th>
+							<td th:text="${getPaymentList.get('paymentPayer')}"></td>
+						</tr>
+					 </tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-	
-
-	
 </th:block>
 </html>

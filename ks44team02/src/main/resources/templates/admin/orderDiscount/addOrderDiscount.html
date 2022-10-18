@@ -62,15 +62,15 @@
 					<div class="card-header" style="text-align: center;">
 						<h3>할인 혜택 등록</h3>
 					</div>
-					<form th:action="@{/admin/orderDiscount/addOrderDiscount}" method="post">
+					<form id="addOrderDiscountForm" th:action="@{/admin/orderDiscount/addOrderDiscount}" method="post">
 						<div class="card-block">
 							<div class="form-group row">
 								<label for="discountName"
 									class="col-xs-2 col-form-label form-control-label">할인 이벤트명</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="discountName"
+									<input class="form-control vailCheck inputObj" type="text" id="discountName"
 										name="discountName" placeholder="할인명을 입력해주세요." th:value="${discountName}">
-									<button type="button" id="nameCheckBtn" data-ischecked="false" class="btn btn-info waves-effect waves-light">중복검사</button>
+										<button type="button" id="nameCheckBtn" data-ischecked="false" class="btn btn-info waves-effect waves-light">중복검사</button>
 									<img id="id_check_sucess" style="display: none;">
 								</div>
 							</div>
@@ -123,7 +123,7 @@
 									</select>
 								</div>
 								<div class="col-sm-7">
-									<input class="form-control" type="number" name="discountNumber" id="discountNumber" placeholder="숫자만 입력해주세요.">
+									<input class="form-control vailCheck inputObj" type="number" name="discountNumber" id="discountNumber" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -131,7 +131,7 @@
 									class="col-xs-2 col-form-label form-control-label">최소주문
 									금액</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="minOrderPrice"
+									<input class="form-control vailCheck inputObj" type="text" id="minOrderPrice"
 										name="minOrderPrice" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
@@ -140,11 +140,11 @@
 									class="col-xs-2 col-form-label form-control-label">최대할인금액
 									</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="maxDiscountPrice"
+									<input class="form-control vailCheck inputObj" type="text" id="maxDiscountPrice"
 										name="maxDiscountPrice" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
-							<button type="submit"
+							<button type="button" id="submitBtn"
 								class="btn btn-info waves-effect waves-light"
 								style="float: right;">등록완료</button>
 						</div>
@@ -199,7 +199,43 @@
 	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$(".js-example-basic-single").select2();
+			//유효성 검사
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == '') {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]').text();
+							alert(alertMsg + '을 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof data == 'undefined' || data == null
+							|| data == '') {
+						isValid = false;
+					}
+				}
+				return isValid;
+			}
+			$(document).on('click', '#submitBtn', function() {
+				var inputObj = $('.vailCheck');
+
+				var isValid = validationCheck(inputObj);
+
+				if(!isValid) return false;
+				
+				$('#addOrderDiscountForm').submit();
+			});
 		});
 	</script>
 	

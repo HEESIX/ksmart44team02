@@ -26,6 +26,35 @@ table td, th {
 .pro-qty .qtybtn {
 	width: 5px;
 }
+
+.cartInfo{
+	z-index: 10;
+	position: absolute;
+	padding: 20px 20px 20px 20px;
+	width: 254px;
+	left: -30px;
+	height: 116px;
+	bottom: 54px;
+	font-size: 12px;
+	text-align: center;
+	background: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: none;
+}
+.cartInfoClose{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+.cartInfo p{
+	font-size: 13px;
+}
+.moveToCart{
+	border: 1px solid #7fad39;
+	padding: 7px 15px 7px 15px;
+	font-weight: bold;
+}
 </style>
 </th:block>
 
@@ -161,6 +190,11 @@ table td, th {
 			</div>
 		</div>
 	</div>
+	<div class="cartInfo">
+		<a href="javascript:void(0)" class="cartInfoClose">X</a>
+		<p>상품이 장바구니에 담겼습니다.</p>
+		<a th:href="@{/buyer/mypage/cart/cartList}" class="moveToCart" style="color: #7fad39;">장바구니로 이동하기 ></a>
+	</div>
 </th:block>
 
 <!-- 사용자 정의 js 하단  -->
@@ -171,26 +205,40 @@ table td, th {
 				var goodsCode = [[${goodsInfo.goodsCode}]];
 				var goodsAmount = $('#goodsAmount').val();
 				
+				var left = $(this).offset().left;
+				var top = $(this).offset().top;
+				var thisHalfWidth = $(this).width() * 2;
+				var thisHalfHeight = $(this).height() / 2;
+				
+				var startX = left + thisHalfWidth;
+				var startY = top - thisHalfHeight;
+				
+				$('.cartInfo').css('left', startX);
+				$('.cartInfo').css('top', startY);
+				 
 				var request = $.ajax({
-					  url: "",
+					  url: "/buyer/mypage/cart/addCart",
 					  method: "POST",
 					  data: { 'goodsCode' : goodsCode,
-						  	  'goodsAmount' : goodsAmount},
+						  	  'orderAmount' : goodsAmount},
 					  dataType: "json"
 					});
 					 
 					request.done(function( data ) {
 						if(data){
-							var confirmMove = confirm('장바구니로 이동하시겠습니까?');
-							if(confirmMove){
-								window.location.href = '';
+							$('.cartInfo').css('display', 'block');
+							
+							setTimeout(function(){
+								$('.cartInfo').css('display', 'none');
+							}, 2000);
 							}
 						}
 					});
 					 
 					request.fail(function( jqXHR, textStatus ) {
 					  alert( "Request failed: " + textStatus );
-					});
+					}); 
+				
 			});
 		});
 	</script>

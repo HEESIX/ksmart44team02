@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Cart;
+import ks44team02.dto.Goods;
 import ks44team02.mapper.CartMapper;
 
 @Service
@@ -15,7 +16,11 @@ public class CartService {
 	public CartService(CartMapper cartmapper) {
 		this.cartMapper = cartmapper;
 	}
-	
+	//장바구니에 상품 담는 처리
+	public boolean addCart(Cart cart) {
+		boolean result = cartMapper.addCart(cart);
+		return result;
+    }
 	//장바구니 목록 조회
 	public List<Cart> getCartList(String sessionId){
 		
@@ -24,8 +29,8 @@ public class CartService {
 		return cartList;
 	}
 	//장바구니 특정 상품 삭제 처리
-	public boolean removeCartGoods(Cart cart) {
-		boolean result = cartMapper.removeCartGoods(cart);
+	public boolean removeCartGoods(String cartListCode) {
+		boolean result = cartMapper.removeCartGoods(cartListCode);
 		return result;
 	}
 

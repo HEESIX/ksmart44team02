@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/sellerDefault}">
+
+<!-- 판매자 정의 상품별 할인혜택 등록 화면  -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+.nice-select {
+	width: 18%;
+	height: 46px;
+	margin-right: 2%;
+}
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>상품별 할인혜택 등록</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<form th:action="@{/seller/goods/discount/regGoodsDiscount}" method="post">
+		<div class="checkout__form">
+			<h4>상품별 할인혜택 등록</h4>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="checkout__input">
+						<p>
+							<label for="goodsDiscountName">상품별 할인혜택명</label><span>*</span>
+						</p>
+						<input class="vailCheck" placeholder="할인혜택명을 입력해주세요." type="text"
+							id="goodsDiscountName" name="goodsDiscountName">
+					</div>
+					<div class="checkout__input">
+						<p>
+							<label for="goodsDiscountNumber">할인율/할인가격</label><span> *</span>
+						</p>
+						<select id="priceOrRate" name="priceOrRate">
+							<option value="discountRate">할인율</option>
+							<option value="discountPrice">할인가격</option>
+						</select> <input class="vailCheck" placeholder="할인율/할인가격을 입력해주세요."
+							style="width: 80%;" type="number" id="goodsDiscountNumber"
+							name="goodsDiscountNumber">
+					</div>
+					<div class="checkout__input">
+						<p>
+							<label for="goodsDiscountExpirationDate">유효기한</label><span>*</span>
+						</p>
+						<input placeholder="유효기한을 입력해주세요." type="date"
+							name="goodsDiscountExpirationDate" id="goodsDiscountExpirationDate"
+							class="vailCheck">
+					</div>
+					<button type="submit" style="float: right;" class="site-btn">등록</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</th:block>
+
+
+
+</html>

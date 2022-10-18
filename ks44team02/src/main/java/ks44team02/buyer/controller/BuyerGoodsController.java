@@ -85,7 +85,44 @@ public class BuyerGoodsController {
 
 	// 판매 식단 목록 조회
 	@GetMapping("/menu/menuList")
-	public String getMenuList(Model model) {
+	public String getMenuList(Model model
+							 ,HttpServletRequest request
+							 ,Criteria cri
+							 ,@RequestParam(value = "goodsCategoryCode", required = false) String goodsCategoryCode
+							 ,@RequestParam(value = "priceRange", required = false) String priceRange
+							 ,@RequestParam(value = "goodsNameValue", required = false) String goodsName) {
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 0;
+		 
+		if ("localhost".equals(serverName)) { 
+			isLocalhost = 1; 
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("isLocalhost", isLocalhost);
+		map.put("skip", cri.getSkip());
+		map.put("amount", cri.getAmount());
+		if(goodsCategoryCode != null) map.put("goodsCategoryCode", goodsCategoryCode);
+		if(priceRange != null) map.put("priceRange", priceRange);
+		if(goodsName != null) map.put("goodsName", goodsName);
+		
+		List<Goods> menuList = goodsService.getMenuList(map);
+		log.info(">>>>>>>>>>>>>>>>>{}", menuList);
+		
+		List<GoodsCategory> menuCategoryList = goodsService.getMenuCategoryList();
+		
+		int total = goodsService.getMenuListCount(map);
+		PageMake pageMake = new PageMake(cri, total);
+		
+		model.addAttribute("title", "식단 목록");
+		model.addAttribute("menuList", menuList);
+		model.addAttribute("menuCategoryList", menuCategoryList);
+		model.addAttribute("pageMake", pageMake);
+		
 		return "buyer/goods/menu/menuList";
 	}
 

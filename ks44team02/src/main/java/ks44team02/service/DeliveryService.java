@@ -49,8 +49,8 @@ public class DeliveryService {
 	}
 	
 	//판매자측 주문상태 업데이트
-	public boolean modifyOrderStatus(OrderDetail sellerOrderList) {
-		boolean result = deliveryMapper.modifyOrderStatus(sellerOrderList);
+	public boolean modifyOrderStatus(Map<String, Object> map) {
+		boolean result = deliveryMapper.modifyOrderStatus(map);
 		return result;
 	}
 	
@@ -60,7 +60,11 @@ public class DeliveryService {
 		return result;
 	}
 	
-	
+	//판매자측 주문 상세정보보기
+	public Map<String, Object> getSellerOrderDetail(String orderDetailCode){
+		Map<String, Object> getSellerOrderDetail = deliveryMapper.getSellerOrderDetail(orderDetailCode);
+		return getSellerOrderDetail;
+	}
 	
 	
 	

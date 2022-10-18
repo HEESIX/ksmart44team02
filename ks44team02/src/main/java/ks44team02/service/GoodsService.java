@@ -115,6 +115,7 @@ public class GoodsService {
 		boolean result = goodsMapper.addGoodsCategory(goodsCategory);
 		return result;
 	}
+	
 
 	// 상품 카테고리 리스트: 사용 중지된 것도 포함
 	public List<GoodsCategory> getGoodsCategoryList() {
@@ -131,7 +132,13 @@ public class GoodsService {
 
 		return goodsCategoryList;
 	}
-
+	
+	//'식단'이 포함된 카테고리 명 목록
+	public List<GoodsCategory> getMenuCategoryList(){
+		List<GoodsCategory> menuCategoryList = goodsMapper.getMenuCategoryList();
+		return menuCategoryList;
+	}
+	
 	// 기존 데이터 조회(상품 카테고리 수정 화면)
 	public GoodsCategory getGoodsCategoryInfo(String goodsCategoryCode) {
 		GoodsCategory goodsCategoryInfo = goodsMapper.getGoodsCategoryInfo(goodsCategoryCode);
@@ -172,6 +179,12 @@ public class GoodsService {
 	public int getGoodsListCount(Map<String, Object> map) {
 		int goodsListCount = goodsMapper.getGoodsListCount(map);
 		return goodsListCount;
+	}
+	
+	//구매자 식단 리스트 페이징
+	public int getMenuListCount(Map<String, Object> map) {
+		int menuListCount = goodsMapper.getMenuListCount(map);
+		return menuListCount;
 	}
 
 	// 상품 삭제
@@ -241,6 +254,12 @@ public class GoodsService {
 
 		return adminMenuList;
 	}
+	
+	//식단 리스트: 구매자
+	public List<Goods> getMenuList(Map<String, Object> map){
+		List<Goods> result = goodsMapper.getMenuList(map);
+		return result;
+	}
 
 	// 식단 정보 수정 처리
 	public boolean modifyMenuInformation(String menuCode, String menuName) {
@@ -307,7 +326,7 @@ public class GoodsService {
 		return goodsDiscountAdmin;
 	}
 
-	// 상품별 할인 혜택 리스트(seller: seller가 접속한 session id와 일치하는 목록 출력)
+	// 상품별 할인 혜택 리스트(seller: 상품 등록 신청에 필요한 판매자가 정의한 상품별 할인혜택과 관리자가 정의한 상품별할인혜택 모두 GET)
 	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session) {
 		// 세션의 아이디 조회
 		// 현재 없으므로 fix된 값 사용
@@ -315,6 +334,12 @@ public class GoodsService {
 		String memberId = "id010";
 		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
 		return goodsDiscountListSeller;
+	}
+	
+	// 상품별 할인 혜택 리스트(seller: 판매자가 등록한 상품별 할인헤택만 GET)
+	public List<GoodsDiscount> getSellerGoodsDiscount(String memberId){
+		List<GoodsDiscount> sellerGoodsDiscount = goodsMapper.getSellerGoodsDiscount(memberId);
+		return sellerGoodsDiscount;
 	}
 	
 	//상품 별 할인 혜택 리스트(모든 리스트)
