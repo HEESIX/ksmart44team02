@@ -488,7 +488,8 @@ public class AdminGoodsController {
 			//INSERT 성공일 경우
 			if(addMenuInformationResult) {
 				// 식단의 상품 등록 구성 INSERT
-				 for(int i=0; i < goodsItemArray.size(); i++) {
+				int arraySize = goodsItemArray.size();
+				 for(int i=0; i < arraySize ; i++) {
 		             MenuOrganize menuOrganize = new MenuOrganize();
 		             
 		             JSONObject goodsItemObject = (JSONObject) goodsItemArray.get(i);
