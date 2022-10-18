@@ -61,9 +61,15 @@ public class CommonInterceptor implements HandlerInterceptor{
 		
 		List<GoodsCategory> goodsCategoryListUser = goodsService.getGoodsCategoryListUser();
 		
-		modelAndView.addObject("goodsCategoryListUser", goodsCategoryListUser);
-		// TODO Auto-generated method stub
+		if(goodsCategoryListUser != null) modelAndView.addObject("goodsCategoryListUser", goodsCategoryListUser);
+		
+		log.info(">>>>>>>>>>>>>>{}", handler);
+		log.info(">>>>>>>>>>>>>>{}", request);
+		log.info(">>>>>>>>>>>>>>{}", response);
+		log.info(">>>>>>>>>>>>>>{}", modelAndView);
+		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
+	
 
 }
