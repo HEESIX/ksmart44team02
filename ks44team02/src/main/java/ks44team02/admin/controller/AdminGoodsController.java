@@ -64,6 +64,7 @@ public class AdminGoodsController {
 	public String getGoodsRegApplyList(Model model) {
 
 		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(null);
+		
 		model.addAttribute("title", "상품 등록 신청 목록");
 		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
 		return "admin/goods/goodsRegApplyList";
@@ -122,6 +123,8 @@ public class AdminGoodsController {
 		
 		List<GoodsApply> goodsRegApplyList = goodsService.getGoodsRegApplyList(map);
 		log.info(">>>>>>>>>>>{}", goodsRegApplyList);
+		
+		model.addAttribute("title", "상품 등록 신청 목록");
 		model.addAttribute("goodsRegApplyList", goodsRegApplyList);
 		
 		return "admin/goods/goodsRegApplyList";
@@ -159,7 +162,9 @@ public class AdminGoodsController {
 	@ResponseBody
 	public boolean refuseGoodsRegApply(@RequestParam(value = "refuseReason") String refuseReason
 									  ,@RequestParam(value = "goodsApplyCode") String goodsApplyCode) {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("refuseReason", refuseReason);
 		map.put("goodsApplyCode", goodsApplyCode);
 		
@@ -204,11 +209,13 @@ public class AdminGoodsController {
 	// 상품 카테고리 리스트
 	@GetMapping("/category/goodsCateList")
 	public String getGoodsCategoryList(Model model, @RequestParam(value = "msg", required = false) String msg) {
+		
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		
 		model.addAttribute("title", "상품 카테고리 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
-		if (msg != null)
-			model.addAttribute("msg", msg);
+		
+		if (msg != null) model.addAttribute("msg", msg);
 
 		return "admin/goods/category/goodsCateList";
 	}
@@ -221,6 +228,7 @@ public class AdminGoodsController {
 
 		model.addAttribute("title", "상품 카테고리 수정");
 		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
+		
 		return "admin/goods/category/updateGoodsCate";
 	}
 
@@ -245,6 +253,7 @@ public class AdminGoodsController {
 			Model model) {
 		GoodsCategory goodsCategoryInfo = goodsService.getGoodsCategoryInfo(goodsCategoryCode);
 		System.out.println(goodsCategoryInfo.toString());
+		
 		model.addAttribute("title", "상품 카테고리 삭제");
 		model.addAttribute("goodsCategoryInfo", goodsCategoryInfo);
 
@@ -289,7 +298,10 @@ public class AdminGoodsController {
 		
 		List<Goods> goodsList = goodsService.getGoodsList(map);
 		System.out.println(goodsList.toString());
+		
+		model.addAttribute("title", "판매 상품 목록");
 		model.addAttribute("goodsList", goodsList);
+		
 		return "admin/goods/goodsList";
 	}
 	
@@ -336,6 +348,7 @@ public class AdminGoodsController {
 		
 		List<Goods> goodsList = goodsService.getGoodsList(map);
 		System.out.println(goodsList.toString());
+		model.addAttribute("title", "판매 상품 목록");
 		model.addAttribute("goodsList", goodsList);
 		return "admin/goods/goodsList";
 	}

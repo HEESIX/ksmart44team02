@@ -223,15 +223,22 @@ a:hover {
 									<a th:href="@{|/buyer/goods/goodsDetail/${gl.goodsCode}|}"
 										th:text="${gl.goodsName}"></a>
 								</h5>
-								<div class="product__item__price"
-									th:if="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
-									<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
-									<span th:text="${gl.goodsPrice}"></span>
-								</div>
-								<div class="product__item__price"
-									th:unless="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
-									<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
-								</div>
+								<th:block th:if="${gl.goodsDiscount} != null">
+									<div class="product__item__price"
+										th:if="${gl.goodsPrice} != ${gl.goodsDiscountedPrice}">
+										<th:block th:text="${gl.goodsDiscountedPrice}"></th:block>
+										<span th:text="${gl.goodsPrice}"></span>
+									</div>
+									<div class="product__item__price"
+										th:if="${gl.goodsPrice} == ${gl.goodsDiscountedPrice}">
+										<th:block th:text="${gl.goodsPrice}"></th:block>
+									</div>
+								</th:block>
+								<th:block th:unless="${gl.goodsDiscount} != null">
+									<div class="product__item__price">
+										<th:block th:text="${gl.goodsPrice}"></th:block>
+									</div>
+								</th:block>
 							</div>
 						</div>
 					</div>
