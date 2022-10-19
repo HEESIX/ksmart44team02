@@ -1,10 +1,225 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	개인 맞춤 식단 리스트
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/buyerDefault}">
+<!-- 구매자 정의 메뉴 리스트 -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+caption {
+	font-weight: bold;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+table th, td {
+	max-width: 200px;
+}
+
+.modifyBtn {
+	font-size: 14px;
+	color: #555;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	background: white;
+	border: 1px solid #555;
+}
+
+.modifyBtn:hover {
+	color: white;
+	background: #ff7b08;
+	border: 1px solid #ff7b08;
+}
+
+.removeBtn {
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	background: #555;
+	border: 1px solid #555;
+}
+
+.removeBtn:hover {
+	color: white;
+	background: #c70d00;
+	border: 1px solid #c70d00;
+}
+
+.cartInfo{
+	z-index: 10;
+	position: absolute;
+	padding: 20px 20px 20px 20px;
+	width: 254px;
+	left: -30px;
+	height: 116px;
+	bottom: 54px;
+	font-size: 12px;
+	text-align: center;
+	background: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: none;
+}
+.cartInfoClose{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+.cartInfo p{
+	font-size: 13px;
+}
+.moveToCart{
+	border: 1px solid #7fad39;
+	padding: 7px 15px 7px 15px;
+	font-weight: bold;
+}
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>내 식단 목록</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/}" style="color: white;">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<table style="width: 100%; text-align: center;">
+		<thead>
+			<tr>
+				<th>식단명</th>
+				<th>가격</th>
+				<th>장바구니에 담기</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(buyerMenuList)}"
+				th:each="bml : ${buyerMenuList}">
+				<td><a th:text="${bml.menuName}"
+					th:href="@{|/buyer/goods/buyerMenu/myMenuDetail/${bml.menuCode}|}"></a></td>
+				<td th:text="${bml.menuPrice}"></td>
+				<td><button type="button" class="site-btn cartBtn"
+						th:data-menuCode="${bml.menuCode}"
+						style="height: 33px; padding: 5px 10px 5px 10px;">담기</button></td>
+				<td><a class="modifyBtn"
+					th:href="@{|/buyer/goods/buyerMenu/updateMyMenu/${bml.menuCode}|}">수정</a></td>
+				<td>
+					<form th:action="@{|/buyer/goods/buyerMenu/removeMyMenu/${bml.menuCode}|}"
+						method="post">
+						<button type="button" class="removeBtn">삭제</button>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5"><a th:href="@{/buyer/goods/buyerMenu/regMenu}" class="site-btn" style="width: 15%;">등록</button></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="cartInfo">
+		<a href="javascript:void(0)" class="cartInfoClose">X</a>
+		<p>상품이 장바구니에 담겼습니다.</p>
+		<a th:href="@{/buyer/mypage/cart/cartList}" class="moveToCart" style="color: #7fad39;">장바구니로 이동하기 ></a>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+			$('.removeBtn').click(function(){
+				var removeConfirm = confirm('정말 삭제하시겠습니까?');
+				
+				if(removeConfirm){
+					$(this).parent().submit();
+				}
+			});
+			
+			$('.cartBtn').click(function(){
+				var menuCode = $(this).attr('data-menuCode');
+				
+				var left = $(this).offset().left;
+				var top = $(this).offset().top;
+				var thisHalfWidth = $(this).width() * 2;
+				var thisHalfHeight = $(this).height() / 2;
+				
+				var startX = left + thisHalfWidth;
+				var startY = top - thisHalfHeight;
+				
+				$('.cartInfo').css('left', startX);
+				$('.cartInfo').css('top', startY);
+				
+				var request = $.ajax({
+					  url: "/buyer/goods/addMyMenuToCart",
+					  method: "POST",
+					  data: { 'menuCode' : menuCode },
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							$('.cartInfo').css('display', 'block');
+							
+							setTimeout(function(){
+								$('.cartInfo').css('display', 'none');
+							}, 2000);
+						}else{
+							alert('실패');
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					}); 
+				
+			});
+		});
+	</script>
+</th:block>
 </html>

@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -411,6 +412,8 @@ public class AdminGoodsController {
 							  ,@RequestParam(value = "goodsMainImage") MultipartFile goodsMainImage
 							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage) throws ParseException {
 		
+		
+		
 		String menuOfGoods = "{ \"goodsItems\" : " + goodsItems + "}";
 		boolean addAdminMenuResult = true;
 		
@@ -521,7 +524,6 @@ public class AdminGoodsController {
 		}else {
 			addAdminMenuResult = false;
 		}
-
 		return addAdminMenuResult;
 	}
 	
