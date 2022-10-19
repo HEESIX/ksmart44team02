@@ -124,6 +124,7 @@
 		UPDATE tb_cart_list
 		SET 
 			order_amount = order_amount + #{orderAmount}
+			,price_subtotal = price_subtotal + #{priceSubtotal}
 		WHERE
 			member_id = #{memberId}
 			and
