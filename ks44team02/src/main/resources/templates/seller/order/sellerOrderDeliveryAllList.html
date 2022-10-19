@@ -10,151 +10,154 @@
 
 <!-- 사용자 정의 css -->
 <th:block layout:fragment="customCss">
-<style>
-	table {
-    text-align: center;
-    border: 1px solid #fff;
-    border-spacing: 1px;
-    font-family: 'Cairo', sans-serif;
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
 }
 
 table td {
-    padding: 10px;
-    background-color: #f8f9fa;
+	padding: 10px;
+	background-color: #f8f9fa;
 }
 
 table th {
-    background-color: #555;
-    color: #fff;
-    padding: 10px;
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
 }
-table td, th{
+
+table td, th {
 	width: 200px;
 }
 
-.orderBtn01,
-.orderBtn02,
-.orderBtn03,
-.orderStatus {
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-     background-color: #808080;
-     
+.orderBtn01, .orderBtn02, .orderBtn03, .orderStatus {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-weight: bold;
+	background-color: #808080;
 }
 
 a:link {
-  color : black;
+	color: black;
 }
+
 a:visited {
-  color : black;
+	color: black;
 }
+
 a:hover {
-  color : #7fad39;
+	color: #7fad39;
 }
 
+.orderBtn04 {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-weight: bold;
+	width: 100%;
+	background-color: #DFE0E0;
+}
 
-.orderBtn04{
+.orderBtn05 {
 	border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-    width: 100%;
-    background-color: #DFE0E0;
+	padding: 5px 10px;
+	color: #fff;
+	font-weight: bold;
+	background-color: #555;
+	float: right;
 }
-.orderBtn05{
-	border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-weight: bold;
-    background-color: #555;
-    float: right;
-}
+
 .orderStatus {
-    background-color: #7fad39;
+	background-color: #7fad39;
 }
-
 
 .modal-dialog.modal-80size {
-  width: 50%;
-  height: 50%;
-  margin: 0;
-  padding: 0;
+	width: 50%;
+	height: 50%;
+	margin: 0;
+	padding: 0;
 }
 
 .modal-content.modal-80size {
- position: relative;
-  height: auto;
-  min-height: 80%;
+	position: relative;
+	height: auto;
+	min-height: 80%;
 }
 
 .modal.modal-center {
-  text-align: center;
+	text-align: center;
 }
 
 @media screen and (min-width: 768px) {
-  .modal.modal-center:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-  }
+	.modal.modal-center:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
 }
 
 .modal-dialog.modal-center {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 
-
 li {
-  list-style: none;
-  cursor: pointer;
+	list-style: none;
+	cursor: pointer;
 }
 
 /* STYLE */
 .main_con_form {
-  text-align: left;
-  padding: 20px;
+	text-align: left;
+	padding: 20px;
 }
 
 .form_inner {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
+
 .main_con_form h1 {
-  font-size: 28px;
+	font-size: 28px;
 }
+
 .form_list_input {
-  height: 100%;
-  margin-top: 20px;
+	height: 100%;
+	margin-top: 20px;
 }
+
 .form_list_input li {
-  height: 54px;
+	height: 54px;
 }
+
 .form_list_input input {
-  padding: 0 1em; 
-  border: solid #555;
-  height: 38px;
-  width: 100%;
-  border-radius: 30px;
+	padding: 0 1em;
+	border: solid #555;
+	height: 38px;
+	width: 100%;
+	border-radius: 30px;
 }
+
 .form_list_input input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px #DFE0E0;
+	outline: none;
+	box-shadow: 0 0 0 3px #DFE0E0;
 }
+
 .form_list_input input::placeholder {
-  font-weight: 300;
-  color: #aaa;
+	font-weight: 300;
+	color: #aaa;
 }
+
 .form_list_input label {
-  float: left;
-  display: none;
+	float: left;
+	display: none;
 }
-
-
 </style>
 </th:block>
 
@@ -170,7 +173,8 @@ li {
 					<div class="breadcrumb__text">
 						<h2>주문관리</h2>
 						<div class="breadcrumb__option">
-							<a th:href="@{/seller}" style="color: #fff;">Home</a><span>Order List</span>
+							<a th:href="@{/seller}" style="color: #fff;">Home</a><span>Order
+								List</span>
 						</div>
 					</div>
 				</div>
@@ -186,284 +190,404 @@ li {
 <th:block layout:fragment="customContents">
 
 
-<div class="row">
+	<div class="row">
 		<div class="product__discount">
-		<div class="section-title product__discount__title">
-		<div>
-		
-				
-		
-		<div class="row">
-			<h2 style="font-size: 30px; margin-left: 50px;">주문배송관리</h2>
-		</div>
-		<div style=" border:1px dashed; padding:10px; margin: 40px 0 0 30px;">
-			1. 주문번호 클릭 - 상세주문서열람가능	/	
-			2. 상품명, 배송상태별 검색 가능.<br>
-			3. 운송장등록버튼 클릭 - 모달창에서 새로운 운송장 등록(수정)가능	/	
-			4. 상태변경 버튼 클릭 - 주문서의 주문상태를 변경가능<br>
-			5. 상품이미지 클릭 - 판매중인 상품정보로 이동
-		</div>
-				
-		<div class="col-lg-12">
-			<div class="product__details__tab" style="padding-top: 30px;">
-		<div th:include="seller/order/searchOrderStatusList :: searchFragment" style="margin-bottom: 10px; padding-left: 15px;"></div>
-				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active"
-						data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">
-							전체</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#tabs-2" role="tab" aria-selected="false">결제완료</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#tabs-3" role="tab" aria-selected="false">배송중 
-					</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="tabs-1" role="tabpanel">
-						<div class="product__details__tab__desc">
-							<table style="margin-top: 15px;">
-								<thead>
-						            <tr>
-										<th>주문번호</th>
-										<th></th>
-										<th>상품명</th>
-										<th>구매수량</th>
-										<th>결제금액</th>
-										<th>주문일</th>
-										<th>주문상태</th>
-										<th>운송장번호</th>
-										<th>주문/배송상태변경</th>
-										<th>운송장등록</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
-						            	th:each="sol : ${sellerOrderList}">
-						                <td><a
-						                	th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"  th:text="${sol.orderDetailCode}"></a></td>
-						                <td><a th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
-														th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px; border-radius: 10px;"/></a></td>
-						                <td th:text="${sol.goods.goodsName}"></td>
-						                <td th:text="${sol.orderAmount}"></td>
-						                <td th:if="${sol.regularPriceSubtotal} !=0" th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
-						                <td th:text="${sol.orderDateTime}"></td>
-						                <td th:if="${sol.orderStatusStandard} != null" th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
-						                <td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
-						              	<td th:text="${sol.delivery.deliveryNum}"></td>
-						              	<td><button class="btn btn-primary" style="background-color: gray; color: #fff; box-shadow: none">
-						              		<a th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}" style="color: #fff;">변경
-						              		</button></a></td>
-						              	<td>
-						              		<button type="button" class="btn btn-primary modalBtn" style="background-color: gray; box-shadow: none">
-												  등록
-											</button>
-											<div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
-											  <div class="modal-dialog modal-80size modal-center" role="document">
-											    <div class="modal-content modal-80size">
-											      <div class="modal-header">
-											        <h4 class="modal-title" id="myModalLabel">운송장 번호 등록</h4>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											      </div>
-											      <div class="modal-body">
-											       <div class="main_con_form">
-													  <div class="form_inner">
-														  <div>
-														    <ul class="form_list_input">											    	
-														      <li>
-														      	<input type="hidden" id="orderDetailCodeModal" >
-														      	<input type="text" id="deliNum_input" name="deliNum_input" placeholder="택배사/ 운송장 번호 입력">
-														      </li>
-														    </ul>
-														  </div>
-													  </div>
-													</div>
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-default addDeliNum" data-dismiss="modal">등록</button>
-											        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-											      </div>
-											    </div>
-											  </div>
+			<div class="section-title product__discount__title">
+				<div>
+
+
+
+					<div class="row">
+						<h2 style="font-size: 30px; margin-left: 50px;">주문배송관리</h2>
+					</div>
+					<div
+						style="border: 1px dashed; padding: 10px; margin: 40px 0 0 30px;">
+						1. 주문번호 클릭 - 상세주문서열람가능 / 2. 상품명, 배송상태별 검색 가능.<br> 3. 운송장등록버튼
+						클릭 - 모달창에서 새로운 운송장 등록(수정)가능 / 4. 상태변경 버튼 클릭 - 주문서의 주문상태를 변경가능<br>
+						5. 상품이미지 클릭 - 판매중인 상품정보로 이동
+					</div>
+
+					<div class="col-lg-12">
+						<div class="order__details__tab" style="padding-top: 30px;">
+							<div
+								th:include="seller/order/searchOrderStatusList :: searchFragment"
+								style="margin-bottom: 10px; padding-left: 15px;"></div>
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item"><a class="nav-link active"
+									data-toggle="tab" href="#tabs-1" role="tab"
+									aria-selected="true"> 전체</a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#tabs-2" role="tab" aria-selected="false">결제완료</a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#tabs-3" role="tab" aria-selected="false">배송중 </a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#tabs-4" role="tab" aria-selected="false">배송완료 </a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#tabs-5" role="tab" aria-selected="false">구매확정 </a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tabs-1" role="tabpanel">
+									<div class="product__details__tab__desc">
+										<table style="margin-top: 15px;">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th></th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>결제금액</th>
+													<th>주문일</th>
+													<th>주문상태</th>
+													<th>운송장번호</th>
+													<th>주문/배송상태변경</th>
+													<th>운송장</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+													th:each="sol : ${sellerOrderList}">
+													<td><a
+														th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"
+														th:text="${sol.orderDetailCode}"></a></td>
+													<td><a
+														th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img
+															th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
+															th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}"
+															style="width: 100px; border-radius: 10px;" /></a></td>
+													<td th:text="${sol.goods.goodsName}"></td>
+													<td th:text="${sol.orderAmount}"></td>
+													<td th:if="${sol.regularPriceSubtotal} !=0"
+														th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+													<td th:text="${sol.orderDateTime}"></td>
+													<td th:if="${sol.orderStatusStandard} != null"
+														th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
+													<td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
+													<td th:text="${sol.delivery.deliveryNum}"></td>
+													<td><a
+														th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}"
+														style="color: #fff;">
+															<button class="btn btn-primary"
+																style="background-color: gray; color: #fff; box-shadow: none">
+																변경</button>
+													</a></td>	
+													<td>
+														<button type="button" class="btn btn-primary modalBtn"
+															style="background-color: gray; box-shadow: none">
+															등록</button>
+
+													</td>
+
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+													<td colspan="5" style="text-align: center;">주문 내역이
+														존재하지않습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane" id="tabs-2" role="tabpanel">
+									<div class="product__details__tab__desc">
+										<table style="margin-top: 15px;">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th></th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>결제금액</th>
+													<th>주문일</th>
+													<th>주문상태</th>
+													<th>운송장번호</th>
+													<th>주문/배송상태변경</th>
+													<th>운송장</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+													th:each="sol : ${sellerOrderList}">
+													<th:block th:if="${sol.orderStatusStandard} != null">
+														<th:block
+															th:if="${sol.orderStatusStandard.orderStatusStandardDetails} == '결제완료'">
+															<td><a
+																th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"
+																th:text="${sol.orderDetailCode}"></a></td>
+															<td><a
+																th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img
+																	th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
+																	th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}"
+																	style="width: 100px; border-radius: 10px;" /></a></td>
+															<td th:text="${sol.goods.goodsName}"></td>
+															<td th:text="${sol.orderAmount}"></td>
+															<td th:if="${sol.regularPriceSubtotal} !=0"
+																th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+															<td th:text="${sol.orderDateTime}"></td>
+															<td th:if="${sol.orderStatusStandard} != null"
+																th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
+															<td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
+															<td th:text="${sol.delivery.deliveryNum}"></td>
+															<td><a
+																th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}"
+																style="color: #fff;">
+																	<button class="btn btn-primary"
+																		style="background-color: gray; color: #fff; box-shadow: none">
+																		변경</button>
+															</a></td>
+															<td>
+																<button type="button" class="btn btn-primary modalBtn"
+																	style="background-color: gray; box-shadow: none">
+																	등록</button>
+															</td>
+														</th:block>
+													</th:block>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+													<td colspan="5" style="text-align: center;">주문 내역이
+														존재하지않습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane" id="tabs-3" role="tabpanel">
+									<div class="product__details__tab__desc">
+										<table style="margin-top: 15px;">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th></th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>결제금액</th>
+													<th>주문일</th>
+													<th>주문상태</th>
+													<th>운송장번호</th>
+													<th>주문/배송상태변경</th>
+													<th>운송장</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+													th:each="sol : ${sellerOrderList}">
+													<th:block th:if="${sol.orderStatusStandard} != null">
+														<th:block
+															th:if="${sol.orderStatusStandard.orderStatusStandardDetails} == '배송중'">
+															<td><a
+																th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"
+																th:text="${sol.orderDetailCode}"></a></td>
+															<td><a
+																th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img
+																	th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
+																	th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}"
+																	style="width: 100px; border-radius: 10px;" /></a></td>
+															<td th:text="${sol.goods.goodsName}"></td>
+															<td th:text="${sol.orderAmount}"></td>
+															<td th:if="${sol.regularPriceSubtotal} !=0"
+																th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+															<td th:text="${sol.orderDateTime}"></td>
+															<td th:if="${sol.orderStatusStandard} != null"
+																th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
+															<td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
+															<td th:text="${sol.delivery.deliveryNum}"></td>
+															<td><a
+																th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}"
+																style="color: #fff;">
+																	<button class="btn btn-primary"
+																		style="background-color: gray; color: #fff; box-shadow: none">
+																		변경</button>
+															</a></td>
+															<td>
+																<button type="button" class="btn btn-primary modalBtn"
+																	style="background-color: gray; box-shadow: none">
+																	등록</button>
+															</td>
+														</th:block>
+													</th:block>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+													<td colspan="5" style="text-align: center;">주문 내역이
+														존재하지않습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane" id="tabs-4" role="tabpanel">
+									<div class="product__details__tab__desc">
+										<table style="margin-top: 15px;">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th></th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>결제금액</th>
+													<th>주문일</th>
+													<th>주문상태</th>
+													<th>운송장번호</th>
+													<th>주문/배송상태변경</th>
+													<th>운송장</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+													th:each="sol : ${sellerOrderList}">
+													<th:block th:if="${sol.orderStatusStandard} != null">
+														<th:block
+															th:if="${sol.orderStatusStandard.orderStatusStandardDetails} == '배송완료'">
+															<td><a
+																th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"
+																th:text="${sol.orderDetailCode}"></a></td>
+															<td><a
+																th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img
+																	th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
+																	th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}"
+																	style="width: 100px; border-radius: 10px;" /></a></td>
+															<td th:text="${sol.goods.goodsName}"></td>
+															<td th:text="${sol.orderAmount}"></td>
+															<td th:if="${sol.regularPriceSubtotal} !=0"
+																th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+															<td th:text="${sol.orderDateTime}"></td>
+															<td th:if="${sol.orderStatusStandard} != null"
+																th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
+															<td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
+															<td th:text="${sol.delivery.deliveryNum}"></td>
+															<td><a
+																th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}"
+																style="color: #fff;">
+																	<button class="btn btn-primary"
+																		style="background-color: gray; color: #fff; box-shadow: none">
+																		변경</button>
+															</a></td>
+															<td>
+																<button type="button" class="btn btn-primary modalBtn"
+																	style="background-color: gray; box-shadow: none">
+																	등록</button>
+															</td>
+														</th:block>
+													</th:block>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+													<td colspan="5" style="text-align: center;">주문 내역이
+														존재하지않습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane" id="tabs-5" role="tabpanel">
+									<div class="product__details__tab__desc">
+										<table style="margin-top: 15px;">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th></th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>결제금액</th>
+													<th>주문일</th>
+													<th>주문상태</th>
+													<th>운송장번호</th>
+													<th>주문/배송상태변경</th>
+													<th>운송장</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${not #lists.isEmpty(sellerOrderList)}"
+													th:each="sol : ${sellerOrderList}">
+													<th:block th:if="${sol.orderStatusStandard} != null">
+														<th:block
+															th:if="${sol.orderStatusStandard.orderStatusStandardDetails} == '구매확정'">
+															<td><a
+																th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"
+																th:text="${sol.orderDetailCode}"></a></td>
+															<td><a
+																th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img
+																	th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
+																	th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}"
+																	style="width: 100px; border-radius: 10px;" /></a></td>
+															<td th:text="${sol.goods.goodsName}"></td>
+															<td th:text="${sol.orderAmount}"></td>
+															<td th:if="${sol.regularPriceSubtotal} !=0"
+																th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+															<td th:text="${sol.orderDateTime}"></td>
+															<td th:if="${sol.orderStatusStandard} != null"
+																th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
+															<td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
+															<td th:text="${sol.delivery.deliveryNum}"></td>
+															<td><a
+																th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}"
+																style="color: #fff;">
+																	<button class="btn btn-primary"
+																		style="background-color: gray; color: #fff; box-shadow: none">
+																		변경</button>
+															</a></td>
+															<td>
+																<button type="button" class="btn btn-primary modalBtn"
+																	style="background-color: gray; box-shadow: none">
+																	등록</button>
+															</td>
+														</th:block>
+													</th:block>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
+													<td colspan="5" style="text-align: center;">주문 내역이
+														존재하지않습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal modal-center fade" id="modal" tabindex="-1"
+									role="dialog" aria-labelledby="my80sizeCenterModalLabel">
+									<div class="modal-dialog modal-80size modal-center"
+										role="document">
+										<div class="modal-content modal-80size">
+											<div class="modal-header">
+												<h4 class="modal-title" id="myModalLabel">운송장 번호 등록</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
 											</div>
-						              	</td>
-				
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
-										<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											<div class="modal-body">
+												<div class="main_con_form">
+													<div class="form_inner">
+														<div>
+															<ul class="form_list_input">
+																<li><input type="hidden" id="orderDetailCodeModal">
+																	<input type="text" id="deliNum_input"
+																	name="deliNum_input" placeholder="택배사/ 운송장 번호 입력">
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default addDeliNum"
+													data-dismiss="modal">등록</button>
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">닫기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="tab-pane" id="tabs-2" role="tabpanel">
-						<div class="product__details__tab__desc">
-							<table style="margin-top: 15px;">
-								<thead>
-						            <tr>
-										<th>주문번호</th>
-										<th></th>
-										<th>상품명</th>
-										<th>구매수량</th>
-										<th>결제금액</th>
-										<th>주문일</th>
-										<th>주문상태</th>
-										<th>운송장번호</th>
-										<th>주문/배송상태변경</th>
-										<th>운송장등록</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
-						            	th:each="sol : ${sellerOrderList}">
-						                <td><a
-						                	th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"  th:text="${sol.orderDetailCode}"></a></td>
-						                <td><a th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
-														th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px; border-radius: 10px;"/></a></td>
-						                <td th:text="${sol.goods.goodsName}"></td>
-						                <td th:text="${sol.orderAmount}"></td>
-						                <td th:if="${sol.regularPriceSubtotal} !=0" th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
-						                <td th:text="${sol.orderDateTime}"></td>
-						                <td th:if="${sol.orderStatusStandard} != null" th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
-						                <td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
-						              	<td th:text="${sol.delivery.deliveryNum}"></td>
-						              	<td><button class="btn btn-primary" style="background-color: gray; color: #fff; box-shadow: none">
-						              		<a th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}" style="color: #fff;">변경
-						              		</button></a></td>
-						              	<td>
-						              		<button type="button" class="btn btn-primary modalBtn" style="background-color: gray; box-shadow: none">
-												  등록
-											</button>
-											<div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
-											  <div class="modal-dialog modal-80size modal-center" role="document">
-											    <div class="modal-content modal-80size">
-											      <div class="modal-header">
-											        <h4 class="modal-title" id="myModalLabel">운송장 번호 등록</h4>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											      </div>
-											      <div class="modal-body">
-											       <div class="main_con_form">
-													  <div class="form_inner">
-														  <div>
-														    <ul class="form_list_input">											    	
-														      <li>
-														      	<input type="hidden" id="orderDetailCodeModal" >
-														      	<input type="text" id="deliNum_input" name="deliNum_input" placeholder="택배사/ 운송장 번호 입력">
-														      </li>
-														    </ul>
-														  </div>
-													  </div>
-													</div>
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-default addDeliNum" data-dismiss="modal">등록</button>
-											        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-						              	</td>
-				
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
-										<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="tab-pane" id="tabs-3" role="tabpanel">
-						<div class="product__details__tab__desc">
-							<table style="margin-top: 15px;">
-								<thead>
-						            <tr>
-										<th>주문번호</th>
-										<th></th>
-										<th>상품명</th>
-										<th>구매수량</th>
-										<th>결제금액</th>
-										<th>주문일</th>
-										<th>주문상태</th>
-										<th>운송장번호</th>
-										<th>주문/배송상태변경</th>
-										<th>운송장등록</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						            <tr th:if="${not #lists.isEmpty(sellerOrderList)}"
-						            	th:each="sol : ${sellerOrderList}">
-						                <td><a
-						                	th:href="@{/seller/order/sellerOrderDetail(orderDetailCode=${sol.orderDetailCode})}"  th:text="${sol.orderDetailCode}"></a></td>
-						                <td><a th:href="@{|/seller/goods/goodsDetail/${sol.goodsCode}|}"><img th:src="@{'/' + ${sol.goodsMainImageInfo.mainImagePath}}"
-														th:alt="${sol.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px; border-radius: 10px;"/></a></td>
-						                <td th:text="${sol.goods.goodsName}"></td>
-						                <td th:text="${sol.orderAmount}"></td>
-						                <td th:if="${sol.regularPriceSubtotal} !=0" th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
-						                <td th:text="${sol.orderDateTime}"></td>
-						                <td th:if="${sol.orderStatusStandard} != null" th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>
-						                <td th:unless="${sol.orderStatusStandard} != null">결제완료</td>
-						              	<td th:text="${sol.delivery.deliveryNum}"></td>
-						              	<td><button class="btn btn-primary" style="background-color: gray; color: #fff; box-shadow: none">
-						              		<a th:href="@{|/seller/order/sellerOrderDeliveryModify/${sol.orderDetailCode}|}" style="color: #fff;">변경
-						              		</button></a></td>
-						              	<td>
-						              		<button type="button" class="btn btn-primary modalBtn" style="background-color: gray; box-shadow: none">
-												  등록
-											</button>
-											<div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
-											  <div class="modal-dialog modal-80size modal-center" role="document">
-											    <div class="modal-content modal-80size">
-											      <div class="modal-header">
-											        <h4 class="modal-title" id="myModalLabel">운송장 번호 등록</h4>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											      </div>
-											      <div class="modal-body">
-											       <div class="main_con_form">
-													  <div class="form_inner">
-														  <div>
-														    <ul class="form_list_input">											    	
-														      <li>
-														      	<input type="hidden" id="orderDetailCodeModal" >
-														      	<input type="text" id="deliNum_input" name="deliNum_input" placeholder="택배사/ 운송장 번호 입력">
-														      </li>
-														    </ul>
-														  </div>
-													  </div>
-													</div>
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-default addDeliNum" data-dismiss="modal">등록</button>
-											        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-						              	</td>
-				
-									</tr>
-									<tr th:unless="${not #lists.isEmpty(sellerOrderList)}">
-										<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+
+
+
 				</div>
 			</div>
 		</div>
-				
-				
-				
-		</div>
-		</div>
-		</div>
-</div>
-	
+	</div>
+
 
 </th:block>
 <th:block layout:fragment="customFootjs">
-<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript" th:inline="javascript">
 	$(function(){
 		var msg = [[${msg}]];
 		
@@ -473,7 +597,7 @@ li {
 			let orderCode = $(this).parents('tr').children('td').eq(0).text();
 			$('#orderDetailCodeModal' ).val(orderCode);
 			$('#modal').modal("show"); //열기
-			//
+			// 
 		});	
 		
 		$(document).on('click', '.addDeliNum', function(){
