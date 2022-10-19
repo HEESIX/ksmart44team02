@@ -115,39 +115,39 @@ li {
                         <table class="cartTable">
                             <thead>
                                 <tr class="head">
-                                    <th>
+                                    <th class="all-select-event">
                                     	<label>
-                                    		<input type="checkbox" checked="checked" class="all-select">
+                                    		<input type="checkbox" checked="checked" id="cbx_chkAll">
                                     		<span>CheckAll</span>
                                     	</label>
                                     </th>
-                                    <th>Products</th>
-                                    <th></th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
+                                    <th id="goodsImege">Products</th>
+                                    <th id="goodsName"></th>
+                                    <th id="goodsPrice">Price</th>
+                                    <th id="goodsQuantity">Quantity</th>
+                                    <th id="subTotal">Total</th>
+                                    <th id="goodsRemove"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="cartTable">
                                 <tr class="cart-deal-item" data-item-status="CHECKED" data-adult="false" th:if="${not #lists.isEmpty(cartList)}" th:each="cl, status : ${cartList}">
-	                                	<td><input type="checkbox" name="goodsCheck" value="goodsCheck" checked></td>
-	                                	<td><a th:href="@{|/buyer/goods/goodsDetail${cl.goods.goodsCode}|}"><img
+	                                	<td><input type="checkbox" name="chk" value="goodsCheck" checked="checked"></td>
+	                                	<td><a th:href="@{|/buyer/goods/goodsDetail/${cl.goods.goodsCode}|}"><img
 											th:src="@{'/' + ${cl.goodsMainImage.mainImagePath}}"
 											th:alt="${cl.goodsMainImage.mainImageOriginalName}"
 											style="width: 100px;" /></a></td>
 	                                	<td th:text="${cl.goods.goodsName}">
-	                                	<td th:text="${cl.discountPrice}"></td>
+	                                	<td class="price" th:text="${cl.discountPrice}"></td>
 	                                	<td class="shoping_cart_quantity">
 	                                		<div class="quantity">
 	                                			<div class="pro-qty">
 		                                			<span class="dec qtybtn" style="width: 5px;"></span>
-		                                			<input th:value="${cl.orderAmount}" style=" width: 40px;">
+		                                			<input id="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
 		                                			<span class="inc qtybtn" style="width: 10px;"></span>
 	                                			</div>
 	                                		</div>
 	                                	</td>
-	                                	<td th:text="${cl.priceSubtotal}"></td>
+	                                	<td class="total" th:text="${cl.priceSubtotal}"></td>
 	                                    <td class="shoping__cart__item__close">
 	                                        <span class="icon_close modalBtn" th:data-cartListCode="${cl.cartListCode}"></span>
 					                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
@@ -211,13 +211,19 @@ li {
 <th:block layout:fragment="customFootjs">
 <script type="text/javascript">
 	$(function(){
+		//모달창 열기
 		$(document).on('click', '.modalBtn', function(){
 			let orderCode = $(this).attr('data-cartListCode');
 			$('.removeGoods').attr('data-cartListCode',orderCode);
 			$('#modal').modal("show"); //열기
-			//
-		});	
+		});
 		
+		//상품 개수에 따른 금액 변경
+		$(docment).on('click', '.dec.qtybtn', function(){
+			$('#amount').val()
+		})
+		
+		//상품 삭제
 		$(document).on('click', '.removeGoods', function(){
 			let cartListCode = $(this).attr('data-cartListCode');
 			//ajax
@@ -229,7 +235,7 @@ li {
 							  	},
 						  dataType: "json"
 						});
-						 
+			
 			request.done(function( data ) {
 				if(data){
 					alert('장바구니에서 상품이 삭제되었습니다.')
@@ -239,15 +245,28 @@ li {
 					alert('삭제 실패.')
 				}
 			});
-			 
+			
 			request.fail(function( jqXHR, textStatus ) {
 			  alert( "Request failed: " + textStatus );
 			});
-			
+		});
+	});
+	//체크박스 전체선택
+	$(document).ready(function() {
+		$("#cbx_chkAll").click(function() {
+			if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
+			else $("input[name=chk]").prop("checked", false);
 		});
 		
+		$("input[name=chk]").click(function() {
+			var total = $("input[name=chk]").length;
+			var checked = $("input[name=chk]:checked").length;
+			
+			if(total != checked) $("#cbx_chkAll").prop("checked", false);
+			else $("#cbx_chkAll").prop("checked", true); 
+		});
 	});
- 
+	
 </script>
 
 </th:block>

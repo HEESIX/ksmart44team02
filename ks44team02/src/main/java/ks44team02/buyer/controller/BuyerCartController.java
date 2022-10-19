@@ -51,7 +51,6 @@ public class BuyerCartController {
 	//장바구니에 상품 담는 처리
 	@PostMapping("/addCart")
 	@ResponseBody
-	@Transactional
 	public boolean addCart(@RequestParam(value = "goodsCode") String goodsCode
 						 ,@RequestParam(value = "orderAmount") int orderAmount
 						 ,HttpSession session) {
