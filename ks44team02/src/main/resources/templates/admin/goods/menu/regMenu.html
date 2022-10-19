@@ -425,6 +425,7 @@
 				} else if (typeof data == 'string') {
 					if (typeof data == 'undefined' || data == null
 							|| data == '') {
+						alert('포함 상품을 선택해주세요.');
 						isValid = false;
 					}
 				}
@@ -436,9 +437,14 @@
 
 				var isValid = validationCheck(inputObj);
 
-				console.log(isValid, '아이디 이외의 값 유효성 검사');
-				
 				if(!isValid) return false;
+				
+				var selectObj = $('.goodsOfMenuCode').val();
+				
+				var selectIsValid = validationCheck(selectObj);
+				
+				if(!selectObj) return false;
+				
 				
 				var goodsItemsObj = $('.goodsItems');
 				var goodsItemsArray = [];
