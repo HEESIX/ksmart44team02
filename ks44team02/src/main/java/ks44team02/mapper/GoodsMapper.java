@@ -181,7 +181,7 @@ public interface GoodsMapper {
 	public int addBuyerMenu();
 	
 	//개인 맞춤 식단 목록 조회
-	public List<MenuInformation> getBuyerMenuList();
+	public List<MenuInformation> getBuyerMenuList(Map<String, Object> map);
 	
 	//개인 맞춤 식단 수정
 	public int modifyBuyerMenu();

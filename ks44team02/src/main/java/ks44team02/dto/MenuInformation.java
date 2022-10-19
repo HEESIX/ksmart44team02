@@ -1,4 +1,7 @@
 package ks44team02.dto;
+
+import java.util.List;
+
 //식단 객체
 public class MenuInformation {
 	
@@ -7,6 +10,30 @@ public class MenuInformation {
 	private String menuName;
 	private String menuRegDatetime;
 	private String menuRegId;
+	private int menuPrice;
+	
+	private List<MenuOrganize> menuOrganizeList;
+	private Ingredient ingredient;
+	
+	public int getMenuPrice() {
+		return menuPrice;
+	}
+	public void setMenuPrice(int menuPrice) {
+		this.menuPrice = menuPrice;
+	}
+	
+	public List<MenuOrganize> getMenuOrganizeList() {
+		return menuOrganizeList;
+	}
+	public void setMenuOrganizeList(List<MenuOrganize> menuOrganizeList) {
+		this.menuOrganizeList = menuOrganizeList;
+	}
+	public Ingredient getIngredient() {
+		return ingredient;
+	}
+	public void setIngredient(Ingredient ingredient) {
+		this.ingredient = ingredient;
+	}
 	public String getMenuCode() {
 		return menuCode;
 	}
@@ -40,7 +67,7 @@ public class MenuInformation {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Menus [menuCode=");
+		builder.append("MenuInformation [menuCode=");
 		builder.append(menuCode);
 		builder.append(", goodsCode=");
 		builder.append(goodsCode);
@@ -50,6 +77,12 @@ public class MenuInformation {
 		builder.append(menuRegDatetime);
 		builder.append(", menuRegId=");
 		builder.append(menuRegId);
+		builder.append(", menuPrice=");
+		builder.append(menuPrice);
+		builder.append(", menuOrganizeList=");
+		builder.append(menuOrganizeList);
+		builder.append(", ingredient=");
+		builder.append(ingredient);
 		builder.append("]");
 		return builder.toString();
 	}

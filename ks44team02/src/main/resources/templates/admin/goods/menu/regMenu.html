@@ -343,7 +343,7 @@
 										<div class="row goodsItems" style="margin-bottom: 10px;">
 											<div class="col-lg-5 goodsOfMenu" style="padding-left: 0;">
 												<select 
-													class="js-example-basic-single2 goodsOfMenuCode"
+													class="js-example-basic-single2 goodsOfMenuCode" id="goodsOfMenuCode"
 													style="width: 100%;">
 													<option value="">선택해주세요.</option>
 													<th:block th:if="${not #lists.isEmpty(goodsList)}"
@@ -355,7 +355,7 @@
 											</div>
 											<div class="col-lg-5 inputBox"
 												style="height: 28px; padding-left: 0;">
-												<input class="form-control vailCheck" type="number"
+												<input class="form-control vailCheck" type="number" id="menuGoodsAmount"
 													value="0"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
@@ -410,11 +410,10 @@
 					$.each(data, function() {
 						var inputValue = $(this).val();
 						if (typeof inputValue == 'undefined'
-								|| inputValue == null || inputValue == '') {
+								|| inputValue == null || inputValue == '' || inputValue <= 0) {
 							isValid = false;
 							var inputId = $(this).attr('id');
-							var alertMsg = $('label[for="' + inputId + '"]')
-									.text();
+							var alertMsg = $('label[for="' + inputId + '"]').text();
 							alert(alertMsg + ' 입력해주세요');
 							$(this).focus();
 							return false;
@@ -423,27 +422,26 @@
 
 					//문자열일 경우
 				} else if (typeof data == 'string') {
-					if (typeof data == 'undefined' || data == null
-							|| data == '') {
-						alert('포함 상품을 선택해주세요.');
+					if (typeof inputValue == 'undefined'
+							|| inputValue == null || inputValue == '') {
 						isValid = false;
+						return false;
 					}
 				}
 				return isValid;
 			}
 
 			$(document).on('click', '#submitBtn', function() {
+				var selectObj = $('.goodsOfMenuCode');
+				var selectIsValid = validationCheck(selectObj);
+				if(!selectIsValid) return false;
+				
 				var inputObj = $('.vailCheck');
-
 				var isValid = validationCheck(inputObj);
-
 				if(!isValid) return false;
 				
-				var selectObj = $('.goodsOfMenuCode').val();
 				
-				var selectIsValid = validationCheck(selectObj);
 				
-				if(!selectObj) return false;
 				
 				
 				var goodsItemsObj = $('.goodsItems');
@@ -469,6 +467,7 @@
 					url : '/admin/goods/menu/regMenu',
 					processData : false,
 					contentType : false,
+					enctype : 'multipart/form-data',
 					data : formData,
 				}).done(function(data) {
 					if(data){

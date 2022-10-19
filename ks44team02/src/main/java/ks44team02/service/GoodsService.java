@@ -35,7 +35,7 @@ public class GoodsService {
 		this.goodsMapper = goodsMapper;
 		this.commonMapper = commonMapper;
 	}
-
+	
 	// 상품 등록 신청 리스트
 	public List<GoodsApply> getGoodsRegApplyList(Map<String, Object> map) {
 		List<GoodsApply> goodsRegApplyList = goodsMapper.getGoodsRegApplyList(map);
@@ -412,10 +412,11 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 목록 조회
-	public List<MenuInformation> getBuyerMenuList() {
-		return null;
+	public List<MenuInformation> getBuyerMenuList(Map<String, Object> map) {
+		List<MenuInformation> buyerMenuList = goodsMapper.getBuyerMenuList(map);
+		return buyerMenuList;
 	}
-
+	
 	// 개인 맞춤 식단 수정
 	public int modifyBuyerMenu() {
 		return 0;

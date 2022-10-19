@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team02.dto.Criteria;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.MenuInformation;
+import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.PageMake;
 import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
@@ -52,8 +56,32 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 목록 조회
 	@GetMapping("/buyerMenu/myMenuList")
-	public String getbuyerMenuList() {
+	public String getbuyerMenuList(Model model
+								  ,HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		map.put("memberId", memberId);
+		
+		List<MenuInformation> buyerMenuList = goodsService.getBuyerMenuList(map);
+		
+		log.info("buyerMenuList :::::: {}", buyerMenuList);
+		
+		model.addAttribute("title", "개인 맞춤 식단 목록");
+		model.addAttribute("buyerMenuList", buyerMenuList);
+		
 		return "buyer/goods/buyerMenu/myMenuList";
+	}
+	
+	//개인 맞춤 식단 장바구니에 담기
+	@PostMapping("/addMyMenuToCart")
+	@ResponseBody
+	public boolean addMyMenuToCart(@RequestParam(value = "menuCode") String menuCode) {
+		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
+		
+		return false;
 	}
 
 	// 개인 맞춤 식단 수정 폼
@@ -72,7 +100,7 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 삭제 처리
 	@PostMapping("/buyerMenu/removeMyMenu/{menu_code}")
-	public String removebuyerMenu(@PathVariable(value = "menu_code") String menu_code) {
+	public String removebuyerMenu(@PathVariable(value = "menu_code") String menuCode) {
 		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 

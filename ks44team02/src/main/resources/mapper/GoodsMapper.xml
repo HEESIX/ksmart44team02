@@ -214,6 +214,51 @@
 		<result column="info_image_size" property="infoImageSize"/>
 		<result column="info_image_islocal" property="infoImageIsLocal"/>
 	</resultMap>
+	<resultMap type="MenuInformation" id="menuInfomationResultMap">
+		<id column="menu_code" property="menuCode"/>
+		<result column="g_code" property="goodsCode"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_reg_datetime" property="menuRegDatetime"/>
+		<result column="menu_reg_id" property="menuRegId"/>
+		<result column="menu_Price" property="menuPrice"/>
+		<collection property="menuOrganizeList" javaType="list" ofType="MenuOrganize" columnPrefix="mo_">
+			<id column="menu_goods_code" property="menuGoodsCode"/>
+			<result column="menu_code" property="menuCode"/>
+			<result column="g_code" property="goodsOfMenuCode"/>
+			<result column="menu_goods_amount" property="menuGoodsAmount"/>
+		</collection>
+	</resultMap>
+	<!-- 개인 식단 조회  -->
+	<select id="getBuyerMenuList" parameterType="Map" resultMap="menuInfomationResultMap" fetchSize="100">
+		SELECT
+			mi.menu_code 
+			,mi.menu_name 
+			,mi.menu_reg_datetime 
+			,sum(if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price, g.g_discount)) OVER () AS menu_Price
+			,mo.menu_goods_code			as mo_menu_goods_code
+			,mo.g_code					as mo_g_code
+			,mo.menu_goods_amount 		as mo_menu_goods_amount
+		FROM 
+			tb_menu_information AS mi 
+			INNER JOIN 
+			tb_menu_organize AS mo 
+			ON 
+			mo.menu_code = mi.menu_code
+			INNER JOIN 
+			tb_ingredient AS i
+			ON 
+			i.g_code = mo.g_code
+			INNER JOIN 
+			tb_goods AS g
+			on
+			g.g_code = mo.g_code
+			INNER JOIN 
+			tb_goods_discount_management AS gdm
+			ON 
+			gdm.goods_discount_code = g.goods_discount_code
+		WHERE 
+			mi.menu_reg_id = #{memberId};
+	</select>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
 		INSERT INTO tb_goods_cate(
