@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.OrderDetail;
+import ks44team02.dto.Goods;
 import ks44team02.dto.MemberMileageAcc;
 import ks44team02.service.CommonService;
 import ks44team02.service.MileageService;
@@ -44,25 +46,28 @@ public class AdminMileageAddExtinctionController {
 	// 적립금 적립 폼
 	/* @GetMapping("/mileage_give/{currentMileage}") */
 	@GetMapping("/mileageGiveExtinct")
-	public String giveMileageForm(Model model, MemberMileageAcc memberMileageAcc) {
+	public String giveMileageForm(Model model, MemberMileageAcc memberMileageAcc, OrderDetail orderDetail) {
 
 		String memberId 	= memberMileageAcc.getMemberId();
 		String mMileageCode = memberMileageAcc.getmMileageCode();
 		int currentMileage 	= memberMileageAcc.getCurrentMileage();
+		String orderDetailCode = memberMileageAcc.getOrderDetailCode();
+		String mileageDistinct = memberMileageAcc.getMileageDistinct();
+		int addedUsedMileage = memberMileageAcc.getAddedUsedMileage();
+		int mileageSubtotal = memberMileageAcc.getMileageSubtotal();
+		String mUpdateDatetime = memberMileageAcc.getmUpdateDatetime();
+		String orderGroupCode = memberMileageAcc.getOrderGroupCode();
 		log.info("get mileageGiveExtinct giveMileageForm AdminMileageAddExtinctionController.java");
+		log.info(memberId + "<- memberId");
 		log.info(mMileageCode + "<- mMileageCode");
 		log.info(currentMileage + "<- currentMileage");
-		log.info(memberId + "<- memberId");
-		List<MemberMileageAcc> mileageList = null;
-		
-			if(memberId == null || memberId.equals("")) {
-				
-				mileageList = mileageService.getMileageList();
-				
-			}else {
-				mileageList = mileageService.giveMileageForm(memberMileageAcc);
-				
-			}
+		log.info(orderDetailCode + "<- orderDetailCode");
+		log.info(mileageDistinct + "<- mileageDistinct");
+		log.info(addedUsedMileage + "<- addedUsedMileage");
+		log.info(mileageSubtotal + "<- mileageSubtotal");
+		log.info(mUpdateDatetime + "<- mUpdateDatetime");
+		log.info(orderGroupCode + "<- orderGroupCode");
+	
 		
 		MemberMileageAcc memberMileageAccInfo = mileageService.getMileageInfo(memberMileageAcc);
 		System.out.println(memberMileageAccInfo.toString());
@@ -70,17 +75,42 @@ public class AdminMileageAddExtinctionController {
 		model.addAttribute("memberMileageAccInfo", memberMileageAccInfo);
 		return "admin/mileageManage/mileageGiveExtinct";
 	}
- /*
-	// 적립금 적립 처리
-	@PostMapping("/mileageGiveExtinct")
-	public String giveMileage(MemberMileageAcc memberMileageAcc, RedirectAttributes reAttr) {
-		log.info("get mileageGiveExtinct giveMileageForm AdminMileageAddExtinctionController.java");
-		 log.info(mMileageCode + "<- mMileageCode");
-		log.info(currentMileage + "<- currentMileage");
-		log.info(memberId + "<- memberId"); 
+
 
 	
-
+ 
+	// 적립금 적립 처리
+	@PostMapping("/mileageGiveExtinct")
+	public String giveMileage(MemberMileageAcc memberMileageAcc,OrderDetail orderDetail, RedirectAttributes reAttr) {
+		log.info("get mileageGiveExtinct giveMileageForm AdminMileageAddExtinctionController.java");
+			
+		String memberId 	= memberMileageAcc.getMemberId();
+		String mMileageCode = memberMileageAcc.getmMileageCode();
+		int currentMileage 	= memberMileageAcc.getCurrentMileage();
+		String orderDetailCode = memberMileageAcc.getOrderDetailCode();
+		String mileageDistinct = memberMileageAcc.getMileageDistinct();
+		int addedUsedMileage = memberMileageAcc.getAddedUsedMileage();
+		int mileageSubtotal = memberMileageAcc.getMileageSubtotal();
+		String mUpdateDatetime = memberMileageAcc.getmUpdateDatetime();
+		String orderGroupCode = memberMileageAcc.getOrderGroupCode();
+		log.info("get mileageGiveExtinct giveMileage AdminMileageAddExtinctionController.java");
+		log.info(memberId + "<- memberId");
+		log.info(mMileageCode + "<- mMileageCode");
+		log.info(currentMileage + "<- currentMileage");
+		log.info(orderDetailCode + "<- orderDetailCode");
+		log.info(mileageDistinct + "<- mileageDistinct");
+		log.info(addedUsedMileage + "<- addedUsedMileage");
+		log.info(mileageSubtotal + "<- mileageSubtotal");
+		log.info(mUpdateDatetime + "<- mUpdateDatetime");
+		log.info(orderGroupCode + "<- orderGroupCode");
+		
+		List<MemberMileageAcc> memberMileageAccInfo = mileageService.giveMileage(memberMileageAcc, orderDetail);
+		
+		return "admin/mileageManage/mileageGiveExtinct";
+		
+	}
+	
+		/*
 	// 적립금 소멸 폼
 	@GetMapping("/mileageGiveExtinct/{currentMileage}")
 	public String MileageExtinctionForm(@PathVariable(value = "currentMileage") String currentMileage,

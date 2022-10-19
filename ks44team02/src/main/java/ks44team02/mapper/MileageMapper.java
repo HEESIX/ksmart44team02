@@ -19,7 +19,7 @@ public interface MileageMapper {
 		
 		
 		//회원 적립금 적립
-		public boolean giveMileage(MemberMileageAcc memberMileageAcc);
+		public MemberMileageAcc giveMileage(MemberMileageAcc memberMileageAcc);
 		
 		public List<MemberMileageAcc> giveMileageForm(MemberMileageAcc memberMileageAcc);
 		
