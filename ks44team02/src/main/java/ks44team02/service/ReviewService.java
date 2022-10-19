@@ -100,22 +100,40 @@ public class ReviewService {
 		}
 
 		public List<Review> getReviewListSearch(String memberId) {
-			List<Review> reviewList = reviewMapper. getReviewListSearch(memberId);
+			List<Review> reviewList = reviewMapper.getReviewListSearch(memberId);
 			return reviewList;
 		}
 
 		public List<Review> getReviewListSearchGcode(String gCode) {
-			List<Review> reviewListByGcode = reviewMapper. getReviewListSearchGcode(gCode);
+			List<Review> reviewListByGcode = reviewMapper.getReviewListSearchGcode(gCode);
 			return reviewListByGcode;
 		}
 
 
+		///회원 아이디,상품별 리뷰조회
 
-
-		public List<Review> getReviewListByid() {
-			List<Review> reviewList = reviewMapper. getReviewList();
+		public List<Review> getReviewListByGcode() {
+			List<Review> reviewListByGcode = reviewMapper.getReviewListByGcode();
+			return reviewListByGcode;
+		}
+		
+		public List<Review> getReviewListByGcode(String gCode) {
+			List<Review> reviewListByGcode = reviewMapper.getReviewListByGcode(gCode);
+			return reviewListByGcode;
+		}
+		
+		public List<Review> getReviewListById() {
+			List<Review> reviewList = reviewMapper.getReviewListById();
 			return reviewList;
 		}
+		
+		public List<Review> getReviewListById(String memberId) {
+			List<Review> reviewList = reviewMapper.getReviewListById(memberId);
+			return reviewList;
+		}
+
+
+
 
 	
 		

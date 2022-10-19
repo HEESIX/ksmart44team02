@@ -19,7 +19,25 @@
 	
 	
 	<!-- 회원 마일리지 조회 -->
-	<select id="getReviewList" parameterType="String" resultMap="reviewResultMap">
+	<select id="getReviewListById" parameterType="String" resultMap="reviewResultMap">
+	SELECT 
+		rev_code
+		,delivery_code 
+		,order_detail_code
+		,g_code
+		,member_id
+		,rev_image
+		,rev_title 
+		,rev_content 
+		,rev_reg_datetime
+		,rev_score
+		,enter_code
+	FROM 
+		tb_review
+				
+	</select>
+	
+		<select id="getReviewListByGcode" parameterType="String" resultMap="reviewResultMap">
 	SELECT 
 		rev_code
 		,delivery_code 

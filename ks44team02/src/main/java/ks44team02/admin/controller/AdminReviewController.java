@@ -48,13 +48,13 @@ public class AdminReviewController {
 	//회원 아이디로 리뷰검색
 	@GetMapping("/reviewManage/reviewList")
 	@ResponseBody
-	public List<Review> getReviewList(@RequestParam(name="memberId") String memberId){
+	public List<Review> getReviewListById(@RequestParam(name="memberId") String memberId){
 		List<Review> reviewList = reviewService.getReviewListSearch(memberId);
 		return reviewList;
 	}
 	
 	//상품 코드로 리뷰검색
-	@GetMapping("/reviewManage/reviewListByGcode")
+	@PostMapping("/reviewManage/reviewListByGcode")
 	@ResponseBody
 	public List<Review> getReviewListByGcode(@RequestParam(name="gCode") String gCode){
 		List<Review> reviewListByGcode = reviewService.getReviewListSearchGcode(gCode);
@@ -64,8 +64,8 @@ public class AdminReviewController {
 	
 	//회원 리뷰 목록 조회(아이디)
 	@GetMapping("/reviewManage/watchReviewById")
-	public String getReviewListByid(Model model) {
-		List<Review> reviewList = reviewService.getReviewListByid();
+	public String getReviewListById(Model model) {
+		List<Review> reviewList = reviewService.getReviewListById();
 		model.addAttribute("title", "회원 리뷰 목록");
 		model.addAttribute("reviewList", reviewList);
 		return "/admin/reviewManage/watchReviewById";
@@ -73,36 +73,12 @@ public class AdminReviewController {
 	
 	//회원 리뷰 목록 조회(상품)
 	@GetMapping("/reviewManage/watchReviewByGcode")
-	public String getReviewList(Model model) {
-		List<Review> reviewList = reviewService.getReviewList();
+	public String getReviewListByGcode(Model model) {
+		List<Review> reviewListByGcode = reviewService.getReviewListByGcode();
 		model.addAttribute("title", "회원 리뷰 목록");
-		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewList", reviewListByGcode);
 		return "/admin/reviewManage/watchReviewByGcode";
 	}
-	
-	//상품 코드로 리뷰 검색
-	@PostMapping("/reviewManage/watchReviewByGcode")
-	public String getReviewListSearchGcode(Model model
-									  ,@RequestParam(value = "gCode") String gCode) throws ParseException {
-		log.info("PostMapping /watchReview getReviewListSearchGcode AdminReviewController");
-		List<Review> reviewListByGcode = null;
-		
-		if(gCode == null || gCode.equals("")){
-			reviewListByGcode = reviewService.getReviewList();
-
-		}else {
-			reviewListByGcode = reviewService.getReviewListSearchGcode(gCode);
-		}
-			
-
-		model.addAttribute("title","리뷰 조회");
-		model.addAttribute("reviewList", reviewListByGcode);
-		
-		return "admin/reviewManage/watchReviewByGcode";
-	}
-	
-	
-	
 	
 	
 	
@@ -114,7 +90,7 @@ public class AdminReviewController {
 		List<Review> reviewList = null;
 		
 		if(memberId == null || memberId.equals("")){
-			reviewList = reviewService.getReviewList();
+			reviewList = reviewService.getReviewListById();
 
 		}else {
 			reviewList = reviewService.getReviewListSearch(memberId);
@@ -126,6 +102,30 @@ public class AdminReviewController {
 		
 		return "admin/reviewManage/watchReviewById";
 	}
+	
+	
+	//상품 코드로 리뷰 검색
+	/*
+		@PostMapping("/reviewManage/watchReviewByGcode")
+		public String getReviewListSearchGcode(Model model
+										  ,@RequestParam(value = "gCode") String gCode) throws ParseException {
+			log.info("PostMapping /watchReview getReviewListSearchGcode AdminReviewController");
+			List<Review> reviewListByGcode = null;
+			
+			if(gCode == null || gCode.equals("")){
+				reviewListByGcode = reviewService.getReviewListByGcode();
+
+			}else {
+				reviewListByGcode = reviewService.getReviewListSearchGcode(gCode);
+			}
+				
+
+			model.addAttribute("title","리뷰 조회");
+			model.addAttribute("reviewList", reviewListByGcode);
+			
+			return "admin/reviewManage/watchReviewByGcode";
+		}
+		*/
 
 
 
