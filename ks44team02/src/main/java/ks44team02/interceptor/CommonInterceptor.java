@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,16 +55,22 @@ public class CommonInterceptor implements HandlerInterceptor{
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
-	
+	/*
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		List<GoodsCategory> goodsCategoryListUser = goodsService.getGoodsCategoryListUser();
+		//List<GoodsCategory> goodsCategoryListUser = goodsService.getGoodsCategoryListUser();
 		
-		modelAndView.addObject("goodsCategoryListUser", goodsCategoryListUser);
-		// TODO Auto-generated method stub
+		//if(goodsCategoryListUser != null) modelAndView.addObject("goodsCategoryListUser", goodsCategoryListUser);
+		
+		log.info(">>>>>>>>>>>>>>{}", handler);
+		log.info(">>>>>>>>>>>>>>{}", request);
+		log.info(">>>>>>>>>>>>>>{}", response);
+		log.info(">>>>>>>>>>>>>>{}", modelAndView);
+		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
+	*/
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,7 @@ public class BuyerCartController {
 	//장바구니에 상품 담는 처리
 	@PostMapping("/addCart")
 	@ResponseBody
+	@Transactional
 	public boolean addCart(@RequestParam(value = "goodsCode") String goodsCode
 						 ,@RequestParam(value = "orderAmount") int orderAmount
 						 ,HttpSession session) {
@@ -75,6 +77,7 @@ public class BuyerCartController {
 		cart.setGoodsCode(goodsCode);
 		cart.setRegularPrice(regularPrice);
 		cart.setDiscountPrice(discountPrice);
+		cart.setOrderAmount(orderAmount);
 		cart.setPriceSubtotal(priceSubtotal);
 		if(enterCode != null) cart.setEnterCode(enterCode);
 		

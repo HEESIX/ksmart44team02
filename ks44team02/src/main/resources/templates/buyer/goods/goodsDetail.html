@@ -201,6 +201,7 @@ table td, th {
 <th:block layout:fragment="customFootjs">
 	<script type="text/javascript" th:inline="javascript">
 		$(function(){
+			
 			$('#addCartBtn').click(function(){
 				var goodsCode = [[${goodsInfo.goodsCode}]];
 				var goodsAmount = $('#goodsAmount').val();
@@ -224,14 +225,15 @@ table td, th {
 					  dataType: "json"
 					});
 					 
-					request.done(function( data ) {
+					request.done(function(data) {
 						if(data){
 							$('.cartInfo').css('display', 'block');
 							
 							setTimeout(function(){
 								$('.cartInfo').css('display', 'none');
 							}, 2000);
-							}
+						}else{
+							alert('실패');
 						}
 					});
 					 
