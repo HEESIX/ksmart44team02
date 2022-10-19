@@ -18,7 +18,17 @@ public class CartService {
 	}
 	//장바구니에 상품 담는 처리
 	public boolean addCart(Cart cart) {
-		boolean result = cartMapper.addCart(cart);
+		//1단계 동일 상품있는지 count
+		int count = cartMapper.cartOverlapCheck(cart);
+		boolean result = false;
+		
+		if(count > 0) {
+			// 동일 상품이 있으면 업데이트
+			result = cartMapper.plusCartOrderAmount(cart);
+		}else {			
+			// 동일 상품이 없으면 인서트
+			result = cartMapper.addCart(cart);
+		}
 		return result;
     }
 	//장바구니 목록 조회
