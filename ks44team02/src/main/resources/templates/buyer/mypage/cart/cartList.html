@@ -249,7 +249,7 @@ li {
 		});
 	});
 	//상품 개수에 따른 금액 변경
-	$(docment).on('click', 'qtybtn', function(){
+	$(docment).on('click', '.qtybtn', function(){
 		var price = $(this).parents(".cart-deal-item").find('.price').val();
 		var amount = $(this).parents(".cart-deal-item").find('.amount').val();
 		var total = price * amount;
