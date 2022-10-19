@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
@@ -24,6 +25,7 @@ import ks44team02.mapper.CommonMapper;
 import ks44team02.mapper.GoodsMapper;
 
 @Service
+@Transactional
 public class GoodsService {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsService.class);
@@ -423,8 +425,14 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 삭제
-	public int removeBuyerMenu() {
-		return 0;
+	public boolean removeBuyerMenu(String menuCode) {
+		boolean removeMenuOrganizeResult = goodsMapper.removeMenuOragnize(menuCode);
+		if(!removeMenuOrganizeResult) return false;
+		
+		boolean removeMenuInformationResult = goodsMapper.removeMenuInformation(menuCode);
+		if(!removeMenuInformationResult) return false;
+		
+		return true;
 	}
 
 	// 개인 맞춤 식단 정보

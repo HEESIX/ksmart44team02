@@ -153,6 +153,9 @@ table th, td {
 					</form>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="5"><a th:href="@{/buyer/goods/buyerMenu/regMenu}" class="site-btn" style="width: 15%;">등록</button></a></td>
+			</tr>
 		</tbody>
 	</table>
 	<div class="cartInfo">
@@ -164,8 +167,12 @@ table th, td {
 
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootjs">
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
 		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
 			$('.removeBtn').click(function(){
 				var removeConfirm = confirm('정말 삭제하시겠습니까?');
 				

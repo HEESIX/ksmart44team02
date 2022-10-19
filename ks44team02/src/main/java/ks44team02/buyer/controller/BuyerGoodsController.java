@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.Cart;
 import ks44team02.dto.Criteria;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
 import ks44team02.dto.MenuInformation;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.PageMake;
+import ks44team02.service.CartService;
 import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
 
@@ -36,15 +39,19 @@ public class BuyerGoodsController {
 
 	private final GoodsService goodsService;
 	private final CommonService commonService;
+	private final CartService cartService;
 	
-	public BuyerGoodsController(GoodsService goodsService, CommonService commonService) {
+	public BuyerGoodsController(GoodsService goodsService, CommonService commonService, CartService cartService) {
 		this.goodsService = goodsService;
 		this.commonService = commonService;
+		this.cartService = cartService;
 	}
 
 	// 개인 맞춤 식단 생성 폼
 	@GetMapping("/buyerMenu/regMenu")
-	public String addbuyerMenuForm() {
+	public String addbuyerMenuForm(Model model) {
+		List<Goods> goodsList = goodsService.getGoodsList(null);
+		model.addAttribute("goodsList", goodsList);
 		return "buyer/goods/buyerMenu/regMenu";
 	}
 
@@ -57,7 +64,8 @@ public class BuyerGoodsController {
 	// 개인 맞춤 식단 목록 조회
 	@GetMapping("/buyerMenu/myMenuList")
 	public String getbuyerMenuList(Model model
-								  ,HttpSession session) {
+								  ,HttpSession session
+								  ,@RequestParam(value = "msg", required = false) String msg) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String memberId = (String) session.getAttribute("SID");
@@ -71,6 +79,7 @@ public class BuyerGoodsController {
 		
 		model.addAttribute("title", "개인 맞춤 식단 목록");
 		model.addAttribute("buyerMenuList", buyerMenuList);
+		model.addAttribute("msg", msg);
 		
 		return "buyer/goods/buyerMenu/myMenuList";
 	}
@@ -78,10 +87,46 @@ public class BuyerGoodsController {
 	//개인 맞춤 식단 장바구니에 담기
 	@PostMapping("/addMyMenuToCart")
 	@ResponseBody
-	public boolean addMyMenuToCart(@RequestParam(value = "menuCode") String menuCode) {
+	public boolean addMyMenuToCart(@RequestParam(value = "menuCode") String menuCode
+								  ,HttpSession session) {
+		boolean result = true;
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
 		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
 		
-		return false;
+		for(MenuOrganize menuOrganize : menuOrganizeList) {
+			Cart cart = new Cart();
+			Goods goods = new Goods();
+			
+			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			goods = goodsService.getGoodsInfo(goodsCode);
+			
+			String cartCode = commonService.getNewCode("tb_cart_list");
+			
+			int discountedPrice = goods.getGoodsDiscountedPrice();
+			int goodsAmount = menuOrganize.getMenuGoodsAmount();
+			int subtotal = discountedPrice * goodsAmount;
+			String enterCode = goods.getEnterCode();
+			
+			cart.setCartListCode(cartCode);
+			cart.setMemberId(memberId);
+			cart.setGoodsCode(goodsCode);
+			cart.setRegularPrice(goods.getGoodsPrice());
+			cart.setDiscountPrice(discountedPrice);
+			cart.setOrderAmount(goodsAmount);
+			cart.setPriceSubtotal(subtotal);
+			if(enterCode != null) cart.setEnterCode(enterCode);
+			
+			boolean addCartResult = cartService.addCart(cart);
+			if(!addCartResult) {
+				result = false;
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 	// 개인 맞춤 식단 수정 폼
@@ -100,7 +145,21 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 삭제 처리
 	@PostMapping("/buyerMenu/removeMyMenu/{menu_code}")
-	public String removebuyerMenu(@PathVariable(value = "menu_code") String menuCode) {
+	public String removebuyerMenu(@PathVariable(value = "menu_code") String menuCode
+								 ,RedirectAttributes reAttr) {
+		
+		boolean result = goodsService.removeBuyerMenu(menuCode);
+		
+		String msg = "";
+		
+		if(result) {
+			msg = "삭제가 정상적으로 완료되었습니다.";
+		}else {
+			msg = "삭제 실패";
+		}
+		
+		reAttr.addAttribute("msg", msg);
+		
 		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 

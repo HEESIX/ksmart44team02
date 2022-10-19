@@ -1455,6 +1455,22 @@
 			,${menuGoodsAmount}
 		);
 	</insert>
+	<!-- 식단 포함 상품 삭제  -->
+	<delete id="removeMenuOragnize" parameterType="String">
+		DELETE 
+		FROM 
+			tb_menu_organize 
+		WHERE 
+			menu_code = #{menuCode} 	
+	</delete>
+	<!-- 식단 정보 삭제  -->
+	<delete id="removeMenuInformation" parameterType="String">
+		DELETE 
+		FROM 
+			tb_menu_information 
+		WHERE 
+			menu_code= #{menuCode}
+	</delete>
 	<!-- 식단 이름 수정  -->
 	<update id="modifyMenuInformation" parameterType="String">
 		UPDATE tb_menu_information
