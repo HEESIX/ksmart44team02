@@ -142,7 +142,7 @@ li {
 	                                		<div class="quantity">
 	                                			<div class="pro-qty">
 		                                			<span class="dec qtybtn" style="width: 5px;"></span>
-		                                			<input id="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
+		                                			<input class="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
 		                                			<span class="inc qtybtn" style="width: 10px;"></span>
 	                                			</div>
 	                                		</div>
@@ -218,10 +218,7 @@ li {
 			$('#modal').modal("show"); //열기
 		});
 		
-		//상품 개수에 따른 금액 변경
-		$(docment).on('click', '.dec.qtybtn', function(){
-			$('#amount').val()
-		})
+		
 		
 		//상품 삭제
 		$(document).on('click', '.removeGoods', function(){
@@ -250,6 +247,13 @@ li {
 			  alert( "Request failed: " + textStatus );
 			});
 		});
+	});
+	//상품 개수에 따른 금액 변경
+	$(docment).on('click', 'qtybtn', function(){
+		var price = $(this).parents(".cart-deal-item").find('.price').val();
+		var amount = $(this).parents(".cart-deal-item").find('.amount').val();
+		var total = price * amount;
+		$('.total').val(total);
 	});
 	//체크박스 전체선택
 	$(document).ready(function() {
