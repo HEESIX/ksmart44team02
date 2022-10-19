@@ -71,23 +71,23 @@
 		 $(function(){
 			 
 			 $(document).on('click', '#searchBtn', function(){
-				 var memberId = $('#memberId').val();
+				 var gCode = $('#gCode').val();
 				 
 				 // ajax 선언      
 				 var request = $.ajax({          
-					 type: "GET",   // 요청 메소드 타입          
-					 url: "/admin/reviewManage/reviewList", // 접속 url
-					 data: {'memberId' : memberId},
+					 type: "POST",   // 요청 메소드 타입          
+					 url: "/admin/reviewManage/reviewListByGcode", // 접속 url
+					 data: {'gCode' : gCode},
 					 dataType: 'json' // 응답 메시지의 타입       
 					 });        
 				 // 결과        
 				 request.done(function(data){         
-					 var reviewList = data;
+					 var reviewListByGcode = data;
 					 var tBody = $('#tBody');					 
 					 var html = '';
 
-					 if(typeof reviewList != 'undefined' && reviewList != null){
-						 for(let userReview of reviewList){
+					 if(typeof reviewListByGcode != 'undefined' && reviewListByGcode != null){
+						 for(let userReview of reviewListByGcode){
 							html += '<tr>';
 							html += '	<td>' + userReview.revCode + '</td>'; 
 							html += '	<td>' + userReview.deliveryCode + '</td>'; 
