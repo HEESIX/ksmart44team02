@@ -51,6 +51,104 @@
 
 
 
+<th:block layout:fragment="customTopJs">
+	  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  	<script>
+ 	  			$(function(){
+	  				function vaildationCheck(data) {
+						var isValid = true;	  					
+	  					//유효성검사
+	  					if(typeof data == 'object'){
+	  						$.each(data, function(){
+	  							var inputValue = $(this).val();
+	  							if(typeof inputValue == 'undefined' || inputValue == null || inputValue == '') {
+	  								isValid = false;
+	  								var inputId = $(this).attr('id');
+	  								var alertMsg = $('label[for="'+ inputId +'"]').text();
+	  								alert(alertMsg + '를 입력해주세요');
+	  								$(this).focus();
+	  								return false; //이벤트를 종료시키기 위함
+	  							}
+	  						});
+	  					}
+	  					
+	  					if(typeof data == 'string'){
+	  						if(typeof data == 'undefined' || data == null || data == '') {
+  								isValid = false;
+  								return false;
+  							}
+	  					}
+	  					return isValid;
+	  				}
+	  				
+	  				$('#sellerBrand').on('keydown change input keyup blur', function(){
+	  					$('#BrandCheckBtn').attr('data-isChecked', false);
+	  				});
+	  						
+	  				$(document).on('click', '#joinBtn', function(){
+	  					
+	  					var isChecked = $('#BrandCheckBtn').attr('data-ischecked');
+	  					 
+	  					isChecked = (isChecked == 'true');
+	  					
+	  					if(!isChecked) {
+	  						alert('브랜드 중복체크 후 입점신청이 가능합니다.');
+	  						return false;
+	  					}
+	  					
+	  					var inputObj = $('#addCompanyForm input');
+
+	  					var isValid = vaildationCheck(inputObj);
+	  					
+	  					if(isValid) $('#addCompanyForm').submit();
+	  				});
+	  				
+	  				$('#BrandCheckBtn').click(function(){
+	  					//var isChecked = $(this).attr('data-isChecked');
+	  					var sellerBrand = $('#sellerBrand').val();
+	  					var result = vaildationCheck(sellerBrand);
+	  					
+	  					if(!result) {
+	  						alert('브랜드명을 입력해주세요');
+	  						return false;
+	  					}
+	  					
+	  					console.log(typeof sellerBrand);
+	  					
+	  					
+	  					var request = $.ajax({
+	  					  url: '/seller/companypage/sellerCompanyBrandcheck', //http://localhost/member/idCheck
+	  					  method: "get",
+	  					  data: { 'sellerBrand' : sellerBrand },
+	  					  dataType: "json"  //String이면 text   //text, json, xml, html
+	  					});
+	  					
+	
+	 
+ 	  					request.done(function( data ) {
+	  						if(data) {
+	  							alert('입점된 브랜드명입니다.');
+	  							$('#sellerBrand').focus();
+	  						}else {
+	  							alert('사용 가능한 브랜드명입니다.');
+	  							$('#BrandCheckBtn').attr('data-isChecked', true);
+	  							$('#addCompanyForm input').prop('disabled', false);
+	  							$('#addCompanyForm select').prop('disabled', false);
+	  							$('#addCompanyForm button').prop('disabled', false);
+
+	  						}	
+	  					});
+	  					
+	  					request.fail(function( jqXHR, textStatus ) {
+	  					  alert( "Request failed: " + textStatus );
+	  					});
+	  				});
+ 	  			});
+	  </script>
+</th:block>
+
+
+
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -79,20 +177,14 @@
 			<div class="checkout__form">
 				<h4>입점 등록 신청</h4>
 				<form action="">
-					<div class="checkout__input">
-						<p>
-							판매자 아이디<span>*</span>
-						</p>
-						<div class="checkout__input d-flex">
-						<input type="text" class="mr-auto" placeholder="가입하신 아이디를 입력해주세요">
-						<button type="submit" class="col-md-2 img-btn">확인</button>
-					</div>
 					</div>
 					<div class="checkout__input">
 						<p>
 							브랜드 등록<span>*</span>
 						</p>
-						<input type="text" placeholder="브랜드 이름을 입력해주세요">
+						<div class="checkout__input d-flex">
+						<input type="text" name="sellerBrand" id="sellerBrand" placeholder="브랜드 이름을 입력해주세요">
+						<button type="button" id="BrandCheckBtn" class="col-md-2 img-btn">확인</button>
 					</div>
 					<div class="checkout__input">
 						<p>
@@ -104,6 +196,7 @@
 						<p>
 							사업자등록번호<span>*</span>
 						</p>
+						<div class="checkout__input">
 						<input type="text" placeholder="예:000-00-00000">
 					</div>
 					<div class="checkout__input">
@@ -182,11 +275,10 @@
 
 
 <!-- 사용자 정의 js 하단  -->
-<th:block layout:fragment="customFootjs}">
+<th:block layout:fragment="customFootjs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			
 			$('.imageUpload').change(function(){
 				var imageName = $(this).val().split('\\');
 				imageName = imageName[imageName.length - 1];

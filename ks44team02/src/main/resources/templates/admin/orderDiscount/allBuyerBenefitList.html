@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+	
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+</th:block>
+
+<!-- 사용자 정의 js file  -->
+<th:block layout:fragment="customTopJs">
+	<script type="text/javascript" th:inline="javascript">
+		var msg = [[${msg}]]
+		
+		if(msg!=null) alert(msg);
+	</script>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<h4>전체 회원의 보유 혜택 목록</h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<div th:include="admin/orderDiscount/searchAllBuyerBenefitList :: searchFragment" style="margin-bottom: 15px;"></div>
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>회원아이디</th>
+										<th>할인명</th>
+										<th>할인율/할인금액</th>
+										<th>등록일자</th>
+										<th>만료일자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:if="${not #lists.isEmpty(allBuyerBenefitList)}" th:each="b : ${allBuyerBenefitList}">
+										<th:block th:if="${not #lists.isEmpty(b.orderDiscountList)}" th:each="o, status : ${b.orderDiscountList}">
+											<tr>
+												<th:block th:if="${status.index == 0}">
+													<td th:rowspan="${status.size}" th:text="${b.memberId}"></td>
+												</th:block>
+												<td th:text="${o.discountName}"></td>
+												<td th:if="${o.discountRate} != 0" th:text="${o.discountRate}+'%'"></td>
+												<td th:if="${o.discountPrice} != 0" th:text="'₩'+${o.discountPrice}"></td>
+												<td th:text="${b.benefitIssueDate}"></td>
+												<td th:text="${b.benefitExpirationDate}"></td>
+											</tr>
+										</th:block>
+									</th:block>
+									<tr th:unless="${not #lists.isEmpty(allBuyerBenefitList)}">
+										<td colspan="5" style="text-align: center;">혜택을 보유한 회원이 없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="customFootJs">
+	<!-- Select 2 js -->
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".js-example-basic-single").select2();
+			$(".js-example-basic-single2").select2();
+		});
+	</script>
+</th:block>
+
+</html>

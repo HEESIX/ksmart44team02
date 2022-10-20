@@ -11,12 +11,11 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a th:href="@{/}"><img src="/user/img/logo.png" alt=""></a>
+			<a th:href="@{/}"><img th:src="@{/user/img/logo.png}" alt=""></a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-				<li><a th:href="@{buyer/mypage/cart/cartList}">!#<i class="fa fa-shopping-bag">지석</i> <span>3</span></a></li>
+				<li><a th:href="@{/buyer/mypage/cart/cartList}">!#<i class="fa fa-shopping-bag">지석</i> <span>3</span></a></li>
 			</ul>
 			<div class="header__cart__price">
 				item: <span>$150.00</span>
@@ -74,13 +73,17 @@
 		<div class="header__top">
 			<div class="container">
 				<div class="row" style="height: 35px;">
-					<div class="col-lg-6">
+					<div class="col-lg-10">
 						<div class="header__top__left" style="padding: 5px 0 0 0;">
 							<ul>
-								<li>알쓸혼밥 : 알아두면 쓸데 있는혼밥 플랫폼</li>
+								<!-- <li>알쓸혼밥 : 알아두면 쓸데 있는혼밥 플랫폼</li> -->
+								<li>배포시각: 2022-10-13 0916</li>
+								<li><a th:href="@{/seller}">MarketPlace : 판매자 페이지</a></li>
+								<li><a th:href="@{/admin}">AdminPlace : 관리자 페이지</a></li>
+							</ul>
 						</div>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-2">
 						<div class="header__top__right" style="padding: 3px 0 0 0;">
 						<!--
 							<div class="header__top__right__social">
@@ -99,7 +102,6 @@
 								</ul>
 							</div>
 							-->	
-
 							<div class="header__top__right__auth">
 							<nav class="header__menu" style="padding: 0 0 0 0;">	
 							<ul>
@@ -107,8 +109,8 @@
 								<i class="fa fa-user"></i> Login</a>
 									<ul class="header__menu__dropdown">
 										<li><a th:href="@{/buyer/login/buyerLoginList}">#회원정보 수정</a></li>
-										<li><a th:href="@{/buyer/goods/myMenuList}">#나만의 식단</a></li>
-										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">#주문 정보</a></li>
+										<li><a th:href="@{/buyer/goods/buyerMenu/myMenuList}">#나만의 식단</a></li>
+										<li><a th:href="@{/buyer/mypage/orderStatus/myOrderStatusList}">!#주문 정보: 장보경</a></li>
 										<li><a href="#">#상품 후기</a></li>
 										<li><a href="#">#상품 문의</a></li>
 										<li><a th:href="@{/buyer/mypage/buyerBenefit/buyerBenefitList}">!#할인 혜택 : 서지석</a></li>
@@ -128,7 +130,7 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="header__logo">
-						<a th:href="@{/}"><img src="/user/img/logo.png" alt=""></a>
+						<a th:href="@{/}"><img th:src="@{/user/img/logo.png}" alt=""></a>
 					</div>
 				</div>
 				<div class="col-lg-7">
@@ -142,14 +144,13 @@
 									<li><a href="#">#문의내역</a></li>
 									<li><a href="#">#신고내역</a></li>
 								</ul></li>
-							<li><a href="./contact.html">#Contact</a></li>
+							<li><a href="#">#Contact</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
 							<li><a th:href="@{/buyer/mypage/cart/cartList}">!#<i class="fa fa-shopping-bag"></i>지석 <span>3</span></a></li>
 						</ul>
 						<div class="header__cart__price">
@@ -174,32 +175,26 @@
 				<div class="col-lg-3">
 					<div class="hero__categories">
 						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>All departments</span>
+							<i class="fa fa-bars"></i> <span style="font-size: 15px;">카테고리</span>
 						</div>
 						<ul>
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
+							<li th:if="${not #lists.isEmpty(goodsCategoryListUser)}" th:each="gclu : ${goodsCategoryListUser}"><a href="#" th:text="${gclu.goodsCategoryName}">Fresh Meat</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-9">
 					<div class="hero__search">
 						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
+							<form th:action="@{/buyer/goods/goodsList}" method="get">
+								<div style="width: 15%;">
+									<select class="select-search" name="goodsCategoryCode">
+										<option th:if="${not #lists.isEmpty(goodsCategoryListUser)}" th:each="gclu : ${goodsCategoryListUser}" th:text="${gclu.goodsCategoryName}" th:value="${gclu.goodsCategoryCode}">1</option>
+									</select>
 								</div>
-								<input type="text" placeholder="What do yo u need?">
-								<button type="submit" class="site-btn">SEARCH</button>
+								<div style="width: 85%;">
+									<input name="goodsNameValue" id="searchValue" style="padding-left: 145px;" type="text" placeholder="무엇이 필요하신가요?">
+									<button type="submit" class="site-btn">SEARCH</button>
+								</div>
 							</form>
 						</div>
 						<div class="hero__search__phone">

@@ -8,31 +8,38 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<!-- 사용자 정의 js file  -->
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
-		$(function(){
-			var msg = [[${msg}]];
-			
-			if(msg!=null) alert(msg);
-			
-		});
-	</script>
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+	<style>
+table th, td {
+	max-width: 200px;
+}
+</style>
 </th:block>
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0"  style="display: flex;">
 				<div class="main-header">
 					<h4>식단 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
 					</ol>
+				</div>
+				<div style="padding-left: 20px;">
+					<span>판매여부에 상관없이 등록되어 있는 식단을 조회한다.</span><br>
+					<span>식단명, 카테고리명, 가격, 할인 적용 후 가격, 재고, 배송비, 등록일자로 검색이 가능하다.</span><br>
+					<span>등록된 식단을 수정하거나 삭제가 가능하고 새로운 식단 또한 등록이 가능하다.</span><br>
+					<span>삭제를 원할 경우 로그인된 계정의 비밀번호를 입력받고 비밀번호가 확인되면 삭제가 진행된다.</span>
 				</div>
 			</div>
 		</div>
@@ -40,19 +47,19 @@
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
+						<div
+							th:include="admin/goods/search/searchMenuList :: searchFragment"
+							style="margin-bottom: 10px;"></div>
 						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
-										<th>번호</th>
+										<th>상품명</th>
 										<th>메인이미지</th>
 										<th>카테고리</th>
-										<th>상품명</th>
 										<th>가격</th>
 										<th>적용 할인 혜택</th>
 										<th>할인 혜택 적용 후 가격</th>
-										<th>원산지</th>
-										<th>제조일/유통기한</th>
 										<th>재고</th>
 										<th>배송비</th>
 										<th>등록일자</th>
@@ -64,32 +71,34 @@
 								<tbody>
 									<tr th:if="${not #lists.isEmpty(adminMenuList)}"
 										th:each="aml, status : ${adminMenuList}">
-										<td th:text="${status.count}"></td>
+										<td th:text="${aml.goodsName}"></td>
 										<td><a
 											th:href="@{|/admin/goods/menu/menuDetail/${aml.menuInformation.menuCode}|}"><img
 												th:src="@{'/' + ${aml.goodsMainImageInfo.mainImagePath}}"
 												th:alt="${aml.goodsMainImageInfo.mainImageOriginalName}"
 												style="width: 100px;" /></a></td>
 										<td th:text="${aml.goodsCategory.goodsCategoryName}"></td>
-										<td th:text="${aml.goodsName}"></td>
 										<td th:text="${aml.goodsPrice}"></td>
 										<td th:text="${aml.goodsDiscount.goodsDiscountName}"></td>
 										<td th:text="${aml.goodsDiscountedPrice}"></td>
-										<td th:text="${aml.goodsProduce}"></td>
-										<td th:text="${aml.goodsProductionExpirationInfo}"></td>
 										<td th:text="${aml.goodsStock}"></td>
 										<td th:text="${aml.goodsDeliveryCharge}"></td>
 										<td th:text="${aml.goodsRegDatetime}"></td>
 										<td th:if="${aml.goodsActivation} == 1">판매중</td>
 										<td th:unless="${aml.goodsActivation} == 1">판매중지</td>
 										<td><a
-											th:href="@{|/admin/goods/menu/updateMenu/${aml.menuInformation.menuCode}|}">수정</a></td>
-										<td><a
-											th:href="@{|/amdin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</a></td>
+											th:href="@{|/admin/goods/menu/updateMenu/${aml.menuInformation.menuCode}|}"><button
+													type="button"
+													class="btn btn-inverse-warning waves-effect waves-light"
+													data-toggle="tooltip" data-placement="top" title="">수정</button></a></td>
+										<td><button type="button"
+												class="btn btn-inverse-danger waves-effect waves-light removeBtn"
+												data-toggle="tooltip" data-placement="top"
+												th:data-location="@{|/admin/goods/menu/removeMenu/${aml.menuInformation.menuCode}|}">삭제</button></td>
 									</tr>
 								</tbody>
 							</table>
-							<a th:href="@{/admin/goods/menu/menu_reg_form}"><button
+							<a th:href="@{/admin/goods/menu/regMenu}"><button
 									class="btn btn-info waves-effect waves-light"
 									style="float: right;" type="button">등록</button></a>
 						</div>
@@ -98,6 +107,65 @@
 			</div>
 		</div>
 	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+						
+			if(msg!=null) alert(msg);
+			
+			$(".js-example-basic-single").select2();
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+			
+			$('.removeBtn').click(function(){
+				var memberPw = prompt('비밀번호를 입력해주세요.', 'pw001');
+				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
+				
+				var removeUrl = $(this).attr('data-location');
+				
+				var toRemove = $(this).parents('tr');
+				
+				var request = $.ajax({
+					  url: removeUrl,
+					  method: "POST",
+					  data: { 'memberPw' : memberPw },
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('식단 삭제가 정상적으로 완료되었습니다.');
+							toRemove.remove();
+						}
+					});
+					 
+					request.fail(function(data) {
+					  	alert('?');
+					});
+			});
+		});
+	</script>
 </th:block>
 
 </html>

@@ -11,6 +11,14 @@
 		<result column="min_order_price" 				property="minOrderPrice"/>
 		<result column="max_discount_price" 			property="maxDiscountPrice"/>
 		<result column="g_production_reg_datetime" 		property="gProductionRegDateTime"/>
+		<collection property="buyerBenefitList"				javaType="List" ofType="BuyerBenefit">
+			<id column="member_benefit_code" 				property="memberBenefitCode"/>
+			<result column="member_id" 						property="memberId"/>
+			<result column="order_discount_code" 			property="orderDiscountCode"/>
+			<result column="benefit_info" 					property="benefitInfo"/>
+			<result column="benefit_issue_date" 			property="benefitIssueDate"/>
+			<result column="benefit_expiration_date" 		property="benefitExpirationDate"/>
+		</collection>
 	</resultMap>
 	<resultMap type="BuyerBenefit" 						id="buyerBenefitResultMap">
 		<id column="member_benefit_code" 				property="memberBenefitCode"/>
@@ -19,7 +27,7 @@
 		<result column="benefit_info" 					property="benefitInfo"/>
 		<result column="benefit_issue_date" 			property="benefitIssueDate"/>
 		<result column="benefit_expiration_date" 		property="benefitExpirationDate"/>
-		<association property="orderDiscount"			javaType="OrderDiscount"			>
+		<collection property="orderDiscountList"		javaType="List" ofType="OrderDiscount">
 			<id column="order_discount_code" 			property="orderDiscountCode"/>
 			<result column="discount_rate" 				property="discountRate"/>
 			<result column="discount_price" 			property="discountPrice"/>
@@ -27,11 +35,11 @@
 			<result column="min_order_price" 			property="minOrderPrice"/>
 			<result column="max_discount_price" 		property="maxDiscountPrice"/>
 			<result column="g_production_reg_datetime" 	property="gProductionRegDateTime"/>
-		</association>	
+		</collection>
 	</resultMap>
 	
 	<!-- 주문서별 할인헤택 목록 조회 -->
-	<select id="getOrderDiscountList" resultMap="listResultMap">
+	<select id="getOrderDiscountList" parameterType="map" resultMap="listResultMap" fetchSize="100">
 		SELECT
 			order_discount_code
 			,discount_rate
@@ -41,7 +49,37 @@
 			,ifnull(max_discount_price,0) as max_discount_price	
 			,g_production_reg_datetime
 		FROM
-			tb_order_discount_management;
+			tb_order_discount_management
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+		</trim>
+		ORDER BY
+			g_production_reg_datetime;
+	</select>
+	<!-- 전체 회원의 할인 혜택 보유 현황 조회 -->
+	<select id="getAllBuyerBenefitList" parameterType="map" resultMap="buyerBenefitResultMap" fetchSize="100">
+		SELECT 
+			b.member_id
+			,m.discount_name
+			,m.discount_price
+			,m.discount_rate
+			,b.benefit_issue_date
+			,b.benefit_expiration_date
+		FROM 
+			tb_buyer_benefit AS b
+			RIGHT JOIN 
+			tb_order_discount_management AS m
+			ON 
+			m.order_discount_code = b.order_discount_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv}, '%')
+			</if>
+		</trim>
+		ORDER BY
+			b.member_id
 	</select>
 	
 	<!-- 특정 주문서별 할인혜택 조회 -->
@@ -104,10 +142,13 @@
 			order_discount_code = #{orderDiscountCode};
 	</delete>
 	
-	<!-- 구매자별 보유 혜택 목록 조회 -->
+	
+	<!-- 회원별 본인의 보유 혜택 목록 조회 -->
 	<select id="getBuyerBenefitList" parameterType="String" resultMap="buyerBenefitResultMap">
-		SELECT 
-			m.discount_name
+		SELECT
+			 b.member_id
+			,b.member_benefit_code
+			,m.discount_name
 			,m.discount_price
 			,m.discount_rate
 			,b.benefit_issue_date
@@ -119,6 +160,8 @@
 			ON 
 			m.order_discount_code = b.order_discount_code
 		WHERE 
-			b.member_id = #{SID};
+			b.member_id = #{SID}
+		ORDER BY
+			b.benefit_expiration_date;
 	</select>
 </mapper>

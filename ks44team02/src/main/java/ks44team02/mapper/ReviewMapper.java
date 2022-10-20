@@ -41,9 +41,7 @@ public interface ReviewMapper {
 		public boolean ReviewDelete(String revCode);
 
 		public boolean ReviewAnswer(Review reviewContents);
-
-		public Review getReviewInfo(String reviewContents, String revCode);
-
+		
 		public boolean regBuyerReviewForm(Review reviewContents);
 
 		public boolean regBuyerReview(Review review);
@@ -51,6 +49,21 @@ public interface ReviewMapper {
 		public boolean buyerReviewDeleteForm(Review reviewContents);
 
 		public boolean buyerReviewDelete(String revCode);
+
+		
+		//회원 아이디별, 상품코드별 리뷰 조회
+		public List<Review> getReviewListSearch(String memberId);
+
+		public List<Review> getReviewListSearchGcode(String gCode);
+
+		public List<Review> getReviewListByGcode();
+
+		public List<Review> getReviewListByGcode(String gCode);
+
+		public List<Review> getReviewListById();
+
+		public List<Review> getReviewListById(String memberId);
+	
 		
 		
 

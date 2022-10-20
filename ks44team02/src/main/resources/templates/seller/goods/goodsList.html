@@ -3,6 +3,62 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/sellerDefault}">
 
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+caption {
+	font-weight: bold;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+.deliNum, .orderStatus {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.deliNum {
+	background-color: #7fad39;
+}
+
+.orderStatus {
+	background-color: #7fad39;
+}
+
+table th, td {
+	max-width: 200px;
+}
+
+.product .container {
+	padding: 0;
+	max-width: 95%;
+}
+</style>
+</th:block>
+
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
 	<section class="breadcrumb-section set-bg"
@@ -25,46 +81,107 @@
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
+	<div th:include="seller/goods/search/searchGoodsList :: searchFragment"
+		style="margin-bottom: 10px; padding-left: 15px;"></div>
 	<table style="width: 100%;">
 		<thead>
 			<tr>
-				<th>썸네일</th>
+				<th>상품명</th>
+				<th>메인이미지</th>
 				<th>카테고리</th>
-				<th>이름</th>
-				<th>원가격</th>
-				<th>할인혜택</th>
-				<th>할인가격</th>
+				<th>가격</th>
+				<th>적용 할인 혜택</th>
+				<th>할인 혜택 적용 후 가격</th>
+				<th>포장 단위 중량</th>
 				<th>원산지</th>
-				<th>제조일자</th>
-				<th>유통기한</th>
-				<th>등록일자</th>
+				<th>제조일/유통기한</th>
 				<th>재고</th>
 				<th>배송비</th>
-				<th>상품상세페이지</th>
+				<th>등록일자</th>
+				<th>판매여부</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img alt="모나리자"></td>
-				<td>카테고리</td>
-				<td>이름</td>
-				<td>원래가격</td>
-				<td>적용할인혜택</td>
-				<td>할인가격</td>
-				<td>원산지</td>
-				<td>제조일자</td>
-				<td>유통기한</td>
-				<td>판매등록일자</td>
-				<td>재고</td>
-				<td>배송비</td>
-				<td><a>방문</a></td>
-				<td><a class="primary-btn" style="width: 70%;">수정</a></td>
-				<td><a><button>삭제</button></a></td>
+			<tr th:if="${not #lists.isEmpty(sellerGoodsList)}"
+				th:each="sgl, status : ${sellerGoodsList}">
+				<td><a
+					th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"
+					th:text="${sgl.goodsName}"></a></td>
+				<td><a
+					th:href="@{|/seller/goods/goodsDetail/${sgl.goodsCode}|}"><img
+						th:src="@{'/' + ${sgl.goodsMainImageInfo.mainImagePath}}"
+						th:alt="${sgl.goodsMainImageInfo.mainImageOriginalName}"
+						style="width: 100px;" /></a></td>
+				<td th:text="${sgl.goodsCategory.goodsCategoryName}"></td>
+				<td th:text="${sgl.goodsPrice}"></td>
+				<td th:text="${sgl.goodsDiscount.goodsDiscountName}"></td>
+				<td th:text="${sgl.goodsDiscountedPrice}"></td>
+				<td th:text="${sgl.goodsNetWeight}+${sgl.goodsNetWeightUnit}"></td>
+				<td th:text="${sgl.goodsProduce}"></td>
+				<td th:text="${sgl.goodsProductionExpirationInfo}"></td>
+				<td th:text="${sgl.goodsStock}"></td>
+				<td th:text="${sgl.goodsDeliveryCharge}"></td>
+				<td th:text="${sgl.goodsRegDatetime}"></td>
+				<td th:if="${sgl.goodsActivation} == 1">판매중</td>
+				<td th:if="${sgl.goodsActivation} == 0">판매중지</td>
+				<td><a
+					th:href="@{|/seller/goods/updateGoods/${sgl.goodsCode}|}">수정</a></td>
+				<td><a href="javascript:void(0)" class="removeBtn"
+					th:data-goodsCode="${sgl.goodsCode}">삭제</a></td>
 			</tr>
 		</tbody>
 	</table>
 </th:block>
 
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script>
+		$(function(){
+			$('.removeBtn').click(function(){
+				var memberPw = prompt('비밀번호를 입력해주세요.', 'pw010');
+				if(memberPw == null || memberPw == '' || memberPw == 'undefined') return false;
+					
+				var removeGoodsCode = $(this).attr('data-goodsCode');
+				
+				var request = $.ajax({
+					  url: '/seller/goods/removeGoods/' + removeGoodsCode,
+					  method: "POST",
+					  data: { 'memberPw' : memberPw },
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('상품 삭제 처리가 정상적으로 완료되었습니다.');
+							location.reload();
+						}
+					});
+					 
+					request.fail(function(data) {
+					  	alert('통신 오류');
+					});
+			});
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
+</th:block>
 </html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<!-- Light Box css -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/light-box/css/ekko-lightbox.css}">
+
+	<!-- Light Box 2 css -->
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/lightbox2/dist/css/lightbox.css}">
+	<style>
+table th {
+	background-color: #d5dade;
+}
+
+table td, th {
+	text-align: center;
+	border: 2px solid #d5dade;
+	width: 150px;
+}
+
+#refuseModal {
+	display: none;
+	width: 40%;
+	padding: 20px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+</style>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents"
+	th:object="${goodsRegApplyInfo}">
+	<div class="container-fluid">
+		<div class="light-box">
+			<div class="row">
+				<div class="col-sm-12 p-0">
+					<div class="main-header">
+						<h4>상품 상세 정보</h4>
+						<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+							<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+									class="icofont icofont-home"></i></a></li>
+							<li class="breadcrumb-item"><a
+								th:href="@{/admin/goods/goodsRegApplyList}">상품 등록 신청 목록</a></li>
+							<li class="breadcrumb-item"><a href="#">상품 상세 정보</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-block col-lg-5"
+							style="padding-top: 0; padding-bottom: 0;">
+							<div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-6 col-xs-12">
+									<a th:href="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
+										data-toggle="lightbox"
+										th:attr="data-title=*{goodsMainImageInfo.mainImageOriginalName}">
+										<img th:src="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
+										class="img-fluid"
+										th:alt="*{goodsMainImageInfo.mainImageOriginalName}"
+										style="width: 100%;">
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-block col-lg-6" style="margin-left: 15px;">
+							<div class="row"
+								style="border-bottom: 1px solid gray; margin-bottom: 15px; padding-bottom: 15px;">
+								<h4 th:text="*{goodsApplyName}" style="color: black;"></h4>
+								<span>'상품 리뷰 정보'</span>
+							</div>
+							<div class="row">
+								<span th:if="*{goodsDiscount.goodsDiscountPrice} != 0"
+									th:text="*{goodsDiscount.goodsDiscountPrice}+'원'"></span> <span
+									th:if="*{goodsDiscount.goodsDiscountRate} != 0"
+									th:text="*{goodsDiscount.goodsDiscountRate}+'%'"></span> <span
+									th:unless="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
+									th:text="*{goodsApplyPrice}+'원'"
+									style="text-decoration: line-through; color: gray;"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 5px;">
+								<h4 th:text="*{goodsApplyDiscount} + '원'" style="color: red;"></h4>
+							</div>
+							<div class="row">
+								<span th:text="'배송비: ' + *{goodsApplyDeliveryCharge} + '원'"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
+								<span
+									th:text="'중량: ' + *{goodsApplyNetWeight} + *{goodsApplyNetWeightUnit}"></span>
+							</div>
+							<div class="row"
+								style="border-bottom: 1px solid #dedede; margin-bottom: 15px; padding-bottom: 15px;">
+								<span>적립금 혜택 | 최대</span> <span
+									th:unless="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
+									th:text="*{goodsApplyDiscount}*0.1  + '원'"></span> <span
+									th:if="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
+									th:text="*{goodsApplyPrice}*0.1 + '원'"></span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="height: 40px;">
+									<th>품목 또는 명칭</th>
+									<td th:text="*{goodsApplyName}"></td>
+									<th>포장단위별 내용물의 용량(중량),수량,크기</th>
+									<td
+										th:text="*{goodsApplyNetWeight} + *{goodsApplyNetWeightUnit}"></td>
+								</tr>
+								<tr style="height: 40px;">
+									<th>생산자</th>
+									<td th:text="*{enterprise.enterName}"></td>
+									<th>원산지</th>
+									<td th:text="*{goodsApplyProduce}"></td>
+								</tr>
+								<tr style="height: 40px;">
+									<th>제조연월일(포장일 또는 생산연도), 유통기한</th>
+									<td th:text="*{goodsApplyProductionExpirationInfo}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-block">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<img th:alt="*{goodsInfoImageInfo.infoImageOriginalName}"
+							th:src="@{'/'+ *{goodsInfoImageInfo.infoImagePath}}"
+							style="width: 100%;">
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+				<div class="col-lg-12">
+					<a href="#" style="float: right;"><button type="button"
+							class="">↑</button></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-block">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<div class="col-lg-6" style="float: right;">
+							<button id="refuseBtn" type="button"
+								th:data-goodsApplyCode="*{goodsApplyCode}"
+								class="btn btn-xlg btn-inverse-danger waves-effect waves-light"
+								style="width: 100%; height: 100%;">거절</button>
+						</div>
+						<div class="col-lg-6" style="float: right;">
+							<button id="approveBtn" type="button"
+								th:data-goodsApplyCode="*{goodsApplyCode}"
+								class="btn btn-xlg btn-inverse-success waves-effect waves-light"
+								style="width: 100%; height: 100%;">승인</button>
+						</div>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+				<div id="refuseModal">
+					<div class="row">
+						<textarea placeholder="거절 이유를 입력해주세요." name="refuseReason"
+							class="form-control" style="width: 100%; height: 300px;"></textarea>
+					</div>
+					<div class="row" style="float: right; margin-top: 10px;">
+						<button class="btn btn-danger waves-effect waves-light realRefuse">거절</button>
+						<button class="btn btn-default waves-effect cancleBtn">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+
+	<!-- light Box js -->
+	<script th:src="@{/admin/assets/plugins/light-box/js/ekko-lightbox.js}"></script>
+
+	<!-- light Box 2 js -->
+	<script th:src="@{/admin/assets/plugins/lightbox2/dist/js/lightbox.js}"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(document).on('click', '[data-toggle="lightbox"]',
+					function(event) {
+						event.preventDefault();
+						$(this).ekkoLightbox();
+					});
+		
+			function modal(id) {
+			    var zIndex = 9999;
+			    var modal = $('#' + id);
+
+			    // 모달 div 뒤에 희끄무레한 레이어
+			    var bg = $('<div>')
+			        .css({
+			            position: 'fixed',
+			            zIndex: zIndex,
+			            left: '0px',
+			            top: '0px',
+			            width: '100%',
+			            height: '100%',
+			            overflow: 'auto',
+			            // 레이어 색갈은 여기서 바꾸면 됨
+			            backgroundColor: 'rgba(0,0,0,0.4)'
+			        })
+			        .appendTo('body');
+
+			    modal
+			        .css({
+			            position: 'fixed',
+			            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+			            // 시꺼먼 레이어 보다 한칸 위에 보이기
+			            zIndex: zIndex + 1,
+
+			            // div center 정렬
+			            top: '50%',
+			            left: '50%',
+			            transform: 'translate(-50%, -50%)',
+			            msTransform: 'translate(-50%, -50%)',
+			            webkitTransform: 'translate(-50%, -50%)'
+			        })
+			        .show()
+			        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+			        .find('.cancleBtn')
+			        .on('click', function() {
+			            bg.remove();
+			            modal.hide();
+			        });
+			    
+			    $('.realRefuse').click(function(){
+			    	var modalTextArea = $('#refuseModal textarea');
+			    	var text = modalTextArea.val();
+			    	var code = $('#refuseBtn').attr('data-goodsApplyCode');
+			    	
+			    	if(text == null || text == '' || text == 'undefined'){
+			    		alert('승인 거절 이유를 입력해주세요.');
+			    		modalTextArea.focus();
+			    		return false;
+			    	}
+			    	
+			    	var confirmRefuse = confirm('상품 등록 신청을 거절하시겠습니까?');
+			    	if(!confirmRefuse) return false;
+			    	
+			    	var request = $.ajax({
+						  url: "/admin/goods/refuseGoodsRegApply",
+						  method: "POST",
+						  data: { 'refuseReason' : text 
+							  	, 'goodsApplyCode' : code },
+						  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							alert('상품 등록 신청이 거절되었습니다.');
+						 	bg.remove();
+				            modal.hide();
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});			    		
+			    	
+			    });
+			}
+
+			$('#refuseBtn').click(function() {
+				var code = $(this).attr('data-goodsApplyCode');
+				modal('refuseModal');
+				});
+
+			$('#approveBtn').click(function() {
+				var confirmResult = confirm('승인하시겠습니까?');
+				if(!confirmResult) return false;
+				var code = $(this).attr('data-goodsApplyCode');
+				
+				var request = $.ajax({
+					  url: "/admin/goods/approveGoodsRegApply",
+					  method: "POST",
+					  data: { 'goodsApplyCode' : code },
+					  dataType: "json"
+				});
+				 
+				request.done(function(data) {
+					if(data){
+						alert('상품 등록 신청이 승인되었습니다.');
+						window.location.href = '/admin/goods/goodsRegApplyList';
+					}
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+			});
+		});
+	</script>
+</th:block>
+</html>

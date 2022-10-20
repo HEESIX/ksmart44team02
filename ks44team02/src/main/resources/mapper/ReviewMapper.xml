@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team02.mapper.ReviewMapper">
+	<resultMap type="Review" id="reviewResultMap">
+		<id column="rev_code" property="revCode"/>
+		<result column="delivery_code" property="deliveryCode"/>
+		<result column="order_detail_code" property="orderDetailCode"/>
+		<result column="g_code" property="gCode"/>
+		<result column="member_id" property="memberId"/>
+		<result column="rev_image" property="revImage"/>
+		<result column="rev_title" property="reviewTitle"/>
+		<result column="rev_content" property="reviewContents"/>
+		<result column="rev_reg_datetime" property="revRegDatetime"/>
+		<result column="rev_score" property="reviewScore"/>
+		<result column="enter_code" property="enterCode"/>
+	</resultMap>
+	
+	
+	<!-- 회원 마일리지 조회 -->
+	<select id="getReviewListById" parameterType="String" resultMap="reviewResultMap">
+	SELECT 
+		rev_code
+		,delivery_code 
+		,order_detail_code
+		,g_code
+		,member_id
+		,rev_image
+		,rev_title 
+		,rev_content 
+		,rev_reg_datetime
+		,rev_score
+		,enter_code
+	FROM 
+		tb_review
+				
+	</select>
+	
+		<select id="getReviewListByGcode" parameterType="String" resultMap="reviewResultMap">
+	SELECT 
+		rev_code
+		,delivery_code 
+		,order_detail_code
+		,g_code
+		,member_id
+		,rev_image
+		,rev_title 
+		,rev_content 
+		,rev_reg_datetime
+		,rev_score
+		,enter_code
+	FROM 
+		tb_review
+				
+	</select>
+	
+	<select id="getReviewListSearch" parameterType="String" resultMap="reviewResultMap">
+		SELECT 
+		rev_code
+		,delivery_code 
+		,order_detail_code
+		,g_code
+		,member_id
+		,rev_image
+		,rev_title 
+		,rev_content 
+		,rev_reg_datetime
+		,rev_score
+		,enter_code
+	FROM 
+		tb_review		
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="membeId != null and memberId != ''">
+				member_id = #{memberId};
+			</if>
+		</trim>
+				
+	</select>
+	
+	<select id="getReviewListSearchGcode" parameterType="String" resultMap="reviewResultMap">
+		SELECT 
+		rev_code
+		,delivery_code 
+		,order_detail_code
+		,g_code
+		,member_id
+		,rev_image
+		,rev_title 
+		,rev_content 
+		,rev_reg_datetime
+		,rev_score
+		,enter_code
+	FROM 
+		tb_review		
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="membeId != null and memberId != ''">
+				g_code = #{gCode};
+			</if>
+		</trim>
+				
+	</select>
+
+</mapper>

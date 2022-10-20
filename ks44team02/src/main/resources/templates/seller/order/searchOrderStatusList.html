@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+	<!-- 검색바 -->
+	<div th:fragment="searchFragment">
+		<form th:action="@{/seller/order/sellerOrderDeliveryAllList}" method="post">
+			<select name="searchKey">
+				<option value="goodsName">상품명</option>
+				<option value="orderStatusStandardDetails">배송상태</option>
+			</select>
+				<input type="text" name="searchValue" style="height: 40px; margin-left: 5px;" placeholder="검색어를 입력해주세요."/>
+			<button type="submit" class="searchBtn" style="height: 40px; border: none; padding: 5px 10px; color: #fff; font-weight: bold; background-color: #7fad39;">
+				검색</button>
+		</form>
+	</div>
+</html>

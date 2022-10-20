@@ -11,6 +11,7 @@ public class Grade {
 	
 	private SellerLevel sellerLevel;
 	
+	
 	public SellerLevel getSellerLevel() {
 		return sellerLevel;
 	}
@@ -20,8 +21,8 @@ public class Grade {
 	public BuyerLevel getBuyerLevel() {
 		return buyerLevel;
 	}
-	public void setBuyerLevel(BuyerLevel buyerLevel) {
-		this.buyerLevel = buyerLevel;
+	public void setBuyerLevel(BuyerLevel buyerGradeCode) {
+		this.buyerLevel = buyerGradeCode;
 	}
 	public String getMemberLevelCode() {
 		return memberLevelCode;

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/sellerDefault}">
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css -->
+<th:block layout:fragment="customCss">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+
+</style>
+</th:block>
+
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>주문관리</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/}">Home</a><span>Order List</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents"
+	th:object="${getSellerOrderDetail}">
+	<div class="card-block">
+		<h4>상세주문정보</h4>
+		<table>
+			<thead>
+				<tr>
+					<th style="width: 200px;"></th>
+					<th style="width: 200px;">상품명</th>
+					<th style="width: 200px;">구매수량</th>
+					<th style="width: 200px;">결제금액</th>
+					<th style="width: 200px;">주문일</th>
+					<th style="width: 200px;">주문상태</th>
+					<th style="width: 200px;">운송장번호</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${not #lists.isEmpty(getSellerOrderDetail)}">
+					<td style="width: 200px;"><a th:href="@{|/seller/goods/goodsDetail/${getSellerOrderDetail.goodsCode}|}"><img
+							th:src="@{'/' + ${getSellerOrderDetail.get('mainImagePath')}}"
+							th:alt="${getSellerOrderDetail.get('mainImageOriName')}"
+							style="width: 100px; border-radius: 10px;" /></a></td>
+					<td th:text="${getSellerOrderDetail.get('goodsName')}" style="width: 200px;"></td>
+					<td th:text="${getSellerOrderDetail.get('orderAmount')}" style="width: 200px;"></td>
+					<td th:text="'₩' + ${getSellerOrderDetail.get('regularPriceSubtotal')}" style="width: 200px;"></td>
+					<td th:text="${getSellerOrderDetail.get('orderDatetime')}" style="width: 200px;"></td>
+					<td th:text="${getSellerOrderDetail.get('orderStatusStandardDetails')}" style="width: 200px;"></td>
+					<td th:text="${getSellerOrderDetail.get('deliveryNumber')}" style="width: 200px;"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="card-block">
+		<div class="row">
+			<div class="col-lg-6">
+				<h4 style="margin-top: 30px;">결제정보</h4>
+				<table class="table table-hover"  style="width: 100%; float: left;">
+					<tbody>
+						<tr>
+							<th>결제은행</th>
+							<td th:text="*{get('payBank')}"></td>
+							<th>결제정보</th>
+							<td th:text="*{get('payBankNum')}"></td>
+						</tr>
+						<tr>
+							<th>분류</th>
+							<td th:text="*{get('payType')}"></td>
+							<th style="height: 40px;">결제자</th>
+							<td th:text="*{get('payName')}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-lg-6">
+				<h4 style="margin-top: 30px;">배송정보</h4>
+				<table class="table table-hover"  style="width: 100%; float: left;">
+					<tbody>
+						<tr>
+							<th>받는사람</th>
+							<td th:text="*{get('deliGetName')}"></td>
+							<th>연락처</th>
+							<td th:text="*{get('deliGetPhone')}"></td>
+						</tr>
+						<tr>
+							<th>배송지</th>
+							<td th:text="*{get('deliGetAddr')}"></td>
+							<th>배송메모</th>
+							<td th:text="*{get('deliMemo')}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

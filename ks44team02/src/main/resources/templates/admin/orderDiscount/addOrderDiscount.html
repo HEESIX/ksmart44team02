@@ -3,9 +3,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 <!-- 주문서별 할인혜택 등록  -->
+
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 </th:block>
 
 <!-- 사용자 정의 css  -->
@@ -16,12 +24,15 @@
 		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 </th:block>
 
+
+
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
 	<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
+					<div class="row col-sm-2" style="padding-right: 5;">
 					<h4>할인 혜택 등록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
@@ -29,6 +40,11 @@
 						<li class="breadcrumb-item"><a th:href="@{/admin/orderDiscount/orderDiscountList}">할인 혜택 목록</a>
 						</li>
 					</ol>
+					</div>
+					<div class="col-sm-0">
+						<button type="button" class="btn btn-default waves-effect" 
+						data-toggle="tooltip" data-placement="right" title data-original-title="빈칸 모두 작성한 뒤 등록 버튼 클릭하면 등록한 할인혜택이 추가된 목록이 조회되는 화면으로 이동함">사용자 메뉴얼</button> 
+					</div>
 				</div>
 			</div>
 		</div>
@@ -39,53 +55,87 @@
 					<div class="card-header" style="text-align: center;">
 						<h3>할인 혜택 등록</h3>
 					</div>
-					<form th:action="@{/admin/orderDiscount/addOrderDiscount}" method="post">
+					<form id="addOrderDiscountForm" th:action="@{/admin/orderDiscount/addOrderDiscount}" method="post">
 						<div class="card-block">
 							<div class="form-group row">
 								<label for="discountName"
 									class="col-xs-2 col-form-label form-control-label">할인 이벤트명</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="discountName"
-										name="discountName">
+									<input class="form-control vailCheck inputObj" type="text" id="discountName"
+										name="discountName" placeholder="할인명을 입력해주세요." th:value="${discountName}">
+										<button type="button" id="nameCheckBtn" data-ischecked="false" class="btn btn-info waves-effect waves-light">중복검사</button>
+									<img id="id_check_sucess" style="display: none;">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="discountRate"
-									class="col-xs-2 col-form-label form-control-label">할인율
-									</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text" id="discountRate"
-										name="discountRate">
+								<div class="col-sm-3">
+									<label for="discountNumber"
+										class="col-form-label form-control-label">할인율/할인금액</label>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="discountPrice"
-									class="col-xs-2 col-form-label form-control-label">할인금액
-									</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text" id="discountPrice"
-										name="discountPrice">
+								<div class="col-sm-2">
+									<div class="modal fade modal-flex" id="single-select-Modal"
+										tabindex="-1" role="dialog">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h5 class="modal-title">Code Explanation for single
+														select radio</h5>
+												</div>
+												<!-- end of modal-header -->
+												<div class="modal-body">
+													<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+												</div>
+												<!-- end of modal-body -->
+											</div>
+											<!-- end of modal-content -->
+										</div>
+										<!-- end of modal-dialog -->
+									</div>
+									<!-- end of modal -->
+									<select id="selectRatePrice" name="selectRatePrice"
+										class="js-example-basic-single">
+										<option value="rate">할인율(%)</option>
+										<option value="price">할인금액(￦)</option>
+									</select>
+								</div>
+								<div class="col-sm-7">
+									<input class="form-control vailCheck inputObj" type="number" name="discountNumber" id="discountNumber" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="minOrderPrice"
-									class="col-xs-2 col-form-label form-control-label">최소주문
-									금액</label>
+								class="col-xs-2 col-form-label form-control-label">최소주문금액</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="minOrderPrice"
-										name="minOrderPrice">
+									<input class="form-control vailCheck inputObj" type="text" id="minOrderPrice"
+									name="minOrderPrice" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="maxDiscountPrice"
-									class="col-xs-2 col-form-label form-control-label">최대할인금액
-									</label>
+								class="col-xs-2 col-form-label form-control-label">최대할인금액</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text" id="maxDiscountPrice"
-										name="maxDiscountPrice">
+									<input class="form-control vailCheck inputObj" type="text" id="maxDiscountPrice"
+									name="maxDiscountPrice" placeholder="숫자만 입력해주세요.">
 								</div>
 							</div>
-							<button type="submit"
+							<button type="button" id="submitBtn"
 								class="btn btn-info waves-effect waves-light"
 								style="float: right;">등록완료</button>
 						</div>
@@ -94,6 +144,91 @@
 			</div>
 		</div>
 	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+								<thead>
+									<tr>
+										<th>할인명</th>
+										<th>할인율/할인금액</th>
+										<th>최소주문금액</th>
+										<th>최대할인금액</th>
+										<th>등록일자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(orderDiscountList)}"
+										th:each="odl : ${orderDiscountList}">
+										<td th:text="${odl.discountName}"></td>
+										<td th:if="${odl.discountRate} != 0" th:text="${odl.discountRate}+'%'"></td>
+										<td th:if="${odl.discountPrice} != 0" th:text="'₩'+${odl.discountPrice}"></td>
+										<td th:text="${odl.minOrderPrice}"></td>
+										<td th:text="${odl.maxDiscountPrice}"></td>
+										<td th:text="${odl.gProductionRegDateTime}"></td>
+									</tr>
+									<tr th:unless="${not #lists.isEmpty(orderDiscountList)}">
+										<td colspan="5" style="text-align: center;">주문서별 할인혜택이 존재하지
+											않습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </th:block>
 
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			//유효성 검사
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == '') {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]').text();
+							alert(alertMsg + '을 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof data == 'undefined' || data == null
+							|| data == '') {
+						isValid = false;
+					}
+				}
+				return isValid;
+			}
+			$(document).on('click', '#submitBtn', function() {
+				var inputObj = $('.vailCheck');
+
+				var isValid = validationCheck(inputObj);
+
+				if(!isValid) return false;
+				
+				$('#addOrderDiscountForm').submit();
+			});
+		});
+	</script>
+	
+</th:block>
 </html>

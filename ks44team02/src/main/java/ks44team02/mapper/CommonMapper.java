@@ -7,8 +7,14 @@ public interface CommonMapper {
 	
 	public boolean sessionIdPwCheck(String memberId, String memberPw);
 	
-	//테이블 명과 컬럼명을 입력하여 새로운 코드를 반환
+	//테이블 명을 입력하여 새로운 코드를 반환
 	public String getNewCode(String tableName);
+	
+	//
+	public int isExistEnterCode(String memberId);
+	
+	//회원 아이디로 입점업체코드 가져오기
+	public String getEnterCodeOfMebmerId(String memberId);
 
 	public boolean MileageExtinction(String mMileageCode);
 
@@ -17,4 +23,6 @@ public interface CommonMapper {
 	public boolean ReviewDelete(String revCode);
 
 	public boolean buyerReviewDelete(String reviewContents);
+
+	public boolean deleteBuyerInquery(String qnaCode);
 }

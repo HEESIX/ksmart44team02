@@ -3,5 +3,131 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team02.mapper.CartMapper">
-
+	<resultMap 	  type="Cart" 			id="cartResultMap">
+		<id 	column="cart_list_code" property="cartListCode"/>
+		<result column="member_id" 		property="memberId"/>
+		<result column="g_code" 		property="goodsCode"/>
+		<result column="regular_price" 	property="regularPrice"/>
+		<result column="discount_price" property="discountPrice"/>
+		<result column="order_amount" 	property="orderAmount"/>
+		<result column="price_subtotal" property="priceSubtotal"/>
+		<result column="order_datetime" property="orderDatetime"/>
+		<result column="enter_code" 	property="enterCode"/>
+		<association 	property="goods" 	  					javaType="Goods">
+			<id 	   	column="g_code" 						property="goodsCode"/>
+			<result     column="enter_code" 					property="enterCode"/>
+			<result 	column="g_cate_code" 					property="goodsCateCode"/>
+			<result 	column="g_name" 						property="goodsName"/>
+			<result 	column="g_price" 						property="goodsPrice"/>
+			<result 	column="goods_discount_code"		 	property="goodsDiscountCode"/>
+			<result 	column="g_discount" 					property="goodsDiscountedPrice"/>
+			<result 	column="g_netweight" 					property="goodsNetWeight"/>
+			<result 	column="g_netweightunit" 				property="goodsNetWeightUnit"/>
+			<result 	column="g_produce" 						property="goodsProduce"/>
+			<result 	column="g_production_expiration_info" 	property="goodsProductionExpirationInfo"/>
+			<result 	column="g_main_image" 				  	property="goodsMainImageCode"/>
+			<result 	column="g_info_image" 				  	property="goodsInfoImageCode"/>
+			<result 	column="g_stock" 						property="goodsStock"/>
+			<result 	column="g_delivery_charge" 				property="goodsDeliveryCharge"/>
+			<result 	column="g_reg_datetime" 				property="goodsRegDatetime"/>
+			<result 	column="g_activation" 					property="goodsActivation"/>
+		</association>
+		<association property="goodsMainImage"					javaType="GoodsMainImage">
+			<id column="main_image_idx"							property="mainImageIdx"/>
+			<id column="main_image_original_name"				property="mainImageOriginalName"/>
+			<id column="main_image_new_name"					property="mainImageNewName"/>
+			<id column="main_image_path"						property="mainImagePath"/>
+			<id column="main_image_size"						property="mainImageSize"/>
+			<id column="main_image_islocal"						property="mainImageIsLocal"/>
+		</association>
+	</resultMap>
+	<!-- 장바구니 목록 조회 -->
+	<select id="getCartList" parameterType="String" resultMap="cartResultMap">
+		SELECT
+			 c.cart_list_code
+			,i.main_image_path
+			,g.g_name
+			,c.discount_price
+			,c.order_amount
+			,c.price_subtotal
+			,g.g_code
+		FROM
+			tb_cart_list AS c
+			LEFT join
+			tb_goods AS g
+			on
+			c.g_code = g.g_code
+			LEFT join
+			tb_goods_main_image AS i
+			on
+			g.g_main_image = i.main_image_idx
+		WHERE
+			member_id = #{SID};
+	</select>
+	<!-- 장바구니 특정 상품 삭제 -->
+	<delete id="removeCartGoods" parameterType="String">
+		DELETE
+		FROM
+			tb_cart_list
+		WHERE
+			cart_list_code = #{cartListCode};
+	</delete>
+	<!-- 장바구니에 담을 상품 중복 체크 -->
+	<select id="cartOverlapCheck" parameterType="Cart" resultType="int">
+	SELECT
+		COUNT(c.cart_list_code)
+	FROM
+		tb_cart_list AS c
+		LEFT join
+		tb_goods AS g
+		on
+		c.g_code = g.g_code
+		LEFT join
+		tb_goods_main_image AS i
+		on
+		g.g_main_image = i.main_image_idx
+	WHERE
+		member_id = #{memberId}
+		and
+		c.g_code = #{goodsCode};
+	</select>
+	<!-- 장바구니에 상품 담는 처리 -->
+	<insert id="addCart" parameterType="Cart">
+	INSERT INTO tb_cart_list (
+			cart_list_code
+			,member_id
+			,g_code
+			,regular_price
+			,discount_price
+			,order_amount
+			,price_subtotal
+			,cart_reg_datetime
+			<if test="enterCode != null and enterCode != ''">
+				,enter_code
+			</if>
+		)VALUES(
+			#{cartListCode}
+			,#{memberId}
+			,#{goodsCode}
+			,#{regularPrice}
+			,#{discountPrice}
+			,#{orderAmount}
+			,#{priceSubtotal}
+			,NOW()
+			<if test="enterCode != null and enterCode != ''">
+				,#{enterCode}
+			</if>
+		);
+	</insert>
+	<!-- 동일상품 갯수 증가 -->
+	<update id="plusCartOrderAmount" parameterType="Cart">
+		UPDATE tb_cart_list
+		SET 
+			order_amount = order_amount + #{orderAmount}
+			,price_subtotal = price_subtotal + #{priceSubtotal}
+		WHERE
+			member_id = #{memberId}
+			and
+			g_code = #{goodsCode}
+	</update>
 </mapper>

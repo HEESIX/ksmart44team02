@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.Review;
 import ks44team02.mapper.ReviewMapper;
 
@@ -16,19 +17,13 @@ public class ReviewService {
 		this.reviewMapper = reviewMapper;
 	}
 	
-	//특정회원 리뷰 조회
-	public Review getReviewInfo(String reviewContents, String revCode) {
-		Review reviewInfo = reviewMapper.getReviewInfo(reviewContents,revCode);
-		
-		return reviewInfo;
-		
-		
-		
-	}
+
+	
 	
 	//회원 리뷰 목록 조회
 		public List<Review> getReviewList() {
-			return null;
+			List<Review> reviewList = reviewMapper. getReviewList();
+			return reviewList;
 		}
 
 		//회원 리뷰 수정
@@ -103,6 +98,42 @@ public class ReviewService {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public List<Review> getReviewListSearch(String memberId) {
+			List<Review> reviewList = reviewMapper.getReviewListSearch(memberId);
+			return reviewList;
+		}
+
+		public List<Review> getReviewListSearchGcode(String gCode) {
+			List<Review> reviewListByGcode = reviewMapper.getReviewListSearchGcode(gCode);
+			return reviewListByGcode;
+		}
+
+
+		///회원 아이디,상품별 리뷰조회
+
+		public List<Review> getReviewListByGcode() {
+			List<Review> reviewListByGcode = reviewMapper.getReviewListByGcode();
+			return reviewListByGcode;
+		}
+		
+		public List<Review> getReviewListByGcode(String gCode) {
+			List<Review> reviewListByGcode = reviewMapper.getReviewListByGcode(gCode);
+			return reviewListByGcode;
+		}
+		
+		public List<Review> getReviewListById() {
+			List<Review> reviewList = reviewMapper.getReviewListById();
+			return reviewList;
+		}
+		
+		public List<Review> getReviewListById(String memberId) {
+			List<Review> reviewList = reviewMapper.getReviewListById(memberId);
+			return reviewList;
+		}
+
+
+
 
 	
 		

@@ -1,5 +1,5 @@
 package ks44team02.dto;
-
+// 회원 정보 
 public class Member {
 	private String memberId;
 	private String memberPw;
@@ -13,6 +13,7 @@ public class Member {
 	private String memberAddr;
 	private String memberRegDate;
 	private String recommenderId;
+	
 	public String getMemberId() {
 		return memberId;
 	}

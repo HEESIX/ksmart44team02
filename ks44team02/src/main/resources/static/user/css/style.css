@@ -1132,6 +1132,7 @@ ol {
 	width: 5px;
 	background: #dd2222;
 	content: "";
+	margin-left: 15px;
 }
 
 .price-range-wrap .range-slider .price-input input {
@@ -1858,6 +1859,74 @@ ol {
 .product__details__tab .product__details__tab__desc p {
 	color: #666666;
 }
+
+/*---------------------
+  order tab
+-----------------------*/
+
+.order__details__tab {
+	padding-top: 85px;
+}
+
+.order__details__tab .nav-tabs {
+	border-bottom: none;
+	justify-content: center;
+	position: relative;
+}
+
+.order__details__tab .nav-tabs:before {
+	position: absolute;
+	left: 0;
+	top: 12px;
+	height: 1px;
+	width: 250px;
+	background: #ebebeb;
+	content: "";
+}
+
+.order__details__tab .nav-tabs:after {
+	position: absolute;
+	right: 0;
+	top: 12px;
+	height: 1px;
+	width: 250px;
+	background: #ebebeb;
+	content: "";
+}
+
+.order__details__tab .nav-tabs li {
+	margin-bottom: 0;
+	margin-right: 65px;
+}
+
+.order__details__tab .nav-tabs li:last-child {
+	margin-right: 0;
+}
+
+.order__details__tab .nav-tabs li a {
+	font-size: 16px;
+	color: #999999;
+	font-weight: 700;
+	border: none;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	padding: 0;
+}
+
+.order__details__tab .product__details__tab__desc {
+	padding-top: 44px;
+}
+
+.order__details__tab .product__details__tab__desc h6 {
+	font-weight: 700;
+	color: #333333;
+	margin-bottom: 26px;
+}
+
+.product__details__tab .product__details__tab__desc p {
+	color: #666666;
+}
+
 
 /*---------------------
   Shop Details

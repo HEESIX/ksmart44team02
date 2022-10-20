@@ -21,9 +21,22 @@ public class CommonService {
 		return result;
 	}
 	
+	//새로운 코드 발행
 	public String getNewCode(String tableName) {
 		String newCode = commonMapper.getNewCode(tableName);
 		return newCode;
+	}
+	
+	//
+	public int isExistEnterCode(String memberId) {
+		int result = commonMapper.isExistEnterCode(memberId);
+		return result;
+	}
+	
+	//회원 아이디로 입점업체코드 가져오기
+	public String getEnterCodeOfMebmerId(String memberId) {
+		String enterCode = commonMapper.getEnterCodeOfMebmerId(memberId);
+		return enterCode;
 	}
 	
 	//회원 마일리지 부여
@@ -51,6 +64,11 @@ public class CommonService {
 
 	public boolean buyerReviewDelete(String revCode, String reviewContents) {
 		boolean result = commonMapper.buyerReviewDelete(reviewContents);
+		return result;
+	}
+
+	public boolean deleteBuyerInquery(String qnaCode, String qnaContents) {
+		boolean result = commonMapper.deleteBuyerInquery(qnaCode);
 		return result;
 	};
 	

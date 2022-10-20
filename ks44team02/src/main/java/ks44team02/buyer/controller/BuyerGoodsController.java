@@ -1,87 +1,257 @@
 package ks44team02.buyer.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.Cart;
+import ks44team02.dto.Criteria;
+import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsCategory;
+import ks44team02.dto.MenuInformation;
+import ks44team02.dto.MenuOrganize;
+import ks44team02.dto.PageMake;
+import ks44team02.service.CartService;
+import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
 
 @Controller
 @RequestMapping(value = "/buyer/goods")
 public class BuyerGoodsController {
+	
+	private static final Logger log = LoggerFactory.getLogger(BuyerGoodsController.class);
 
 	private final GoodsService goodsService;
+	private final CommonService commonService;
+	private final CartService cartService;
 	
-	public BuyerGoodsController(GoodsService goodsService) {
+	public BuyerGoodsController(GoodsService goodsService, CommonService commonService, CartService cartService) {
 		this.goodsService = goodsService;
+		this.commonService = commonService;
+		this.cartService = cartService;
 	}
 
 	// 개인 맞춤 식단 생성 폼
-	@GetMapping("/buyermenu/regMenu")
-	public String addBuyerMenuForm() {
-		return "buyer/goods/buyermenu/regMenu";
+	@GetMapping("/buyerMenu/regMyMenu")
+	public String addbuyerMenuForm(Model model) {
+		List<Goods> goodsList = goodsService.getGoodsList(null);
+		model.addAttribute("goodsList", goodsList);
+		return "buyer/goods/buyerMenu/regMyMenu";
 	}
 
 	// 개인 맞춤 식단 생성 처리
-	@PostMapping("/buyermenu/regMenu")
-	public String addBuyerMenu() {
-		return "redirect:/buyer/goods/buyermenu/myMenuList";
+	@PostMapping("/buyerMenu/regMenu")
+	public String addbuyerMenu() {
+		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 
 	// 개인 맞춤 식단 목록 조회
-	@GetMapping("/buyermenu/myMenuList")
-	public String getBuyerMenuList() {
-		return "buyer/goods/buyermenu/myMenuList";
+	@GetMapping("/buyerMenu/myMenuList")
+	public String getbuyerMenuList(Model model
+								  ,HttpSession session
+								  ,@RequestParam(value = "msg", required = false) String msg) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		map.put("memberId", memberId);
+		
+		List<MenuInformation> buyerMenuList = goodsService.getBuyerMenuList(map);
+		
+		log.info("buyerMenuList :::::: {}", buyerMenuList);
+		
+		model.addAttribute("title", "개인 맞춤 식단 목록");
+		model.addAttribute("buyerMenuList", buyerMenuList);
+		model.addAttribute("msg", msg);
+		
+		return "buyer/goods/buyerMenu/myMenuList";
+	}
+	
+	//개인 맞춤 식단 장바구니에 담기
+	@PostMapping("/addMyMenuToCart")
+	@ResponseBody
+	public boolean addMyMenuToCart(@RequestParam(value = "menuCode") String menuCode
+								  ,HttpSession session) {
+		boolean result = true;
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		List<MenuOrganize> menuOrganizeList = goodsService.getMenuOrganizeList(menuCode);
+		
+		for(MenuOrganize menuOrganize : menuOrganizeList) {
+			Cart cart = new Cart();
+			Goods goods = new Goods();
+			
+			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			goods = goodsService.getGoodsInfo(goodsCode);
+			
+			String cartCode = commonService.getNewCode("tb_cart_list");
+			
+			int discountedPrice = goods.getGoodsDiscountedPrice();
+			int goodsAmount = menuOrganize.getMenuGoodsAmount();
+			int subtotal = discountedPrice * goodsAmount;
+			String enterCode = goods.getEnterCode();
+			
+			cart.setCartListCode(cartCode);
+			cart.setMemberId(memberId);
+			cart.setGoodsCode(goodsCode);
+			cart.setRegularPrice(goods.getGoodsPrice());
+			cart.setDiscountPrice(discountedPrice);
+			cart.setOrderAmount(goodsAmount);
+			cart.setPriceSubtotal(subtotal);
+			if(enterCode != null) cart.setEnterCode(enterCode);
+			
+			boolean addCartResult = cartService.addCart(cart);
+			if(!addCartResult) {
+				result = false;
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 	// 개인 맞춤 식단 수정 폼
-	@GetMapping("/buyermenu/updateMyMenu/{menu_code}")
-	public String modifyBuyerMenuForm(@PathVariable(value = "menu_code") String menu_code) {
+	@GetMapping("/buyerMenu/updateMyMenu/{menu_code}")
+	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menu_code) {
 		// 세션 SID와 불러오는 식단 정보의 memberId 유효성 검사 필요
 
-		return "buyer/goods/buyermenu/updateMyMenu";
+		return "buyer/goods/buyerMenu/updateMyMenu";
 	}
 
 	// 개인 맞춤 식단 수정 처리
-	@PostMapping("/buyermenu/updateMyMenu")
-	public String modifyBuyerMenu() {
-		return "redirect:/buyer/goods/buyermenu/myMenuList";
+	@PostMapping("/buyerMenu/updateMyMenu")
+	public String modifybuyerMenu() {
+		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 
 	// 개인 맞춤 식단 삭제 처리
-	@PostMapping("/buyermenu/removeMyMenu/{menu_code}")
-	public String removeBuyerMenu(@PathVariable(value = "menu_code") String menu_code) {
-		return "redirect:/buyer/goods/buyermenu/myMenuList";
+	@PostMapping("/buyerMenu/removeMyMenu/{menu_code}")
+	public String removebuyerMenu(@PathVariable(value = "menu_code") String menuCode
+								 ,RedirectAttributes reAttr) {
+		
+		boolean result = goodsService.removeBuyerMenu(menuCode);
+		
+		String msg = "";
+		
+		if(result) {
+			msg = "삭제가 정상적으로 완료되었습니다.";
+		}else {
+			msg = "삭제 실패";
+		}
+		
+		reAttr.addAttribute("msg", msg);
+		
+		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 
 	// 개인 맞춤 식단 개별 정보
-	@GetMapping("/buyermenu/myMenuDetail/{menu_code}")
-	public String getBuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	@GetMapping("/buyerMenu/myMenuDetail/{menu_code}")
+	public String getbuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
 		
-		return "buyer/goods/buyermenu/myMenuDetail";
+		return "buyer/goods/buyerMenu/myMenuDetail";
 	}
 
 	// 판매 식단 목록 조회
 	@GetMapping("/menu/menuList")
-	public String getMenuList(Model model) {
+	public String getMenuList(Model model
+							 ,HttpServletRequest request
+							 ,Criteria cri
+							 ,@RequestParam(value = "goodsCategoryCode", required = false) String goodsCategoryCode
+							 ,@RequestParam(value = "priceRange", required = false) String priceRange
+							 ,@RequestParam(value = "goodsNameValue", required = false) String goodsName) {
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 0;
+		 
+		if ("localhost".equals(serverName)) { 
+			isLocalhost = 1; 
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("isLocalhost", isLocalhost);
+		map.put("skip", cri.getSkip());
+		map.put("amount", cri.getAmount());
+		if(goodsCategoryCode != null) map.put("goodsCategoryCode", goodsCategoryCode);
+		if(priceRange != null) map.put("priceRange", priceRange);
+		if(goodsName != null) map.put("goodsName", goodsName);
+		
+		List<Goods> menuList = goodsService.getMenuList(map);
+		log.info(">>>>>>>>>>>>>>>>>{}", menuList);
+		
+		List<GoodsCategory> menuCategoryList = goodsService.getMenuCategoryList();
+		
+		int total = goodsService.getMenuListCount(map);
+		PageMake pageMake = new PageMake(cri, total);
+		
+		model.addAttribute("title", "식단 목록");
+		model.addAttribute("menuList", menuList);
+		model.addAttribute("menuCategoryList", menuCategoryList);
+		model.addAttribute("pageMake", pageMake);
 		
 		return "buyer/goods/menu/menuList";
 	}
 
 	// 판매 상품 목록 조회
 	@GetMapping("/goodsList")
-	public String getGoodsList(Model model) {
+	public String getGoodsList(Model model
+							  ,HttpServletRequest request
+							  ,Criteria cri
+							  ,@RequestParam(value = "goodsCategoryCode", required = false) String goodsCategoryCode
+							  ,@RequestParam(value = "priceRange", required = false) String priceRange
+							  ,@RequestParam(value = "goodsNameValue", required = false) String goodsName) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String serverName = request.getServerName(); 
+		log.info("{} <<<< serverName", serverName); 
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		int isLocalhost = 0;
+		 
+		if ("localhost".equals(serverName)) { 
+			isLocalhost = 1; 
+		}
+		
+		map.put("isLocalhost", isLocalhost);
+		map.put("skip", cri.getSkip());
+		map.put("amount", cri.getAmount());
+		if(goodsCategoryCode != null) map.put("goodsCategoryCode", goodsCategoryCode);
+		if(priceRange != null) map.put("priceRange", priceRange);
+		if(goodsName != null) map.put("goodsName", goodsName);
+		
+		List<Goods> goodsList = goodsService.getGoodsListBuyer(map);
+		log.info(">>>>>>>>>>>>>>>>>>>>>{}", goodsList);
+		
 		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListUser();
+		
+		int total = goodsService.getGoodsListCount(map);
+		PageMake pageMake = new PageMake(cri, total);
 		
 		model.addAttribute("title", "상품 목록");
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("pageMake", pageMake);
 		
 		return "buyer/goods/goodsList";
 	}
@@ -93,9 +263,14 @@ public class BuyerGoodsController {
 	}
 
 	// 개별 상품 정보
-	@GetMapping("/goodsDetail/{g_code}")
-	public String getGoodsInfo(@PathVariable(value = "g_code") String g_code) {
+	@GetMapping("/goodsDetail/{goodsCode}")
+	public String getGoodsInfo(@PathVariable(value = "goodsCode") String goodsCode
+							  ,Model model) {
 		
+		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		
+		model.addAttribute("title", "상품 상세 정보");
+		model.addAttribute("goodsInfo", goodsInfo);	
 		return "buyer/goods/goodsDetail";
 	}
 

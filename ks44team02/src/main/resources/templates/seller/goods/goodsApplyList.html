@@ -1,10 +1,168 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	상품 등록 신청 리스트
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/sellerDefault}">
+	
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+caption {
+	font-weight: bold;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+.deliNum, .orderStatus {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.deliNum {
+	background-color: #7fad39;
+}
+
+.orderStatus {
+	background-color: #7fad39;
+}
+table th,td{
+	max-width: 200px;
+}
+
+.product .container {
+	padding: 0;
+	max-width: 95%;
+}
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>판매 상품 조회</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div th:include="seller/goods/search/searchGoodsApplyList :: searchFragment"
+		style="margin-bottom: 10px; padding-left: 15px;"></div>
+	<table style="width: 100%;">
+		<thead>
+			<tr>
+				<th>상품명</th>
+				<th>메인이미지</th>
+				<th>카테고리</th>
+				<th>가격</th>
+				<th>적용 할인 혜택</th>
+				<th>할인 혜택 적용 후 가격</th>
+				<th>포장 단위 중량</th>
+				<th>원산지</th>
+				<th>제조일/유통기한</th>
+				<th>재고</th>
+				<th>배송비</th>
+				<th>신청일자</th>
+				<th>승인여부</th>
+				<th>승인/거절 날짜</th>
+				<th>거절 이유</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(goodsApplyList)}"
+				th:each="gal, status : ${goodsApplyList}">
+				<td><a th:href="@{|/seller/goods/goodsApplyDetail/${gal.goodsApplyCode}|}"
+					th:text="${gal.goodsApplyName}"></a></td>
+				<td><a th:href="@{|/seller/goods/goodsApplyDetail/${gal.goodsApplyCode}|}"><img
+						th:src="@{'/' + ${gal.goodsMainImageInfo.mainImagePath}}"
+						th:alt="${gal.goodsMainImageInfo.mainImageOriginalName}"
+						style="width: 100px;" /></a></td>
+				<td th:text="${gal.goodsCategory.goodsCategoryName}"></td>
+				<td th:text="${gal.goodsApplyPrice}"></td>
+				<td th:text="${gal.goodsDiscount.goodsDiscountName}"></td>
+				<td th:text="${gal.goodsApplyDiscount}"></td>
+				<td th:text="${gal.goodsApplyNetWeight}+${gal.goodsApplyNetWeightUnit}"></td>
+				<td th:text="${gal.goodsApplyProduce}"></td>
+				<td th:text="${gal.goodsApplyProductionExpirationInfo}"></td>
+				<td th:text="${gal.goodsApplyStock}"></td>
+				<td th:text="${gal.goodsApplyDeliveryCharge}"></td>
+				<td th:text="${gal.goodsApplyRegDatetime}"></td>
+				<td th:text="${gal.goodsApplyApproveRefuse}"></td>
+				<td th:if="${gal.goodsApplyApproveDatetime} != null" th:text="${gal.goodsApplyApproveDatetime}"></td>
+				<td th:unless="${gal.goodsApplyApproveDatetime} != null">N/A</td>
+				<td th:if="${gal.goodsApplyRefuseReason} != null" th:text="${gal.goodsApplyRefuseReason}"></td>
+				<td th:unless="${gal.goodsApplyRefuseReason} != null">N/A</td>
+			</tr>
+		</tbody>
+	</table>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<script>
+		$(function(){
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				
+				$('.searchValueBox input').val('');
+				$('.searchValueBox select').prop("selected", false);
+				
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else if(searchKey == 'approveRefuse'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.selectBox').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
+</th:block>
+
 </html>

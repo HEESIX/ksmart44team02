@@ -51,32 +51,86 @@
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
-	<div class="row">
+		<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
 					<h4>식단 수정</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
-						<li class="breadcrumb-item"><a href="#">식단 수정</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/menuList}">식단 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/menu/updateMenu}">식단 수정</a></li>
 					</ol>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xl-12 col-lg-12" style="padding-top: 15px;">
-				<div class="card">
+				<div class="card" style="padding-top: 20px;">
 					<div class="card-header" style="text-align: center;">
 						<h3>식단 수정</h3>
 					</div>
 					<div class="card-block" style="padding-top: 0;">
 						<div class="col-xl-3 col-lg-3"></div>
-						<div class="col-xl-6 col-lg-6">
-							<form id="addGoodsForm"
-								action="" method="post"
-								enctype="multipart/form-data">
+						<div class="col-xl-6 col-lg-6" th:object="${menuInfo}">
+							<form id="addGoodsForm" th:action="@{/admin/goods/menu/updateMenu}" enctype="multipart/form-data"
+								method="post">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsCateCode"
+												class="col-form-label form-control-label">카테고리</label>
+										</div>
+										<div class="modal fade modal-flex" id="single-select-Modal"
+											tabindex="-1" role="dialog">
+											<div class="modal-dialog modal-lg" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h5 class="modal-title">Code Explanation for single
+															select radio</h5>
+													</div>
+													<!-- end of modal-header -->
+													<div class="modal-body">
+														<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+													</div>
+													<!-- end of modal-body -->
+												</div>
+												<!-- end of modal-content -->
+											</div>
+											<!-- end of modal-dialog -->
+										</div>
+										<!-- end of modal -->
+										<select id="goodsCateCode" name="goodsCateCode"
+											class="js-example-basic-single inputObj" style="width: 40%;">
+											<th:block
+												th:if="${not #lists.isEmpty(goodsCategoryList)}"
+												th:each="gcl : ${goodsCategoryList}">
+												<option th:if="${gcl.goodsCategoryCode} == *{goodsCateCode}" th:value="${gcl.goodsCategoryCode}" th:text="${gcl.goodsCategoryName}" selected="selected"></option>
+												<option th:unless="${gcl.goodsCategoryCode} == *{goodsCateCode}" th:value="${gcl.goodsCategoryCode}" th:text="${gcl.goodsCategoryName}"></option>
+											</th:block>
+										</select>
+									</div>
+								</div>
 								<div class="form-group row">
 									<div class="col-lg-12">
 										<div>
@@ -84,8 +138,8 @@
 												class="col-form-label form-control-label">식단명</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="text"
-												id="goodsName" name="goodsName" placeholder="식단명을 입력해주세요.">
+											<input class="form-control vailCheck inputObj" type="text"
+												id="goodsName" name="goodsName" th:value="*{goodsName}" placeholder="식단명을 입력해주세요.">
 										</div>
 									</div>
 								</div>
@@ -96,8 +150,8 @@
 												class="col-form-label form-control-label">식단 가격</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
-												id="goodsPrice" name="goodsPrice"
+											<input class="form-control vailCheck inputObj" type="number"
+												id="goodsPrice" name="goodsPrice" th:value="*{goodsPrice}"
 												placeholder="식단 가격을 입력해주세요.">
 										</div>
 									</div>
@@ -145,13 +199,12 @@
 										</div>
 										<!-- end of modal -->
 										<select id="goodsDiscountCode" name="goodsDiscountCode"
-											class="js-example-basic-single" style="width: 40%;">
-											<option value="">적용 할인 혜택(비적용)</option>
+											class="js-example-basic-single inputObj" style="width: 40%;">
 											<th:block
 												th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
 												th:each="gdla : ${goodsDiscountListAdmin}">
-												<option th:value="${gdla.goodsDiscountCode}"
-													th:text="${gdla.goodsDiscountName}"></option>
+												<option th:if="*{goodsDiscountCode} == ${gdla.goodsDiscountCode}" th:value="${gdla.goodsDiscountCode}" th:text="${gdla.goodsDiscountName}" selected="selected"></option>
+												<option th:unless="*{goodsDiscountCode} == ${gdla.goodsDiscountCode}" th:value="${gdla.goodsDiscountCode}" th:text="${gdla.goodsDiscountName}"></option>
 											</th:block>
 										</select>
 									</div>
@@ -162,15 +215,15 @@
 											<p>
 												<label for="goodsMainImage"
 													class="col-form-label form-control-label">식단 썸네일
-													이미지 </label>
+													이미지(수정 사항 없을경우 빈칸)</label>
 											</p>
 											<div class="filebox">
 												<input class="upload-name form-control"
-													id="goodsMainImageName"
+													id="goodsMainImageName" th:value="*{goodsMainImageInfo.mainImageOriginalName}"
 													placeholder="식단 썸네일 이미지(*.gif, *.jpg, *.png)"> <label
 													class="label-lg label-default" for="goodsMainImage"
 													style="margin-top: 8px;">파일찾기</label> <input type="file"
-													id="goodsMainImage" class="imageUpload vailCheck"
+													id="goodsMainImage" class="imageUpload inputObj"
 													name="goodsMainImage" accept=".gif, .jpg, .png">
 											</div>
 										</div>
@@ -181,16 +234,16 @@
 										<div class="checkout__input">
 											<p>
 												<label for="goodsInfoImage"
-													class="col-form-label form-control-label">식단 소개 이미지
+													class="col-form-label form-control-label">식단 소개 이미지(수정 사항 없을경우 빈칸)
 												</label>
 											</p>
 											<div class="filebox">
 												<input class="upload-name form-control"
-													id="goodsInfoImageName"
+													id="goodsInfoImageName" th:value="*{goodsInfoImageInfo.infoImageOriginalName}"
 													placeholder="식단 소개 이미지(*.gif, *.jpg, *.png)"> <label
 													class="label-lg label-default" for="goodsInfoImage"
 													style="margin-top: 8px;">파일찾기</label> <input type="file"
-													id="goodsInfoImage" class="imageUpload vailCheck"
+													id="goodsInfoImage" class="imageUpload inputObj"
 													name="goodsInfoImage" accept=".gif, .jpg, .png">
 											</div>
 										</div>
@@ -203,8 +256,8 @@
 												class="col-form-label form-control-label">재고</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
-												id="goodsStock" name="goodsStock" placeholder="재고를 입력해주세요.">
+											<input class="form-control vailCheck inputObj" type="number"
+												id="goodsStock" name="goodsStock" th:value="*{goodsStock}" placeholder="재고를 입력해주세요.">
 										</div>
 									</div>
 								</div>
@@ -215,9 +268,9 @@
 												class="col-form-label form-control-label">배송비</label>
 										</div>
 										<div>
-											<input class="form-control vailCheck" type="number"
+											<input class="form-control vailCheck inputObj" type="number"
 												id="goodsDeliveryCharge" name="goodsDeliveryCharge"
-												placeholder="배송비를 입력해주세요.">
+												placeholder="배송비를 입력해주세요." th:value="*{goodsDeliveryCharge}">
 										</div>
 									</div>
 								</div>
@@ -227,9 +280,9 @@
 											여부</label>
 									</div>
 									<div class="col-md-10 has-danger">
-										<label class="custom-control custom-checkbox"> <input
-											class="custom-control-input" type="checkbox"
-											id="goodsActivation" name="goodsActivation" value="1">
+										<label class="custom-control custom-checkbox"> 
+										<input th:if="*{goodsActivation} == 1" checked="checked" class="custom-control-input inputObj" type="checkbox" id="goodsActivation" name="goodsActivation" value="1">
+										<input th:unless="*{goodsActivation} == 1" class="custom-control-input inputObj" type="checkbox" id="goodsActivation" name="goodsActivation" value="1">
 											<span class="custom-control-indicator"></span> <span
 											class="custom-control-description">사용</span>
 										</label>
@@ -246,7 +299,7 @@
 									</div>
 								</div>
 								<div class="form-group row" id="goodsOfMenuSelectForm">
-									<div class="col-lg-10 select_goods_Of_Menu"
+									<div class="col-lg-12 select_goods_Of_Menu"
 										style="padding-right: 0; margin-bottom: 10px;">
 										<div class="modal fade modal-flex" id="single-select-Modal"
 											tabindex="-1" role="dialog">
@@ -284,28 +337,37 @@
 											<!-- end of modal-dialog -->
 										</div>
 										<!-- end of modal -->
-										<div>
-											<div class="col-lg-6" style="padding-left: 0;">
-												<select name="goodsOfMenuCode"
-													class="js-example-basic-single2" style="width: 100%;">
-													<th:block th:if="${not #lists.isEmpty(goodsList)}"
-														th:each="gl : ${goodsList}">
-														<option th:value="${gl.goodsCode}"
-															th:text="${gl.goodsName}"></option>
-													</th:block>
-												</select>
+										<th:block th:if="${not #lists.isEmpty(menuOrganizeList)}" th:each="mol, status : ${menuOrganizeList}">
+											<div class="row goodsItems" style="margin-bottom: 10px;">
+												<div class="col-lg-5 goodsOfMenu" style="padding-left: 0;">
+													<select 
+														class="js-example-basic-single2 goodsOfMenuCode"
+														style="width: 100%;">
+														<th:block th:if="${not #lists.isEmpty(goodsList)}"
+															th:each="gl : ${goodsList}">
+															<option th:if="${mol.goodsOfMenuCode} == ${gl.goodsCode}" selected="selected" th:value="${gl.goodsCode}" th:text="${gl.goodsName}"></option>
+															<option th:unless="${mol.goodsOfMenuCode} == ${gl.goodsCode}" th:value="${gl.goodsCode}" th:text="${gl.goodsName}"></option>
+														</th:block>
+													</select>
+												</div>
+												<div class="col-lg-5 inputBox"
+													style="height: 28px; padding-left: 0;">
+													<input class="form-control vailCheck" type="number" th:value="${mol.menuGoodsAmount}"
+														value="0"
+														style="width: 100%; height: 100%;" placeholder="수량">
+												</div>
+												<div class="col-lg-2 btnDiv" th:if="${status.count} == 1">
+													<div>
+														<button type="button"
+															class="btn btn-success waves-effect waves-light"
+															id="moreGoodsBtn" style="height: 28px;  line-height : 10px;">추가</button>
+													</div>
+												</div>
+												<div class="col-lg-2 btnDiv" th:unless="${status.count} == 1">
+													<button type="button" class="btn btn-inverse-danger waves-effect waves-light deleteBtn" style="height: 28px; line-height : 10px;">삭제</button>
+												</div>
 											</div>
-											<div class="col-lg-6" style="height: 28px; padding-left: 0;">
-												<input class="form-control vailCheck" type="number"
-													id="menuGoodsAmount" name="menuGoodsAmount"
-													style="width: 100%; height: 100%;" placeholder="수량">
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<button type="button"
-											class="btn btn-success waves-effect waves-light"
-											id="moreGoodsBtn" style="height: 28px;">추가</button>
+										</th:block>
 									</div>
 								</div>
 								<a th:href="@{/admin/goods/goods_list_admin}"><button
@@ -313,14 +375,14 @@
 										style="float: right;">취소</button></a>
 								<button type="button" id="submitBtn"
 									class="btn btn-info waves-effect waves-light"
-									style="float: right; margin-right: 10px;">수정</button>
+									style="float: right; margin-right: 10px;">등록</button>
+								<input type="hidden" id="goodsCode" name="goodsCode" th:value="*{goodsCode}">
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </th:block>
 
@@ -329,10 +391,16 @@
 	<!-- Select 2 js -->
 	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript" src="/admin/assets/pages/elements.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
 		$(function() {
 			$(".js-example-basic-single").select2();
 			$(".js-example-basic-single2").select2();
+			var deleteBtn = $('.deleteBtn');
+			$.each(deleteBtn, function(){
+				$(this).click(function(){
+					$(this).parent().parent().remove();
+				});
+			});
 
 			$('.imageUpload').change(function() {
 				var imageName = $(this).val().split('\\');
@@ -372,24 +440,72 @@
 			}
 
 			$(document).on('click', '#submitBtn', function() {
-
 				var inputObj = $('.vailCheck');
 
 				var isValid = validationCheck(inputObj);
 
 				console.log(isValid, '아이디 이외의 값 유효성 검사');
+				
+				if(!isValid) return false;
+					
+				var goodsItemsObj = $('.goodsItems');
+				var goodsItemsArray = [];
 
-				if (isValid)
-					$('#').submit();
+				$.each(goodsItemsObj, function(item, index) {
+					var goodsItems = {};
+					var goodsOfMenuCode = $(this).find('select').val();
+					var menuGoodsAmount = $(this).find('input').val();
+					goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
+					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
+					goodsItemsArray.push(goodsItems);
+				});
+				console.log(goodsItemsArray, "<<<<<");
+				
+				var form = $('#addGoodsForm');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				formData.append('goodsMainImage', $('#goodsMainImage'));
+				formData.append('goodsInfoImage', $('#goodsInfoImage'));
+				console.log(formData, "<<<<<<<<<<<<<<");
+				var mappingUrl = '/admin/goods/menu/updateMenu/' + [[${menuInfo.menuInformation.menuCode}]];
+				console.log(mappingUrl);
+				
+				$.ajax({
+					type : 'POST',
+					url : '/admin/goods/menu/updateMenu/' + [[${menuInfo.menuInformation.menuCode}]],
+					processData : false,
+					contentType : false,
+					data : formData,
+				}).done(function(data) {
+					if(data){
+						alert('식단 수정 성공');
+						window.location.href = '/admin/goods/menu/menuList';
+					}else{
+						alert('오류!');
+					}
+				}).fail(function(error) {
+					alert('통신 실패');
+					alert(error.toString());
+				});
 			});
 
-			$('#moreGoodsBtn').click(
-					function() {
-						var $selectClone = $(
-								'.select_goods_Of_Menu:first-child').clone();
-
-						$('#goodsOfMenuSelectForm').append($selectClone);
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-5" style="padding-left: 0;"></div></div>');
+				var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .col-lg-5:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 28px; padding-left: 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2"><button type="button" class="btn btn-inverse-danger waves-effect waves-light deleteBtn" style="height: 28px; line-height : 10px;">삭제</button></div>');
+				
+				var deleteBtn = $('.deleteBtn');
+				$.each(deleteBtn, function(){
+					$(this).click(function(){
+						$(this).parent().parent().remove();
 					});
+				});
+				$(".js-example-basic-single2").select2();
+			});
 
 		});
 	</script>

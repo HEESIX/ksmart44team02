@@ -37,6 +37,42 @@
 		ON 
 			ml.member_level_code=bl.member_level_code;
 	</select>
+<!-- 구매자 등급 정의 등록 -->	
+	<insert id="addBuyerGrade" parameterType="Grade" >
+	INSERT INTO tb_buyer_level(
+		buyer_level_code
+		,member_level_code
+		,buyer_condition
+		,buyer_mileage	
+		)VALUES(
+			#{buyerLevelCode}
+	 		,#{memberLevelCode}
+	 		,#{buyerCondition}
+	 		,#{buyerMileage}	
+	 	);
+	</insert>
+<!-- 구매자 등급 정의 수정 -->		
+	<insert id="modifyBuyerGrade">
+		UPDATE 
+			tb_buyer_level
+		SET
+			member_level_code = #{memberLevelCode}
+			,buyer_condition = #{buyerCondition}
+			,buyer_mileage = #{buyerMileage}
+		WHERE
+			buyer_level_code=#{buyerLevelCode};
+	</insert>
+<!-- 구매자 등급 정의 삭제 처리  -->		
+	<insert id="removeBuyerGrade">	
+		DELETE 
+		FROM
+			member_level_code
+			,buyer_condition 
+			,buyer_mileage
+		WHERE 
+			buyer_level_code=#{buyerLevelCode};
+	</insert>
+	
 <!-- 판매자 등급 정의 리스트 -->
 	<select id="getSellerGradeList" resultMap="sellerGradeResultMap">
 		SELECT 
@@ -52,5 +88,45 @@
 			tb_seller_level AS sl
 		ON 
 			ml.member_level_code=sl.member_level_code;
+	</select>
+
+<!-- 판매자 등급 정의 등록 -->
+	<select id="addSellerGradeList" resultMap="sellerGradeResultMap">	
+		INSERT INTO tb_seller_level(
+		seller_level_code
+		,member_level_code
+		,seller_condition
+		,can_reg_amt
+		,seller_mileage
+			
+		)VALUES(
+			#{sellerLevelCode}
+	 		,#{memberLevelCode}
+	 		,#{sellerCondition}
+	 		,#{canRegAmt}	
+	 		,#{sellerMileage}
+	 	);
+	</select>
+
+<!-- 판매자 등급 정의 수정 -->
+	<select id="modifySellerGradeList" resultMap="sellerGradeResultMap">		
+		UPDATE 
+		tb_seller_level
+		SET
+			member_level_code = #{memberLevelCode}
+			,seller_condition = #{sellerCondition}
+			,can_reg_amt = #{canRegAmt}
+			,seller_mileage = #{sellerMileage}
+		WHERE
+			seller_level_code=#{sellerLevelCode};
+	</select>
+	
+<!-- 판매자 등급 정의 삭제 -->
+	<select id="removeSellerGradeList" resultMap="sellerGradeResultMap">		
+		DELETE 
+		FROM
+			tb_seller_level
+		WHRER
+			seller_level_code=#{sellerLevelCode};
 	</select>
 </mapper>

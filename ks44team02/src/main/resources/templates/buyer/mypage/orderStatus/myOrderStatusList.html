@@ -8,6 +8,22 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<!-- 사용자 정의 css -->
+<th:block layout:fragment="customCss">
+<style>
+
+a:link {
+  color : black;
+}
+a:visited {
+  color : black;
+}
+a:hover {
+  color : #7fad39;
+}
+
+</style>
+</th:block>
 
 
 
@@ -19,7 +35,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>주문리스트</h2>
+						<h2>MY ORDER</h2>
 						<div class="breadcrumb__option">
 							<a th:href="@{/}">Home</a><span>my order</span>
 						</div>
@@ -35,26 +51,42 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
+			<div class="col-sm-12 p-0">
+				<div class="main-header">
+					<h4>주문리스트</h4>
+					<span style="font-size: 17px; font-style: italic;">
+						> 주문한 상품 클릭시 상세주문서내역으로 이동합니다.
+					</span>
+				</div>
+			</div>
+		</div>	
+		
+		<div class="row">
 			<div class="col-xl-12 col-lg-12">
-				<table class="table table-hover">
+				<table class="table table-hover" style="margin-top: 10px;">
 					<thead>
 						<tr>
-							<th>주문번호</th>
 							<th></th>
 							<th>ITEM</th>
-							<th>PRICE</th>
+							<th>총 배송비</th>
+							<th>총 할인금액</th>
+							<th>총 결제금액</th>
 							<th>전체주문일자</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
-							th:each="orl, status : ${getOrderList}" style="line-height: 50px;">
+							th:each="orl : ${getOrderList}" style="line-height: 50px;">
+							<td style="width: 200px;"><a href="#"><img
+								th:src="@{'/' + ${orl.get('mainImagePath')}}"
+								th:alt="${orl.get('mainImageOriName')}"
+								style="width: 100px; border-radius: 10px;" /></a></td>
 							<td><a
-								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${status.count}">
+								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('goodsName')}">
 							</a></td>
-							<td><a href="#"><img th:alt="${orl.mainImageOriName}" th:src="@{'/'+ ${orl.mainImagePath}}" style="height: 50px;"></a></td>
-							<td th:text="${orl.get('goodsName')}"></td>
-							<td th:text="${orl.get('finalPrice')}"></td>
+							<td th:text="'₩' + ${orl.get('deliTotal')}"></td>
+							<td th:text="'₩' + ${orl.get('discountAdd')}"></td>
+							<td th:text="'₩' + ${orl.get('finalPrice')}"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
 							
 						</tr>

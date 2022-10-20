@@ -4,7 +4,36 @@
 	layout:decorate="~{layout/adminDefault}">
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
-	<title th:text="${title}"></title>
+	  <title th:text="${title}"></title>
+</th:block>
+<th:block layout:fragment="customTopJs">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  		<script type="text/javascript" th:inline="javascript">
+ 	  			$(function(){
+ 	  				var msg = /*[[${msg}]]*/;
+ 	                if(msg != null) alert(msg);
+ 	  				
+ 	  				$('#loginBtn').click(()=>{
+ 	  					
+ 	  					var checkValid = true;
+ 	  					
+ 	  					var inputObj = $('loginForm input');
+ 	  					
+ 	  					$.each(inputObj, function(){
+ 	  						var inputData = $(this).val();
+ 	  						if(typeof inputData == 'undefined' || inputData == null || inputData == '') {
+ 	  							checkValid = false;
+ 	  							var alertMsg = $('label[for="'+ $(this).attr('id') +'"]').text();
+ 	  							alert(alertMsg + " 를 입력해주세요");
+ 	  							$(this).focus();
+ 	  							return false;
+ 	  						}
+ 	  					});
+ 	  					
+ 	  					if(checkValid) $('#loginForm').submit();
+ 	  				});
+ 	  			});
+	  		</script>
 </th:block>
 
 <!-- 사용자 정의 css  -->
@@ -397,7 +426,7 @@ footer .copyright-wrap span{
 <th:block layout:fragment="customContents">
 	<section class="checkout spad">
 		<div class="container">
-			<form action="#" method="post">
+			<form id="loginForm" th:action="@{/admin/login/adminLogin}" method="post">
 				<div class="logcenter">
 				<div class="hcc">
 				<div class="logcenter">
@@ -411,13 +440,13 @@ footer .copyright-wrap span{
 				  <div class="form-group row">
 				    <label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
 				    <div class="col-lg-8">
-				      <input type="password" class="form-control" id="inputPassword">
+				      <input type="password" class="form-control" name="memberId" id="inputPassword" placeholder="회원 아이디를 입력해주세요"/>
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
 				    <div class="col-lg-8">
-				      <input type="password" class="form-control" id="inputPassword">
+				      <input type="password" class="form-control" name="memberPw" id="inputPassword" placeholder="비밀번호를 입력해주세요"/>
 				    </div>
 				  </div>
 			  </div>	
@@ -425,13 +454,13 @@ footer .copyright-wrap span{
 			  <div class="hcc">
 				 	<div class ="logcenter">
 				 		<div class="form-group form-check">
-					    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+					    <input type="checkbox" class="form-check-input" id="exampleCheck1" placeholder="회원 비밀번호를 입력해주세요"/>
 					    <label class="form-check-label" for="exampleCheck1">로그인정보저장</label>
 	  			 		</div>
 	  			 	</div>	
   			 </div>	
   			<div class="logcenter">
-  				<button type="button" class="loginbtn">로그인</button>
+	  			<button type="button" id="loginBtn" class="loginbtn">로그인</button>
   			</div>
   			<br>
   			<div class="logcenter">

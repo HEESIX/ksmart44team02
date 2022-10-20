@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+
+
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<h1>상품별 회원리뷰 조회/관리</h1>
+
+	
+	
+	<form action="/admin/reviewManage/watchReviewByGcode" method="post">
+		<div class="position-relative">
+			<div class="col-xs-3">
+
+				<input class="form-control" id="gCode" type="text"
+					name="gCode" placeholder="상품코드검색">
+
+			</div>
+			<button type="button" id="searchBtn" >검색</button>
+			
+			<!-- <button type="button" id="mSearch" class="btn btn-primary">검색</button> -->
+		</div>
+	</form>
+	<br>
+		<table class="table m-b-0 photo-table">
+    			<thead>
+    			<tr>
+    				<th>리뷰코드</th>
+    				<th>배송코드</th>
+    				<th>상세주문서 코드</th>
+    				<th>상품코드</th>
+    				<th>회원아이디</th>
+    				<th>이미지</th>
+    				<th>글제목</th>
+    				<th>글내용</th>
+    				<th>글작성일</th>
+    				<th>평점</th>
+    			</tr>
+    		</thead>
+    		<tbody id="tBody">
+    			<tr th:if="${not #lists.isEmpty(reviewList)}"
+    				th:each="rl : ${reviewList}">
+    				<td th:text="${rl.revCode}"></td>
+    				<td th:text="${rl.deliveryCode}"></td>
+    				<td th:text="${rl.orderDetailCode}"></td>
+    				<td th:text="${rl.gCode}"></td>
+    				<td th:text="${rl.memberId}"></td>
+    				<td th:text="${rl.revImage}"></td>
+    				<td th:text="${rl.reviewTitle}"></td>
+    				<td th:text="${rl.reviewContents}"></td>
+    				<td th:text="${rl.revRegDatetime}"></td>
+    				<td th:text="${rl.reviewScore}"></td>
+
+    			</tr>
+    			<tr th:unless="${not #lists.isEmpty(reviewList)}">
+    				<td colspan="11" style="text-align: center;">리뷰 내역이 존재하지 않습니다.</td>
+    			</tr>
+    		</tbody>
+    	</table>
+
+
+	</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	 <script>
+		 $(function(){
+			 
+			 $(document).on('click', '#searchBtn', function(){
+				 var gCode = $('#gCode').val();
+				 
+				 // ajax 선언      
+				 var request = $.ajax({          
+					 type: "POST",   // 요청 메소드 타입          
+					 url: "/admin/reviewManage/reviewListByGcode", // 접속 url
+					 data: {'gCode' : gCode},
+					 dataType: 'json' // 응답 메시지의 타입       
+					 });        
+				 // 결과        
+				 request.done(function(data){         
+					 var reviewListByGcode = data;
+					 var tBody = $('#tBody');					 
+					 var html = '';
+
+					 if(typeof reviewListByGcode != 'undefined' && reviewListByGcode != null){
+						 for(let userReview of reviewListByGcode){
+							html += '<tr>';
+							html += '	<td>' + userReview.revCode + '</td>'; 
+							html += '	<td>' + userReview.deliveryCode + '</td>'; 
+							html += '	<td>' + userReview.orderDetailCode + '</td>'; 
+							html += '	<td>' + userReview.gCode + '</td>'; 
+							html += '	<td>' + userReview.memberId + '</td>'; 
+							html += '	<td>' + userReview.revImage + '</td>';
+							html += '	<td>' + userReview.reviewTitle + '</td>';
+							html += '	<td>' + userReview.reviewContents + '</td>';
+							html += '	<td>' + userReview.revRegDatetime + '</td>';
+							html += '	<td>' + userReview.reviewScore + '</td>';
+							html += '</tr>';
+						 }
+					 }
+					 
+					 tBody.html(html);
+				 });     
+			 });
+			 
+		});    
+	 </script>
+</th:block>
+
+
+
+</html>

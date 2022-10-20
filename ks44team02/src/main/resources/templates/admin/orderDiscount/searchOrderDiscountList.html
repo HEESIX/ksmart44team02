@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 검색 -->
+<div th:fragment="searchFragment">
+	<form th:action="@{/admin/orderDiscount/orderDiscountList}"
+		method="post">
+		<div class="col-sm-1" style="padding: 0;">
+			<div class="modal fade modal-flex" id="single-select-Modal"
+				tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h5 class="modal-title">Code Explanation for single select
+								radio</h5>
+						</div>
+						<!-- end of modal-header -->
+						<div class="modal-body">
+							<pre class="brush: html;">
+		     				  	/* For Single Select */
+		     				  	<select class="js-example-basic-single">
+		     				  		<optgroup label="Developer">
+		     				  			<option value="AL">Alabama</option>
+		     				  			<option value="WY">Wyoming</option>
+		     				  		</optgroup>
+		     				  		<optgroup label="Designer">
+		     				  			<option value="WY">Peter</option>
+		     				  			<option value="WY">Hanry Die</option>
+		     				  			<option value="WY">John Doe</option>
+		     				  		</optgroup>
+		     				  	</select>
+								</pre>
+						</div>
+						<!-- end of modal-body -->
+					</div>
+					<!-- end of modal-content -->
+				</div>
+				<!-- end of modal-dialog -->
+			</div>
+			<!-- end of modal -->
+			<select name="searchKey" class="js-example-basic-single">
+				<option value="discountName">할인명</option>
+				<option value="discountRate">할인율</option>
+				<option value="discountPrice">할인금액</option>
+				<option value="gProductionRegDateTime">등록일자</option>
+			</select>
+		</div>
+		<div class="col-lg-3" style="padding-left: 0; height: 28px;">
+			<input class="form-control" type="text" name="searchValue"
+				placeholder="검색어를 입력해주세요." style="height: 28px;"/>
+		</div>
+		<button type="submit" class="btn btn-info waves-effect waves-light">검색</button>
+	</form>
+</div>
+</html>

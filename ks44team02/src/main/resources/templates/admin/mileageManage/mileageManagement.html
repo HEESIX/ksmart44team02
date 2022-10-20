@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+
+
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<h1>회원마일리지 조회/관리</h1>
+
+	<form action="/admin/mileageManage/mileageManagement" method="post">
+		<div class="position-relative">
+			<div class="col-xs-3">
+
+				<input class="form-control" id="memberId" type="text"
+					name="memberId" placeholder="회원아이디검색">
+
+			</div>
+			<button type="button" id="searchBtn" >검색</button>
+			
+			<!-- <button type="button" id="mSearch" class="btn btn-primary">검색</button> -->
+		</div>
+	</form>
+	<br>
+		<table class="table m-b-0 photo-table">
+    			<thead>
+    			<tr>
+    				<th>회원 아이디</th>
+    				<th>주문 상세코드</th>
+    				<th>현재 적립금</th>
+    				<th>적립금 구분</th>
+    				<th>적립금 사용/적립금액</th>
+    				<th>적립금 갱신날짜</th>
+    			</tr>
+    		</thead>
+    		<tbody id="tBody">
+    			<tr th:if="${not #lists.isEmpty(mileageList)}"
+    				th:each="ml : ${mileageList}">
+    				<td th:text="${ml.memberId}"></td>
+    				<td th:text="${ml.orderDetailCode}"></td>
+    				<td th:text="${ml.currentMileage}"></td>
+    				<td th:text="${ml.mileageDistinct}"></td>
+    				<td th:text="${ml.addedUsedMileage}"></td>
+    				<td th:text="${ml.mUpdateDatetime}"></td>
+
+    			</tr>
+    			<tr th:unless="${not #lists.isEmpty(mileageList)}">
+    				<td colspan="7" style="text-align: center;">마일리지 내역이 존재하지 않습니다.</td>
+    			</tr>
+    		</tbody>
+    	</table>
+
+
+	</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	 <script>
+		 $(function(){
+			 
+			 $(document).on('click', '#searchBtn', function(){
+				 var memberId = $('#memberId').val();
+				 
+				 // ajax 선언      
+				 var request = $.ajax({          
+					 type: "GET",   // 요청 메소드 타입          
+					 url: "/admin/mileageManage/mileageList", // 접속 url
+					 data: {'memberId' : memberId},
+					 dataType: 'json' // 응답 메시지의 타입       
+					 });        
+				 // 결과        
+				 request.done(function(data){         
+					 var mileageList = data;
+					 var tBody = $('#tBody');					 
+					 var html = '';
+
+					 if(typeof mileageList != 'undefined' && mileageList != null){
+						 for(let userMileage of mileageList){
+							html += '<tr>';
+							html += '	<td>' + userMileage.memberId + '</td>'; 
+							html += '	<td>' + userMileage.orderDetailCode + '</td>'; 
+							html += '	<td>' + userMileage.currentMileage + '</td>'; 
+							html += '	<td>' + userMileage.mileageDistinct + '</td>'; 
+							html += '	<td>' + userMileage.addedUsedMileage + '</td>'; 
+							html += '	<td>' + userMileage.mUpdateDatetime + '</td>';
+							html += '</tr>';
+						 }
+					 }
+					 
+					 tBody.html(html);
+				 });     
+			 });
+			 
+		});    
+	 </script>
+</th:block>
+
+
+
+</html>

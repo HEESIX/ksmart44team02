@@ -52,7 +52,7 @@
 <th:block layout:fragment="customContents">
 	<div class="container-fluid" style="height: 100%; width: 100%;">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>식단 등록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
@@ -63,6 +63,9 @@
 						<li class="breadcrumb-item"><a
 							th:href="@{/admin/goods/menu/regMenu}">식단 등록</a></li>
 					</ol>
+				</div>
+				<div style="padding-left: 20px;">
+					<span style="line-height: 100px;">식단이 포함되는 상품들과 식단의 정보를 입력한 후 식단을 등록한다.</span>
 				</div>
 			</div>
 		</div>
@@ -78,6 +81,59 @@
 							<form id="addGoodsForm" th:action="@{/admin/goods/menu/regMenu}" enctype="multipart/form-data"
 								method="post">
 								<!-- <h6 class="sub-title">Single Select</h6> -->
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div>
+											<label for="goodsCateCode"
+												class="col-form-label form-control-label">카테고리</label>
+										</div>
+										<div class="modal fade modal-flex" id="single-select-Modal"
+											tabindex="-1" role="dialog">
+											<div class="modal-dialog modal-lg" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h5 class="modal-title">Code Explanation for single
+															select radio</h5>
+													</div>
+													<!-- end of modal-header -->
+													<div class="modal-body">
+														<pre class="brush: html;">
+									     				  	/* For Single Select */
+									     				  	<select class="js-example-basic-single">
+									     				  		<optgroup label="Developer">
+									     				  			<option value="AL">Alabama</option>
+									     				  			<option value="WY">Wyoming</option>
+									     				  		</optgroup>
+									     				  		<optgroup label="Designer">
+									     				  			<option value="WY">Peter</option>
+									     				  			<option value="WY">Hanry Die</option>
+									     				  			<option value="WY">John Doe</option>
+									     				  		</optgroup>
+									     				  	</select>
+															</pre>
+													</div>
+													<!-- end of modal-body -->
+												</div>
+												<!-- end of modal-content -->
+											</div>
+											<!-- end of modal-dialog -->
+										</div>
+										<!-- end of modal -->
+										<select id="goodsCateCode" name="goodsCateCode"
+											class="js-example-basic-single inputObj" style="width: 40%;">
+											<th:block
+												th:if="${not #lists.isEmpty(goodsCategoryList)}"
+												th:each="gcl : ${goodsCategoryList}">
+												<option th:value="${gcl.goodsCategoryCode}"
+													th:text="${gcl.goodsCategoryName}"></option>
+											</th:block>
+										</select>
+									</div>
+								</div>
 								<div class="form-group row">
 									<div class="col-lg-12">
 										<div>
@@ -147,7 +203,6 @@
 										<!-- end of modal -->
 										<select id="goodsDiscountCode" name="goodsDiscountCode"
 											class="js-example-basic-single inputObj" style="width: 40%;">
-											<option value="">적용 할인 혜택(비적용)</option>
 											<th:block
 												th:if="${not #lists.isEmpty(goodsDiscountListAdmin)}"
 												th:each="gdla : ${goodsDiscountListAdmin}">
@@ -247,7 +302,7 @@
 									</div>
 								</div>
 								<div class="form-group row" id="goodsOfMenuSelectForm">
-									<div class="col-lg-10 select_goods_Of_Menu"
+									<div class="col-lg-12 select_goods_Of_Menu"
 										style="padding-right: 0; margin-bottom: 10px;">
 										<div class="modal fade modal-flex" id="single-select-Modal"
 											tabindex="-1" role="dialog">
@@ -286,9 +341,9 @@
 										</div>
 										<!-- end of modal -->
 										<div class="row goodsItems" style="margin-bottom: 10px;">
-											<div class="col-lg-6 goodsOfMenu" style="padding-left: 0;">
+											<div class="col-lg-5 goodsOfMenu" style="padding-left: 0;">
 												<select 
-													class="js-example-basic-single2 goodsOfMenuCode"
+													class="js-example-basic-single2 goodsOfMenuCode" id="goodsOfMenuCode"
 													style="width: 100%;">
 													<option value="">선택해주세요.</option>
 													<th:block th:if="${not #lists.isEmpty(goodsList)}"
@@ -298,21 +353,23 @@
 													</th:block>
 												</select>
 											</div>
-											<div class="col-lg-6 inputBox"
+											<div class="col-lg-5 inputBox"
 												style="height: 28px; padding-left: 0;">
-												<input class="form-control vailCheck" type="number"
+												<input class="form-control vailCheck" type="number" id="menuGoodsAmount"
 													value="0"
 													style="width: 100%; height: 100%;" placeholder="수량">
 											</div>
+											<div class="col-lg-2 btnDiv">
+												<div>
+													<button type="button"
+														class="btn btn-success waves-effect waves-light"
+														id="moreGoodsBtn" style="height: 28px;  line-height : 10px;">추가</button>
+												</div>
+											</div>
 										</div>
 									</div>
-									<div class="col-lg-2">
-										<button type="button"
-											class="btn btn-success waves-effect waves-light"
-											id="moreGoodsBtn" style="height: 28px;">추가</button>
-									</div>
 								</div>
-								<a th:href="@{/admin/goods/goods_list_admin}"><button
+								<a th:href="@{/admin/goods/menu/menuList}"><button
 										type="button" id="returnBtn" class="btn btn-disable disabled"
 										style="float: right;">취소</button></a>
 								<button type="button" id="submitBtn"
@@ -353,11 +410,10 @@
 					$.each(data, function() {
 						var inputValue = $(this).val();
 						if (typeof inputValue == 'undefined'
-								|| inputValue == null || inputValue == '') {
+								|| inputValue == null || inputValue == '' || inputValue <= 0) {
 							isValid = false;
 							var inputId = $(this).attr('id');
-							var alertMsg = $('label[for="' + inputId + '"]')
-									.text();
+							var alertMsg = $('label[for="' + inputId + '"]').text();
 							alert(alertMsg + ' 입력해주세요');
 							$(this).focus();
 							return false;
@@ -366,20 +422,24 @@
 
 					//문자열일 경우
 				} else if (typeof data == 'string') {
-					if (typeof data == 'undefined' || data == null
-							|| data == '') {
+					if (typeof inputValue == 'undefined'
+							|| inputValue == null || inputValue == '') {
 						isValid = false;
+						return false;
 					}
 				}
 				return isValid;
 			}
 
 			$(document).on('click', '#submitBtn', function() {
-				//var inputObj = $('.vailCheck');
+				var selectObj = $('.goodsOfMenuCode');
+				var selectIsValid = validationCheck(selectObj);
+				if(!selectIsValid) return false;
+				
+				var inputObj = $('.vailCheck');
+				var isValid = validationCheck(inputObj);
+				if(!isValid) return false;
 
-				//var isValid = validationCheck(inputObj);
-
-				//console.log(isValid, '아이디 이외의 값 유효성 검사');
 				var goodsItemsObj = $('.goodsItems');
 				var goodsItemsArray = [];
 
@@ -400,27 +460,39 @@
 				console.log(formData, "<<<<<<<<<<<<<<");
 				$.ajax({
 					type : 'POST',
-					enctype : "multipart/form-data",
 					url : '/admin/goods/menu/regMenu',
 					processData : false,
 					contentType : false,
+					enctype : 'multipart/form-data',
 					data : formData,
 				}).done(function(data) {
-					alert(data);
+					if(data){
+						window.location.href = '/admin/goods/menu/menuList';
+						alert('식단 등록 성공');
+					}else{
+						alert('오류!');
+					}
 				}).fail(function(error) {
-					alert(JSON.stringify(error));
+					alert('통신 실패');
 				});
 			});
 
 			$('#moreGoodsBtn').click(function() {
-				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-6" style="padding-left: 0;"></div></div>');
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-5" style="padding-left: 0;"></div></div>');
 				var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
 				var $inputBox = $('.inputBox .vailCheck').clone();
-				$('.select_goods_Of_Menu .col-lg-6:last').append($selectBox);
-				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-6" style="height: 28px; padding-left: 0;"></div>');
-				$('.select_goods_Of_Menu .row:last .col-lg-6:last').append($inputBox);
+				$('.select_goods_Of_Menu .col-lg-5:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 28px; padding-left: 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2"><button type="button" class="btn btn-inverse-danger waves-effect waves-light deleteBtn" style="height: 28px; line-height : 10px;">삭제</button></div>');
+				
+				var deleteBtn = $('.deleteBtn');
+				$.each(deleteBtn, function(){
+					$(this).click(function(){
+						$(this).parent().parent().remove();
+					});
+				});
 				$(".js-example-basic-single2").select2();
-				$()
 			});
 
 		});

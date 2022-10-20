@@ -8,31 +8,41 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<!-- 사용자 정의 js file  -->
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
-		$(function(){
-			var msg = [[${msg}]];
-			
-			if(msg!=null) alert(msg);
-			
-		});
-	</script>
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+	<style>
+table th, td {
+	max-width: 200px;
+}
+
+.textBox span {
+	display: block;
+}
+</style>
 </th:block>
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
-	<div class="row">
-			<div class="col-sm-12 p-0">
+		<div class="row">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>상품 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/goodsList}">상품 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/goodsList}">상품 목록</a></li>
 					</ol>
+				</div>
+				<div class="textBox" style="padding-left: 20px;">
+					<span> 판매중, 판매중이지 않은 상품들을 전부 조회한다. </span> <span> 표 위의 검색기능을
+						사용하여 상품명, 판매사, 카테고리명, 원산지, 가격, 할인된 가격, 재고, 배송비, 등록일자에 따라 검색이 가능하다.
+					</span> <span> 상품명 또는 메인 이미지를 클릭하게되면 해당 상품의 상세정보페이지로 이동한다. </span>
 				</div>
 			</div>
 		</div>
@@ -40,15 +50,18 @@
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
+						<div
+							th:include="admin/goods/search/searchGoodsList :: searchFragment"
+							style="margin-bottom: 10px;"></div>
 						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
 									<tr>
 										<th>번호</th>
-										<th>메인이미지</th>
-										<th>판매사</th>
-										<th>카테고리</th>
 										<th>상품명</th>
+										<th>메인이미지</th>
+										<th>카테고리</th>
+										<th>판매사</th>
 										<th>가격</th>
 										<th>적용 할인 혜택</th>
 										<th>할인 혜택 적용 후 가격</th>
@@ -65,11 +78,16 @@
 									<tr th:if="${not #lists.isEmpty(goodsList)}"
 										th:each="gl, status : ${goodsList}">
 										<td th:text="${status.count}"></td>
-										<td><a th:href="@{|/admin/goods/goodsDetail/${gl.goodsCode}|}"><img th:src="@{'/' + ${gl.goodsMainImageInfo.mainImagePath}}"
-											th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}" style="width: 100px;" /></a></td>
-										<td th:text="${gl.enterprise.enterName}"></td>	
+										<td><a
+											th:href="@{|/admin/goods/goodsDetail/${gl.goodsCode}|}"
+											th:text="${gl.goodsName}"></a></td>
+										<td><a
+											th:href="@{|/admin/goods/goodsDetail/${gl.goodsCode}|}"><img
+												th:src="@{'/' + ${gl.goodsMainImageInfo.mainImagePath}}"
+												th:alt="${gl.goodsMainImageInfo.mainImageOriginalName}"
+												style="width: 100px;" /></a></td>
 										<td th:text="${gl.goodsCategory.goodsCategoryName}"></td>
-										<td th:text="${gl.goodsName}"></td>
+										<td th:text="${gl.enterprise.enterName}"></td>
 										<td th:text="${gl.goodsPrice}"></td>
 										<td th:text="${gl.goodsDiscount.goodsDiscountName}"></td>
 										<td th:text="${gl.goodsDiscountedPrice}"></td>
@@ -90,6 +108,38 @@
 			</div>
 		</div>
 	</div>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+			$(".js-example-basic-single").select2();
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'goodsPrice' || searchKey == 'goodsDiscountPrice' || searchKey == 'goodsStock' || searchKey == 'goodsDeliveryCharge'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
 </th:block>
 
 </html>

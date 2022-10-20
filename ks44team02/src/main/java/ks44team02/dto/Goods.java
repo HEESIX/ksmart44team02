@@ -1,6 +1,5 @@
 package ks44team02.dto;
 
-import java.util.Arrays;
 
 //상품 객체
 public class Goods {
@@ -15,8 +14,8 @@ public class Goods {
 	private String goodsNetWeightUnit;
 	private String goodsProduce;
 	private String goodsProductionExpirationInfo;
-	private String goodsInfoImageCode;
 	private String goodsMainImageCode;
+	private String goodsInfoImageCode;
 	private int goodsStock;
 	private int goodsDeliveryCharge;
 	private String goodsRegDatetime;

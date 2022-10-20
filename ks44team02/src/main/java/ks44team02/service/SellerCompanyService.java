@@ -27,6 +27,14 @@ public class SellerCompanyService {
 		*/
 	}
 	
+	
+	//브랜드 중복체크
+	public boolean BrandCheck(String sellerBrand) {
+		boolean result = sellerCompanyMapper.BrandCheck(sellerBrand);
+		return result;
+	}
+	
+	
 	//업체 정보 검색 및 전체 리스트
 	public List<Launching> sellerCompanyInfoList() {
 		List<Launching> sellerCompanyInfoList = sellerCompanyMapper.sellerCompanyInfoList();

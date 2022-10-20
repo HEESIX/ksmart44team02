@@ -10,31 +10,31 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<!-- 사용자 정의 js file  -->
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
-		$(function(){
-			var msg = [[${msg}]];
-			
-			if(msg!=null) alert(msg);
-			
-		});
-	</script>
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
 </th:block>
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-12 p-0">
+			<div class="col-sm-12 p-0" style="display: flex;">
 				<div class="main-header">
 					<h4>할인 혜택 목록</h4>
 					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
 						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
 								class="icofont icofont-home"></i></a></li>
-						<li class="breadcrumb-item"><a th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
+						<li class="breadcrumb-item"><a
+							th:href="@{/admin/goods/discount/goodsDiscountList}">할인 혜택 목록</a></li>
 					</ol>
+				</div>
+				<div style="padding-left: 20px; padding-top: 20px;">
+					<span>상품별 할인혜택 목록을 조회한다.</span><br>
+					<span>상품별 할인혜택에 대해 수정 및 삭제가 가능하며 등록 또한 가능하다.</span>
 				</div>
 			</div>
 		</div>
@@ -42,6 +42,8 @@
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
 					<div class="card-block">
+							<div th:replace="admin/goods/search/searchGoodsDiscountList :: searchFragment"
+								style="margin-bottom: 10px;"></div>
 						<div class="table-responsive">
 							<table class="table m-b-0 photo-table">
 								<thead>
@@ -80,7 +82,8 @@
 											<td th:text="${gdl.goodsDiscountRegDatetime}"></td>
 											<td><a
 												th:href="@{|/admin/goods/discount/updateGoodsDiscount/${gdl.goodsDiscountCode}|}">수정</a></td>
-											<td><a th:href="@{|/admin/goods/discount/removeGoodsDiscount/${gdl.goodsDiscountCode}|}">삭제</a></td>
+											<td><a
+												th:href="@{|/admin/goods/discount/removeGoodsDiscount/${gdl.goodsDiscountCode}|}">삭제</a></td>
 										</th:block>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(goodsDiscountList)}">
@@ -90,7 +93,7 @@
 								</tbody>
 							</table>
 						</div>
-						<a th:href="@{/admin/goods/discount/goods_discount_reg_form}"><button
+						<a th:href="@{/admin/goods/discount/regGoodsDiscount}"><button
 								style="float: right; margin-top: 10px;"
 								class="btn btn-info waves-effect waves-light" type="button">등록</button></a>
 					</div>
@@ -100,6 +103,36 @@
 	</div>
 </th:block>
 
-
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			var msg = [[${msg}]];
+			
+			if(msg!=null) alert(msg);
+			
+			$(".js-example-basic-single").select2();
+			
+			$('#searchKey').change(function(){
+				console.log('바뀜');
+				var searchKey = $(this).val();
+				console.log(searchKey);
+				if(searchKey == 'discountRate' || searchKey == 'discountPrice'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minNum').css('display', 'block');
+					$('.maxNum').css('display', 'block');
+				}else if(searchKey == 'expirationDate' || searchKey == 'regDate'){
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.minDate').css('display', 'block');
+					$('.maxDate').css('display', 'block');
+				}else{
+					$('#seachBox .searchValueBox').css('display', 'none');
+					$('.searchText').css('display', 'block');
+				}
+			});
+		});
+	</script>
+</th:block>
 
 </html>
