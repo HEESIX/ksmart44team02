@@ -234,20 +234,13 @@
 			mi.menu_code 
 			,mi.menu_name 
 			,mi.menu_reg_datetime 
-			,sum(if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price, g.g_discount)) OVER () AS menu_Price
-			,mo.menu_goods_code			as mo_menu_goods_code
-			,mo.g_code					as mo_g_code
-			,mo.menu_goods_amount 		as mo_menu_goods_amount
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price * mo.menu_goods_amount, g.g_discount * mo.menu_goods_amount) AS menu_Price
 		FROM 
 			tb_menu_information AS mi 
 			INNER JOIN 
 			tb_menu_organize AS mo 
 			ON 
 			mo.menu_code = mi.menu_code
-			INNER JOIN 
-			tb_ingredient AS i
-			ON 
-			i.g_code = mo.g_code
 			INNER JOIN 
 			tb_goods AS g
 			on
@@ -257,7 +250,9 @@
 			ON 
 			gdm.goods_discount_code = g.goods_discount_code
 		WHERE 
-			mi.menu_reg_id = #{memberId};
+			mi.menu_reg_id = #{memberId}
+		GROUP BY 
+			mi.menu_code
 	</select>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">

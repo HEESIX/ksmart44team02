@@ -413,15 +413,14 @@ public class AdminGoodsController {
 							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage) throws ParseException {
 		
 		
+		boolean addAdminMenuResult = true;
 		
 		String menuOfGoods = "{ \"goodsItems\" : " + goodsItems + "}";
-		boolean addAdminMenuResult = true;
 		
 		JSONParser jsonParse = new JSONParser();
 		JSONObject jsonObj = (JSONObject) jsonParse.parse(menuOfGoods);
 		System.out.println(jsonObj);
 		JSONArray goodsItemArray = (JSONArray) jsonObj.get("goodsItems");
-		
 		
 		 String serverName = request.getServerName(); 
 		 log.info("{} <<<< serverName", serverName); 

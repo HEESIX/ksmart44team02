@@ -12,6 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import groovyjarjarantlr4.v4.parse.ANTLRParser.parserRule_return;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
@@ -408,9 +414,47 @@ public class GoodsService {
 		return 0;
 	}
 
-	// 개인 맞춤 식단 생성
-	public int addBuyerMenu() {
-		return 0;
+	// 개인 맞춤 식단 등록
+	public boolean addMyMenu(String menuCode, String myMenuName, String goodsItems, HttpSession session) throws JsonMappingException, JsonProcessingException {
+		
+		boolean result = true;
+		
+		MenuInformation menuInformation = new MenuInformation();
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		menuInformation.setMenuCode(menuCode);
+		menuInformation.setMenuName(myMenuName);
+		menuInformation.setMenuRegId(memberId);
+		
+		boolean addMenuInfomationResult = goodsMapper.addMenuInformation(menuInformation);
+		if(!addMenuInfomationResult) result = false;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<Map<String, Object>> maps = objectMapper.readValue(goodsItems, new TypeReference<List<Map<String, Object>>>() {});
+
+		for(Map<String, Object> map : maps) {
+			String goodsOfMenuCode = (String) map.get("goodsOfMenuCode");
+			
+			int menuGoodsAmount = Integer.parseInt((String) map.get("menuGoodsAmount"));
+			String menuGoodsCode = commonMapper.getNewCode("tb_menu_organize");
+			
+			MenuOrganize menuOrganize = new MenuOrganize();
+			
+			menuOrganize.setMenuGoodsCode(menuGoodsCode);
+			menuOrganize.setMenuCode(menuCode);
+			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode);
+			menuOrganize.setMenuGoodsAmount(menuGoodsAmount);
+			
+			boolean addMenuOrganizeResult = goodsMapper.addMenuOrganize(menuOrganize);
+			if(!addMenuOrganizeResult) {
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 	// 개인 맞춤 식단 목록 조회

@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import ks44team02.dto.Cart;
 import ks44team02.dto.Criteria;
 import ks44team02.dto.Goods;
@@ -50,15 +53,25 @@ public class BuyerGoodsController {
 	// 개인 맞춤 식단 생성 폼
 	@GetMapping("/buyerMenu/regMyMenu")
 	public String addbuyerMenuForm(Model model) {
-		List<Goods> goodsList = goodsService.getGoodsList(null);
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
 		model.addAttribute("goodsList", goodsList);
 		return "buyer/goods/buyerMenu/regMyMenu";
 	}
 
 	// 개인 맞춤 식단 생성 처리
-	@PostMapping("/buyerMenu/regMenu")
-	public String addbuyerMenu() {
-		return "redirect:/buyer/goods/buyerMenu/myMenuList";
+	@PostMapping("/buyerMenu/regMyMenu")
+	@ResponseBody
+	public boolean addbuyerMenu(@RequestParam(value = "myMenuName") String myMenuName
+							   ,@RequestParam(value = "goodsItems") String goodsItems
+							   ,HttpSession session) throws JsonMappingException, JsonProcessingException {
+		log.info(">>>>>>>>>>{}", myMenuName);
+		log.info(">>>>>>>>>>{}", goodsItems);
+		
+		String menuCode = commonService.getNewCode("tb_menu_information");
+		
+		goodsService.addMyMenu(menuCode, myMenuName, goodsItems, session);
+		
+		return true;
 	}
 
 	// 개인 맞춤 식단 목록 조회
