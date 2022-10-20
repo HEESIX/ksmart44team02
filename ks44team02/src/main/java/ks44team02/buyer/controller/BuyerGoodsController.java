@@ -48,11 +48,11 @@ public class BuyerGoodsController {
 	}
 
 	// 개인 맞춤 식단 생성 폼
-	@GetMapping("/buyerMenu/regMenu")
+	@GetMapping("/buyerMenu/regMyMenu")
 	public String addbuyerMenuForm(Model model) {
 		List<Goods> goodsList = goodsService.getGoodsList(null);
 		model.addAttribute("goodsList", goodsList);
-		return "buyer/goods/buyerMenu/regMenu";
+		return "buyer/goods/buyerMenu/regMyMenu";
 	}
 
 	// 개인 맞춤 식단 생성 처리
