@@ -225,9 +225,28 @@
 			<id column="menu_goods_code" property="menuGoodsCode"/>
 			<result column="menu_code" property="menuCode"/>
 			<result column="g_code" property="goodsOfMenuCode"/>
+			<result column="g_name" property="goodsName"/>
 			<result column="menu_goods_amount" property="menuGoodsAmount"/>
 		</collection>
 	</resultMap>
+	<!-- 개인 식단 하나 조회  -->
+	<select id="getBuyerMenuInfo" parameterType="Map" resultMap="menuInfomationResultMap">
+		SELECT
+			mi.menu_code 
+			,mi.menu_name 
+			,mo.g_code						 as mo_g_code
+			,mo.menu_goods_amount			 as mo_menu_goods_amount
+		FROM 
+			tb_menu_information AS mi 
+			INNER JOIN 
+			tb_menu_organize AS mo 
+			ON 
+			mo.menu_code = mi.menu_code
+		WHERE 
+			mi.menu_reg_id = #{memberId}
+			AND
+			mi.menu_code = #{menuCode}
+	</select>
 	<!-- 개인 식단 조회  -->
 	<select id="getBuyerMenuList" parameterType="Map" resultMap="menuInfomationResultMap" fetchSize="100">
 		SELECT
@@ -235,6 +254,9 @@
 			,mi.menu_name 
 			,mi.menu_reg_datetime 
 			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price * mo.menu_goods_amount, g.g_discount * mo.menu_goods_amount) AS menu_Price
+			,mo.g_code						 as mo_g_code
+			,mo.menu_goods_amount			 as mo_menu_goods_amount
+			,g.g_name						 as mo_g_name
 		FROM 
 			tb_menu_information AS mi 
 			INNER JOIN 
@@ -251,8 +273,6 @@
 			gdm.goods_discount_code = g.goods_discount_code
 		WHERE 
 			mi.menu_reg_id = #{memberId}
-		GROUP BY 
-			mi.menu_code
 	</select>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">

@@ -144,9 +144,24 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 폼
 	@GetMapping("/buyerMenu/updateMyMenu/{menu_code}")
-	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menu_code) {
-		// 세션 SID와 불러오는 식단 정보의 memberId 유효성 검사 필요
-
+	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
+									 ,HttpSession session
+									 ,Model model) {
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("menuCode", menuCode);
+		map.put("memberId", memberId);
+		
+		MenuInformation menuInformation = goodsService.getBuyerMenuInfo(map);
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
+		
+		model.addAttribute("title", "나만의 식단 수정");
+		model.addAttribute("menuInformation", menuInformation);
+		model.addAttribute("goodsList", goodsList);
+		
 		return "buyer/goods/buyerMenu/updateMyMenu";
 	}
 

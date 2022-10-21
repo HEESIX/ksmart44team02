@@ -190,7 +190,7 @@ public interface GoodsMapper {
 	public int removeBuyerMenu();
 	
 	//개인 맞춤 식단 정보
-	public MenuInformation getBuyerMenuInfo();
+	public MenuInformation getBuyerMenuInfo(Map<String, Object> map);
 	
 	//식단 목록
 	public List<MenuInformation> getMenuList();

@@ -463,10 +463,6 @@ public class GoodsService {
 		return buyerMenuList;
 	}
 	
-	// 개인 맞춤 식단 수정
-	public int modifyBuyerMenu() {
-		return 0;
-	}
 
 	// 개인 맞춤 식단 삭제
 	public boolean removeBuyerMenu(String menuCode) {
@@ -480,8 +476,9 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 정보
-	public MenuInformation getBuyerMenuInfo() {
-		return null;
+	public MenuInformation getBuyerMenuInfo(Map<String, Object> map) {
+		MenuInformation menuInformation = goodsMapper.getBuyerMenuInfo(map);
+		return menuInformation;
 	}
 
 	// 식단 목록
