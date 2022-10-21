@@ -121,8 +121,20 @@ public class BuyerCartController {
 		return result;
 	}
 	
-	//장바구니에 담긴 상품 주문화면으로 선택 이동
-	@PostMapping("/cartMove")
+	//장바구니에 담긴 상품 주문화면으로 이동
+	@PostMapping("/cartGoodsOrder")
+	public boolean cartGoodsOrder(@RequestParam(value = "cartListCode") String cartListCode
+											   ,HttpSession session) {
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		return true;
+	}
+	
+	
+	//주문화면 조회
+	@GetMapping("/order")
 	public String moveCartGoods() {
 		return "buyer/order/order";
 	}
