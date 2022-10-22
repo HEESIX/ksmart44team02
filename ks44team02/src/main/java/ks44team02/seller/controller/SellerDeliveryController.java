@@ -72,12 +72,7 @@ public class SellerDeliveryController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	//주문서 상태별 조회 처리
 	@PostMapping("/sellerOrderDeliveryAllList")
@@ -170,18 +165,5 @@ public class SellerDeliveryController {
 	}
 	
 
-
-	//구매자 주문배송처리 폼
-	@GetMapping("/sellerOrderStatusDeal/")
-	public String OrderDeal(Model model) {
-		return null;
-	}
-	
-	
-	//구매자 주문배송 처리
-	@PostMapping("/sellerOrderStatusDeal")
-	public String OrderDeal() {
-		return null;
-	}
 }
 
