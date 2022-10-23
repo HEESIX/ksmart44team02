@@ -54,6 +54,7 @@ public class BuyerGoodsController {
 	@GetMapping("/buyerMenu/regMyMenu")
 	public String addbuyerMenuForm(Model model) {
 		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
+		model.addAttribute("title", "개인 맞춤 식단 등록");
 		model.addAttribute("goodsList", goodsList);
 		return "buyer/goods/buyerMenu/regMyMenu";
 	}
@@ -167,7 +168,9 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 처리
 	@PostMapping("/buyerMenu/updateMyMenu")
-	public String modifybuyerMenu() {
+	public String modifybuyerMenu(Model model) {
+		
+		model.addAttribute("title", "개인 맞춤 식단 수정");
 		return "redirect:/buyer/goods/buyerMenu/myMenuList";
 	}
 
@@ -193,7 +196,10 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 개별 정보
 	@GetMapping("/buyerMenu/myMenuDetail/{menu_code}")
-	public String getbuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	public String getbuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code
+								  ,Model model) {
+		
+		model.addAttribute("title", "개인 맞춤 식단 상세 정보");
 		
 		return "buyer/goods/buyerMenu/myMenuDetail";
 	}

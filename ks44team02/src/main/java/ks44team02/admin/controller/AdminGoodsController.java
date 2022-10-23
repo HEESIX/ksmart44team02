@@ -179,6 +179,8 @@ public class AdminGoodsController {
 	public String getGoodsRegApplyInfo(Model model
 										,@PathVariable(value = "goodsApplyCode") String goodsApplyCode) {
 		GoodsApply goodsRegApplyInfo = goodsService.getGoodsRegApplyInfo(goodsApplyCode);
+		
+		model.addAttribute("title", "상품 등록 신청 상세 정보");
 		model.addAttribute("goodsRegApplyInfo", goodsRegApplyInfo);
 		return "admin/goods/goodsRegApplyDetail";
 	}
@@ -362,6 +364,8 @@ public class AdminGoodsController {
 		// g_code null? 혹은 존재하지 않을경우?
 
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		
+		model.addAttribute("title", "개별 상품 정보");
 		model.addAttribute("goodsInfo", goodsInfo);
 		return "admin/goods/goodsDetail";
 	}
@@ -545,6 +549,8 @@ public class AdminGoodsController {
 		map.put("isLocalhost", isLocalhost);
 		
 		List<Goods> adminMenuList = goodsService.getAdminMenuList(map);
+		
+		model.addAttribute("title", "판매 식단 목록");
 		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menuList";
 	}
@@ -778,7 +784,10 @@ public class AdminGoodsController {
 
 	// 상품별 할인 혜택 등록 폼
 	@GetMapping("/discount/regGoodsDiscount")
-	public String addGoodsDiscountForm() {
+	public String addGoodsDiscountForm(Model model) {
+		
+		model.addAttribute("title", "상품별 할인 혜택 등록");
+		
 		return "admin/goods/discount/regGoodsDiscount";
 	}
 
@@ -860,6 +869,8 @@ public class AdminGoodsController {
 	public String modifyGoodsDiscountForm(@PathVariable(value = "goodsDiscountCode") String goodsDiscountCode
 										 ,Model model) {
 		GoodsDiscount goodsDiscountInfo = goodsService.modifyGoodsDiscountForm(goodsDiscountCode);
+		
+		model.addAttribute("title", "상품별 할인 혜택 수정");
 		model.addAttribute("goodsDiscountInfo", goodsDiscountInfo);
 		return "admin/goods/discount/updateGoodsDiscount";
 	}
@@ -908,6 +919,7 @@ public class AdminGoodsController {
 										 ,Model model) {
 		GoodsDiscount goodsDiscountInfo = goodsService.removeGoodsDiscountForm(goodsDiscountCode);
 		
+		model.addAttribute("title", "상품별 할인 혜택 삭제");
 		model.addAttribute("goodsDiscountInfo", goodsDiscountInfo);
 		return "admin/goods/discount/removeGoodsDiscount";
 	}
