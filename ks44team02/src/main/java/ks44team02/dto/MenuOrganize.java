@@ -4,7 +4,17 @@ public class MenuOrganize {
 	private String menuGoodsCode;
 	private String menuCode;
 	private String goodsOfMenuCode;
+	private String goodsName;
 	private int menuGoodsAmount;
+
+	
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
 
 	public String getMenuGoodsCode() {
 		return menuGoodsCode;
@@ -47,6 +57,8 @@ public class MenuOrganize {
 		builder.append(menuCode);
 		builder.append(", goodsOfMenuCode=");
 		builder.append(goodsOfMenuCode);
+		builder.append(", goodsName=");
+		builder.append(goodsName);
 		builder.append(", menuGoodsAmount=");
 		builder.append(menuGoodsAmount);
 		builder.append("]");

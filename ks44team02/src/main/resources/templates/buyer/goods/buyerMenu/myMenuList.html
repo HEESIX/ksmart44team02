@@ -26,6 +26,7 @@ caption {
 table td {
 	padding: 10px;
 	background-color: #f8f9fa;
+	
 }
 
 table th {
@@ -36,6 +37,7 @@ table th {
 
 table th, td {
 	max-width: 200px;
+	
 }
 
 .modifyBtn {
@@ -72,7 +74,7 @@ table th, td {
 	border: 1px solid #c70d00;
 }
 
-.cartInfo{
+.cartInfo {
 	z-index: 10;
 	position: absolute;
 	padding: 20px 20px 20px 20px;
@@ -87,15 +89,18 @@ table th, td {
 	box-sizing: border-box;
 	display: none;
 }
-.cartInfoClose{
+
+.cartInfoClose {
 	position: absolute;
 	right: 10px;
 	top: 5px;
 }
-.cartInfo p{
+
+.cartInfo p {
 	font-size: 13px;
 }
-.moveToCart{
+
+.moveToCart {
 	border: 1px solid #7fad39;
 	padding: 7px 15px 7px 15px;
 	font-weight: bold;
@@ -129,6 +134,8 @@ table th, td {
 		<thead>
 			<tr>
 				<th>식단명</th>
+				<th>포함 상품명</th>
+				<th>수량</th>
 				<th>가격</th>
 				<th>장바구니에 담기</th>
 				<th>수정</th>
@@ -136,32 +143,44 @@ table th, td {
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:if="${not #lists.isEmpty(buyerMenuList)}"
-				th:each="bml : ${buyerMenuList}">
-				<td><a th:text="${bml.menuName}"
-					th:href="@{|/buyer/goods/buyerMenu/myMenuDetail/${bml.menuCode}|}"></a></td>
-				<td th:text="${bml.menuPrice}"></td>
-				<td><button type="button" class="site-btn cartBtn"
-						th:data-menuCode="${bml.menuCode}"
-						style="height: 33px; padding: 5px 10px 5px 10px;">담기</button></td>
-				<td><a class="modifyBtn"
-					th:href="@{|/buyer/goods/buyerMenu/updateMyMenu/${bml.menuCode}|}">수정</a></td>
-				<td>
-					<form th:action="@{|/buyer/goods/buyerMenu/removeMyMenu/${bml.menuCode}|}"
-						method="post">
-						<button type="button" class="removeBtn">삭제</button>
-					</form>
-				</td>
-			</tr>
+			<th:block th:if="${not #lists.isEmpty(buyerMenuList)}"
+				th:each="bml, bmlStatus : ${buyerMenuList}">
+				<tr th:if="${not #lists.isEmpty(bml.menuOrganizeList)}"
+					th:each="mol, molStatus : ${bml.menuOrganizeList}">
+					<td th:if="${molStatus.index} == 0" th:rowspan="${molStatus.size}"><a
+						th:text="${bml.menuName}"
+						th:href="@{|/buyer/goods/buyerMenu/myMenuDetail/${bml.menuCode}|}"></a></td>
+					<td th:text="${mol.goodsName}"></td>
+					<td th:text="${mol.menuGoodsAmount}"></td>
+					<td th:if="${molStatus.index} == 0" th:rowspan="${molStatus.size}" th:text="${bml.menuPrice}"></td>
+					<td th:if="${molStatus.index} == 0" th:rowspan="${molStatus.size}"><button
+							type="button" class="site-btn cartBtn"
+							th:data-menuCode="${bml.menuCode}"
+							style="height: 33px; padding: 5px 10px 5px 10px;">담기</button></td>
+					<td th:if="${molStatus.index} == 0" th:rowspan="${molStatus.size}"><a
+						class="modifyBtn"
+						th:href="@{|/buyer/goods/buyerMenu/updateMyMenu/${bml.menuCode}|}">수정</a></td>
+					<td th:if="${molStatus.index} == 0" th:rowspan="${molStatus.size}">
+						<form
+							th:action="@{|/buyer/goods/buyerMenu/removeMyMenu/${bml.menuCode}|}"
+							method="post">
+							<button type="button" class="removeBtn">삭제</button>
+						</form>
+					</td>
+				</tr>
+			</th:block>
 			<tr>
-				<td colspan="5"><a th:href="@{/buyer/goods/buyerMenu/regMyMenu}" class="site-btn" style="width: 15%;">등록</button></a></td>
+				<td colspan="7"><a
+					th:href="@{/buyer/goods/buyerMenu/regMyMenu}" class="site-btn"
+					style="width: 15%;">등록</a></td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="cartInfo">
 		<a href="javascript:void(0)" class="cartInfoClose">X</a>
 		<p>상품이 장바구니에 담겼습니다.</p>
-		<a th:href="@{/buyer/mypage/cart/cartList}" class="moveToCart" style="color: #7fad39;">장바구니로 이동하기 ></a>
+		<a th:href="@{/buyer/mypage/cart/cartList}" class="moveToCart"
+			style="color: #7fad39;">장바구니로 이동하기 ></a>
 	</div>
 </th:block>
 

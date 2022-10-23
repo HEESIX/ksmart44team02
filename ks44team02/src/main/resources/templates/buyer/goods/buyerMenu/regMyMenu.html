@@ -42,7 +42,7 @@ table th, td {
 	max-width: 200px;
 }
 
-.modifyBtn {
+.moreGoodsBtn {
 	font-size: 14px;
 	color: #555;
 	font-weight: 800;
@@ -53,10 +53,10 @@ table th, td {
 	border: 1px solid #555;
 }
 
-.modifyBtn:hover {
+.moreGoodsBtn:hover {
 	color: white;
-	background: #ff7b08;
-	border: 1px solid #ff7b08;
+	background: #42cf44;
+	border: 1px solid white;
 }
 
 .removeBtn {
@@ -144,7 +144,7 @@ table th, td {
 
 <!-- 사용자 정의 contents  -->
 <th:block layout:fragment="customContents">
-	<form th:action="@{/buyer/goods/buyerMenu/regMenu}" method="post">
+	<form id="addMyMenuForm" th:action="@{/buyer/goods/buyerMenu/regMenu}" method="post">
 		<div class="checkout__form">
 			<h4>내 식단 등록</h4>
 			<div class="row">
@@ -153,36 +153,38 @@ table th, td {
 						<p>
 							<label for="myMenuName">식단명</label><span>*</span>
 						</p>
-						<input class="vailCheck" placeholder="식단명을 입력해주세요." type="text"
+						<input class="vailCheck" placeholder="식단명" type="text"
 							id="myMenuName" name="myMenuName">
 					</div>
-					<div class="row goodsItems checkout__input"
-						style="margin-bottom: 10px; padding-left: 15px;">
-						<div class="goodsOfMenu" style="padding-left: 0; width: 300px;">
-							<select class="js-example-basic-single2 goodsOfMenuCode"
-								id="goodsOfMenuCode" style="width: 100%;">
-								<option value="">포함될 상품을 선택해주세요.</option>
-								<th:block th:if="${not #lists.isEmpty(goodsList)}"
-									th:each="gl : ${goodsList}">
-									<option th:value="${gl.goodsCode}" th:text="${gl.goodsName}"></option>
-								</th:block>
-							</select>
-						</div>
-						<div class="col-lg-5 inputBox"
-							style="height: 42px; padding-left: 0; padding-right: 3px;">
-							<input class="form-control vailCheck" type="number"
-								id="menuGoodsAmount" value="0"
-								style="width: 100%; height: 100%;" placeholder="수량">
-						</div>
-						<div class="col-lg-2 btnDiv" style="padding-left: 0;">
-							<div>
-								<button type="button"
-									class="btn btn-success waves-effect waves-light"
-									id="moreGoodsBtn" style="height: 42px; line-height: 10px;">추가</button>
+					<div class="select_goods_Of_Menu">
+						<div class="row goodsItems checkout__input"
+							style="margin-bottom: 10px; padding-left: 15px;">
+							<div class="goodsOfMenu" style="padding-left: 0; width: 300px;">
+								<select class="js-example-basic-single2 goodsOfMenuCode"
+									id="goodsOfMenuCode" style="width: 100%;">
+									<option value="">포함될 상품을 선택해주세요.</option>
+									<th:block th:if="${not #lists.isEmpty(goodsList)}"
+										th:each="gl : ${goodsList}">
+										<option th:value="${gl.goodsCode}" th:text="${gl.goodsName}"></option>
+									</th:block>
+								</select>
+							</div>
+							<div class="col-lg-5 inputBox"
+								style="height: 42px; padding-left: 0; padding-right: 3px;">
+								<input class="form-control vailCheck" type="number"
+									id="menuGoodsAmount"
+									style="width: 100%; height: 100%;" placeholder="수량">
+							</div>
+							<div class="col-lg-2 btnDiv" style="padding-left: 0;">
+								<div>
+									<button type="button"
+										class="moreGoodsBtn"
+										id="moreGoodsBtn" style="height: 42px; line-height: 10px;">추가</button>
+								</div>
 							</div>
 						</div>
 					</div>
-					<button type="submit" style="float: right;" class="site-btn">등록</button>
+					<button type="button" id="regBtn" style="float: right;" class="site-btn">등록</button>
 				</div>
 			</div>
 		</div>
@@ -197,6 +199,101 @@ table th, td {
 		$(function() {
 			$('.nice-select').remove();
 			$('.js-example-basic-single2').select2();
+			
+			//유효성 검사
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == '' || inputValue <= 0) {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]').text();
+							alert(alertMsg + ' 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof inputValue == 'undefined'
+							|| inputValue == null || inputValue == '') {
+						isValid = false;
+						return false;
+					}
+				}
+				return isValid;
+			}
+			
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems checkout__input" style="margin-bottom: 10px; padding-left: 15px;"><div class="goodsOfMenu" style="padding-left: 0; width: 300px;"></div></div>');
+				var $selectBox = $('.goodsOfMenu:first .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .goodsOfMenu:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 42px; padding : 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2" style="padding-left: 3px;"><button type="button" class="site-btn removeBtn" style="height: 42px; line-height : 20px;">삭제</button></div>');
+				
+				var deleteBtn = $('.removeBtn');
+				$.each(deleteBtn, function(){
+					$(this).click(function(){
+						$(this).parent().parent().remove();
+					});
+				});
+				$(".js-example-basic-single2").select2();
+			});
+			
+			$('#regBtn').click(function(){
+				var booleanValue = true;
+				
+				var selectObj = $('.goodsOfMenuCode');
+				var selectValid = validationCheck(selectObj);
+				if(!selectValid) return false;
+				
+				var inputObj = $('.vailCheck');
+				var inputValid = validationCheck(inputObj);
+				if(!inputValid) return false;
+				
+				var goodsItemsObj = $('.goodsItems');
+				var goodsItemsArray = [];
+				
+				$.each(goodsItemsObj, function(item, index) {
+					var goodsItems = {};
+					var goodsOfMenuCode = $(this).find('select').val();
+					var menuGoodsAmount = $(this).find('input').val();
+					goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
+					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
+					goodsItemsArray.push(goodsItems);
+				});
+				console.log(goodsItemsArray, "<<<<<");
+				
+				var form = $('#addMyMenuForm');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				console.log(formData, "<<<<<<<<<<<<<<");
+				$.ajax({
+					type : 'POST',
+					url : '/buyer/goods/buyerMenu/regMyMenu',
+					processData : false,
+					contentType : false,
+					data : formData,
+				}).done(function(data) {
+					if(data){
+						window.location.href = '/buyer/goods/buyerMenu/myMenuList';
+						alert('식단 등록이 정상적으로 완료되었습니다.');
+					}else{
+						alert('오류!');
+					}
+				}).fail(function(error) {
+					alert('통신 실패');
+				}); 
+				
+			});
 		});
 	</script>
 </th:block>
