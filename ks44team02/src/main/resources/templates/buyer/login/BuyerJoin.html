@@ -391,6 +391,7 @@ footer .copyright-wrap span{
 
 <th:block layout:fragment="customContents">
 	<section class="checkout spad">
+		<form th:action="@{/buyer/login/buyerJoin}" method="post">
 		<div class="container">
 				<div class="checkout__form">
 					<h4>구매자 회원가입</h4>
@@ -586,15 +587,14 @@ footer .copyright-wrap span{
 									  			<br><br>
 									</div>
 									<div class="logcenter">	
-										<a th:href="@{/buyer/login/buyerLogin}">
-						  					<button type="button" class="loginbtn">회원 가입 완료</button>
-						  				</a>	
+						  					<button type="submit" class="loginbtn">회원 가입 완료</button>
 						  			</div>
+						  	
 						 </div>  	
 				  	</div>
 				</div>			
 			</div>
-	
+		</form>	
 	</section>
 </th:block>
 

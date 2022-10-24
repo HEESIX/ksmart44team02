@@ -94,9 +94,9 @@ public class LoginService {
 	}
 		
 	//구매자 회원가입
-	public void addBuyer (Member member) {
-		int result = loginMapper.addBuyer(member);
-		System.out.println("회원가입 결과:" + result);
+	public void addBuyer(Member member) {
+			int result = loginMapper.addBuyer(member);
+			System.out.println("회원가입 결과:" + result);
 	 	}
 	public List<Member> getAddBuyer(){
 		List<Member>addBuyer = loginMapper.getAddBuyer();

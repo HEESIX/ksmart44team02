@@ -72,6 +72,5 @@ public class MemberInfoservice {
 					return null;
 		}
 		
-		
-		
+			
 }
