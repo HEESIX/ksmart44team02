@@ -301,10 +301,15 @@ public class GoodsService {
 	// 개별 식단 정보(식단이 포함하는 상품들의 정보)조회
 	public List<Goods> getMenuOrganizeGoodsInfo(String menuCode) {
 		List<Goods> menuOrganizeGoodsInfo = new ArrayList<Goods>();
+		
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
+		
 		for (MenuOrganize menuOrganize : menuOrganizeList) {
+			
 			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			
 			menuOrganizeGoodsInfo.add(goodsMapper.getGoodsInfo(goodsCode));
+			
 			System.out.println(menuOrganizeGoodsInfo.toString());
 		}
 		return menuOrganizeGoodsInfo;
@@ -461,6 +466,51 @@ public class GoodsService {
 	public List<MenuInformation> getBuyerMenuList(Map<String, Object> map) {
 		List<MenuInformation> buyerMenuList = goodsMapper.getBuyerMenuList(map);
 		return buyerMenuList;
+	}
+	
+	//개인 맞춤 식단 수정
+	public boolean modifyMyMenu(String menuCode
+							   ,String myMenuName
+							   ,String goodsItems
+							   ,HttpSession session) throws JsonMappingException, JsonProcessingException {
+		
+		boolean result = true;
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		boolean addMenuInfomationResult = goodsMapper.modifyMenuInformation(menuCode, myMenuName);
+		if(!addMenuInfomationResult) return false;
+		
+		//새로 INSERT 전 DELETE 작업 필요
+		boolean removeMenuOrganizeResult = goodsMapper.removeMenuOragnize(menuCode);
+		if(!removeMenuOrganizeResult) return false;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<Map<String, Object>> maps = objectMapper.readValue(goodsItems, new TypeReference<List<Map<String, Object>>>() {});
+
+		for(Map<String, Object> map : maps) {
+			String goodsOfMenuCode = (String) map.get("goodsOfMenuCode");
+			
+			int menuGoodsAmount = Integer.parseInt((String) map.get("menuGoodsAmount"));
+			String menuGoodsCode = commonMapper.getNewCode("tb_menu_organize");
+			
+			MenuOrganize menuOrganize = new MenuOrganize();
+			
+			menuOrganize.setMenuGoodsCode(menuGoodsCode);
+			menuOrganize.setMenuCode(menuCode);
+			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode);
+			menuOrganize.setMenuGoodsAmount(menuGoodsAmount);
+			
+			boolean addMenuOrganizeResult = goodsMapper.addMenuOrganize(menuOrganize);
+			if(!addMenuOrganizeResult) {
+				result = false;
+				break;
+			}
+			if(!result) return false;
+		}
+		return result;
 	}
 	
 

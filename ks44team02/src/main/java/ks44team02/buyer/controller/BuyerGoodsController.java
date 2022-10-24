@@ -145,7 +145,7 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 폼
 	@GetMapping("/buyerMenu/updateMyMenu/{menu_code}")
-	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
+	public String modifyBuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
 									 ,HttpSession session
 									 ,Model model) {
 		String memberId = (String) session.getAttribute("SID");
@@ -168,10 +168,15 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 처리
 	@PostMapping("/buyerMenu/updateMyMenu")
-	public String modifybuyerMenu(Model model) {
+	@ResponseBody
+	public boolean modifyBuyerMenu(@RequestParam(value = "menuCode") String menuCode
+								 ,@RequestParam(value = "myMenuName") String myMenuName
+							     ,@RequestParam(value = "goodsItems") String goodsItems
+							     ,HttpSession session) throws JsonMappingException, JsonProcessingException {
 		
-		model.addAttribute("title", "개인 맞춤 식단 수정");
-		return "redirect:/buyer/goods/buyerMenu/myMenuList";
+		boolean modifyMyMenuResult = goodsService.modifyMyMenu(menuCode, myMenuName, goodsItems, session);
+		
+		return modifyMyMenuResult;
 	}
 
 	// 개인 맞춤 식단 삭제 처리
@@ -292,7 +297,21 @@ public class BuyerGoodsController {
 
 	// 개별 식단 정보
 	@GetMapping("/menu/menuDetail/{menu_code}")
-	public String getMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	public String getMenuInfo(@PathVariable(value = "menu_code") String menuCode
+							 ,Model model) {
+		
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
+		List<MenuOrganize> menuOrganizeInfo = goodsService.getMenuOrganizeList(menuCode);
+		List<Goods> menuOrganizeGoods = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		
+		log.info(">>>>>>>>>>>>>>>>>{}", menuInfo);
+		log.info(">>>>>>>>>>>>>>>>>{}", menuOrganizeGoods);
+		
+		model.addAttribute("title", "식단 상세 정보");
+		model.addAttribute("menuInfo", menuInfo);
+		model.addAttribute("menuOrganizeGoods", menuOrganizeGoods);
+		model.addAttribute("menuOrganizeInfo", menuOrganizeInfo);
+		
 		return "buyer/goods/menu/menuDetail";
 	}
 

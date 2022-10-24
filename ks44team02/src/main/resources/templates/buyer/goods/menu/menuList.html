@@ -135,7 +135,7 @@ a:hover {
 								<div class="col-lg-4">
 									<div class="product__discount__item">
 										<div class="product__discount__item__pic">
-											<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
+											<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
 												th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
 											<div class="product__discount__percent"
 												th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
@@ -150,7 +150,7 @@ a:hover {
 										<div class="product__discount__item__text">
 											<span th:text="${ml.goodsCategory.goodsCategoryName}"></span>
 											<h5>
-												<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}" th:text="${ml.goodsName}"></a>
+												<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}" th:text="${ml.goodsName}"></a>
 											</h5>
 											<div class="product__item__price"
 												th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
@@ -216,7 +216,7 @@ a:hover {
 					<div class="col-lg-4 col-md-6 col-sm-6">
 						<div class="product__item">
 							<div class="product__item__pic">
-								<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
+								<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
 									th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
 								<div class="product__discount__percent"
 									th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
@@ -231,7 +231,7 @@ a:hover {
 							<div class="product__discount__item__text">
 								<span th:text="${ml.goodsCategory.goodsCategoryName}"></span>
 								<h5>
-									<a th:href="@{|/buyer/goods/menuDetail/${ml.goodsCode}|}" th:text="${ml.goodsName}"></a>
+									<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}" th:text="${ml.goodsName}"></a>
 								</h5>
 								<div class="product__item__price"
 									th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">

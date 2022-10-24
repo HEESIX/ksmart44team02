@@ -136,7 +136,7 @@ table th, td {
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>내 식단 등록</h2>
+						<h2>내 식단 수정</h2>
 						<div class="breadcrumb__option">
 							<a th:href="@{/seller}">Home</a><span>Shop</span>
 						</div>
@@ -163,6 +163,7 @@ table th, td {
 						</p>
 						<input class="vailCheck" placeholder="식단명" type="text"
 							id="myMenuName" name="myMenuName" th:value="*{menuName}">
+						<input type="hidden" name="menuCode" th:value="*{menuCode}">
 					</div>
 					<div class="select_goods_Of_Menu">
 						<th:block
@@ -248,102 +249,73 @@ table th, td {
 				return isValid;
 			}
 
-			$('#moreGoodsBtn')
-					.click(
-							function() {
-								$('.select_goods_Of_Menu')
-										.append(
-												'<div class="row goodsItems checkout__input" style="margin-bottom: 10px; padding-left: 15px;"><div class="goodsOfMenu" style="padding-left: 0; width: 300px;"></div></div>');
-								var $selectBox = $(
-										'.goodsOfMenu:first .select2-hidden-accessible')
-										.clone();
-								var $inputBox = $('.inputBox .vailCheck')
-										.clone();
-								$('.select_goods_Of_Menu .goodsOfMenu:last')
-										.append($selectBox);
-								$('.select_goods_Of_Menu .row:last')
-										.append(
-												'<div class="col-lg-5" style="height: 42px; padding : 0;"></div>');
-								$(
-										'.select_goods_Of_Menu .row:last .col-lg-5:last')
-										.append($inputBox);
-								$('.select_goods_Of_Menu .row:last')
-										.append(
-												'<div class="col-lg-2" style="padding-left: 3px;"><button type="button" class="site-btn removeBtn" style="height: 42px; line-height : 20px;">삭제</button></div>');
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems checkout__input" style="margin-bottom: 10px; padding-left: 15px;"><div class="goodsOfMenu" style="padding-left: 0; width: 300px;"></div></div>');
+				var $selectBox = $('.goodsOfMenu:first .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .goodsOfMenu:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 42px; padding : 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2" style="padding-left: 3px;"><button type="button" class="site-btn removeBtn" style="height: 42px; line-height : 20px;">삭제</button></div>');
 
-								var deleteBtn = $('.removeBtn');
-								$.each(deleteBtn, function() {
-									$(this).click(function() {
-										$(this).parent().parent().remove();
-									});
-								});
-								$(".js-example-basic-single2").select2();
-							});
+				var deleteBtn = $('.removeBtn');
+				$.each(deleteBtn, function() {
+					$(this).click(function() {
+						$(this).parent().parent().remove();
+					});
+				});
+				$(".js-example-basic-single2").select2();
+			});
 
-			$('#regBtn')
-					.click(
-							function() {
-								var booleanValue = true;
+			$('#regBtn').click(function() {
+				var booleanValue = true;
 
-								var selectObj = $('.goodsOfMenuCode');
-								var selectValid = validationCheck(selectObj);
-								if (!selectValid)
-									return false;
+				var selectObj = $('.goodsOfMenuCode');
+				var selectValid = validationCheck(selectObj);
+				if (!selectValid)
+					return false;
 
-								var inputObj = $('.vailCheck');
-								var inputValid = validationCheck(inputObj);
-								if (!inputValid)
-									return false;
+				var inputObj = $('.vailCheck');
+				var inputValid = validationCheck(inputObj);
+				if (!inputValid)
+					return false;
 
-								var goodsItemsObj = $('.goodsItems');
-								var goodsItemsArray = [];
+				var goodsItemsObj = $('.goodsItems');
+				var goodsItemsArray = [];
 
-								$
-										.each(
-												goodsItemsObj,
-												function(item, index) {
-													var goodsItems = {};
-													var goodsOfMenuCode = $(
-															this)
-															.find('select')
-															.val();
-													var menuGoodsAmount = $(
-															this).find('input')
-															.val();
-													goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
-													goodsItems['menuGoodsAmount'] = menuGoodsAmount;
-													goodsItemsArray
-															.push(goodsItems);
-												});
-								console.log(goodsItemsArray, "<<<<<");
+				$.each(goodsItemsObj, function(item, index) {
+					var goodsItems = {};
+					var goodsOfMenuCode = $(this).find('select').val();
+					var menuGoodsAmount = $(this).find('input').val();
+					goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
+					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
+					goodsItemsArray.push(goodsItems);
+				});
+				console.log(goodsItemsArray, "<<<<<");
 
-								var form = $('#modifyMyMenu');
-								var formData = new FormData(form[0]);
-								formData.append('goodsItems', JSON
-										.stringify(goodsItemsArray));
-								console.log(formData, "<<<<<<<<<<<<<<");
-								$
-										.ajax(
-												{
-													type : 'POST',
-													url : '/buyer/goods/buyerMenu/updateMyMenu',
-													processData : false,
-													contentType : false,
-													data : formData,
-												})
-										.done(
-												function(data) {
-													if (data) {
-														window.location.href = '/buyer/goods/buyerMenu/myMenuList';
-														alert('식단 등록이 정상적으로 완료되었습니다.');
-													} else {
-														alert('오류!');
-													}
-												}).fail(function(error) {
-											alert('통신 실패');
-										});
+				var form = $('#modifyMyMenu');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				console.log(formData, "<<<<<<<<<<<<<<");
+				$.ajax(
+					{ 	type : 'POST',
+						url : '/buyer/goods/buyerMenu/updateMyMenu',
+						processData : false,
+						contentType : false,
+						data : formData,
+					}).done(function(data) {
+						if (data) {
+							window.location.href = '/buyer/goods/buyerMenu/myMenuList';
+							alert('식단 수정이 정상적으로 완료되었습니다.');
+						} else {
+							window.location.href = '/buyer/goods/buyerMenu/myMenuList';
+							alert('식단 수정 실패');
+						}
+					}).fail(function(error) {
+							alert('통신 실패');
+					});
 
-							});
+			});
 		});
 	</script>
 </th:block>
