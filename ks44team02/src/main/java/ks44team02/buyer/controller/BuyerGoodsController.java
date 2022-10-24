@@ -145,7 +145,7 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 폼
 	@GetMapping("/buyerMenu/updateMyMenu/{menu_code}")
-	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
+	public String modifyBuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
 									 ,HttpSession session
 									 ,Model model) {
 		String memberId = (String) session.getAttribute("SID");
@@ -168,10 +168,15 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 처리
 	@PostMapping("/buyerMenu/updateMyMenu")
-	public String modifybuyerMenu(Model model) {
+	@ResponseBody
+	public boolean modifyBuyerMenu(@RequestParam(value = "menuCode") String menuCode
+								 ,@RequestParam(value = "myMenuName") String myMenuName
+							     ,@RequestParam(value = "goodsItems") String goodsItems
+							     ,HttpSession session) throws JsonMappingException, JsonProcessingException {
 		
-		model.addAttribute("title", "개인 맞춤 식단 수정");
-		return "redirect:/buyer/goods/buyerMenu/myMenuList";
+		boolean modifyMyMenuResult = goodsService.modifyMyMenu(menuCode, myMenuName, goodsItems, session);
+		
+		return modifyMyMenuResult;
 	}
 
 	// 개인 맞춤 식단 삭제 처리
