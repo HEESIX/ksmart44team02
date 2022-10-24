@@ -39,7 +39,7 @@ public class AdminDeliveryController {
 	//구매자의 배송현황 조회
 	@GetMapping("/buyerOrderDeliveryStatus")
 	public String getAdminOrderStatusList() {
-		return null;
+		return "admin/order/buyerOrderDeliveryStatus";
 	}
 
 	//환불 사유 카테고리 등록 폼
