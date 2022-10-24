@@ -60,7 +60,7 @@ public interface LoginMapper {
 	//회원 목록 조회
 	public List<Member> getMemberList();
 
-	//관리자회원 가입???
+	//관리자회원 리스트
 	public List<Member> getAddAdmin();
 	
 	//관리자회원 가입
