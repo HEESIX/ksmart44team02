@@ -83,7 +83,7 @@ public class LoginService {
 		return result;
 		}
 		
-	//판매자 회원가입
+	//관리자 회원가입
 	public void addAdmin(Member member) {
 	       int result = loginMapper.addAdmin(member);
 	       System.out.println("회원가입 결과:" + result);
