@@ -59,12 +59,19 @@ public interface LoginMapper {
 
 	//회원 목록 조회
 	public List<Member> getMemberList();
+	
 
 	//관리자회원 리스트
 	public List<Member> getAddAdmin();
 	
 	//관리자회원 가입
 	public int addAdmin(Member member);
+	
+	//구매자 회원 리스트
+	public List<Member> getAddBuyer();
+
+	//구매자 회원가입 
+	public int addBuyer(Member member);
 
 
 

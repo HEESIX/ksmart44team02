@@ -437,9 +437,9 @@ footer .copyright-wrap span{
 									<div class="checkout__input">
 										<p>성별 <span> *</span></p>
 										<select name="memberGender" id="memberGender">										
-												<option>--성별--</option>
-												<option>--여성--</option>
-												<option>--남성--</option>
+												<option>성별</option>
+												<option>여</option>
+												<option>남</option>
 										</select>
 									</div>
 								</div>
@@ -448,10 +448,18 @@ footer .copyright-wrap span{
 										<p>이메일<span> *</span></p>
 										<input type="text" name="memberEmail" id="memberEmail">
 								</div>
+								</div>
 							</div>
-							
-						
-							</div>
+								<div class="row">
+										<div class="col-lg-12">
+											<div class="checkout__input">
+												<p>등급</p>
+												<select name="memberLevelCode" id="memberLevelCode">										
+													<option>member_level_2</option>
+											</select>
+										</div>
+									</div>
+								</div><br>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input" style="margin-bottom: 0;">
@@ -459,42 +467,74 @@ footer .copyright-wrap span{
 									</div>
 								</div>
 							</div>
-							
+							 <!-- 
+							<div>
+				               <div class="row">
+				               	  <div class="checkout__input col-lg-2">
+				               	  	 <input type="text" name="yy" id="year" class ="col-lg-2" placeholder="1900 연도">
+				               	  </div>                 
+				               	  <p>년</p>
+				                  <select name="mm" id="month" class ="col-lg-2">
+				                  		<option >-월-</option>
+										<option >1</option>
+										<option >2</option>
+										<option >3</option>
+										<option >4</option>
+										<option >5</option>
+										<option >6</option>
+										<option >7</option>
+										<option >8</option>
+										<option >9</option>
+										<option >10</option>
+										<option >11</option>
+										<option >12</option>
+				                  </select>월
+				                  <div class="checkout__input col-lg-2">
+				                	  <input type="text" name="dd" id="day" class ="col-lg-2" placeholder="00일" >			                  
+				                  </div>
+				                  <p>일</p>
+				                  <div id="birth_y-errmsg"></div>
+				                  <div id="birth_m-errmsg"></div>
+				                  <div id="birth_d-errmsg"></div>
+				               </div>
+				            </div>
+							-->
 							<div class="row">
-								<div class="checkout__input col-lg-2">
-									<input type="text" name="memberBirf" id="memberBirf" placeholder="4자 연도">								
-								</div>	
-								<p>년</p>
-								
-								<div class="checkout__input col-lg-3">
-									<select id="memberBirs">
-										<option >----월----</option>
-										<option >1월</option>
-										<option >2월</option>
-										<option >3월</option>
-										<option >4월</option>
-										<option >5월</option>
-										<option >6월</option>
-										<option >7월</option>
-										<option >8월</option>
-										<option >9월</option>
-										<option >10월</option>
-										<option >11월</option>
-										<option >12월</option>
-									</select>
-									</div>
 									<div class="checkout__input col-lg-2">
-										<input type="text" name="goodsProduce" id="goodsProduce"placeholder="일">								
+										<input type="text" name="yy" id="yy" placeholder="1900 연도">								
 									</div>	
+								<p>년</p>
+									<div class="checkout__input col-lg-3" >
+											<select name="mm"  id="mm">
+												<option >-월-</option>
+												<option >01</option>
+												<option >02</option>
+												<option >03</option>
+												<option >04</option>
+												<option >05</option>
+												<option >06</option>
+												<option >07</option>
+												<option >08</option>
+												<option >09</option>
+												<option >10</option>
+												<option >11</option>
+												<option >12</option>
+											</select>
+										</div>
+									<p>월</p>
+										<div class="checkout__input col-lg-2">
+											<input type="text" name="dd" id="dd" placeholder="00일">								
+										</div>	
 									<p>일</p>
 							</div>
+						
 							
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
 										<p>연락처<span>*</span></p>
 										<div class="checkout__input d-flex">
-											<input class="upload-name" id="memberPhone" placeholder="010-000-0000"> 
+											<input class="upload-name" id="memberPhone" name=""memberPhone"" placeholder="010-000-0000"> 
 											<button type="submit" class="col-md-2 img-btn">인증</button>
 										</div>
 									</div>
@@ -507,7 +547,7 @@ footer .copyright-wrap span{
 									<div class="checkout__input">
 										<p>주소<span>*</span></p>
 										<div class="checkout__input d-flex">
-											<input class="upload-name" id="memberAdr"> 
+											<input class="upload-name" id="memberAddr" name="memberAddr"> 
 											<button type="submit" class="col-md-2 img-btn">주소찾기</button>
 										</div>
 									</div>
@@ -520,13 +560,13 @@ footer .copyright-wrap span{
 									<div class="checkout__input">
 										<p>추천아이디</p>
 										<div class="checkout__input d-flex">
-											<input class="upload-name" id="memberReco"> 
+											<input class="upload-name" id="recommenderId" name="recommenderId"> 
 										</div>
 									</div>
 								</div>
 							</div>
 						
-				
+				   <!--
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="checkout__input">
@@ -538,6 +578,7 @@ footer .copyright-wrap span{
 									</div>
 								</div>
 							</div>
+				  -->
 								
 									<div class="logcenter">	
 												<input type='checkbox'/>정보 제공 동의 <br>

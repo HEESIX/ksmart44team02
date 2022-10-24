@@ -12,7 +12,7 @@ import ks44team02.service.JoinService;
 
 
 @Controller
-@RequestMapping ("/admin/join")
+@RequestMapping ("/admin/login")
 public class AdminJoinController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminJoinController.class);

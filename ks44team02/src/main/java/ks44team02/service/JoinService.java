@@ -31,8 +31,11 @@ public class JoinService {
 		}
 		
 	//판매자 회원가입
-	public String buyerJoin() {
-		return null;
+	public String buyerJoin(Member member) {
+		String addResult = "회원가입실패";
+		int result = loginMapper.addBuyer(member);
+		if(result > 0 ) addResult = "회원가입성공";
+		return addResult;
 	}
 	
 }
