@@ -18,6 +18,7 @@ public class OrderDetail {
 	private Delivery delivery;
 	private OrderStatus orderStatus;
 	private OrderStatusStandard orderStatusStandard;
+	private OrderManagement orderManagement;
 	public String getOrderDetailCode() {
 		return orderDetailCode;
 	}
@@ -114,6 +115,12 @@ public class OrderDetail {
 	public void setOrderStatusStandard(OrderStatusStandard orderStatusStandard) {
 		this.orderStatusStandard = orderStatusStandard;
 	}
+	public OrderManagement getOrderManagement() {
+		return orderManagement;
+	}
+	public void setOrderManagement(OrderManagement orderManagement) {
+		this.orderManagement = orderManagement;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -149,9 +156,12 @@ public class OrderDetail {
 		builder.append(orderStatus);
 		builder.append(", orderStatusStandard=");
 		builder.append(orderStatusStandard);
+		builder.append(", orderManagement=");
+		builder.append(orderManagement);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

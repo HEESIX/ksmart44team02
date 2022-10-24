@@ -257,7 +257,7 @@ li {
 													<td th:text="${sol.goods.goodsName}"></td>
 													<td th:text="${sol.orderAmount}"></td>
 													<td th:if="${sol.regularPriceSubtotal} !=0"
-														th:text="'₩ ' + ${sol.regularPriceSubtotal}"></td>
+														th:text="${sol.regularPriceSubtotal} + '원'"></td>
 													<td th:text="${sol.orderDateTime}"></td>
 													<td th:if="${sol.orderStatusStandard} != null"
 														th:text="${sol.orderStatusStandard.orderStatusStandardDetails}"></td>

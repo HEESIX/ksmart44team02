@@ -80,7 +80,7 @@ table th {
 							style="width: 100px; border-radius: 10px;" /></a></td>
 					<td th:text="${getSellerOrderDetail.get('goodsName')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderAmount')}" style="width: 200px;"></td>
-					<td th:text="'₩' + ${getSellerOrderDetail.get('regularPriceSubtotal')}" style="width: 200px;"></td>
+					<td th:text="${getSellerOrderDetail.get('regularPriceSubtotal')} + '원'" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderDatetime')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('orderStatusStandardDetails')}" style="width: 200px;"></td>
 					<td th:text="${getSellerOrderDetail.get('deliveryNumber')}" style="width: 200px;"></td>
@@ -95,16 +95,16 @@ table th {
 				<table class="table table-hover"  style="width: 100%; float: left;">
 					<tbody>
 						<tr>
+							<th>분류</th>
+							<td th:text="*{get('payType')}"></td>
+							<th style="height: 40px;">결제자명</th>
+							<td th:text="*{get('payName')}"></td>
+						</tr>
+						<tr>
 							<th>결제은행</th>
 							<td th:text="*{get('payBank')}"></td>
 							<th>결제정보</th>
 							<td th:text="*{get('payBankNum')}"></td>
-						</tr>
-						<tr>
-							<th>분류</th>
-							<td th:text="*{get('payType')}"></td>
-							<th style="height: 40px;">결제자</th>
-							<td th:text="*{get('payName')}"></td>
 						</tr>
 					</tbody>
 				</table>

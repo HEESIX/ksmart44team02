@@ -1,6 +1,7 @@
 package ks44team02.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team02.dto.OrderDetail;
 import ks44team02.dto.RefundExchangeReasons;
 import ks44team02.service.AdminDeliveryeService;
 import ks44team02.service.CommonService;
@@ -37,9 +39,31 @@ public class AdminDeliveryController {
 	
 	
 	//구매자의 배송현황 조회
-	@GetMapping("/buyerOrderDeliveryStatus")
-	public String getAdminOrderStatusList() {
-		return "admin/order/buyerOrderDeliveryStatus";
+	@GetMapping("/adminOrderDeliveryList")
+	public String getAdminOrderStatusList(Model model) {
+		
+		List<Map<String, Object>> getBuyerOrderList = adminDeliveryeService.getBuyerOrderList();
+		
+		model.addAttribute("title", "전체 구매자 주문내역");
+		model.addAttribute("getBuyerOrderList", getBuyerOrderList);
+		
+		return "admin/order/adminOrderDeliveryList";
+	}
+	
+	//구매자의 주문서 상세정보 조회
+	@GetMapping("/adminOrderDetail")
+	public String getBuyerOrderDetail(Model model
+			,@RequestParam(value = "orderGroupCode") String orderGroupCode) {
+		List<Map<String, Object>> getBuyerOrderDetail = adminDeliveryeService.getBuyerOrderDetail(orderGroupCode);
+		Map<String, Object> getBuyerPaymentInfo = adminDeliveryeService.getBuyerPaymentInfo(orderGroupCode);
+		Map<String, Object> getBuyerDeliveryInfo = adminDeliveryeService.getBuyerDeliveryInfo(orderGroupCode);
+		
+		model.addAttribute("title", "주문서 상세내역");
+		model.addAttribute("getBuyerOrderDetail", getBuyerOrderDetail);
+		model.addAttribute("getBuyerPaymentInfo", getBuyerPaymentInfo);
+		model.addAttribute("getBuyerDeliveryInfo", getBuyerDeliveryInfo);
+		
+		return "admin/order/adminOrderDetail";
 	}
 
 	//환불 사유 카테고리 등록 폼
