@@ -1323,6 +1323,7 @@
 	<select id="getMenuList" parameterType="Map" resultMap="goodsResultMap">
 		SELECT
 			g.g_code
+			,mi.menu_code					as mi_menu_code
 			,gmi.main_image_path			as gmi_main_image_path
 			,gmi.main_image_original_name	as gmi_main_image_original_name
 			,gmi.main_image_new_name		as gmi_main_image_new_name
@@ -1356,6 +1357,10 @@
 			tb_goods_main_image AS gmi
 			ON 
 			gmi.main_image_idx = g.g_main_image
+			INNER JOIN 
+			tb_menu_information AS mi 
+			ON 
+			mi.g_code = g.g_code
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
 				<if test="isLocalhost != null and isLocalhost != ''">
 					gmi.main_image_islocal = ${isLocalhost}

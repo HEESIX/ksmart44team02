@@ -301,10 +301,15 @@ public class GoodsService {
 	// 개별 식단 정보(식단이 포함하는 상품들의 정보)조회
 	public List<Goods> getMenuOrganizeGoodsInfo(String menuCode) {
 		List<Goods> menuOrganizeGoodsInfo = new ArrayList<Goods>();
+		
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
+		
 		for (MenuOrganize menuOrganize : menuOrganizeList) {
+			
 			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			
 			menuOrganizeGoodsInfo.add(goodsMapper.getGoodsInfo(goodsCode));
+			
 			System.out.println(menuOrganizeGoodsInfo.toString());
 		}
 		return menuOrganizeGoodsInfo;

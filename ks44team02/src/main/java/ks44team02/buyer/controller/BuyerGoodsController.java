@@ -292,7 +292,21 @@ public class BuyerGoodsController {
 
 	// 개별 식단 정보
 	@GetMapping("/menu/menuDetail/{menu_code}")
-	public String getMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	public String getMenuInfo(@PathVariable(value = "menu_code") String menuCode
+							 ,Model model) {
+		
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
+		List<MenuOrganize> menuOrganizeInfo = goodsService.getMenuOrganizeList(menuCode);
+		List<Goods> menuOrganizeGoods = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		
+		log.info(">>>>>>>>>>>>>>>>>{}", menuInfo);
+		log.info(">>>>>>>>>>>>>>>>>{}", menuOrganizeGoods);
+		
+		model.addAttribute("title", "식단 상세 정보");
+		model.addAttribute("menuInfo", menuInfo);
+		model.addAttribute("menuOrganizeGoods", menuOrganizeGoods);
+		model.addAttribute("menuOrganizeInfo", menuOrganizeInfo);
+		
 		return "buyer/goods/menu/menuDetail";
 	}
 
