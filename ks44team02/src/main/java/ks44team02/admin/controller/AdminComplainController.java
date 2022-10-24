@@ -54,7 +54,7 @@ public class AdminComplainController {
 
 	//회원 신고내역 삭제 폼
 	@GetMapping("/complainManage/complainDelete")
-	public String ComplainDeleteForm(@PathVariable(value = "complainCode") String complainCode,
+	public String complainDeleteForm(@PathVariable(value = "complainCode") String complainCode,
 			Model model) {
 		Complain complainInfo  = complainService.getComplainInfo(complainCode);
 		System.out.println(complainInfo.toString());
@@ -65,7 +65,7 @@ public class AdminComplainController {
 	
 	//회원 신고내역 삭제처리
 	@PostMapping("/complainManage/complainDelete/{complainCode}")
-	public String ComplainDelete(@RequestParam(value = "complainCode") String complainCode,
+	public String complainDelete(@RequestParam(value = "complainCode") String complainCode,
 									HttpSession session, RedirectAttributes reAttr) {
 		// session 저장하는 로그인 완성되면 이 부분 session 아이디 가져오게 교체
 		// String memberId = session.getAttribute("SID");

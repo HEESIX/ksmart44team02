@@ -58,7 +58,6 @@ public class MileageService {
 		     int detailPrice = regularPriceSubtotal;
 			
 
-			
 			if("적립".equals(mileageDistinct)){
 				addedUsedMileage = (int)((detailPrice) * (1/100));
 				currentMileage = currentMileage + addedUsedMileage;
