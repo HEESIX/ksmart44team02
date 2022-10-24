@@ -200,7 +200,7 @@ li {
                             <li>Subtotal <span>$454.98</span></li>
                             <li>Total <span>$454.98</span></li>
                         </ul>
-                        <a th:href="@{/buyer/order/order}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a id="subminBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -217,9 +217,6 @@ li {
 			$('.removeGoods').attr('data-cartListCode',orderCode);
 			$('#modal').modal("show"); //열기
 		});
-		
-		
-		
 		//상품 삭제
 		$(document).on('click', '.removeGoods', function(){
 			let cartListCode = $(this).attr('data-cartListCode');
@@ -272,6 +269,15 @@ li {
 			else $("#cbx_chkAll").prop("checked", true); 
 		});
 	});
+	
+	//선택한 상품 주문화면으로 이동
+	$(document).on('click', '#submitBtn', function() {
+		var 
+		
+		$.each()
+			var cartGoods = {};
+			cartGoods['goodsCode']
+	}
 	
 </script>
 
