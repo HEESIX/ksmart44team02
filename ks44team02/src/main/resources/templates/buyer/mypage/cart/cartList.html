@@ -7,21 +7,17 @@
 <th:block layout:fragment="customTitle">
 <title th:text="${title}"></title>
 </th:block>
-
 <!-- 사용자 정의 css -->
 <th:block layout:fragment="customCss">
 <style>
-
 .modal-content.modal-80size {
  position: relative;
   height: auto;
   min-height: 80%;
 }
-
 .modal.modal-center {
   text-align: center;
 }
-
 @media screen and (min-width: 768px) {
   .modal.modal-center:before {
     display: inline-block;
@@ -30,25 +26,20 @@
     height: 100%;
   }
 }
-
 .modal-dialog.modal-center {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
 }
-
-
 li {
   list-style: none;
   cursor: pointer;
 }
-
 /* STYLE */
 .main_con_form {
   text-align: left;
   padding: 20px;
 }
-
 .form_inner {
   width: 100%;
   height: 100%;
@@ -81,10 +72,8 @@ li {
 .form_list_input label {
   float: left;
   display: none;
-
 </style>
 </th:block>
-
 <!-- Breadcrumb Section Begin -->
 <th:block layout:fragment="customBreadCrum">
     <section class="breadcrumb-section set-bg" data-setbg="/user/img/breadcrumb.jpg">
@@ -104,147 +93,119 @@ li {
     </section>
 </th:block>
 <!-- Breadcrumb Section End -->
-
 <!-- Shoping Cart Section Begin -->
-	<th:block layout:fragment="customContents">
-	    <section class="shoping-cart spad">
-	        <div class="container">
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <div class="shoping__cart__table">
-	                        <table class="cartTable">
-	                            <thead>
-	                                <tr class="head">
-	                                    <th class="all-select-event">
-	                                    	<label>
-	                                    		<input type="checkbox" checked="checked" id="cbx_chkAll">
-	                                    		<span>CheckAll</span>
-	                                    	</label>
-	                                    </th>
-	                                    <th id="goodsImege">Products</th>
-	                                    <th id="goodsName"></th>
-	                                    <th id="goodsPrice">Price</th>
-	                                    <th id="goodsQuantity">Quantity</th>
-	                                    <th id="subTotal">Total</th>
-	                                    <th id="goodsRemove"></th>
-	                                </tr>
-	                            </thead>
-	                            <tbody id="cartTable">
-	                                <tr class="cart-deal-item" data-item-status="CHECKED" data-adult="false" th:if="${not #lists.isEmpty(cartList)}" th:each="cl, status : ${cartList}">
-		                                	<td><input type="checkbox" name="chk" value="goodsCheck" checked="checked"></td>
-		                                	<td><a th:href="@{|/buyer/goods/goodsDetail/${cl.goods.goodsCode}|}"><img
-												th:src="@{'/' + ${cl.goodsMainImage.mainImagePath}}"
-												th:alt="${cl.goodsMainImage.mainImageOriginalName}"
-												style="width: 100px;" /></a></td>
-		                                	<td th:text="${cl.goods.goodsName}">
-		                                	<td id="price" class="price" th:text="${cl.discountPrice}"></td>
-		                                	<td class="shoping_cart_quantity">
-		                                		<div class="quantity">
-		                                			<div class="pro-qty" id="qtybtn">
-			                                			<span class="dec qtybtn" style="width: 5px;"></span>
-		                                				<input id="amount" class="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
-			                                			<span class="inc qtybtn" style="width: 10px;"></span>
-		                                			</div>
-		                                		</div>
-		                                	</td>
-		                                	<td id="total" class="total" th:text="${cl.priceSubtotal}"></td>
-		                                    <td class="shoping__cart__item__close">
-		                                        <span class="icon_close modalBtn" th:data-cartListCode="${cl.cartListCode}"></span>
-						                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
-													  <div class="modal-dialog modal-80size modal-center" role="document">
-													    <div class="modal-content modal-80size">
-													      <div class="modal-header">
-													        <h4 class="modal-title" id="myModalLabel"></h4>
-													        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													      </div>
-													      <div class="modal-body">
-													       <div class="main_con_form">
-															  <div class="form_inner">
-																  <div>
-																    <ul class="form_list_input">											    	
-																      <li >
-																      	<input type="hidden" id="cartListCodeModal">
-																      	선택한 상품을 장바구니에서 삭제하시겠습니까?
-																      </li>
-																    </ul>
-																  </div>
+<th:block layout:fragment="customContents">
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table class="cartTable">
+                            <thead>
+                                <tr class="head">
+                                    <th class="all-select-event">
+                                    	<label>
+                                    		<input type="checkbox" checked="checked" id="cbx_chkAll">
+                                    		<span>CheckAll</span>
+                                    	</label>
+                                    </th>
+                                    <th id="goodsImege">Products</th>
+                                    <th id="goodsName"></th>
+                                    <th id="goodsPrice">Price</th>
+                                    <th id="goodsQuantity">Quantity</th>
+                                    <th id="subTotal">Total</th>
+                                    <th id="goodsRemove"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartTable">
+                                <tr class="cart-deal-item" data-item-status="CHECKED" data-adult="false" th:if="${not #lists.isEmpty(cartList)}" th:each="cl, status : ${cartList}">
+	                                	<td><input type="checkbox" name="chk" value="goodsCheck" checked="checked"></td>
+	                                	<td><a th:href="@{|/buyer/goods/goodsDetail/${cl.goods.goodsCode}|}"><img
+											th:src="@{'/' + ${cl.goodsMainImage.mainImagePath}}"
+											th:alt="${cl.goodsMainImage.mainImageOriginalName}"
+											style="width: 100px;" /></a></td>
+	                                	<td th:text="${cl.goods.goodsName}">
+	                                	<td id="price" class="price" th:text="${cl.discountPrice}"></td>
+	                                	<td class="shoping_cart_quantity">
+	                                		<div class="quantity">
+	                                			<div class="pro-qty" id="qtybtn">
+		                                			<span class="dec qtybtn" style="width: 5px;"></span>
+	                                				<input id="amount" class="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
+		                                			<span class="inc qtybtn" style="width: 10px;"></span>
+	                                			</div>
+	                                		</div>
+	                                	</td>
+	                                	<td id="total" class="total" th:text="${cl.priceSubtotal}"></td>
+	                                    <td class="shoping__cart__item__close">
+	                                        <span class="icon_close modalBtn" th:data-cartListCode="${cl.cartListCode}"></span>
+					                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
+												  <div class="modal-dialog modal-80size modal-center" role="document">
+												    <div class="modal-content modal-80size">
+												      <div class="modal-header">
+												        <h4 class="modal-title" id="myModalLabel"></h4>
+												        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												      </div>
+												      <div class="modal-body">
+												       <div class="main_con_form">
+														  <div class="form_inner">
+															  <div>
+															    <ul class="form_list_input">											    	
+															      <li >
+															      	<input type="hidden" id="cartListCodeModal">
+															      	선택한 상품을 장바구니에서 삭제하시겠습니까?
+															      </li>
+															    </ul>
 															  </div>
-															</div>
-													      </div>
-													      <div class="modal-footer">
-													        <button type="button" class="btn btn-default removeGoods" th:data-cartListCode="${cartListCode}">확인</button>
-													      </div>
-													    </div>
-													  </div>
-													</div>
-		                                        </td>
-	                                </tr>
-	                               	<tr th:unless="${not #lists.isEmpty(cartList)}">
-										<td colspan="5" style="text-align: center;">상품을 담아주세요.</td>
-	                                </tr>
-	                            </tbody>
-	                        </table>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <div class="shoping__cart__btns">
-	                        <a th:href="@{/buyer/goods/goodsList}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-	                    </div>
-	                </div>
-	                <div class="col-lg-6">
-	                    <div class="shoping__checkout">
-	                        <h5>Cart Total</h5>
-	                        <ul>
-	                            <li>Subtotal <span>$454.98</span></li>
-	                            <li>Total <span>$454.98</span></li>
-	                        </ul>
-	                        <a id="submitBtn" class="primary-btn" style="cursor:pointer">PROCEED TO CHECKOUT</a>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </section>
-	</th:block>
+														  </div>
+														</div>
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-default removeGoods" th:data-cartListCode="${cartListCode}">확인</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+	                                        </td>
+                                </tr>
+                               	<tr th:unless="${not #lists.isEmpty(cartList)}">
+									<td colspan="5" style="text-align: center;">상품을 담아주세요.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a th:href="@{/buyer/goods/goodsList}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <li>Subtotal <span>$454.98</span></li>
+                            <li>Total <span>$454.98</span></li>
+                        </ul>
+                        <a id="subminBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </th:block>
     <!-- Shoping Cart Section End -->    
-<!-- <th:block layout:fragment="customFootjs">-->
+<th:block layout:fragment="customFootjs">
 <script type="text/javascript">
-$(function(){
-	$(document).on('click', '#submitBtn', function() {
-		let checkGoods = $("checkbox[name=chk]:checked").val();
-		//ajax
-		console.log(checkGoods);
-		
-		alert("1111")
-		/*
-		var request = $.ajax({
-					  method: "POST",
-					  url: "/buyer/order/order",
-					  data: { 
-						  	   'checkGoods' : checkGoods 
-						  	},
-					  dataType: "json",
-					  success: function(data){
-						  	console.log("success");
-						  	console.log("data");
-					  		location.href ="/buyer/order/order"
-					  }
-		});
-		*/
-
-	});
-});
-/*
 	$(function(){
 		//모달창 열기
-		
 		$(document).on('click', '.modalBtn', function(){
 			let orderCode = $(this).attr('data-cartListCode');
 			$('.removeGoods').attr('data-cartListCode',orderCode);
 			$('#modal').modal("show"); //열기
 		});
-		상품 삭제
+		//상품 삭제
 		$(document).on('click', '.removeGoods', function(){
 			let cartListCode = $(this).attr('data-cartListCode');
 			//ajax
@@ -272,7 +233,7 @@ $(function(){
 			});
 		});
 	});
-	/상품 개수에 따른 금액 변경
+	//상품 개수에 따른 금액 변경
 	$(document).on('click', '.qtybtn', function(){
 		console.log('확인');
 		var price = $(this).parents('.cart-deal-item').find('.price').text();
@@ -280,8 +241,7 @@ $(function(){
 		var subtotal = price * amount;
 		$(this).parents('.cart-deal-item').find('#total').text(subtotal);
 	});
-
-	/상품 전체 선택
+	//상품 전체 선택
 	$(document).ready(function() {
 		$("#cbx_chkAll").click(function() {
 			if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
@@ -296,11 +256,16 @@ $(function(){
 			else $("#cbx_chkAll").prop("checked", true); 
 		});
 	});
-	
-	/선택한 상품 주문화면으로 이동
-	
-	*/
-	
+
+	//선택한 상품 주문화면으로 이동
+	$(document).on('click', '#submitBtn', function() {
+		var 
+
+		$.each()
+			var cartGoods = {};
+			cartGoods['goodsCode']
+	}
+
 </script>
 
 </th:block>
