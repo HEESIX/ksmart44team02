@@ -5,10 +5,38 @@
 
 <th:block layout:fragment="customCss">
 	<style>
-		table tr th,td{
-			 border-spacing: 0.5px;
-  			border-collapse: separate;
-		}
+		html,
+body,
+.intro {
+  height: 100%;
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+thead th {
+  color: #fff;
+}
+
+.card {
+  border-radius: .5rem;
+}
+
+.table-scroll {
+  border-radius: .5rem;
+}
+
+.table-scroll table thead th {
+  font-size: 1.25rem;
+}
+thead {
+  top: 0;
+  position: sticky;
+}
 	</style>
 </th:block>
 
@@ -30,15 +58,22 @@
 		</div>
 	</form>
 	<br>
-		<table class="table m-b-0 photo-table">
-    			<thead>
+		<section class="intro">
+  <div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72;">
     			<tr>
     				<th>리뷰코드</th>
-    				<th>배송코드</th>
     				<th>상세주문서 코드</th>
     				<th>상품코드</th>
     				<th>회원아이디</th>
-    				<th>이미지</th>
     				<th>글제목</th>
     				<th>글내용</th>
     				<th>글작성일</th>
@@ -49,11 +84,9 @@
     			<tr th:if="${not #lists.isEmpty(reviewList)}"
     				th:each="rl : ${reviewList}">
     				<td th:text="${rl.revCode}"></td>
-    				<td th:text="${rl.deliveryCode}"></td>
     				<td th:text="${rl.orderDetailCode}"></td>
     				<td th:text="${rl.gCode}"></td>
     				<td th:text="${rl.memberId}"></td>
-    				<td th:text="${rl.revImage}"></td>
     				<td th:text="${rl.reviewTitle}"></td>
     				<td th:text="${rl.reviewContents}"></td>
     				<td th:text="${rl.revRegDatetime}"></td>
@@ -62,8 +95,17 @@
     			<tr th:unless="${not #lists.isEmpty(reviewList)}">
     				<td colspan="11" style="text-align: center;">리뷰 내역이 존재하지 않습니다.</td>
     			</tr>
-    		</tbody>
-    	</table>
+    	   </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 	</th:block>
@@ -92,12 +134,10 @@
 					 if(typeof reviewList != 'undefined' && reviewList != null){
 						 for(let userReview of reviewList){
 							html += '<tr>';
-							html += '	<td>' + userReview.revCode + '</td>'; 
-							html += '	<td>' + userReview.deliveryCode + '</td>'; 
+							html += '	<td>' + userReview.revCode + '</td>';  
 							html += '	<td>' + userReview.orderDetailCode + '</td>'; 
 							html += '	<td>' + userReview.gCode + '</td>'; 
-							html += '	<td>' + userReview.memberId + '</td>'; 
-							html += '	<td>' + userReview.revImage + '</td>';
+							html += '	<td>' + userReview.memberId + '</td>';
 							html += '	<td>' + userReview.reviewTitle + '</td>';
 							html += '	<td>' + userReview.reviewContents + '</td>';
 							html += '	<td>' + userReview.revRegDatetime + '</td>';
