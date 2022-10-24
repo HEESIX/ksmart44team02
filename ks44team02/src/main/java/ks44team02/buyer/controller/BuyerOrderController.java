@@ -1,6 +1,8 @@
 package ks44team02.buyer.controller;
 
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks44team02.dto.Cart;
 import ks44team02.service.OrderService;
 
 @Controller
@@ -32,6 +35,8 @@ public class BuyerOrderController {
 	//주문 화면
 	@GetMapping("/order/order")
 	public String order(Model model) {
+		
+		
 		return "buyer/order/order";
 	}
 

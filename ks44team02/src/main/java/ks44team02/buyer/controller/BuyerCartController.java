@@ -121,12 +121,4 @@ public class BuyerCartController {
 		
 		return result;
 	}	
-	
-	//주문화면 조회
-	@GetMapping("/order")
-	public String moveCartGoods() {
-		
-		
-		return "buyer/order/order";
-	}
 }
