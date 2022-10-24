@@ -370,28 +370,6 @@ public class AdminGoodsController {
 		return "admin/goods/goodsDetail";
 	}
 
-	// 상품 수정 폼
-	@GetMapping("/updateGoods/{g_code}")
-	public String modifyGoodsForm(@PathVariable(value = "g_code") String g_code) {
-
-		return "admin/goods/updateGoods";
-	}
-
-	// 상품 수정 처리
-	@PostMapping("/updateGoods")
-	public String modifyGoods() {
-
-		// 수정 처리 후 돌아갈 화면 redirect
-		return "redirect:/admin/goods/goodsList";
-	}
-
-	// 상품 삭제 처리
-	@PostMapping("/removeGoods/{g_code}")
-	public String removeAdminGoods(@PathVariable(value = "g_code") String g_code) {
-
-		return "redirect:/admin/goods/goodsList";
-	}
-
 	// 식단 등록 폼
 	@GetMapping("/menu/regMenu")
 	public String addAdminMenuForm(Model model) {
