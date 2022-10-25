@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,4 +78,26 @@ public class BuyerLoginController {
 		return "buyer/login/buyerLoginList";
 		
 	}
+	
+	// 구매자 회원 개별 정보 
+	@GetMapping("buyerLoginList/{member_id}")
+	public String getBuyerInfo(@PathVariable(value="member_id") String memberId, Model model) {
+		Member buyerInfo = loginService.getBuyerInfo(memberId);
+		model.addAttribute("title","구매자 개별 정보");
+		model.addAttribute("buyerInfo",buyerInfo);
+		return "buyer/login/buyerLoginList";
+	}
+	
+	// 구매자 정보 수정폼 
+	@GetMapping("/buyerLoginUpdate/{member_id}")
+	public String modifyBuyerForm(@PathVariable(value="member_id") String member_id) {
+		return "buyer/login/buyerLoginUpdate";
+	}
+	
+	//구매자 정보 수정 처리 
+	public String modifyBuyer() {
+		
+		return "redirect:buyer/login/buyerLoginList";
+	}
+	
 }

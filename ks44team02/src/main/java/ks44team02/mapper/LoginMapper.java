@@ -73,6 +73,9 @@ public interface LoginMapper {
 	//구매자 회원가입 
 	public int addBuyer(Member member);
 
+	//구매자 개별 정보 
+	public Member getBuyerInfo(String buyerInfo);
+
 
 
 	
