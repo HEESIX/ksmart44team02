@@ -12,13 +12,13 @@ import ks44team02.service.ComplainService;
 
 @Controller
 @RequestMapping(value = "seller/complain")
-public class SellerComplainController {
+public class sellerComplainController {
 	
-	private static final Logger log = LoggerFactory.getLogger(SellerInqueryController.class);
+	private static final Logger log = LoggerFactory.getLogger(sellerInqueryController.class);
 	
 	private final ComplainService complainService;
 	
-	public SellerComplainController(ComplainService complainService) {
+	public sellerComplainController(ComplainService complainService) {
 		this.complainService = complainService;
 	}
 	
