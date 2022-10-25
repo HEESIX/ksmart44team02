@@ -4,6 +4,7 @@ package ks44team02.buyer.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +33,17 @@ public class BuyerOrderController {
 	public void buyerOrderControllerInit() {
 		log.info("BuyerOrderController bean 생성");
 	}
-	//주문 화면
+	//주문 화면 조회
 	@GetMapping("/order/order")
-	public String order(Model model) {
+	public String order(Model model
+					   ,HttpSession session) {
 		
+		String sessionId = (String) session.getAttribute("SID");
+		
+		//세션이 생기면 아래 조건문은 주석처리 해야함
+		if(sessionId == null)  sessionId = "id002";
+		
+		List<Cart> orderList = orderService.order(sessionId);
 		
 		return "buyer/order/order";
 	}
