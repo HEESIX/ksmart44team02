@@ -33,7 +33,7 @@ public class BuyerJoinController {
 	public String adminJoin(Member member) {
 		log.info("member {}", member);
 		joinService.adminJoin(member);
-		return "redirect:/buyer";
+		return "redirect:/buyer/login/buyerLogin";
 	}
 
 				

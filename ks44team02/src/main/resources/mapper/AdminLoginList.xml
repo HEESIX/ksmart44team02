@@ -89,7 +89,32 @@
 		VALUES 
 			(#{memberId},#{memberPw},#{memberName},#{memberLevelCode},#{memberPhone},#{memberEmail},#{memberGender},CURDATE(),concat(#{yy},'-', #{mm},'-',#{dd}),#{recommenderId},#{memberAddr});
 	</insert>
-	
-	
-	
+	<!-- 구매자 회원 정보 수정 처리 -->
+	<!--   내용 수정하기 !!
+	<update id="modifyIngredient" parameterType="Ingredient">
+		UPDATE tb_ingredient
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="ingredientKCal != null">
+				ingr_kcal=${ingredientKCal}
+			</if>
+			<if test="ingredientProtein != null">
+				,ingr_protein=${ingredientProtein}
+			</if>
+			<if test="ingredientCarb != null">
+				,ingr_carb=${ingredientCarb}
+			</if>
+			<if test="ingredientSugar != null">
+				,ingr_sugar=${ingredientSugar}
+			</if>
+			<if test="ingredientSodium != null">
+				,ingr_sodium=${ingredientSodium}
+			</if>
+			<if test="ingredientCholesterol != null">
+				,ingr_cholesterol=${ingredientCholesterol}
+			</if>
+		</trim>
+		WHERE 
+			g_code = #{goodsCode}
+	</update>
+	-->
 </mapper>

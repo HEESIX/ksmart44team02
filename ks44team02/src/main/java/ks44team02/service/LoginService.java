@@ -18,10 +18,7 @@ public class LoginService {
 	}
 			
 		
-	//회원수정
-	public void modifyMember(Member member) {
-		loginMapper.modifyMember(member);
-		}
+	
 
 	//구매자 로그인
 	public String buyerLogin () {
@@ -103,8 +100,12 @@ public class LoginService {
 		return addBuyer;
 		
 	}
-		
-		
+	
+	// 구매자 개별 정보 
+	public Member getBuyerInfo(String memberId) {
+		Member buyerInfo = loginMapper.getBuyerInfo(memberId);
+		return buyerInfo;
+	}
 		
 		
 }
