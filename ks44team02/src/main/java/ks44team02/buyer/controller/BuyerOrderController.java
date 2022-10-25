@@ -47,26 +47,15 @@ public class BuyerOrderController {
 		
 		return "buyer/order/order";
 	}
-
+	//주문 처리
+	@PostMapping("/order/order")
+	public String order() {
+		return "redirect:/buyer/order/orderSuccess";
+	}
 	//주문 성공 화면
 	@GetMapping("/order/orderSuccess")
 	public String orderSuccess(Model model) {
 		return "buyer/order/orderSuccess";
-	}
-	//주문 성공 처리
-	@PostMapping("/mypage/orderStatus/orderSuccess")
-	public String orderSuccess() {
-		return "buyer/mypage/orderStatus/orderSuccess";
-	}
-	//결제 성공 화면
-	@GetMapping("/order/paymentSuccess")
-	public String paymentSuccess(Model model) {
-		return "buyer/order/paymentSuccess";
-	}
-	//결제 성공 처리
-	@PostMapping("/order/paymentSuccess")
-	public String paymentSuccess() {
-		return "buyer/order/paymentSuccess";
 	}
 	//주문 취소 화면
 	@GetMapping("/mypage/orderStatus/orderCancel")
