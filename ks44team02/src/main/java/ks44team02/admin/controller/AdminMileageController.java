@@ -31,12 +31,11 @@ public class AdminMileageController<Mileage> {
 	private final MileageService mileageService;
 
 
-	private final CommonService commonService;
+	
 
-
-	public AdminMileageController(MileageService mileageService, CommonService commonService) {
+	public AdminMileageController(MileageService mileageService) {
 		this.mileageService = mileageService;
-		this.commonService = commonService;
+		
 	}
 
 	@PostConstruct
