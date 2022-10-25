@@ -24,12 +24,12 @@ public class BuyerJoinController {
 	}
 	
 	//구매자 회원가입
-	@GetMapping("/BuyerJoin")
-	public String BuyerJoin() {
+	@GetMapping("/buyerJoin")
+	public String buyerJoin() {
 		return "buyer/login/buyerJoin";
 	}
 	
-	@PostMapping("/BuyerJoin")
+	@PostMapping("/buyerJoin")
 	public String adminJoin(Member member) {
 		log.info("member {}", member);
 		joinService.adminJoin(member);
