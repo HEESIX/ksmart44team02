@@ -17,17 +17,17 @@ import ks44team02.service.MileageService;
 
 @Controller
 @RequestMapping(value = "/buyer/Mileage")
-public class BuyerMileageController {
+public class buyerMileageController {
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
 
 	private final MileageService mileageService;
 
-	public BuyerMileageController(MileageService mileageService) {
+	public buyerMileageController(MileageService mileageService) {
 		this.mileageService = mileageService;
 	}
 
 	@PostConstruct
-	public void BuyerMileageControllerInit() {
+	public void buyerMileageControllerInit() {
 		log.info("adminMileageControllerInit bean 생성");
 	}
 	

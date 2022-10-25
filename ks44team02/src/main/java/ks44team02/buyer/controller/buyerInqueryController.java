@@ -23,15 +23,15 @@ import ks44team02.service.QnAservice;
 
 @Controller
 @RequestMapping(value = "/buyer/inquery")
-public class BuyerInqueryController {
+public class buyerInqueryController {
 
-	private static final Logger log = LoggerFactory.getLogger(BuyerInqueryController.class);
+	private static final Logger log = LoggerFactory.getLogger(buyerInqueryController.class);
 
 	private final QnAservice qnaService;
 	
 	private final CommonService commonService;
 
-	public BuyerInqueryController(QnAservice qnaService, CommonService commonService) {
+	public buyerInqueryController(QnAservice qnaService, CommonService commonService) {
 		this.qnaService = qnaService;
 		this.commonService = commonService;
 	}
