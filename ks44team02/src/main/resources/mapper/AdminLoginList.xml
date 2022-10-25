@@ -19,7 +19,6 @@
 	</resultMap>
 	
 	
-
 	<!-- 회원 정보 리스트 -->
 	<select id="getMemberListAdmin" parameterType="Map" resultMap="memberResultMap">
 		select
@@ -75,11 +74,22 @@
 			m.member_id = #{memberId};
 	</select>
 	
-	<!-- 회원 가입 -->
-	<insert id="addMember" parameterType="Member">
+	<!--관리자 회원 가입 -->
+	<insert id="addAdmin" parameterType="Member">
 		INSERT INTO tb_member
-			(member_id,member_pw,member_name,member_level_code,member_mileage,member_phone,member_email,member_gender,member_birth,member_addr,member_reg_date,recommender_id)
+			(member_id,member_pw,member_name,member_level_code,member_phone,member_email,member_gender,member_reg_date)
 		VALUES 
-			(#{memberId},#{memberPw},#{memberName},#{memberLevelCode},#{memberMileage},#{memberPhone},#{memberEmail},#{memberGender},#{memberBirth},#{memberAddr},#{memberRegDate},#{recommenderId});	
+			(#{memberId},#{memberPw},#{memberName},#{memberLevelCode},#{memberPhone},#{memberEmail},#{memberGender},CURDATE());	
 	</insert>
+	
+	<!-- 구매자 회원 가입 -->
+	<insert id="addBuyer" parameterType="Member">
+		INSERT INTO tb_member
+			(member_id,member_pw,member_name,member_level_code,member_phone,member_email,member_gender,member_reg_date,member_birth,recommender_id,member_addr)
+		VALUES 
+			(#{memberId},#{memberPw},#{memberName},#{memberLevelCode},#{memberPhone},#{memberEmail},#{memberGender},CURDATE(),concat(#{yy},'-', #{mm},'-',#{dd}),#{recommenderId},#{memberAddr});
+	</insert>
+	
+	
+	
 </mapper>

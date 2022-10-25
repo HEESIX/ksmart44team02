@@ -1,6 +1,7 @@
 package ks44team02.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,7 +26,15 @@ public interface AdminDeliveryMapper {
 	public boolean removeRefundExchangeReason(String refundExchangeReasonList);
 	
 	//구매자 배송현황 조회
-	public String getAdminOrderStatusList();
+	public List<Map<String, Object>> getBuyerOrderList();
 
+	//상세조회
+	public List<Map<String, Object>> getBuyerOrderDetail(String orderGroupCode);
 
+	//결제조회
+	public Map<String, Object> getBuyerPaymentInfo(String orderGroupCode);
+	
+	//배송조회
+	public Map<String, Object> getBuyerDeliveryInfo(String orderGroupCode);
+	
 }
