@@ -25,7 +25,7 @@ public class JoinService {
 		return addResult;
 	}
 	
-	//판매자 회원가입
+	//구매자 회원가입
 	public String sellerJoin() {
 			return null;
 		}
