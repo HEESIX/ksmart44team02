@@ -225,29 +225,44 @@
 			<id column="menu_goods_code" property="menuGoodsCode"/>
 			<result column="menu_code" property="menuCode"/>
 			<result column="g_code" property="goodsOfMenuCode"/>
+			<result column="g_name" property="goodsName"/>
 			<result column="menu_goods_amount" property="menuGoodsAmount"/>
 		</collection>
 	</resultMap>
-	<!-- 개인 식단 조회  -->
-	<select id="getBuyerMenuList" parameterType="Map" resultMap="menuInfomationResultMap" fetchSize="100">
+	<!-- 개인 식단 하나 조회  -->
+	<select id="getBuyerMenuInfo" parameterType="Map" resultMap="menuInfomationResultMap">
 		SELECT
 			mi.menu_code 
 			,mi.menu_name 
-			,mi.menu_reg_datetime 
-			,sum(if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price, g.g_discount)) OVER () AS menu_Price
-			,mo.menu_goods_code			as mo_menu_goods_code
-			,mo.g_code					as mo_g_code
-			,mo.menu_goods_amount 		as mo_menu_goods_amount
+			,mo.g_code						 as mo_g_code
+			,mo.menu_goods_amount			 as mo_menu_goods_amount
 		FROM 
 			tb_menu_information AS mi 
 			INNER JOIN 
 			tb_menu_organize AS mo 
 			ON 
 			mo.menu_code = mi.menu_code
+		WHERE 
+			mi.menu_reg_id = #{memberId}
+			AND
+			mi.menu_code = #{menuCode}
+	</select>
+	<!-- 개인 식단 조회  -->
+	<select id="getBuyerMenuList" parameterType="Map" resultMap="menuInfomationResultMap" fetchSize="100">
+		SELECT
+			mi.menu_code 
+			,mi.menu_name 
+			,mi.menu_reg_datetime 
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), g.g_price * mo.menu_goods_amount, g.g_discount * mo.menu_goods_amount) AS menu_Price
+			,mo.g_code						 as mo_g_code
+			,mo.menu_goods_amount			 as mo_menu_goods_amount
+			,g.g_name						 as mo_g_name
+		FROM 
+			tb_menu_information AS mi 
 			INNER JOIN 
-			tb_ingredient AS i
+			tb_menu_organize AS mo 
 			ON 
-			i.g_code = mo.g_code
+			mo.menu_code = mi.menu_code
 			INNER JOIN 
 			tb_goods AS g
 			on
@@ -257,7 +272,7 @@
 			ON 
 			gdm.goods_discount_code = g.goods_discount_code
 		WHERE 
-			mi.menu_reg_id = #{memberId};
+			mi.menu_reg_id = #{memberId}
 	</select>
 	<!-- 상품 카테고리 등록 처리  -->
 	<insert id="addGoodsCategory" parameterType="GoodsCategory">
@@ -1308,6 +1323,7 @@
 	<select id="getMenuList" parameterType="Map" resultMap="goodsResultMap">
 		SELECT
 			g.g_code
+			,mi.menu_code					as mi_menu_code
 			,gmi.main_image_path			as gmi_main_image_path
 			,gmi.main_image_original_name	as gmi_main_image_original_name
 			,gmi.main_image_new_name		as gmi_main_image_new_name
@@ -1341,6 +1357,10 @@
 			tb_goods_main_image AS gmi
 			ON 
 			gmi.main_image_idx = g.g_main_image
+			INNER JOIN 
+			tb_menu_information AS mi 
+			ON 
+			mi.g_code = g.g_code
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
 				<if test="isLocalhost != null and isLocalhost != ''">
 					gmi.main_image_islocal = ${isLocalhost}

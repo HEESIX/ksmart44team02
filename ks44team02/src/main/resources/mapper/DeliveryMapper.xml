@@ -432,7 +432,10 @@ ORDER BY
 			p.payment_agency AS paymentBank,
 			p.payment_cash_sum AS paymentCash,
 			p.payment_date AS paymentDate,
-			p.payment_payer_name AS paymentPayer
+			p.payment_payer_name AS paymentPayer,
+			om.regular_price_subtotal AS subtotalPrice,
+			om.add_discount_price AS disAddPrice,
+			om.g_delivery_charge_total AS gDeliveryCharge
 		FROM
 			tb_payment_by_order AS p
 			INNER join

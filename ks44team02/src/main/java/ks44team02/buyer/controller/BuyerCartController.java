@@ -59,7 +59,8 @@ public class BuyerCartController {
 		//String memberId = session.getAttribute("SID");
 		//null일 경우 체크(비정상적인 접근)
 		//현재 없으므로 픽스된 값 입력
-		String memberId = "id002";
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
 		
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		
@@ -119,11 +120,5 @@ public class BuyerCartController {
 		boolean result = cartService.removeCartGoods(cartListCode);
 		
 		return result;
-	}
-	
-	//장바구니에 담긴 상품 주문화면으로 선택 이동
-	@PostMapping("/cartMove")
-	public String moveCartGoods() {
-		return "buyer/order/order";
-	}
+	}	
 }

@@ -17,10 +17,6 @@ public class MemberInfoservice {
 		this.memberInfomapper = MemberInforMapper;
 	}
 	
-	//구매 회원 등록
-	public String addBuyerInsert() {
-		return null;
-	}
 	
 	// 구매 회원 등록시 아이디 중복 체크 
 	public String CheckBuyerId() {
@@ -64,12 +60,17 @@ public class MemberInfoservice {
 		
 	// 판매 회원 회원 정보 수정
 		public String modifyVender() {
-							return null;
-							}
+					return null;
+					}
 				
 	// 관리자 회원 등록
 		public String addAdminInsert() {
-							return null;
-							}
-	
+					return null;
+					}
+	// 구매자 회원 등록
+		public String addBuyerInsert() {
+					return null;
+		}
+		
+			
 }

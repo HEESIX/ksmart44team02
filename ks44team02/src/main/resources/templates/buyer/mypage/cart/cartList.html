@@ -7,21 +7,17 @@
 <th:block layout:fragment="customTitle">
 <title th:text="${title}"></title>
 </th:block>
-
 <!-- 사용자 정의 css -->
 <th:block layout:fragment="customCss">
 <style>
-
 .modal-content.modal-80size {
  position: relative;
   height: auto;
   min-height: 80%;
 }
-
 .modal.modal-center {
   text-align: center;
 }
-
 @media screen and (min-width: 768px) {
   .modal.modal-center:before {
     display: inline-block;
@@ -30,25 +26,20 @@
     height: 100%;
   }
 }
-
 .modal-dialog.modal-center {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
 }
-
-
 li {
   list-style: none;
   cursor: pointer;
 }
-
 /* STYLE */
 .main_con_form {
   text-align: left;
   padding: 20px;
 }
-
 .form_inner {
   width: 100%;
   height: 100%;
@@ -81,10 +72,8 @@ li {
 .form_list_input label {
   float: left;
   display: none;
-
 </style>
 </th:block>
-
 <!-- Breadcrumb Section Begin -->
 <th:block layout:fragment="customBreadCrum">
     <section class="breadcrumb-section set-bg" data-setbg="/user/img/breadcrumb.jpg">
@@ -104,7 +93,6 @@ li {
     </section>
 </th:block>
 <!-- Breadcrumb Section End -->
-
 <!-- Shoping Cart Section Begin -->
 <th:block layout:fragment="customContents">
     <section class="shoping-cart spad">
@@ -137,17 +125,17 @@ li {
 											th:alt="${cl.goodsMainImage.mainImageOriginalName}"
 											style="width: 100px;" /></a></td>
 	                                	<td th:text="${cl.goods.goodsName}">
-	                                	<td class="price" th:text="${cl.discountPrice}"></td>
+	                                	<td id="price" class="price" th:text="${cl.discountPrice}"></td>
 	                                	<td class="shoping_cart_quantity">
 	                                		<div class="quantity">
-	                                			<div class="pro-qty">
+	                                			<div class="pro-qty" id="qtybtn">
 		                                			<span class="dec qtybtn" style="width: 5px;"></span>
-		                                			<input class="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
+	                                				<input id="amount" class="amount" th:value="${cl.orderAmount}" style=" width: 40px;">
 		                                			<span class="inc qtybtn" style="width: 10px;"></span>
 	                                			</div>
 	                                		</div>
 	                                	</td>
-	                                	<td class="total" th:text="${cl.priceSubtotal}"></td>
+	                                	<td id="total" class="total" th:text="${cl.priceSubtotal}"></td>
 	                                    <td class="shoping__cart__item__close">
 	                                        <span class="icon_close modalBtn" th:data-cartListCode="${cl.cartListCode}"></span>
 					                            <div class="modal modal-center fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
@@ -200,7 +188,7 @@ li {
                             <li>Subtotal <span>$454.98</span></li>
                             <li>Total <span>$454.98</span></li>
                         </ul>
-                        <a th:href="@{/buyer/order/order}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a id="subminBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -217,9 +205,6 @@ li {
 			$('.removeGoods').attr('data-cartListCode',orderCode);
 			$('#modal').modal("show"); //열기
 		});
-		
-		
-		
 		//상품 삭제
 		$(document).on('click', '.removeGoods', function(){
 			let cartListCode = $(this).attr('data-cartListCode');
@@ -249,13 +234,14 @@ li {
 		});
 	});
 	//상품 개수에 따른 금액 변경
-	$(docment).on('click', '.qtybtn', function(){
-		var price = $(this).parents(".cart-deal-item").find('.price').val();
-		var amount = $(this).parents(".cart-deal-item").find('.amount').val();
-		var total = price * amount;
-		$('.total').val(total);
+	$(document).on('click', '.qtybtn', function(){
+		console.log('확인');
+		var price = $(this).parents('.cart-deal-item').find('.price').text();
+		var amount = $(this).parent().find('.amount').val();
+		var subtotal = price * amount;
+		$(this).parents('.cart-deal-item').find('#total').text(subtotal);
 	});
-	//체크박스 전체선택
+	//상품 전체 선택
 	$(document).ready(function() {
 		$("#cbx_chkAll").click(function() {
 			if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
@@ -270,7 +256,16 @@ li {
 			else $("#cbx_chkAll").prop("checked", true); 
 		});
 	});
-	
+
+	//선택한 상품 주문화면으로 이동
+	$(document).on('click', '#submitBtn', function() {
+		var 
+
+		$.each()
+			var cartGoods = {};
+			cartGoods['goodsCode']
+	}
+
 </script>
 
 </th:block>

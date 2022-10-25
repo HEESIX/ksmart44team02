@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<!-- 상품 등록 신청 리스트  -->
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+	<style>
+table th, td {
+	max-width: 200px;
+}
+
+.textBox span {
+	display: block;
+}
+</style>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 p-0" style="display: flex;">
+				<div class="main-header">
+					<h4>전체 회원 주문내역</h4>
+					<ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"><i
+								class="icofont icofont-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#">전체 회원 주문내역</a></li>
+					</ol>
+				</div>
+				<div class="textBox" style="padding-left: 20px;">
+					<span>기능설명추가</span>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table m-b-0 photo-table">
+							<thead>
+								<tr>
+									<th>구매자ID</th>
+									<th>상품</th>
+									<th>상품명</th>
+									<th>총 배송비</th>
+									<th>총 결제금액</th>
+									<th>주문일자</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #lists.isEmpty(getBuyerOrderList)}"
+									th:each="gbol : ${getBuyerOrderList}" style="line-height: 50px;">
+									<td th:text="${gbol.get('memberId')}"></td>
+									<td style="width: 200px;"><img
+										th:src="@{'/' + ${gbol.get('mainImagePath')}}"
+										th:alt="${gbol.get('mainImageOriName')}"
+										style="width: 100px; border-radius: 10px;" /></td>
+									<td><a
+										th:href="@{/admin/order/adminOrderDetail(orderGroupCode=${gbol.orderGroupCode})}"  th:text="${gbol.get('goodsName')}">
+									</a></td>
+									<td th:text="'+ ' + ${gbol.get('deliTotal')} + '원'"></td>
+									<td th:text="${gbol.get('finalPrice')} + '원'"></td>
+									<td th:text="${gbol.get('orderDatetime')}"></td>
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(getBuyerOrderList)}">
+									<td colspan="5" style="text-align: center;">주문 내역이 존재하지않습니다.
+									</td>
+								</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>				
+				</div>
+			</div>
+		</div>
+		
+		
+
+	</div>
+</th:block>
+
+
+
+
+
+
+</html>

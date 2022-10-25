@@ -3,26 +3,252 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/buyerDefault}">
 
-<!-- 구매자 판매 식단 상세 정보 조회  -->
-
-<!-- 사용자 정의 css  -->
-<th:block layout:fragment="customCss">
-</th:block>
+<!-- 구매자 판매 식단 세부 정보 조회  -->	
 
 <!-- 사용자 정의 title 설정  -->
 <th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<style>
+table th {
+	background-color: #d5dade;
+}
+
+table td, th {
+	text-align: center;
+	border: 2px solid #d5dade;
+	width: 150px;
+}
+
+.pro-qty .qtybtn {
+	width: 5px;
+}
+
+.cartInfo{
+	z-index: 10;
+	position: absolute;
+	padding: 20px 20px 20px 20px;
+	width: 254px;
+	left: -30px;
+	height: 116px;
+	bottom: 54px;
+	font-size: 12px;
+	text-align: center;
+	background: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: none;
+}
+.cartInfoClose{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+.cartInfo p{
+	font-size: 13px;
+}
+.moveToCart{
+	border: 1px solid #7fad39;
+	padding: 7px 15px 7px 15px;
+	font-weight: bold;
+}
+</style>
 </th:block>
 
 <!-- start breadcrum section -->
 <th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2 th:text="${menuInfo.goodsName}"></h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </th:block>
 <!-- end breadcrum section -->
 
 <!-- 사용자 정의 contents  -->
-<th:block layout:fragment="customContents">
+<th:block layout:fragment="customContents" th:object="${menuInfo}">
+	<div class="row">
+		<div class="col-lg-6 col-md-6">
+			<div class="product__details__pic">
+				<div class="product__details__pic__item">
+					<a th:href="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
+						data-toggle="lightbox"
+						th:attr="data-title=*{goodsMainImageInfo.mainImageOriginalName}">
+						<img th:src="@{'/'+*{goodsMainImageInfo.mainImagePath}}"
+						class="img-fluid"
+						th:alt="*{goodsMainImageInfo.mainImageOriginalName}"
+						style="width: 100%;">
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="product__details__text">
+				<h3 th:text="*{goodsName}"></h3>
+				<div class="product__details__rating">리뷰점수 및 리뷰 개수</div>
+				<th:block th:if="*{goodsDiscount.goodsDiscountPrice} != 0">
+					<span th:text="'₩' + *{goodsDiscount.goodsDiscountPrice}"></span>
+					<span th:text="*{goodsPrice}"
+						style="text-decoration: line-through;"></span>
+					<div class="product__details__price"
+						th:text="*{goodsDiscountedPrice} + '원'"></div>
+				</th:block>
+				<th:block th:if="*{goodsDiscount.goodsDiscountRate} != 0">
+					<span th:text="*{goodsDiscount.goodsDiscountRate} + '%'"></span>
+					<span th:text="*{goodsPrice}"
+						style="text-decoration: line-through;"></span>
+					<div class="product__details__price"
+						th:text="*{goodsDiscountedPrice} + '원'"></div>
+				</th:block>
+				<th:block
+					th:if="*{goodsDiscount.goodsDiscountPrice} == 0 and *{goodsDiscount.goodsDiscountRate} == 0">
+					<div class="product__details__price" th:text="*{goodsPrice} + '원'"></div>
+				</th:block>
+				<div class="product__details__quantity">
+					<div class="quantity">
+						<div class="pro-qty">
+							<span class="dec qtybtn"></span> <input type="text" value="1" id="goodsAmount" name="goodsAmount">
+							<span class="inc qtybtn"></span>
+						</div>
+					</div>
+				</div>
+				<button id="addCartBtn" type="button" class="site-btn">장바구니 담기</button>
+				<ul>
+					<li><b>배송비</b> <span th:text="*{goodsDeliveryCharge} + '원'"></span>
+					</li>
+					<li><b>최대 적립금 혜택</b> <span
+						th:unless="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
+						th:text="*{goodsDiscountedPrice}*0.1  + '원'"></span> <span
+						th:if="*{goodsDiscount.goodsDiscountPrice} == 0 AND *{goodsDiscount.goodsDiscountRate} == 0"
+						th:text="*{goodsPrice}*0.1 + '원'"></span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-12">
+			<div class="product__details__tab">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item"><a class="nav-link active"
+						data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">상품
+							소개</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#tabs-2" role="tab" aria-selected="false">포함 상품 정보</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#tabs-3" role="tab" aria-selected="false">리뷰 <span>(1)</span>
+					</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="tabs-1" role="tabpanel">
+						<div class="product__details__tab__desc">
+							<img th:alt="*{goodsInfoImageInfo.infoImageOriginalName}"
+								th:src="@{'/'+ *{goodsInfoImageInfo.infoImagePath}}"
+								style="width: 100%;">
+						</div>
+					</div>
+					<div class="tab-pane" id="tabs-2" role="tabpanel">
+						<div class="product__details__tab__desc">
+							<table style="width: 100%;">
+								<tbody>
+									<th:block th:if="${not #lists.isEmpty(menuOrganizeGoods)}" th:each="mog : ${menuOrganizeGoods}">
+										<tr style="height: 40px;">
+											<th>품목 또는 명칭</th>
+											<td th:text="${mog.goodsName}"></td>
+											<th>포장단위별 내용물의 용량(중량),수량,크기</th>
+											<td th:text="${mog.goodsNetWeight} + ${mog.goodsNetWeightUnit}"></td>
+										</tr>
+										<tr style="height: 40px;">
+											<th>생산자</th>
+											<td th:text="${mog.enterprise.enterName}"></td>
+											<th>원산지</th>
+											<td th:text="${mog.goodsProduce}"></td>
+										</tr>
+										<tr style="height: 40px;">
+											<th>제조연월일(포장일 또는 생산연도), 유통기한</th>
+											<td th:text="${mog.goodsProductionExpirationInfo}"></td>
+											<th>포함 상품 개수</th>
+											<th:block th:if="${not #lists.isEmpty(menuOrganizeInfo)}" th:each="moi : ${menuOrganizeInfo}">
+												<td th:if="${mog.goodsCode} == ${moi.goodsOfMenuCode}" th:text="${moi.menuGoodsAmount} + '개'"></td>
+											</th:block>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="tab-pane" id="tabs-3" role="tabpanel">
+						<div class="product__details__tab__desc">
+							<h6>리뷰 정보</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cartInfo">
+		<a href="javascript:void(0)" class="cartInfoClose">X</a>
+		<p>상품이 장바구니에 담겼습니다.</p>
+		<a th:href="@{/buyer/mypage/cart/cartList}" class="moveToCart" style="color: #7fad39;">장바구니로 이동하기 ></a>
+	</div>
 </th:block>
 
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootjs">
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			
+			$('#addCartBtn').click(function(){
+				var goodsCode = [[${menuInfo.goodsCode}]];
+				var goodsAmount = $('#goodsAmount').val();
+				
+				var left = $(this).offset().left;
+				var top = $(this).offset().top;
+				var thisHalfWidth = $(this).width() * 2;
+				var thisHalfHeight = $(this).height() / 2;
+				
+				var startX = left + thisHalfWidth;
+				var startY = top - thisHalfHeight;
+				
+				$('.cartInfo').css('left', startX);
+				$('.cartInfo').css('top', startY);
+				 
+				var request = $.ajax({
+					  url: "/buyer/mypage/cart/addCart",
+					  method: "POST",
+					  data: { 'goodsCode' : goodsCode,
+						  	  'orderAmount' : goodsAmount},
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data){
+							$('.cartInfo').css('display', 'block');
+							
+							setTimeout(function(){
+								$('.cartInfo').css('display', 'none');
+							}, 2000);
+						}else{
+							alert('실패');
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					}); 
+				
+			});
+		});
+	</script>
 </th:block>
 </html>
