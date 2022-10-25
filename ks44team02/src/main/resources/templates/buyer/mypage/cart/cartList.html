@@ -72,6 +72,7 @@ li {
 .form_list_input label {
   float: left;
   display: none;
+}
 </style>
 </th:block>
 <!-- Breadcrumb Section Begin -->
@@ -185,10 +186,9 @@ li {
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span class="subtotal"></span></li>
                         </ul>
-                        <a id="subminBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a id="submitBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@ li {
 							  	   'cartListCode' : cartListCode 
 							  	},
 						  dataType: "json"
-						});
+			});
 			
 			request.done(function( data ) {
 				if(data){
@@ -232,39 +232,34 @@ li {
 			  alert( "Request failed: " + textStatus );
 			});
 		});
-	});
-	//상품 개수에 따른 금액 변경
-	$(document).on('click', '.qtybtn', function(){
-		console.log('확인');
-		var price = $(this).parents('.cart-deal-item').find('.price').text();
-		var amount = $(this).parent().find('.amount').val();
-		var subtotal = price * amount;
-		$(this).parents('.cart-deal-item').find('#total').text(subtotal);
-	});
-	//상품 전체 선택
-	$(document).ready(function() {
-		$("#cbx_chkAll").click(function() {
-			if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
-			else $("input[name=chk]").prop("checked", false);
+		//상품 개수에 따른 금액 변경
+		$(document).on('click', '.qtybtn', function(){
+			console.log('확인');
+			var price = $(this).parents('.cart-deal-item').find('.price').text();
+			var amount = $(this).parent().find('.amount').val();
+			var subtotal = price * amount;
+			$(this).parents('.cart-deal-item').find('#total').text(subtotal);
 		});
-		
-		$("input[name=chk]").click(function() {
-			var total = $("input[name=chk]").length;
-			var checked = $("input[name=chk]:checked").length;
+		//상품 전체 선택
+		$(document).ready(function() {
+			$("#cbx_chkAll").click(function() {
+				if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
+				else $("input[name=chk]").prop("checked", false);
+			});
 			
-			if(total != checked) $("#cbx_chkAll").prop("checked", false);
-			else $("#cbx_chkAll").prop("checked", true); 
+			$("input[name=chk]").click(function() {
+				var total = $("input[name=chk]").length;
+				var checked = $("input[name=chk]:checked").length;
+				
+				if(total != checked) $("#cbx_chkAll").prop("checked", false);
+				else $("#cbx_chkAll").prop("checked", true); 
+			});
+		});
+		//선택한 상품 주문화면으로 이동
+		$(document).on('click', '#submitBtn', function() {
+			
 		});
 	});
-
-	//선택한 상품 주문화면으로 이동
-	$(document).on('click', '#submitBtn', function() {
-		var 
-
-		$.each()
-			var cartGoods = {};
-			cartGoods['goodsCode']
-	}
 
 </script>
 
