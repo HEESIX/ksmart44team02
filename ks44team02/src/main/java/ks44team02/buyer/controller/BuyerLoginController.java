@@ -65,7 +65,7 @@ public class BuyerLoginController {
 			return "/buyer/login/buyerLogin";
 		}
 	//구매자 로그아웃
-	public String buyeLogout() {
+	public String buyerLogout() {
 		return "redirect:buyer/login/buerLoginList";
 	}
 

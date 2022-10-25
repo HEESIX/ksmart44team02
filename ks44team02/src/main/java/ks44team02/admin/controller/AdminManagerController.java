@@ -34,17 +34,6 @@ public class AdminManagerController {
 	public String getAuthorizeSellerWithdrawal() {
 		return "admin/login/member_delete_admin";
 	}
-	//관리자 회원 정보 수정 폼
-	@GetMapping("/member_update_admin")
-	public String getModifyAdminForm() {
-		return "admin/login/member_update_admin";
-	}
-	
-	//관리자 회원 정보 수정 처리
-	@PostMapping
-	public String getModifyAdminList() {
-		return "redirect:admin/login/member_update_admin";
-	}
 	
 	//관리자 회원 리스트 조건별 검색 
 	@GetMapping("/member_select_admin")
