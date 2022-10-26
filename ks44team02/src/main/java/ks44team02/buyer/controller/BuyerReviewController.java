@@ -23,14 +23,14 @@ import ks44team02.service.ReviewService;
 
 @Controller
 @RequestMapping(value = "/buyer/review")
-public class buyerReviewController {
+public class BuyerReviewController {
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
 
 	private final ReviewService reviewService;
 	
 	private final CommonService commonService;
 
-	public buyerReviewController(ReviewService reviewService,CommonService commonService) {
+	public BuyerReviewController(ReviewService reviewService,CommonService commonService) {
 		this.reviewService = reviewService;
 		this.commonService = commonService;
 	}

@@ -13,13 +13,13 @@ import ks44team02.service.PenaltyService;
 
 	@Controller
 	@RequestMapping(value = "seller/penalty")
-	public class sellerPenaltyController {
+	public class SellerPenaltyController {
 		
-		private static final Logger log = LoggerFactory.getLogger(sellerPenaltyController.class);
+		private static final Logger log = LoggerFactory.getLogger(SellerPenaltyController.class);
 		
 		private final PenaltyService penaltyService;
 		
-		public sellerPenaltyController(PenaltyService penaltyService) {
+		public SellerPenaltyController(PenaltyService penaltyService) {
 			this.penaltyService = penaltyService;
 		}
 		

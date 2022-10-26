@@ -17,12 +17,12 @@ import ks44team02.service.MileageService;
 
 @Controller
 @RequestMapping(value = "/buyer/Mileage")
-public class buyerMileageController {
+public class BuyerMileageController {
 	private static final Logger log = LoggerFactory.getLogger(AdminqnaController.class);
 
 	private final MileageService mileageService;
 
-	public buyerMileageController(MileageService mileageService) {
+	public BuyerMileageController(MileageService mileageService) {
 		this.mileageService = mileageService;
 	}
 

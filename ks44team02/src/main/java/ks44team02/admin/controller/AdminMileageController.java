@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team02.dto.MemberMileageAcc;
-import ks44team02.service.CommonService;
 import ks44team02.service.MileageService;
 
 @Controller

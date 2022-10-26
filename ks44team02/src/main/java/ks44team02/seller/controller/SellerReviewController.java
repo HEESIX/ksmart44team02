@@ -14,13 +14,13 @@ import ks44team02.service.ReviewService;
 
 @Controller
 @RequestMapping(value = "seller/review")
-public class sellerReviewController {
+public class SellerReviewController {
 	
-	private static final Logger log = LoggerFactory.getLogger(sellerReviewController.class);
+	private static final Logger log = LoggerFactory.getLogger(SellerReviewController.class);
 	
 	private final ReviewService reviewService;
 	
-	public sellerReviewController(ReviewService reviewService) {
+	public SellerReviewController(ReviewService reviewService) {
 		this.reviewService = reviewService;
 	}
 	

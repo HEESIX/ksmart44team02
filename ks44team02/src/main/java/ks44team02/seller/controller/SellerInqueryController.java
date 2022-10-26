@@ -15,13 +15,13 @@ import ks44team02.service.QnAservice;
 
 	@Controller
 	@RequestMapping(value = "seller/inquery")
-	public class sellerInqueryController {
+	public class SellerInqueryController {
 		
-		private static final Logger log = LoggerFactory.getLogger(sellerInqueryController.class);
+		private static final Logger log = LoggerFactory.getLogger(SellerInqueryController.class);
 	
 		private final QnAservice qnaService;
 		
-		public sellerInqueryController(QnAservice qnaService) {
+		public SellerInqueryController(QnAservice qnaService) {
 			this.qnaService = qnaService;
 		}
 		
