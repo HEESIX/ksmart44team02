@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks44team02.dto.Cart;
-import ks44team02.dto.Goods;
 import ks44team02.mapper.CartMapper;
 
 @Service
