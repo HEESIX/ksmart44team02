@@ -38,9 +38,11 @@ public class BuyerDeliveryController {
 								  ,HttpSession session) {
 			// 세션이 존재 하는 경우 세션에서 값을 가져와서 세팅: memberId
 			//String memberId = session.getAttribute("SID");
-			String memberId = "id002";
-			List<Map<String, Object>> getOrderList = deliveryservice.getOrderList(memberId);
-				model.addAttribute("title", "주문 리스트");
+			String sessionId = (String) session.getAttribute("SID");
+		    //세션이 생기면 아래 조건문은 주석처리 해야함
+		    if(sessionId == null)  sessionId = "id002";
+			List<Map<String, Object>> getOrderList = deliveryservice.getOrderList(sessionId);
+				model.addAttribute("title", "주문 내역");
 				model.addAttribute("getOrderList", getOrderList);
 				
 			return "buyer/mypage/orderStatus/myOrderStatusList";
@@ -54,7 +56,7 @@ public class BuyerDeliveryController {
 			Map<String, Object> getPaymentList = deliveryservice.getPaymentDetail(orderGroupCode);
 			Map<String, Object> getDeliveryinfo = deliveryservice.getDeliveryinfo(orderGroupCode);
 			
-				model.addAttribute("title", "상세 주문리스트");
+				model.addAttribute("title", "주문서 상세내역");
 				model.addAttribute("getOrderDetailList", getOrderDetailList);
 				model.addAttribute("getPaymentList", getPaymentList);
 				model.addAttribute("getDeliveryinfo", getDeliveryinfo);
