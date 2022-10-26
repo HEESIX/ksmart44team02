@@ -212,7 +212,7 @@ public class AdminDiscountController {
 	public String getAllBuyerBenefitList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		
-
+	
 		List<BuyerBenefit> allBuyerBenefitList = discountService.getAllBuyerBenefitList(null);
 		log.info("할인혜택 보유 현황 조회 :::: {}", allBuyerBenefitList);
 		
@@ -275,5 +275,5 @@ public class AdminDiscountController {
 		}
 		reAttr.addAttribute("msg", msg);
 		return "redirect:/admin/orderDiscount/orderDiscountList";
-		}
+	}
 }
