@@ -343,7 +343,7 @@ public class GoodsService {
 	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session) {
 		// 세션의 아이디 조회
 		// 현재 없으므로 fix된 값 사용
-		// String memberId = session.getAttribute("SID");
+		// String memberId = (String) session.getAttribute("SID");
 		String memberId = "id010";
 		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
 		return goodsDiscountListSeller;
