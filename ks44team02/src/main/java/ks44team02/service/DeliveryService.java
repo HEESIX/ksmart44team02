@@ -65,17 +65,10 @@ public class DeliveryService {
 		Map<String, Object> getSellerOrderDetail = deliveryMapper.getSellerOrderDetail(orderDetailCode);
 		return getSellerOrderDetail;
 	}
-	
-	
-	
-	//구매자 배송처리
-	public String OrderDeal() {
-		return null;
-	}
 			
-	// 주문 리스트 list<>
-	public List<Map<String, Object>> getOrderList(String memberId) {
-		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList(memberId);
+	// 주문 리스트 
+	public List<Map<String, Object>> getOrderList(String sessionId) {
+		List<Map<String, Object>> getOrderList = deliveryMapper.getOrderList(sessionId);
 		return getOrderList;
 	}
 	
