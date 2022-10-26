@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Complain;
+import ks44team02.dto.MemberMileageAcc;
 import ks44team02.service.CommonService;
 import ks44team02.service.ComplainService;
 
@@ -41,6 +44,15 @@ public class AdminComplainController {
 	}
 	
 	//회원 신고내역 조회
+	@PostMapping("/complainManage/complainList")
+	@ResponseBody
+	public List<Complain> getComplainList(@RequestParam(name="memberId") String memberId){
+		List<Complain> complainList = complainService.getComplainListSearch(memberId);
+		return complainList;
+	}
+	
+	
+	//회원 신고내역 조회
 	@GetMapping("/complainManage/complainList")
 	public String getComplainList(Model model) {
 		log.info("/complainManage/complainList getComplainList AdminComplainController");
@@ -49,8 +61,30 @@ public class AdminComplainController {
 		System.out.println(complainList.toString());
 		model.addAttribute("title", "회원 신고내역 현황");
 		model.addAttribute("complainList", complainList);
-		return "admin/complainManage/complainList";
+		return "admin/complainManage/showComplain";
 	}
+	
+	//회원 신고내역 검색
+	@PostMapping("/complainManagement/showComplain")
+	public String getComplainSearch(Model model
+									  ,@RequestParam(value = "memberId") String memberId) throws ParseException {
+		log.info("PostMapping /complainManagement getComplainListSearch AdminComplainController");
+		List<Complain> complainList = null;
+		
+		if(memberId == null || memberId.equals("")){
+			complainList = complainService.getComplainList();
+
+		}else {
+			complainList = complainService.getComplainListSearch(memberId);
+		}
+			
+
+		model.addAttribute("title","적립금 조회");
+		model.addAttribute("mileageList", complainList);
+		
+		return "admin/comlainManage/showComplain";
+	}
+	
 
 	//회원 신고내역 삭제 폼
 	@GetMapping("/complainManage/complainDelete")

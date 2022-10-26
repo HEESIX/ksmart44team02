@@ -25,6 +25,8 @@ public interface ComplainMapper {
 public Complain getComplainInfo();
 
 public boolean regBuyerComplain(Complain complain);
+
+public List<Complain> getComplainListSearch(String memberId);
 		
 	
 

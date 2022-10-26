@@ -34,5 +34,28 @@
 		FROM
 			tb_complain;
 	</select>
+	
+	<select id="getComplainListSearch" resultMap="getComplainList">
+		SELECT
+			complain_code             
+			,member_id 	             
+			,g_code 	             
+			,complain_category       
+			,enter_code			    
+			,complain_title			
+			,complain_content		 
+			,complain_reg_datetime	 
+			,complain_answer_confirm 
+			,complain_answer_content 
+			,complain_answer_datetime 
+		FROM
+			tb_complain
+			
+			<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			  <if test="membeId != null and memberId != ''">
+				member_id = #{memberId};
+			  </if>
+		</trim>
+	</select>
 
 </mapper>
