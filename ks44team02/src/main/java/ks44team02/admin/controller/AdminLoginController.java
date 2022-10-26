@@ -54,7 +54,7 @@ public class AdminLoginController {
 				session.setAttribute("SNAME", member.getMemberName());
 				session.setAttribute("SLEVEL", member.getMemberLevelCode());
 				// 회원의 정보가 일치하면
-				return "redirect:/";
+				return "redirect:/admin";
 			}
 		}	
 		reAttr.addAttribute("msg", "회원의 정보가 일치하지 않습니다.");
