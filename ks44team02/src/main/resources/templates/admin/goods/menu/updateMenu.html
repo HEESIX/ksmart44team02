@@ -370,8 +370,8 @@
 										</th:block>
 									</div>
 								</div>
-								<a th:href="@{/admin/goods/goods_list_admin}"><button
-										type="button" id="returnBtn" class="btn btn-disable disabled"
+								<a th:href="@{/admin/goods/menu/menuList}"><button
+										type="button" id="returnBtn" class="btn"
 										style="float: right;">취소</button></a>
 								<button type="button" id="submitBtn"
 									class="btn btn-info waves-effect waves-light"
@@ -491,12 +491,12 @@
 
 			$('#moreGoodsBtn').click(function() {
 				$('.select_goods_Of_Menu').append('<div class="row goodsItems" style="margin-bottom: 10px;"><div class="col-lg-5" style="padding-left: 0;"></div></div>');
-				var $selectBox = $('.goodsOfMenu .select2-hidden-accessible').clone();
-				var $inputBox = $('.inputBox .vailCheck').clone();
+				var $selectBox = $('.goodsOfMenu:first .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox:first .vailCheck').clone();
 				$('.select_goods_Of_Menu .col-lg-5:last').append($selectBox);
 				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 28px; padding-left: 0;"></div>');
 				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
-				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2"><button type="button" class="btn btn-inverse-danger waves-effect waves-light deleteBtn" style="height: 28px; line-height : 10px;">삭제</button></div>');
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2"><button type="button" class="btn btn-inverse-danger waves-effect waves-light deleteBtn" style="height: 28px; line-height : 10px;">삭제</button></div>');				
 				
 				var deleteBtn = $('.deleteBtn');
 				$.each(deleteBtn, function(){
