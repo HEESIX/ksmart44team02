@@ -151,7 +151,7 @@
 			,m.discount_price
 			,m.discount_rate
 			,b.benefit_issue_date
-			,b.benefit_expiration_date
+			,b.benefit_expiration_date_
 		FROM 
 			tb_buyer_benefit AS b
 			RIGHT JOIN 
@@ -163,4 +163,5 @@
 		ORDER BY
 			b.benefit_expiration_date;
 	</select>
+	
 </mapper>
