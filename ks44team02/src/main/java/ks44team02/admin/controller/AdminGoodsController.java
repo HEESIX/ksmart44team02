@@ -20,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -179,6 +178,8 @@ public class AdminGoodsController {
 	public String getGoodsRegApplyInfo(Model model
 										,@PathVariable(value = "goodsApplyCode") String goodsApplyCode) {
 		GoodsApply goodsRegApplyInfo = goodsService.getGoodsRegApplyInfo(goodsApplyCode);
+		
+		model.addAttribute("title", "상품 등록 신청 상세 정보");
 		model.addAttribute("goodsRegApplyInfo", goodsRegApplyInfo);
 		return "admin/goods/goodsRegApplyDetail";
 	}
@@ -362,30 +363,10 @@ public class AdminGoodsController {
 		// g_code null? 혹은 존재하지 않을경우?
 
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
+		
+		model.addAttribute("title", "개별 상품 정보");
 		model.addAttribute("goodsInfo", goodsInfo);
 		return "admin/goods/goodsDetail";
-	}
-
-	// 상품 수정 폼
-	@GetMapping("/updateGoods/{g_code}")
-	public String modifyGoodsForm(@PathVariable(value = "g_code") String g_code) {
-
-		return "admin/goods/updateGoods";
-	}
-
-	// 상품 수정 처리
-	@PostMapping("/updateGoods")
-	public String modifyGoods() {
-
-		// 수정 처리 후 돌아갈 화면 redirect
-		return "redirect:/admin/goods/goodsList";
-	}
-
-	// 상품 삭제 처리
-	@PostMapping("/removeGoods/{g_code}")
-	public String removeAdminGoods(@PathVariable(value = "g_code") String g_code) {
-
-		return "redirect:/admin/goods/goodsList";
 	}
 
 	// 식단 등록 폼
@@ -393,7 +374,7 @@ public class AdminGoodsController {
 	public String addAdminMenuForm(Model model) {
 		List<GoodsDiscount> goodsDiscountListAdmin = goodsService.getGoodsDiscountListForReg();
 		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
-		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryList();
+		List<GoodsCategory> goodsCategoryList = goodsService.getGoodsCategoryListUser();
 		
 		model.addAttribute("title", "식단 등록");
 		model.addAttribute("goodsDiscountListAdmin", goodsDiscountListAdmin);
@@ -413,15 +394,14 @@ public class AdminGoodsController {
 							  ,@RequestParam(value = "goodsInfoImage") MultipartFile goodsInfoImage) throws ParseException {
 		
 		
+		boolean addAdminMenuResult = true;
 		
 		String menuOfGoods = "{ \"goodsItems\" : " + goodsItems + "}";
-		boolean addAdminMenuResult = true;
 		
 		JSONParser jsonParse = new JSONParser();
 		JSONObject jsonObj = (JSONObject) jsonParse.parse(menuOfGoods);
 		System.out.println(jsonObj);
 		JSONArray goodsItemArray = (JSONArray) jsonObj.get("goodsItems");
-		
 		
 		 String serverName = request.getServerName(); 
 		 log.info("{} <<<< serverName", serverName); 
@@ -546,6 +526,8 @@ public class AdminGoodsController {
 		map.put("isLocalhost", isLocalhost);
 		
 		List<Goods> adminMenuList = goodsService.getAdminMenuList(map);
+		
+		model.addAttribute("title", "판매 식단 목록");
 		model.addAttribute("adminMenuList", adminMenuList);
 		return "admin/goods/menu/menuList";
 	}
@@ -779,7 +761,10 @@ public class AdminGoodsController {
 
 	// 상품별 할인 혜택 등록 폼
 	@GetMapping("/discount/regGoodsDiscount")
-	public String addGoodsDiscountForm() {
+	public String addGoodsDiscountForm(Model model) {
+		
+		model.addAttribute("title", "상품별 할인 혜택 등록");
+		
 		return "admin/goods/discount/regGoodsDiscount";
 	}
 
@@ -861,6 +846,8 @@ public class AdminGoodsController {
 	public String modifyGoodsDiscountForm(@PathVariable(value = "goodsDiscountCode") String goodsDiscountCode
 										 ,Model model) {
 		GoodsDiscount goodsDiscountInfo = goodsService.modifyGoodsDiscountForm(goodsDiscountCode);
+		
+		model.addAttribute("title", "상품별 할인 혜택 수정");
 		model.addAttribute("goodsDiscountInfo", goodsDiscountInfo);
 		return "admin/goods/discount/updateGoodsDiscount";
 	}
@@ -909,6 +896,7 @@ public class AdminGoodsController {
 										 ,Model model) {
 		GoodsDiscount goodsDiscountInfo = goodsService.removeGoodsDiscountForm(goodsDiscountCode);
 		
+		model.addAttribute("title", "상품별 할인 혜택 삭제");
 		model.addAttribute("goodsDiscountInfo", goodsDiscountInfo);
 		return "admin/goods/discount/removeGoodsDiscount";
 	}

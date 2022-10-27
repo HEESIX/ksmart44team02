@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+
+<!-- 사용자 정의 CSS -->
+<th:block layout:fragment="customCss">
+	
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}" rel="stylesheet"> -->
+	<link rel="stylesheet" type="text/css" th:src="@{/admin/dataTable/dataTables.bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:src="@{/admin/dataTable/buttons.dataTables.min.css}">
+	<link rel="stylesheet" type="text/css" th:src="@{/admin/dataTable/responsive.bootstrap4.min.css}">
+		<!-- <style>
+		
+		.filterable {
+		    margin-top: 15px;
+		}
+		.filterable .panel-heading .pull-right {
+		    margin-top: -20px;
+		}
+		.filterable .filters input[disabled] {
+		    background-color: transparent;
+		    border: none;
+		    cursor: auto;
+		    box-shadow: none;
+		    padding: 0;
+		    height: auto;
+		}
+		.filterable .filters input[disabled]::-webkit-input-placeholder {
+		    color: #333;
+		}
+		.filterable .filters input[disabled]::-moz-placeholder {
+		    color: #333;
+		}
+		.filterable .filters input[disabled]:-ms-input-placeholder {
+		    color: #333;
+		}
+
+		</style> -->
+
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<h1>회원신고내역 조회/관리</h1>
+
+	<form action="mileage_management">
+		<div class="position-relative">
+			<div class="col-xs-3">
+
+				<input class="form-control" id="memberId" type="text"
+					name="memberId" placeholder="회원아이디검색">
+
+			</div>
+			<button type="button" id="mSearch" class="btn btn-primary">검색</button>
+		</div>
+	</form>
+	<br>
+		<div class="container">
+    <hr>
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+                </div>
+                <h3 class="panel-title">신고내역</h3>
+            </div>
+            <table id="simpletable" class="table dt-responsive table-striped table-bordered nowrap dataTable dtr-inline collapsed">
+    			<thead>
+	    			<tr class="filters">
+	    				<th>신고 사항 코드 </th>
+	    				<th>회원아이디</th>
+	    				<th>상품코드</th>
+	    				<th>신고 사항 분류</th>
+	    				<th>입점업체대표코드</th>
+	    				<th>글제목</th>
+	    				<th>글내용</th>
+	    				<th>글작성일</th>
+	    				<th>답변 여부</th>
+	    				<th>답변 내용</th>
+	    				<th>답변 일시</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody id="tBody">
+	    			<tr th:if="${not #lists.isEmpty(complainList)}"
+	    				th:each="cl : ${complainList}">
+	    				<td th:text="${cl.complainCode}"></td>
+	    				<td th:text="${cl.memberId}"></td>
+	    				<td th:text="${cl.gCode}"></td>
+	    				<td th:text="${cl.complainCategory}"></td>
+	    				<td th:text="${cl.enterCode}"></td>
+	    				<td th:text="${cl.complainTitle}"></td>
+	    				<td th:text="${cl.complainContent}"></td>
+						<td th:text="${cl.complainRegDatetime}"></td>
+						<td th:text="${cl.complainAnswerConfirm}"></td>
+						<td th:text="${cl.complainAnswerContent}"></td>
+						<td th:text="${cl.complainAnswerDatetime}"></td>
+	    			</tr>
+	    			<tr th:unless="${not #lists.isEmpty(complainList)}">
+	    				<td colspan="11" style="text-align: center;">신고 내역이 존재하지 않습니다.</td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+        </div>
+    </div>
+</div>
+
+	</th:block>
+
+	<!-- 사용자 정의 js 하단  -->
+	
+	<th:block layout:fragment="customFootJs">
+		<!-- <script th:src="@{//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script> -->
+		<script th:src="@{/admin/dataTable/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/admin/dataTable/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/admin/dataTable/jszip.min.js}"></script>
+		<script th:src="@{/admin/dataTable/pdfmake.min.js}"></script>
+		<script th:src="@{/admin/dataTable/vfs_fonts.js}"></script>
+		<script th:src="@{/admin/dataTable/buttons.print.min.js}"></script>
+		<script th:src="@{/admin/dataTable/buttons.html5.min.js}"></script>
+		<script th:src="@{/admin/dataTable/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/admin/dataTable/dataTables.responsive.min.js}"></script>
+		<script th:src="@{/admin/dataTable/responsive.bootstrap4.min.js}"></script>
+		
+		
+		<script>
+			$(function(){
+				$('#simpletable').DataTable();
+				
+				$(document).on('click', '#mSearch', function(){
+					 var memberId = $('#memberId').val();
+					 
+					 // ajax 선언      
+					 var request = $.ajax({          
+						 type: "POST",   // 요청 메소드 타입          
+						 url: "/admin/complainManage/complainList", // 접속 url
+						 data: {'memberId' : memberId},
+						 dataType: 'json' // 응답 메시지의 타입       
+						 });        
+					 // 결과        
+					 request.done(function(data){
+						
+						 var complainList = data;
+						 var tBody = $('#tBody');					 
+						 var html = '';
+
+						 if(typeof complainList != 'undefined' && complainList != null){
+							 for(let userComplain of complainList){
+								html += '<tr>';
+								html += '	<td>' + userComplain.complainCode + '</td>';  
+								html += '	<td>' + userComplain.memberId + '</td>'; 
+								html += '	<td>' + userComplain.gCode + '</td>'; 
+								html += '	<td>' + userComplain.complainCategory + '</td>';
+								html += '	<td>' + userComplain.enterCode + '</td>';
+								html += '	<td>' + userComplain.complainTitle + '</td>';
+								html += '	<td>' + userComplain.complainContent + '</td>';
+								html += '	<td>' + userComplain.complainRegDatetime + '</td>';
+								html += '	<td>' + userComplain.complainAnswerConfirm + '</td>';
+								html += '	<td>' + userComplain.complainAnswerContent + '</td>';
+								html += '	<td>' + userComplain.complainAnswerDatetime + '</td>';
+								html += '</tr>';
+							 }
+						 }
+						 
+						 tBody.html(html);
+					 });
+					 request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+					 });
+				 });
+				 
+			});    
+			
+		</script>
+	
+	</th:block>
+
+</html>

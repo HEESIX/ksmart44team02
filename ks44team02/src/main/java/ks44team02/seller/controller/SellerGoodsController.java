@@ -337,6 +337,8 @@ public class SellerGoodsController {
 								,Model model) {
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		log.info(">>>>>>>>>>{}", goodsInfo);
+		
+		model.addAttribute("title", "개별 상품 상세 정보");
 		model.addAttribute("goodsInfo", goodsInfo);
 		return "seller/goods/goodsDetail";
 	}

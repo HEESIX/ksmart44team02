@@ -1,10 +1,322 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	개인 맞춤 식단 수정 폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/buyerDefault}">
+<!-- 구매자 정의 메뉴 리스트 -->
+
+<!-- 사용자 정의 title 설정  -->
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- 사용자 정의 css  -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{/admin/assets/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/admin/assets/plugins/select2/css/s2-docs.css}">
+	<style>
+table {
+	text-align: center;
+	border: 1px solid #fff;
+	border-spacing: 1px;
+	font-family: 'Cairo', sans-serif;
+}
+
+caption {
+	font-weight: bold;
+}
+
+table td {
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+table th {
+	background-color: #555;
+	color: #fff;
+	padding: 10px;
+}
+
+table th, td {
+	max-width: 200px;
+}
+
+.moreGoodsBtn {
+	font-size: 14px;
+	color: #555;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	background: white;
+	border: 1px solid #555;
+}
+
+.moreGoodsBtn:hover {
+	color: white;
+	background: #42cf44;
+	border: 1px solid white;
+}
+
+.removeBtn {
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	background: #555;
+	border: 1px solid #555;
+}
+
+.removeBtn:hover {
+	color: white;
+	background: #c70d00;
+	border: 1px solid #c70d00;
+}
+
+.cartInfo {
+	z-index: 10;
+	position: absolute;
+	padding: 20px 20px 20px 20px;
+	width: 254px;
+	left: -30px;
+	height: 116px;
+	bottom: 54px;
+	font-size: 12px;
+	text-align: center;
+	background: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: none;
+}
+
+.cartInfoClose {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.cartInfo p {
+	font-size: 13px;
+}
+
+.moveToCart {
+	border: 1px solid #7fad39;
+	padding: 7px 15px 7px 15px;
+	font-weight: bold;
+}
+
+.select2-container .select2-selection--single {
+	height: 42px;
+}
+
+.select2-selection__rendered {
+	height: 42px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered
+	{
+	line-height: 42px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow
+	{
+	height: 42px;
+}
+</style>
+</th:block>
+
+<!-- start breadcrum section -->
+<th:block layout:fragment="customBreadCrum">
+	<section class="breadcrumb-section set-bg"
+		data-setbg="/user/img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>내 식단 수정</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/seller}">Home</a><span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<!-- end breadcrum section -->
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents"
+	th:object="${menuInformation}">
+	<form id="modifyMyMenu"
+		th:action="@{/buyer/goods/buyerMenu/updateMyMenu}" method="post">
+		<div class="checkout__form">
+			<h4>내 식단 등록</h4>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="checkout__input">
+						<p>
+							<label for="myMenuName">식단명</label><span>*</span>
+						</p>
+						<input class="vailCheck" placeholder="식단명" type="text"
+							id="myMenuName" name="myMenuName" th:value="*{menuName}">
+						<input type="hidden" name="menuCode" th:value="*{menuCode}">
+					</div>
+					<div class="select_goods_Of_Menu">
+						<th:block
+							th:if="${not #lists.isEmpty(menuInformation.menuOrganizeList)}"
+							th:each="mo ,status : *{menuOrganizeList}">
+							<div class="row goodsItems checkout__input"
+								style="margin-bottom: 10px; padding-left: 15px;">
+								<div class="goodsOfMenu" style="padding-left: 0; width: 300px;">
+									<select class="js-example-basic-single2 goodsOfMenuCode"
+										id="goodsOfMenuCode" style="width: 100%;">
+										<option value="">포함될 상품을 선택해주세요.</option>
+										<th:block th:if="${not #lists.isEmpty(goodsList)}"
+											th:each="gl : ${goodsList}">
+											<option th:if="${mo.goodsOfMenuCode} == ${gl.goodsCode}"
+												th:value="${gl.goodsCode}" th:text="${gl.goodsName}"
+												selected="selected"></option>
+											<option th:unless="${mo.goodsOfMenuCode} == ${gl.goodsCode}"
+												th:value="${gl.goodsCode}" th:text="${gl.goodsName}"></option>
+										</th:block>
+									</select>
+								</div>
+								<div class="col-lg-5 inputBox"
+									style="height: 42px; padding-left: 0; padding-right: 3px;">
+									<input class="form-control vailCheck" type="number"
+										id="menuGoodsAmount" style="width: 100%; height: 100%;"
+										placeholder="수량" th:value="${mo.menuGoodsAmount}">
+								</div>
+								<div class="col-lg-2 btnDiv" style="padding-left: 0;">
+									<div>
+										<button type="button" class="moreGoodsBtn" id="moreGoodsBtn"
+											style="height: 42px; line-height: 10px;">추가</button>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+					<button type="button" id="regBtn" style="float: right;"
+						class="site-btn" th:data-menuCode="*{menuCode}">수정</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootjs">
+	<!-- Select 2 js -->
+	<script src="/admin/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(function() {
+			$('.nice-select').remove();
+			$('.js-example-basic-single2').select2();
+
+			//유효성 검사
+			function validationCheck(data) {
+				var isValid = true;
+				//객체일 경우
+				if (typeof data == 'object') {
+
+					$.each(data, function() {
+						var inputValue = $(this).val();
+						if (typeof inputValue == 'undefined'
+								|| inputValue == null || inputValue == ''
+								|| inputValue <= 0) {
+							isValid = false;
+							var inputId = $(this).attr('id');
+							var alertMsg = $('label[for="' + inputId + '"]')
+									.text();
+							alert(alertMsg + ' 입력해주세요');
+							$(this).focus();
+							return false;
+						}
+					});
+
+					//문자열일 경우
+				} else if (typeof data == 'string') {
+					if (typeof inputValue == 'undefined' || inputValue == null
+							|| inputValue == '') {
+						isValid = false;
+						return false;
+					}
+				}
+				return isValid;
+			}
+
+			$('#moreGoodsBtn').click(function() {
+				$('.select_goods_Of_Menu').append('<div class="row goodsItems checkout__input" style="margin-bottom: 10px; padding-left: 15px;"><div class="goodsOfMenu" style="padding-left: 0; width: 300px;"></div></div>');
+				var $selectBox = $('.goodsOfMenu:first .select2-hidden-accessible').clone();
+				var $inputBox = $('.inputBox .vailCheck').clone();
+				$('.select_goods_Of_Menu .goodsOfMenu:last').append($selectBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-5" style="height: 42px; padding : 0;"></div>');
+				$('.select_goods_Of_Menu .row:last .col-lg-5:last').append($inputBox);
+				$('.select_goods_Of_Menu .row:last').append('<div class="col-lg-2" style="padding-left: 3px;"><button type="button" class="site-btn removeBtn" style="height: 42px; line-height : 20px;">삭제</button></div>');
+
+				var deleteBtn = $('.removeBtn');
+				$.each(deleteBtn, function() {
+					$(this).click(function() {
+						$(this).parent().parent().remove();
+					});
+				});
+				$(".js-example-basic-single2").select2();
+			});
+
+			$('#regBtn').click(function() {
+				var booleanValue = true;
+
+				var selectObj = $('.goodsOfMenuCode');
+				var selectValid = validationCheck(selectObj);
+				if (!selectValid)
+					return false;
+
+				var inputObj = $('.vailCheck');
+				var inputValid = validationCheck(inputObj);
+				if (!inputValid)
+					return false;
+
+				var goodsItemsObj = $('.goodsItems');
+				var goodsItemsArray = [];
+
+				$.each(goodsItemsObj, function(item, index) {
+					var goodsItems = {};
+					var goodsOfMenuCode = $(this).find('select').val();
+					var menuGoodsAmount = $(this).find('input').val();
+					goodsItems['goodsOfMenuCode'] = goodsOfMenuCode;
+					goodsItems['menuGoodsAmount'] = menuGoodsAmount;
+					goodsItemsArray.push(goodsItems);
+				});
+				console.log(goodsItemsArray, "<<<<<");
+
+				var form = $('#modifyMyMenu');
+				var formData = new FormData(form[0]);
+				formData.append('goodsItems', JSON.stringify(goodsItemsArray));
+				console.log(formData, "<<<<<<<<<<<<<<");
+				$.ajax(
+					{ 	type : 'POST',
+						url : '/buyer/goods/buyerMenu/updateMyMenu',
+						processData : false,
+						contentType : false,
+						data : formData,
+					}).done(function(data) {
+						if (data) {
+							window.location.href = '/buyer/goods/buyerMenu/myMenuList';
+							alert('식단 수정이 정상적으로 완료되었습니다.');
+						} else {
+							window.location.href = '/buyer/goods/buyerMenu/myMenuList';
+							alert('식단 수정 실패');
+						}
+					}).fail(function(error) {
+							alert('통신 실패');
+					});
+
+			});
+		});
+	</script>
+</th:block>
 </html>

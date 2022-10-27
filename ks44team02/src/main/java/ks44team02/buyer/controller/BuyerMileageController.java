@@ -27,7 +27,7 @@ public class BuyerMileageController {
 	}
 
 	@PostConstruct
-	public void BuyerMileageControllerInit() {
+	public void buyerMileageControllerInit() {
 		log.info("adminMileageControllerInit bean 생성");
 	}
 	

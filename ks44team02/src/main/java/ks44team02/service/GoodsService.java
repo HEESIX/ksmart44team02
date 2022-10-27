@@ -12,6 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import groovyjarjarantlr4.v4.parse.ANTLRParser.parserRule_return;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
@@ -295,10 +301,15 @@ public class GoodsService {
 	// 개별 식단 정보(식단이 포함하는 상품들의 정보)조회
 	public List<Goods> getMenuOrganizeGoodsInfo(String menuCode) {
 		List<Goods> menuOrganizeGoodsInfo = new ArrayList<Goods>();
+		
 		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
+		
 		for (MenuOrganize menuOrganize : menuOrganizeList) {
+			
 			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			
 			menuOrganizeGoodsInfo.add(goodsMapper.getGoodsInfo(goodsCode));
+			
 			System.out.println(menuOrganizeGoodsInfo.toString());
 		}
 		return menuOrganizeGoodsInfo;
@@ -332,7 +343,7 @@ public class GoodsService {
 	public List<GoodsDiscount> getGoodsDiscountListSeller(HttpSession session) {
 		// 세션의 아이디 조회
 		// 현재 없으므로 fix된 값 사용
-		// String memberId = session.getAttribute("SID");
+		// String memberId = (String) session.getAttribute("SID");
 		String memberId = "id010";
 		List<GoodsDiscount> goodsDiscountListSeller = goodsMapper.getGoodsDiscountListSeller(memberId);
 		return goodsDiscountListSeller;
@@ -408,9 +419,47 @@ public class GoodsService {
 		return 0;
 	}
 
-	// 개인 맞춤 식단 생성
-	public int addBuyerMenu() {
-		return 0;
+	// 개인 맞춤 식단 등록
+	public boolean addMyMenu(String menuCode, String myMenuName, String goodsItems, HttpSession session) throws JsonMappingException, JsonProcessingException {
+		
+		boolean result = true;
+		
+		MenuInformation menuInformation = new MenuInformation();
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		menuInformation.setMenuCode(menuCode);
+		menuInformation.setMenuName(myMenuName);
+		menuInformation.setMenuRegId(memberId);
+		
+		boolean addMenuInfomationResult = goodsMapper.addMenuInformation(menuInformation);
+		if(!addMenuInfomationResult) result = false;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<Map<String, Object>> maps = objectMapper.readValue(goodsItems, new TypeReference<List<Map<String, Object>>>() {});
+
+		for(Map<String, Object> map : maps) {
+			String goodsOfMenuCode = (String) map.get("goodsOfMenuCode");
+			
+			int menuGoodsAmount = Integer.parseInt((String) map.get("menuGoodsAmount"));
+			String menuGoodsCode = commonMapper.getNewCode("tb_menu_organize");
+			
+			MenuOrganize menuOrganize = new MenuOrganize();
+			
+			menuOrganize.setMenuGoodsCode(menuGoodsCode);
+			menuOrganize.setMenuCode(menuCode);
+			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode);
+			menuOrganize.setMenuGoodsAmount(menuGoodsAmount);
+			
+			boolean addMenuOrganizeResult = goodsMapper.addMenuOrganize(menuOrganize);
+			if(!addMenuOrganizeResult) {
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 	// 개인 맞춤 식단 목록 조회
@@ -419,10 +468,51 @@ public class GoodsService {
 		return buyerMenuList;
 	}
 	
-	// 개인 맞춤 식단 수정
-	public int modifyBuyerMenu() {
-		return 0;
+	//개인 맞춤 식단 수정
+	public boolean modifyMyMenu(String menuCode
+							   ,String myMenuName
+							   ,String goodsItems
+							   ,HttpSession session) throws JsonMappingException, JsonProcessingException {
+		
+		boolean result = true;
+		
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		boolean addMenuInfomationResult = goodsMapper.modifyMenuInformation(menuCode, myMenuName);
+		if(!addMenuInfomationResult) return false;
+		
+		//새로 INSERT 전 DELETE 작업 필요
+		boolean removeMenuOrganizeResult = goodsMapper.removeMenuOragnize(menuCode);
+		if(!removeMenuOrganizeResult) return false;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<Map<String, Object>> maps = objectMapper.readValue(goodsItems, new TypeReference<List<Map<String, Object>>>() {});
+
+		for(Map<String, Object> map : maps) {
+			String goodsOfMenuCode = (String) map.get("goodsOfMenuCode");
+			
+			int menuGoodsAmount = Integer.parseInt((String) map.get("menuGoodsAmount"));
+			String menuGoodsCode = commonMapper.getNewCode("tb_menu_organize");
+			
+			MenuOrganize menuOrganize = new MenuOrganize();
+			
+			menuOrganize.setMenuGoodsCode(menuGoodsCode);
+			menuOrganize.setMenuCode(menuCode);
+			menuOrganize.setGoodsOfMenuCode(goodsOfMenuCode);
+			menuOrganize.setMenuGoodsAmount(menuGoodsAmount);
+			
+			boolean addMenuOrganizeResult = goodsMapper.addMenuOrganize(menuOrganize);
+			if(!addMenuOrganizeResult) {
+				result = false;
+				break;
+			}
+			if(!result) return false;
+		}
+		return result;
 	}
+	
 
 	// 개인 맞춤 식단 삭제
 	public boolean removeBuyerMenu(String menuCode) {
@@ -436,8 +526,9 @@ public class GoodsService {
 	}
 
 	// 개인 맞춤 식단 정보
-	public MenuInformation getBuyerMenuInfo() {
-		return null;
+	public MenuInformation getBuyerMenuInfo(Map<String, Object> map) {
+		MenuInformation menuInformation = goodsMapper.getBuyerMenuInfo(map);
+		return menuInformation;
 	}
 
 	// 식단 목록

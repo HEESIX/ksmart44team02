@@ -6,7 +6,7 @@
 		<section class="sidebar" id="sidebar-scroll">
 			<!-- Sidebar Menu-->
 			<ul class="sidebar-menu">
-				<li class="nav-level">--- 관리</li>
+				<li class="nav-level"><a th:href="@{/admin/login/adminLogin}">--- 관리자 로그인---</a></li>
 				<li class="treeview"><a class="waves-effect waves-dark"
 					href="#"><i class="icon-briefcase"></i><span>#회원 관리</span><i
 						class="icon-arrow-down"></i></a>
@@ -17,7 +17,7 @@
 								class="icon-arrow-right"></i>#회원 조회/검색</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/mileageManage/mileageManagement}"><i
 								class="icon-arrow-right"></i>#회원 적립금 조회</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/mileageManage/mileageGiveExtinct}"><i
+						<li><a class="waves-effect waves-dark" href="#"><i
 								class="icon-arrow-right"></i>#회원 적립금 적립/소멸</a></li>		
 								
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/gradeDetails/buyerGradeList}"><i	
@@ -125,10 +125,12 @@
 								class="icon-arrow-right"></i>신고관리</a></li>
 					</ul></li>
 				<li class="treeview"><a class="waves-effect waves-dark"
-					href="#"> <i class="icon-list"></i><span>!#환불/교환 사유 관리:장보경</span><i
+					href="#"> <i class="icon-list"></i><span>!#주문관리:장보경</span><i
 						class="icon-arrow-down"></i>
 				</a>
 					<ul class="treeview-menu">
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/adminOrderDeliveryList}"><i
+								class="icon-arrow-right"></i>!#주문내역조회</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refundExchangeReasonList}"><i
 								class="icon-arrow-right"></i>!#환불/교환사유 목록</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/order/refundExchangeReasonAdd}"><i

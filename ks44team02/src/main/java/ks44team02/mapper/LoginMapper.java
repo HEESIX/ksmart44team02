@@ -31,13 +31,7 @@ public interface LoginMapper {
 	
 	//판매자 회원 정보 리스트 조회 
 	public List<Member> getMemberListAdmin(Map<String, Object> map);
-	
-	//(공통 1) 로그인 이력 삭제
-	public int removeLoginHistory(String memberId);
-		
-	//(공통 2) 회원 삭제
-	public int removeMember(String memberId);
-		
+			
 	//판매자 조회
 	public List<Member> getSellerList();
 		
@@ -59,12 +53,22 @@ public interface LoginMapper {
 
 	//회원 목록 조회
 	public List<Member> getMemberList();
+	
 
-	//관리자회원 가입???
+	//관리자회원 리스트
 	public List<Member> getAddAdmin();
 	
 	//관리자회원 가입
 	public int addAdmin(Member member);
+	
+	//구매자 회원 리스트
+	public List<Member> getAddBuyer();
+
+	//구매자 회원가입 
+	public int addBuyer(Member member);
+
+	//구매자 개별 정보 
+	public Member getBuyerInfo(String buyerInfo);
 
 
 

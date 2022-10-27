@@ -16,12 +16,6 @@ public class LoginService {
 	public LoginService(LoginMapper loginMapper) {
 		this.loginMapper = loginMapper;
 	}
-			
-		
-	//회원수정
-	public void modifyMember(Member member) {
-		loginMapper.modifyMember(member);
-		}
 
 	//구매자 로그인
 	public String buyerLogin () {
@@ -83,7 +77,7 @@ public class LoginService {
 		return result;
 		}
 		
-	//판매자 회원가입
+	//관리자 회원가입
 	public void addAdmin(Member member) {
 	       int result = loginMapper.addAdmin(member);
 	       System.out.println("회원가입 결과:" + result);
@@ -93,9 +87,22 @@ public class LoginService {
 		return addAdmin;
 	}
 		
+	//구매자 회원가입
+	public void addBuyer(Member member) {
+			int result = loginMapper.addBuyer(member);
+			System.out.println("회원가입 결과:" + result);
+	 	}
+	public List<Member> getAddBuyer(){
+		List<Member>addBuyer = loginMapper.getAddBuyer();
+		return addBuyer;
 		
-		
-		
+	}
+	
+	// 구매자 개별 정보 
+	public Member getBuyerInfo(String memberId) {
+		Member buyerInfo = loginMapper.getBuyerInfo(memberId);
+		return buyerInfo;
+	}
 		
 		
 }

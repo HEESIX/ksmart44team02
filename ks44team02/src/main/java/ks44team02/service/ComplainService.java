@@ -34,27 +34,27 @@ public class ComplainService {
 	public String getSellerComplainList() {
 		return null;
 	}
-		
-	// 구매자 신고 등록
-	public int regBuyerComplain() {
-		return 0;
 
-	}
-
+	//신고내역 코드 조회
 	public Complain getComplainInfo(String complainCode) {
 		Complain complainInfo = complainMapper.getComplainInfo();
 		return complainInfo;
 	
 	}
-
+	//신고내역 내용,제목 조회
 	public Complain getComplainInfo(String complainContent, String complainTitle) {
 		Complain complainInfo = complainMapper.getComplainInfo();
 		return complainInfo;
 	}
-
+	//회원 신고 등록
 	public boolean regBuyerComplain(Complain complain) {
 		boolean result = complainMapper.regBuyerComplain(complain);
 		return result;
+	}
+
+	public List<Complain> getComplainListSearch(String memberId) {
+		List<Complain> complainList = complainMapper.getComplainListSearch(memberId);
+		return complainList;
 	}
 
 }

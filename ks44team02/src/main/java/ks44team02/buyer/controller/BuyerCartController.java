@@ -8,20 +8,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team02.dto.Cart;
 import ks44team02.dto.Goods;
-import ks44team02.dto.OrderDiscount;
 import ks44team02.service.CartService;
 import ks44team02.service.CommonService;
 import ks44team02.service.GoodsService;
@@ -59,7 +54,8 @@ public class BuyerCartController {
 		//String memberId = session.getAttribute("SID");
 		//null일 경우 체크(비정상적인 접근)
 		//현재 없으므로 픽스된 값 입력
-		String memberId = "id002";
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
 		
 		Goods goodsInfo = goodsService.getGoodsInfo(goodsCode);
 		
@@ -119,11 +115,5 @@ public class BuyerCartController {
 		boolean result = cartService.removeCartGoods(cartListCode);
 		
 		return result;
-	}
-	
-	//장바구니에 담긴 상품 주문화면으로 선택 이동
-	@PostMapping("/cartMove")
-	public String moveCartGoods() {
-		return "buyer/order/order";
-	}
+	}	
 }

@@ -37,7 +37,7 @@ a:hover {
 					<div class="breadcrumb__text">
 						<h2>MY ORDER</h2>
 						<div class="breadcrumb__option">
-							<a th:href="@{/}">Home</a><span>my order</span>
+							<a th:href="@{/}" style="color: white;">Home</a><span>my order</span>
 						</div>
 					</div>
 				</div>
@@ -53,7 +53,7 @@ a:hover {
 		<div class="row">
 			<div class="col-sm-12 p-0">
 				<div class="main-header">
-					<h4>주문리스트</h4>
+					<h4>주문 내역</h4>
 					<span style="font-size: 17px; font-style: italic;">
 						> 주문한 상품 클릭시 상세주문서내역으로 이동합니다.
 					</span>
@@ -69,7 +69,6 @@ a:hover {
 							<th></th>
 							<th>ITEM</th>
 							<th>총 배송비</th>
-							<th>총 할인금액</th>
 							<th>총 결제금액</th>
 							<th>전체주문일자</th>
 						</tr>
@@ -77,16 +76,15 @@ a:hover {
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(getOrderList)}"
 							th:each="orl : ${getOrderList}" style="line-height: 50px;">
-							<td style="width: 200px;"><a href="#"><img
+							<td style="width: 200px;"><img
 								th:src="@{'/' + ${orl.get('mainImagePath')}}"
 								th:alt="${orl.get('mainImageOriName')}"
-								style="width: 100px; border-radius: 10px;" /></a></td>
+								style="width: 100px; border-radius: 10px;" /></td>
 							<td><a
 								th:href="@{/buyer/mypage/orderStatus/myOrderDeliveryDetail(orderGroupCode=${orl.orderGroupCode})}"  th:text="${orl.get('goodsName')}">
 							</a></td>
-							<td th:text="'₩' + ${orl.get('deliTotal')}"></td>
-							<td th:text="'₩' + ${orl.get('discountAdd')}"></td>
-							<td th:text="'₩' + ${orl.get('finalPrice')}"></td>
+							<td th:text="'+ ' + ${orl.get('deliTotal')} + '원'"></td>
+							<td th:text="${orl.get('finalPrice')} + '원'"></td>
 							<td th:text="${orl.get('orderDatetime')}"></td>
 							
 						</tr>
@@ -100,5 +98,4 @@ a:hover {
 		</div>
 	</div>
 </th:block>
-
 </html>

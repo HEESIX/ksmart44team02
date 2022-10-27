@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import ks44team02.dto.Cart;
 import ks44team02.dto.Criteria;
 import ks44team02.dto.Goods;
@@ -50,15 +53,26 @@ public class BuyerGoodsController {
 	// 개인 맞춤 식단 생성 폼
 	@GetMapping("/buyerMenu/regMyMenu")
 	public String addbuyerMenuForm(Model model) {
-		List<Goods> goodsList = goodsService.getGoodsList(null);
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
+		model.addAttribute("title", "개인 맞춤 식단 등록");
 		model.addAttribute("goodsList", goodsList);
 		return "buyer/goods/buyerMenu/regMyMenu";
 	}
 
 	// 개인 맞춤 식단 생성 처리
-	@PostMapping("/buyerMenu/regMenu")
-	public String addbuyerMenu() {
-		return "redirect:/buyer/goods/buyerMenu/myMenuList";
+	@PostMapping("/buyerMenu/regMyMenu")
+	@ResponseBody
+	public boolean addbuyerMenu(@RequestParam(value = "myMenuName") String myMenuName
+							   ,@RequestParam(value = "goodsItems") String goodsItems
+							   ,HttpSession session) throws JsonMappingException, JsonProcessingException {
+		log.info(">>>>>>>>>>{}", myMenuName);
+		log.info(">>>>>>>>>>{}", goodsItems);
+		
+		String menuCode = commonService.getNewCode("tb_menu_information");
+		
+		goodsService.addMyMenu(menuCode, myMenuName, goodsItems, session);
+		
+		return true;
 	}
 
 	// 개인 맞춤 식단 목록 조회
@@ -131,16 +145,38 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 수정 폼
 	@GetMapping("/buyerMenu/updateMyMenu/{menu_code}")
-	public String modifybuyerMenuForm(@PathVariable(value = "menu_code") String menu_code) {
-		// 세션 SID와 불러오는 식단 정보의 memberId 유효성 검사 필요
-
+	public String modifyBuyerMenuForm(@PathVariable(value = "menu_code") String menuCode
+									 ,HttpSession session
+									 ,Model model) {
+		String memberId = (String) session.getAttribute("SID");
+		if(memberId == null) memberId = "id002";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("menuCode", menuCode);
+		map.put("memberId", memberId);
+		
+		MenuInformation menuInformation = goodsService.getBuyerMenuInfo(map);
+		List<Map<String, Object>> goodsList = goodsService.getGoodsListForMenu();
+		
+		model.addAttribute("title", "나만의 식단 수정");
+		model.addAttribute("menuInformation", menuInformation);
+		model.addAttribute("goodsList", goodsList);
+		
 		return "buyer/goods/buyerMenu/updateMyMenu";
 	}
 
 	// 개인 맞춤 식단 수정 처리
 	@PostMapping("/buyerMenu/updateMyMenu")
-	public String modifybuyerMenu() {
-		return "redirect:/buyer/goods/buyerMenu/myMenuList";
+	@ResponseBody
+	public boolean modifyBuyerMenu(@RequestParam(value = "menuCode") String menuCode
+								 ,@RequestParam(value = "myMenuName") String myMenuName
+							     ,@RequestParam(value = "goodsItems") String goodsItems
+							     ,HttpSession session) throws JsonMappingException, JsonProcessingException {
+		
+		boolean modifyMyMenuResult = goodsService.modifyMyMenu(menuCode, myMenuName, goodsItems, session);
+		
+		return modifyMyMenuResult;
 	}
 
 	// 개인 맞춤 식단 삭제 처리
@@ -165,7 +201,10 @@ public class BuyerGoodsController {
 
 	// 개인 맞춤 식단 개별 정보
 	@GetMapping("/buyerMenu/myMenuDetail/{menu_code}")
-	public String getbuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	public String getbuyerMenuInfo(@PathVariable(value = "menu_code") String menu_code
+								  ,Model model) {
+		
+		model.addAttribute("title", "개인 맞춤 식단 상세 정보");
 		
 		return "buyer/goods/buyerMenu/myMenuDetail";
 	}
@@ -258,7 +297,21 @@ public class BuyerGoodsController {
 
 	// 개별 식단 정보
 	@GetMapping("/menu/menuDetail/{menu_code}")
-	public String getMenuInfo(@PathVariable(value = "menu_code") String menu_code) {
+	public String getMenuInfo(@PathVariable(value = "menu_code") String menuCode
+							 ,Model model) {
+		
+		Goods menuInfo = goodsService.getMenuInfo(menuCode);
+		List<MenuOrganize> menuOrganizeInfo = goodsService.getMenuOrganizeList(menuCode);
+		List<Goods> menuOrganizeGoods = goodsService.getMenuOrganizeGoodsInfo(menuCode);
+		
+		log.info(">>>>>>>>>>>>>>>>>{}", menuInfo);
+		log.info(">>>>>>>>>>>>>>>>>{}", menuOrganizeGoods);
+		
+		model.addAttribute("title", "식단 상세 정보");
+		model.addAttribute("menuInfo", menuInfo);
+		model.addAttribute("menuOrganizeGoods", menuOrganizeGoods);
+		model.addAttribute("menuOrganizeInfo", menuOrganizeInfo);
+		
 		return "buyer/goods/menu/menuDetail";
 	}
 

@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>상세주문리스트</h2>
+						<h2>주문서 상세내역</h2>
 						<div class="breadcrumb__option">
 							<a th:href="@{/}">Home</a><span>my order detail</span>
 						</div>
@@ -68,8 +68,8 @@
 						<th></th>
 						<th>ITEM</th>
 						<th>수량</th>
-						<th>배송비</th>
 						<th>상품가격</th>
+						<th>배송비</th>
 						<th>업체</th>
 						<th>주문상태</th>
 						<th>운송장번호</th>
@@ -81,8 +81,8 @@
 											th:alt="${odl.get('mainImageOriName')}" style="width: 100px; border-radius: 10px;"/></a></td>
 							<td th:text="${odl.get('goodsName')}"></td>
 							<td th:text="${odl.get('orderAmount')}"></td>
-							<td th:text="'₩' + ${odl.get('deliCharge')}"></td>
-							<td th:text="'₩' + ${odl.get('regularPriceSubtotal')}"></td>
+							<td th:text="${odl.get('regularPriceSubtotal')} + '원'"></td>
+							<td th:text="'+ ' + ${odl.get('deliCharge')} + '원'"></td>
 							<td th:text="${odl.get('entName')}"></td>
 							<td th:text="${odl.get('orderStatusStandardDetails')}"></td>
 							<td th:text="${odl.get('deliveryNumber')}"></td>
@@ -117,21 +117,31 @@
 			</div>
 			<div class="col-lg-6">
 				<h4 style="margin-top: 30px;">결제정보</h4>
-				<table class="table table-hover"  style="width: 100%; float: left;">
-					<tbody>
-					    <tr>
-							<th>결제정보</th>
-							<td th:text="${getPaymentList.get('paymentInputNumber')}"></td>
-							<th>은행사</th>
-							<td th:text="${getPaymentList.get('paymentBank')}"></td>
-						</tr>
-						<tr>
-							<th>결제금액</th>
-							<td th:text="'₩ '+ ${getPaymentList.get('paymentCash')}"></td>
-							<th>결제자명 </th>
-							<td th:text="${getPaymentList.get('paymentPayer')}"></td>
-						</tr>
-					 </tbody>
+				<table class="table"  style="width: 100%; float: left;">
+						 <tbody>
+							    <tr>
+							   		<th>은행사</th>
+									<td th:text="${getPaymentList.get('paymentBank')}"></td>
+									<th>소계 </th>
+									<td th:text="${getPaymentList.get('subtotalPrice')} + '원'"></td>
+								</tr>
+								<tr>
+									<th>결제정보</th>
+									<td th:text="${getPaymentList.get('paymentInputNumber')}"></td>	
+									<th>할인금액</th>
+									<td th:text="'- ' + ${getPaymentList.get('disAddPrice')} + '원'"></td>
+								</tr>
+								<tr>
+									<th>결제자명 </th>
+									<td th:text="${getPaymentList.get('paymentPayer')}"></td>
+									<th>배송비 </th>
+									<td th:text="'+	' + ${getPaymentList.get('gDeliveryCharge')} + '원'"></td>
+								</tr>
+								<tr>
+									<th>총 결제금액</th>
+									<td th:text="${getPaymentList.get('paymentCash')} + '원'"></td>
+								</tr>
+						      </tbody>
 				</table>
 			</div>
 		</div>
