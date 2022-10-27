@@ -56,6 +56,7 @@ public class GoodsService {
 		
 		for(MenuOrganize menuOrganize : menuOrganizeList) {
 			String goodsCode = menuOrganize.getGoodsOfMenuCode();
+			
 			int goodsAmount = menuOrganize.getMenuGoodsAmount();
 			
 			int cartAmount = goodsAmount * orderAmount;
@@ -66,22 +67,34 @@ public class GoodsService {
 			
 			Cart cart = new Cart();
 			
-			String cartCode = commonMapper.getNewCode("tb_cart_list");
-			
-			cart.setCartListCode(cartCode);
 			cart.setMemberId(memberId);
 			cart.setGoodsCode(goodsCode);
-			cart.setRegularPrice(goods.getGoodsPrice());
-			cart.setDiscountPrice(discountedPrice);
 			cart.setOrderAmount(cartAmount);
 			cart.setPriceSubtotal((cartAmount * discountedPrice));
-			cart.setEnterCode(goods.getEnterCode());
 			
-			boolean addCartResult = cartMapper.addCart(cart);
-			if(!addCartResult) {
-				result = false;
-				break;
+			int overlapCheck = cartMapper.cartOverlapCheck(cart);
+			
+			//update처리
+			if(overlapCheck > 0) {
+				
+				cartMapper.plusCartOrderAmount(cart);
+			}else {
+				
+				String cartCode = commonMapper.getNewCode("tb_cart_list");
+				
+				cart.setCartListCode(cartCode);
+				cart.setRegularPrice(goods.getGoodsPrice());
+				cart.setDiscountPrice(discountedPrice);
+				cart.setEnterCode(goods.getEnterCode());
+				
+				boolean addCartResult = cartMapper.addCart(cart);
+				if(!addCartResult) {
+					result = false;
+					break;
+				}
 			}
+			
+			
 		}
 		
 		return result;
