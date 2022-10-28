@@ -68,8 +68,7 @@ public class DiscountService {
 	}
 	//주문서별 할인혜택 부여
 	public boolean giveOrderDiscount(OrderDiscount orderDiscount) {
-		boolean result = discountMapper.giveOrderDiscount();
+		boolean result = discountMapper.giveOrderDiscount(orderDiscount);
 		return result;
 	}
-
 }
