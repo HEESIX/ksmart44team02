@@ -11,7 +11,7 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	  		<script type="text/javascript" th:inline="javascript">
  	  			$(function(){
- 	  				var msg = /*[[${msg}]]*/;
+ 	  				var msg = [[${msg}]];
  	                if(msg != null) alert(msg);
  	  				
  	  				$('#loginBtn').click(()=>{
