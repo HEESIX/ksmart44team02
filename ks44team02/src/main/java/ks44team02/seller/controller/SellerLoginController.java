@@ -71,7 +71,7 @@ public class SellerLoginController {
 			model.addAttribute("title", "로그인 화면");
 			if(msg != null) model.addAttribute("msg", msg);
 				
-			return "/seller/login/sellerLogin";
+			return "seller/login/sellerLogin";
 		}
 	
 		//아이디 중복 체크 
