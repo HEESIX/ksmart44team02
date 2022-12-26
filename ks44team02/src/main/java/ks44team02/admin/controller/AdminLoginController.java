@@ -68,7 +68,7 @@ public class AdminLoginController {
 		model.addAttribute("title", "로그인 화면");
 		if(msg != null) model.addAttribute("msg", msg);
 			
-		return "/admin/login/adminLogin";
+		return "admin/login/adminLogin";
 	}
 	
 	
