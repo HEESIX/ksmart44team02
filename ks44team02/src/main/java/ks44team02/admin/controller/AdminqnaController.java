@@ -46,7 +46,7 @@ public class AdminqnaController {
 		model.addAttribute("qnaList", qnaList);
 		
 		
-		return "/admin/qnaManage/qna_list";
+		return "admin/qnaManage/qna_list";
 	}
 
 	//회원 QnA 답글 등록 폼
@@ -54,7 +54,7 @@ public class AdminqnaController {
 	public String qnaAnswerForm(@PathVariable(value = "qnaAnswer") String qnaAnswer
 			,Model model) {
 		 QnA Answerqna = qnaService.getqnaInfo(qnaAnswer);
-		return "/admin/qnaManage/qnaAnswer";
+		return "admin/qnaManage/qnaAnswer";
 	}
 	
 	//회원QnA 답글 등록 처리

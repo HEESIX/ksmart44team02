@@ -27,7 +27,7 @@ public class CommonService {
 		return newCode;
 	}
 	
-	//
+	//세션의 아이디로 입점업체 코드 조회
 	public int isExistEnterCode(String memberId) {
 		int result = commonMapper.isExistEnterCode(memberId);
 		return result;

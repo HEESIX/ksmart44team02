@@ -212,7 +212,7 @@ public class AdminDiscountController {
 	public String getAllBuyerBenefitList(Model model
 									  ,@RequestParam(value = "msg", required = false) String msg) {
 		
-
+	
 		List<BuyerBenefit> allBuyerBenefitList = discountService.getAllBuyerBenefitList(null);
 		log.info("할인혜택 보유 현황 조회 :::: {}", allBuyerBenefitList);
 		
@@ -253,14 +253,19 @@ public class AdminDiscountController {
 		model.addAttribute("allBuyerBenefitList", allBuyerBenefitList);
 		return "admin/orderDiscount/allBuyerBenefitList";
 	}
+	
 	//주문서별 할인혜택 회원한테 부여 화면
 	@GetMapping("/giveOrderDiscount")
-	public String giveOrderDiscount(Model model) {
+	public String giveOrderDiscount(Model model
+								   ,@RequestParam(value = "msg", required = false) String msg) {
+		
 		
 		model.addAttribute("title", "할인혜택 부여");
+		if(msg!=null) model.addAttribute("msg", msg);
 		
 		return "admin/orderDiscount/giveOrderDiscount";
 	}
+	/*
 	//주문서별 할인혜택 회원한테 부여 처리
 	@PostMapping("/giveOrderDiscount")
 	public String giveOrderDiscount(OrderDiscount orderDiscount
@@ -275,5 +280,6 @@ public class AdminDiscountController {
 		}
 		reAttr.addAttribute("msg", msg);
 		return "redirect:/admin/orderDiscount/orderDiscountList";
-		}
+	}
+	*/
 }

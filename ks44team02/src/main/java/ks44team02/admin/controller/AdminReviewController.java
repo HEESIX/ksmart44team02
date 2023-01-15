@@ -68,7 +68,7 @@ public class AdminReviewController {
 		List<Review> reviewList = reviewService.getReviewListById();
 		model.addAttribute("title", "회원 리뷰 목록");
 		model.addAttribute("reviewList", reviewList);
-		return "/admin/reviewManage/watchReviewById";
+		return "admin/reviewManage/watchReviewById";
 	}
 	
 	//회원 리뷰 목록 조회(상품)
@@ -77,7 +77,7 @@ public class AdminReviewController {
 		List<Review> reviewListByGcode = reviewService.getReviewListByGcode();
 		model.addAttribute("title", "회원 리뷰 목록");
 		model.addAttribute("reviewList", reviewListByGcode);
-		return "/admin/reviewManage/watchReviewByGcode";
+		return "admin/reviewManage/watchReviewByGcode";
 	}
 	
 	

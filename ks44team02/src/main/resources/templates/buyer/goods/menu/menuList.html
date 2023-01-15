@@ -130,6 +130,7 @@ a:hover {
 					<div class="product__discount__slider owl-carousel">
 						<th:block th:if="${not #lists.isEmpty(menuList)}"
 							th:each="ml : ${menuList}">
+							<th:block th:if="${ml.goodsDiscount} != null">
 							<th:block
 								th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0 or ${ml.goodsDiscount.goodsDiscountRate} != 0">
 								<div class="col-lg-4">
@@ -137,12 +138,14 @@ a:hover {
 										<div class="product__discount__item__pic">
 											<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
 												th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
-											<div class="product__discount__percent"
-												th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
-												th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
-											<div class="product__discount__percent"
-												th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
-												th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+											<th:block th:if="${ml.goodsDiscount} != null">
+												<div class="product__discount__percent"
+													th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
+													th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+												<div class="product__discount__percent"
+													th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
+													th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+											</th:block>
 											<ul class="product__item__pic__hover">
 												<li><a><i class="fa fa-shopping-cart"></i></a></li>
 											</ul>
@@ -152,14 +155,23 @@ a:hover {
 											<h5>
 												<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}" th:text="${ml.goodsName}"></a>
 											</h5>
-											<div class="product__item__price"
-												th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
-												<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
-												<span th:text="${ml.goodsPrice}"></span>
-											</div>
+											<th:block th:if="${ml.goodsDiscount} != null">
+												<div class="product__item__price"
+													th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+													<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+													<span th:text="${ml.goodsPrice}"></span>
+												</div>
+											</th:block>
+											<th:block th:unless="${ml.goodsDiscount} != null">
+													<div class="product__item__price"
+														th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+														<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+													</div>
+												</th:block>
 										</div>
 									</div>
 								</div>
+							</th:block>
 							</th:block>
 						</th:block>
 						<th:block th:unless="${not #lists.isEmpty(menuList)}">
@@ -218,12 +230,14 @@ a:hover {
 							<div class="product__item__pic">
 								<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}"><img th:alt="${ml.goodsMainImageInfo.mainImageOriginalName}"
 									th:src="'/' + ${ml.goodsMainImageInfo.mainImagePath}"></a>
-								<div class="product__discount__percent"
-									th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
-									th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
-								<div class="product__discount__percent"
-									th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
-									th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+								<th:block th:if="${ml.goodsDiscount} != null">
+									<div class="product__discount__percent"
+										th:if="${ml.goodsDiscount.goodsDiscountPrice} != 0"
+										th:text="'-' + ${ml.goodsDiscount.goodsDiscountPrice} + '원'"></div>
+									<div class="product__discount__percent"
+										th:if="${ml.goodsDiscount.goodsDiscountRate} != 0"
+										th:text="'-' + ${ml.goodsDiscount.goodsDiscountRate} + '%'"></div>
+								</th:block>
 								<ul class="product__item__pic__hover">
 									<li><a><i class="fa fa-shopping-cart"></i></a></li>
 								</ul>
@@ -233,15 +247,22 @@ a:hover {
 								<h5>
 									<a th:href="@{|/buyer/goods/menu/menuDetail/${ml.menuInformation.menuCode}|}" th:text="${ml.goodsName}"></a>
 								</h5>
-								<div class="product__item__price"
-									th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
-									<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
-									<span th:text="${ml.goodsPrice}"></span>
-								</div>
-								<div class="product__item__price"
-									th:unless="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
-									<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
-								</div>
+								<th:block th:if="${ml.goodsDiscount} != null">
+									<div class="product__item__price"
+										th:if="${ml.goodsPrice} != ${ml.goodsDiscountedPrice}">
+										<th:block th:text="${ml.goodsDiscountedPrice}"></th:block>
+										<span th:text="${ml.goodsPrice}"></span>
+									</div>
+									<div class="product__item__price"
+										th:if="${ml.goodsPrice} == ${ml.goodsDiscountedPrice}">
+										<th:block th:text="${ml.goodsPrice}"></th:block>
+									</div>
+								</th:block>
+								<th:block th:unless="${ml.goodsDiscount} != null">
+									<div class="product__item__price">
+										<th:block th:text="${ml.goodsPrice}"></th:block>
+									</div>
+								</th:block>
 							</div>
 						</div>
 					</div>

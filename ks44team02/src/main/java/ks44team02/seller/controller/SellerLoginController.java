@@ -57,7 +57,7 @@ public class SellerLoginController {
 					session.setAttribute("SNAME", member.getMemberName());
 					session.setAttribute("SLEVEL", member.getMemberLevelCode());
 					// 회원의 정보가 일치하면
-					return "redirect:/";
+					return "redirect:/seller";
 				}
 			}	
 			reAttr.addAttribute("msg", "회원의 정보가 일치하지 않습니다.");
@@ -71,7 +71,7 @@ public class SellerLoginController {
 			model.addAttribute("title", "로그인 화면");
 			if(msg != null) model.addAttribute("msg", msg);
 				
-			return "/seller/login/sellerLogin";
+			return "seller/login/sellerLogin";
 		}
 	
 		//아이디 중복 체크 

@@ -40,6 +40,6 @@ public class BuyerMileageController {
 		System.out.println(mileageList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", mileageList);
-		return "/buyer/Mileage/mileageList";
+		return "buyer/Mileage/mileageList";
 	}
 }

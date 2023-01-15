@@ -206,27 +206,27 @@
 	<!-- 판매자측면 주문 상세정보 조회 -->
 	<select id="getSellerOrderDetail" parameterType="String" resultType="map">
 		SELECT
-	         od.order_detail_code AS orderDetailCode,
-	         g.g_main_image as goodsMainImage,
-	         g.g_name as goodsName,
-	         g.g_code as goodsCode,
-	         om.add_discount_price AS disPricAdd,
-	         od.discount_price AS discountPrice,
-	         od.regular_price_subtotal as regularPriceSubtotal,
-	         od.order_amount as orderAmount,
-	         od.order_datetime as orderDatetime,
-	         oss.order_status_standard_details as orderStatusStandardDetails,
-			 d.d_get_name AS deliGetName,
-			 d.d_get_addr AS deliGetAddr,
-			 d.d_get_phone AS deliGetPhone,
-			 d.d_memo AS deliMemo,
-	         d.delivery_num as deliveryNumber
+	          od.order_detail_code AS orderDetailCode
+	         ,g.g_main_image as goodsMainImage
+	         ,g.g_name as goodsName
+	         ,g.g_code as goodsCode
+	         ,om.add_discount_price AS disPricAdd
+	         ,od.discount_price AS discountPrice
+	         ,od.regular_price_subtotal as regularPriceSubtotal
+	         ,od.order_amount as orderAmount
+	         ,od.order_datetime as orderDatetime
+	         ,oss.order_status_standard_details as orderStatusStandardDetails
+			 ,d.d_get_name AS deliGetName
+			 ,d.d_get_addr AS deliGetAddr
+			 ,d.d_get_phone AS deliGetPhone
+			 ,d.d_memo AS deliMemo
+	         ,d.delivery_num as deliveryNumber
 	         ,gmi.main_image_original_name AS mainImageOriName
 			 ,gmi.main_image_path AS mainImagePath
 			 ,ent.enter_name AS entName
 			 ,od.g_delivery_charge AS deliCharge
 			 ,om.add_discount_price AS disPriceAdd
-			  ,p.payment_cash_sum AS paySum
+			 ,p.payment_cash_sum AS paySum
 			 ,p.payment_input_bank_card_number AS payBankNum
 			 ,p.payment_type AS payType
 			 ,p.payment_agency AS payBank
@@ -261,10 +261,10 @@
 			 tb_enterprise AS ent
 			 on
 			 ent.enter_code = od.enter_code
-			 	INNER JOIN
-			 	tb_payment_by_order AS p
-			 	on
-			 	om.order_code = p.order_code
+			 INNER JOIN
+			 tb_payment_by_order AS p
+			 on
+			 om.order_code = p.order_code
 		WHERE
 			od.order_detail_code = #{orderDetailCode}
 	</select>
@@ -330,44 +330,44 @@
 	
 	<!-- 주문 리스트 -->
 	<select id="getOrderList" parameterType="String" resultType="map">	
-		SELECT
-	om.order_code as orderCode,
-	group_concat(g.g_name SEPARATOR ', ') as goodsName,
-	om.final_price as finalPrice,
-	od.order_datetime AS orderDatetime,
-	om.order_group_code AS orderGroupCode,
-	om.add_discount_price AS discountAdd,
-	om.regular_price_subtotal AS subPrice,
-	om.g_delivery_charge_total as deliTotal
-	,gmi.main_image_original_name AS mainImageOriName
-	,gmi.main_image_path AS mainImagePath
-FROM
-	tb_order_management AS om
-	INNER JOIN
-	tb_order_detail AS od
-	ON 
-	od.order_group_code = om.order_group_code
-	LEFT JOIN
-	tb_goods AS g
-	on
-	g.g_code = od.g_code
-	inner JOIN
-	tb_order_status AS os
-	on
-	os.order_detail_code = od.order_detail_code
-	INNER JOIN
-	tb_order_status_standard AS oss
-	on
-	oss.order_status_standard_code = os.order_status_standard_code
-		INNER JOIN 
-	tb_goods_main_image AS gmi
-	ON 
-	gmi.main_image_idx = g.g_main_image
-WHERE
-	od.member_id = #{memberId}
-GROUP BY om.order_code
-ORDER BY
-	os.order_status_update_datetime;
+	SELECT
+		om.order_code as orderCode
+		,group_concat(g.g_name SEPARATOR ', ') as goodsName
+		,om.final_price as finalPrice
+		,od.order_datetime AS orderDatetime
+		,om.order_group_code AS orderGroupCode
+		,om.add_discount_price AS discountAdd
+		,om.regular_price_subtotal AS subPrice
+		,om.g_delivery_charge_total as deliTotal
+		,gmi.main_image_original_name AS mainImageOriName
+		,gmi.main_image_path AS mainImagePath
+	FROM
+		tb_order_management AS om
+		INNER JOIN
+		tb_order_detail AS od
+		ON 
+		od.order_group_code = om.order_group_code
+		LEFT JOIN
+		tb_goods AS g
+		on
+		g.g_code = od.g_code
+		inner JOIN
+		tb_order_status AS os
+		on
+		os.order_detail_code = od.order_detail_code
+		INNER JOIN
+		tb_order_status_standard AS oss
+		on
+		oss.order_status_standard_code = os.order_status_standard_code
+			INNER JOIN 
+		tb_goods_main_image AS gmi
+		ON 
+		gmi.main_image_idx = g.g_main_image
+	WHERE
+		od.member_id = #{SID}
+	GROUP BY om.order_code
+	ORDER BY
+		os.order_status_update_datetime;
 	</select>
 	
 	

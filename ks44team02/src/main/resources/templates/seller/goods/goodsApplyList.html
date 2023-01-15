@@ -106,12 +106,11 @@ table th,td{
 		<tbody>
 			<tr th:if="${not #lists.isEmpty(goodsApplyList)}"
 				th:each="gal, status : ${goodsApplyList}">
-				<td><a th:href="@{|/seller/goods/goodsApplyDetail/${gal.goodsApplyCode}|}"
-					th:text="${gal.goodsApplyName}"></a></td>
-				<td><a th:href="@{|/seller/goods/goodsApplyDetail/${gal.goodsApplyCode}|}"><img
+				<td th:text="${gal.goodsApplyName}"></td>
+				<td><img
 						th:src="@{'/' + ${gal.goodsMainImageInfo.mainImagePath}}"
 						th:alt="${gal.goodsMainImageInfo.mainImageOriginalName}"
-						style="width: 100px;" /></a></td>
+						style="width: 100px;" /></td>
 				<td th:text="${gal.goodsCategory.goodsCategoryName}"></td>
 				<td th:text="${gal.goodsApplyPrice}"></td>
 				<td th:text="${gal.goodsDiscount.goodsDiscountName}"></td>

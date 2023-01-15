@@ -11,7 +11,7 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	  		<script type="text/javascript" th:inline="javascript">
  	  			$(function(){
- 	  				var msg = /*[[${msg}]]*/;
+ 	  				var msg = [[${msg}]];
  	                if(msg != null) alert(msg);
  	  				
  	  				$('#loginBtn').click(()=>{
@@ -308,7 +308,7 @@ footer .copyright-wrap span{
 				  <div class="form-group row">
 				    <label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
 				    <div class="col-lg-8">
-				      <input type="password" class="form-control" name="memberId" id="inputPassword" placeholder="회원 아이디를 입력해주세요"/>
+				      <input type="id" class="form-control" name="memberId" id="inputPassword" placeholder="회원 아이디를 입력해주세요"/>
 				    </div>
 				  </div>
 				  <div class="form-group row">

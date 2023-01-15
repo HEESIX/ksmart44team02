@@ -11,7 +11,7 @@ public class BuyerBenefit {
 	private String benefitExpirationDate;
 	
 	private List<OrderDiscount> orderDiscountList;
-
+	
 
 	public List<OrderDiscount> getOrderDiscountList() {
 		return orderDiscountList;

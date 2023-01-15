@@ -43,7 +43,6 @@ public class BuyerOrderController {
 		//세션이 생기면 아래 조건문은 주석처리 해야함
 		if(sessionId == null)  sessionId = "id002";
 		
-		List<Cart> orderList = orderService.order(sessionId);
 		
 		return "buyer/order/order";
 	}

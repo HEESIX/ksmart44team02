@@ -142,7 +142,6 @@
 			order_discount_code = #{orderDiscountCode};
 	</delete>
 	
-	
 	<!-- 회원별 본인의 보유 혜택 목록 조회 -->
 	<select id="getBuyerBenefitList" parameterType="String" resultMap="buyerBenefitResultMap">
 		SELECT
@@ -164,4 +163,5 @@
 		ORDER BY
 			b.benefit_expiration_date;
 	</select>
+	
 </mapper>

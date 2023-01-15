@@ -59,7 +59,5 @@ public interface DeliveryMapper {
 	//취소,환불,교환 조회 list<>
 	public String getRefundExchangeList();
 
-	//구매자 배송처리
-	public String OrderDeal();
 
 }
