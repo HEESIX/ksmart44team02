@@ -58,7 +58,65 @@ thead {
 			<!-- <button type="button" id="mSearch" class="btn btn-primary">검색</button> -->
 		</div>
 	</form>
+				
 	<br>
+	<div style="margin-left:10px;">
+		<form th:action="@{/admin/mileageManage/mileageManagement}"
+						method="post">
+						<div class="col-xs-3">
+						
+						<label for="mMileageCode">마일리지 누적코드
+									<input th:value="*{mMileageCode}" class="form-control"
+										type="text" id="mMileageCode" name="mMileageCode">
+								</label>
+						<br>	
+								<label for="memberId">회원아이디
+									<input th:value="*{memberId}" class="form-control"
+										type="text" id="member_Id" name="member_Id">
+								</label>
+							
+						<br>
+								<label for="mMileageCode">상세 주문서코드
+									<input th:value="*{orderDetailCode}" class="form-control"
+										type="text" id="orderDetailCode" name="orderDetailCode">
+								 </label>
+						<br>
+							
+								<label for="mileageDistinct">마일리지 구분
+       							<!-- <input th:value="*{mileageDistinct}" class="form-control"
+										type="text" id="mileageDistinct" name="mileageDistinct">-->		
+								<select id="mileageDistinct" name="mileageDistinct" class="custom-select custom-select-lg mb-3">
+									<option th:value="적립">적립</option>
+									<option th:value="사용">사용</option>
+								</select>
+							 </label>
+							
+						<br>	
+							<label for="mCurrentMileage">현재마일리지
+									<input th:value="*{currentMileage}" class="form-control"
+										type="text" id="currentMileage" name="currentMileage">
+								</label>
+						<br>	
+							
+								<label for="mMileageCode">적립/소멸마일리지
+									<input th:value="*{addedUsedMileage}" class="form-control"
+										type="text" id="addedUsedMileage" name="addedUsedMileage">
+								</label>
+						<br>	
+						
+						<label for="mMileageCode">주문서그룹코드
+									<input th:value="*{orderGroupCode}" class="form-control"
+										type="text" id="orderGroupCode" name="orderGroupCode">
+								</label>
+						<br>	
+
+							<div style="margin-left:10px;">
+							<button id="updateBtn" type="button"
+								class="btn btn-info waves-effect waves-light">적립/소멸</button>
+						 </div>
+						</div>
+					</form>
+						</div>
 <section class="intro">
   <div class="bg-image h-100" style="background-color: #f5f7fa;">
     <div class="mask d-flex align-items-center h-100">
@@ -111,7 +169,44 @@ thead {
 <!-- 사용자 정의 js 하단  -->
 <th:block layout:fragment="customFootJs">
 	 <script>
-		 $(function(){
+	 $(function(){
+		 
+		 $(document).on('click', '#updateBtn', function(){
+			 var mMileageCode =$('#mMileageCode').val();
+			 var member_Id = $('#member_Id').val();
+			 var orderDetailCode = $('#orderDetailCode').val();
+			 var mileageDistinct = $('#mileageDistinct').val();
+			 var addedUsedMileage = $('#addedUsedMileage').val();
+			 var currentMileage = $('#currentMileage').val();
+			 var orderGroupCode = $('#orderGroupCode').val();
+			 // ajax 선언      
+			 var request = $.ajax({          
+				 type: "POST",   // 요청 메소드 타입          
+				 url: "/ks44team02/giveMileageForm", // 접속 url
+				 data: {'mMileageCode' : mMileageCode,
+					 'member_Id' : member_Id,
+					 'orderDetailCode' : orderDetailCode,
+					 'mileageDistinct' : mileageDistinct,
+					 'addedUsedMileage' : addedUsedMileage,
+					 'currentMileage' : currentMileage,
+					 'orderGroupCode' : orderGroupCode},
+				 dataType: 'json' // 응답 메시지의 타입       
+				 });        
+			 // 결과        
+			 request.done(function(data){
+			
+				console.log(data);
+				console.log("done");
+				
+
+			
+			 });     
+		 });
+		 
+	});    	
+	 
+	 
+	 $(function(){
 			 
 			 $(document).on('click', '#searchBtn', function(){
 				 var memberId = $('#memberId').val();
@@ -124,7 +219,8 @@ thead {
 					 dataType: 'json' // 응답 메시지의 타입       
 					 });        
 				 // 결과        
-				 request.done(function(data){         
+				 request.done(function(data){
+					 console.log("good");
 					 var mileageList = data;
 					 var tBody = $('#tBody');					 
 					 var html = '';

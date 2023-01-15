@@ -91,5 +91,24 @@ public class MileageService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<MemberMileageAcc> addMileage(String mMileageCode, String member_Id, String orderDetailCode,
+			String mileageDistinct, int addedUsedMileage, int currentMileage, String orderGroupCode) {
+		
+		List<MemberMileageAcc> memberMileageAccInfo = mileageMapper.addMileage(mMileageCode,member_Id,orderDetailCode
+						,mileageDistinct,addedUsedMileage,currentMileage,orderGroupCode);
+		
+		return memberMileageAccInfo;
+	}
+
+	public List<MemberMileageAcc> useMileage(String mMileageCode, String member_Id, String orderDetailCode, String mileageDistinct,
+			int addedUsedMileage, int currentMileage, String orderGroupCode) {
+		List<MemberMileageAcc> memberMileageAccInfo = mileageMapper.useMileage(mMileageCode,member_Id,orderDetailCode
+				,mileageDistinct,addedUsedMileage,currentMileage,orderGroupCode);
+		
+		return memberMileageAccInfo;
+		
+	}
+
 
 }
