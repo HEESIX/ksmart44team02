@@ -60,6 +60,8 @@ public class AdminMileageAddExtinctionController {
 		System.out.println(addedUsedMileage);
 		System.out.println(currentMileage);
 		System.out.println(orderGroupCode);
+		
+		
 		if(mileageDistinct.equals("적립")) {
 				mileageService.addMileage(mMileageCode,member_Id,orderDetailCode
 						,mileageDistinct,addedUsedMileage,currentMileage,orderGroupCode);
@@ -75,7 +77,7 @@ public class AdminMileageAddExtinctionController {
 	}
 
 
-	
+	/*
  
 	// 적립금 적립 처리
 	@PostMapping("/mileageGiveExtinct")
@@ -107,6 +109,8 @@ public class AdminMileageAddExtinctionController {
 		return "admin/mileageManage/mileageGiveExtinct";
 		
 	}
+	
+	*/
 	
 		/*
 	// 적립금 소멸 폼

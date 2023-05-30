@@ -1,14 +1,54 @@
 package ks44team02.dto;
 
+import java.time.LocalDateTime;
+
 //QnA 구성요소,내용(객체)
 public class QnA {
 	private String qnaCode;
 	private String memberId;
+	private String gCode;
 	private String qnaCategory;
+	private String enterCode;
+	private String qnaImage;
 	private String qnaTitle;
+	private LocalDateTime qnaRegDatetime;
 	private String qnaContents;
+	private String qnaAnswerConfirm;
+	public String getgCode() {
+		return gCode;
+	}
+	public void setgCode(String gCode) {
+		this.gCode = gCode;
+	}
+	public String getEnterCode() {
+		return enterCode;
+	}
+	public void setEnterCode(String enterCode) {
+		this.enterCode = enterCode;
+	}
+	public String getQnaImage() {
+		return qnaImage;
+	}
+	public void setQnaImage(String qnaImage) {
+		this.qnaImage = qnaImage;
+	}
+	public LocalDateTime getQnaRegDatetime() {
+		return qnaRegDatetime;
+	}
+	public void setQnaRegDatetime(LocalDateTime qnaRegDatetime) {
+		this.qnaRegDatetime = qnaRegDatetime;
+	}
+	public String getQnaAnswerConfirm() {
+		return qnaAnswerConfirm;
+	}
+	public void setQnaAnswerConfirm(String qnaAnswerConfirm) {
+		this.qnaAnswerConfirm = qnaAnswerConfirm;
+	}
+	public void setQnaRegDate(LocalDateTime qnaRegDate) {
+		this.qnaRegDate = qnaRegDate;
+	}
 	private String qnaAnswer;
-	private String qnaRegDate;
+	private LocalDateTime qnaRegDate;
 	public String getQnaAnswer() {
 		return qnaAnswer;
 	}
@@ -39,13 +79,6 @@ public class QnA {
 	public void setQnaContents(String qnaContents) {
 		this.qnaContents = qnaContents;
 	}
-	public String getQnaRegDate() {
-		return qnaRegDate;
-	}
-	public void setQnaRegDate(String qnaRegDate) {
-		this.qnaRegDate = qnaRegDate;
-	}
-	
 	
 	public String getQnaCode() {
 		return qnaCode;
@@ -55,23 +88,10 @@ public class QnA {
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("QnA [qnaCode=");
-		builder.append(qnaCode);
-		builder.append(", memberId=");
-		builder.append(memberId);
-		builder.append(", qnaCategory=");
-		builder.append(qnaCategory);
-		builder.append(", qnaTitle=");
-		builder.append(qnaTitle);
-		builder.append(", qnaContents=");
-		builder.append(qnaContents);
-		builder.append(", qnaAnswer=");
-		builder.append(qnaAnswer);
-		builder.append(", qnaRegDate=");
-		builder.append(qnaRegDate);
-		builder.append("]");
-		return builder.toString();
+		return "QnA [qnaCode=" + qnaCode + ", memberId=" + memberId + ", gCode=" + gCode + ", qnaCategory="
+				+ qnaCategory + ", enterCode=" + enterCode + ", qnaImage=" + qnaImage + ", qnaTitle=" + qnaTitle
+				+ ", qnaRegDatetime=" + qnaRegDatetime + ", qnaContents=" + qnaContents + ", qnaAnswerConfirm="
+				+ qnaAnswerConfirm + ", qnaAnswer=" + qnaAnswer + ", qnaRegDate=" + qnaRegDate + "]";
 	}
 	
 	

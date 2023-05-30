@@ -18,11 +18,7 @@ public class MileageService {
 		this.mileageMapper = mileageMapper;
 	}
 
-	// 특정회원 적립금 조회
-	public MemberMileageAcc getMileageInfo(String currentMileage, String mMileageCode) {
-		MemberMileageAcc mileageInfo = mileageMapper.getMileageInfo();
-		return mileageInfo;
-	}
+	
 
 	// 회원 적립금 조회
 	public List<MemberMileageAcc> getMileageList() {
@@ -30,12 +26,6 @@ public class MileageService {
 		return mileageList;
 	}
 	
-	//마일리지 적립 폼
-	public List<MemberMileageAcc> giveMileageForm(MemberMileageAcc memberMileageAcc, OrderDetail orderDetail) {
-		List<MemberMileageAcc> mileageList = mileageMapper.giveMileageForm(memberMileageAcc);
-	
-		return mileageList;
-	}
 	
 	// 회원 적립금 검색
 	public List<MemberMileageAcc> getMileageListSearch(String memberId) {
@@ -43,55 +33,10 @@ public class MileageService {
 		return mileageList;
 	}
 
-	// 회원 적립금 적립
-	public List<MemberMileageAcc> giveMileage(MemberMileageAcc memberMileageAcc, OrderDetail orderDetail) {
-		
-		List<MemberMileageAcc> mileageList = mileageMapper.giveMileageForm(memberMileageAcc);
-		
-		int currentMileage 	   = memberMileageAcc.getCurrentMileage();
-	    String mileageDistinct = memberMileageAcc.getMileageDistinct();
-		int addedUsedMileage   = memberMileageAcc.getAddedUsedMileage();
 	
-		int regularPriceSubtotal = orderDetail.getRegularPriceSubtotal();
-	
-		 
-		     int detailPrice = regularPriceSubtotal;
-			
 
-			if("적립".equals(mileageDistinct)){
-				addedUsedMileage = (int)((detailPrice) * (1/100));
-				currentMileage = currentMileage + addedUsedMileage;
-			}else{
-				
-				currentMileage = currentMileage - addedUsedMileage;
-			}
-		 
-		return mileageList;
-	}
 
-	// 기존 데이터 조회(마일리지 적립화면)
-	public MemberMileageAcc getMemberMileageAccInfo(String mMileageCode, String currentMileage) {
-		MemberMileageAcc memberMileageAccInfo = mileageMapper.getMemberMileageAccInfo(mMileageCode, currentMileage);
-		return memberMileageAccInfo;
-	}
-
-	// buyer 적립금 조회
-	public List<MemberMileageAcc> getBuyerMileageList() {
-		return null;
-	}
-
-	// 회원 적립금 소멸
-	public boolean MileageExtinction(String mMileageCode) {
-		boolean resultRemove = mileageMapper.MileageExtinction(mMileageCode);
-		return resultRemove;
-
-	}
-
-	public MemberMileageAcc getMileageInfo(MemberMileageAcc memberMileageAcc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+//회원 적립금 적립
 	public List<MemberMileageAcc> addMileage(String mMileageCode, String member_Id, String orderDetailCode,
 			String mileageDistinct, int addedUsedMileage, int currentMileage, String orderGroupCode) {
 		
@@ -100,7 +45,8 @@ public class MileageService {
 		
 		return memberMileageAccInfo;
 	}
-
+	
+	//회원 적립금 소멸
 	public List<MemberMileageAcc> useMileage(String mMileageCode, String member_Id, String orderDetailCode, String mileageDistinct,
 			int addedUsedMileage, int currentMileage, String orderGroupCode) {
 		List<MemberMileageAcc> memberMileageAccInfo = mileageMapper.useMileage(mMileageCode,member_Id,orderDetailCode
@@ -109,6 +55,8 @@ public class MileageService {
 		return memberMileageAccInfo;
 		
 	}
+
+
 
 
 }

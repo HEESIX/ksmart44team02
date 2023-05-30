@@ -163,5 +163,4 @@
 		ORDER BY
 			b.benefit_expiration_date;
 	</select>
-	
 </mapper>

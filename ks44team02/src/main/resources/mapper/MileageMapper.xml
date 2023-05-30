@@ -29,7 +29,7 @@
 			tb_member_mileage_acc
 		ORDER BY
 		member_id,
-			mileage_update_datetime DESC
+			mileage_update_datetime ASC
 				
 	</select>
 	
@@ -49,7 +49,9 @@
 				member_id = #{memberId};
 			</if>
 		</trim>
-		
+		ORDER BY
+		member_id,
+			mileage_update_datetime DESC
 				
 	</select>
 	

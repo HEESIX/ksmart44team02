@@ -49,7 +49,7 @@ public class BuyerComplainController {
 		model.addAttribute("title", "신고 내용 작성");
 		model1.addAttribute("title", "신고제목 작성");
 		model.addAttribute("complainInfo", complainInfo);
-		return "buyer/complain/regComplain";
+		return "/buyer/complain/regComplain";
 		
 	}
 	

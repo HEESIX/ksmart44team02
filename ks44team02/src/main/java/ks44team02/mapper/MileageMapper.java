@@ -43,4 +43,6 @@ public interface MileageMapper {
 
 		public List<MemberMileageAcc> useMileage(String mMileageCode, String member_Id, String orderDetailCode,
 				String mileageDistinct, int addedUsedMileage, int currentMileage, String orderGroupCode);
+
+		
 }

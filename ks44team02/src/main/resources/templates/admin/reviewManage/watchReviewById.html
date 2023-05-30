@@ -50,6 +50,8 @@ thead {
 
 				<input class="form-control" id="memberId" type="text"
 					name="memberId" placeholder="회원아이디검색">
+				<input class="form-control" id="gCode" type="text"
+					name="gCode" placeholder="상품코드검색">
 
 			</div>
 			<button type="button" id="searchBtn" >검색</button>
@@ -57,7 +59,7 @@ thead {
 			<!-- <button type="button" id="mSearch" class="btn btn-primary">검색</button> -->
 		</div>
 	</form>
-	<br>
+	
 		<section class="intro">
   <div class="bg-image h-100" style="background-color: #f5f7fa;">
     <div class="mask d-flex align-items-center h-100">
@@ -117,12 +119,14 @@ thead {
 			 
 			 $(document).on('click', '#searchBtn', function(){
 				 var memberId = $('#memberId').val();
+				 var gCode = $('#gCode').val();
 				 
 				 // ajax 선언      
 				 var request = $.ajax({          
 					 type: "GET",   // 요청 메소드 타입          
 					 url: "/admin/reviewManage/reviewList", // 접속 url
-					 data: {'memberId' : memberId},
+					 data: {'memberId' : memberId,
+						 	'gCode'    : gCode      },
 					 dataType: 'json' // 응답 메시지의 타입       
 					 });        
 				 // 결과        

@@ -131,9 +131,9 @@ thead {
     			<tr>
     				<th scope="col">회원 아이디</th>
     				<th scope="col">주문 상세코드</th>
-    				<th scope="col">현재 적립금</th>
-    				<th scope="col">적립금 구분</th>
     				<th scope="col">적립금 사용/적립금액</th>
+    				<th scope="col">적립금 구분</th>
+    				<th scope="col">현재 적립금</th>
     				<th scope="col">적립금 갱신날짜</th>
     			</tr>
     		</thead>
@@ -142,9 +142,9 @@ thead {
     				th:each="ml : ${mileageList}">
     				<td th:text="${ml.memberId}"></td>
     				<td th:text="${ml.orderDetailCode}"></td>
-    				<td th:text="${ml.currentMileage}"></td>
-    				<td th:text="${ml.mileageDistinct}"></td>
     				<td th:text="${ml.addedUsedMileage}"></td>
+    				<td th:text="${ml.mileageDistinct}"></td>
+    				<td th:text="${ml.currentMileage}"></td>
     				<td th:text="${ml.mUpdateDatetime}"></td>
 
     			</tr>
@@ -230,9 +230,9 @@ thead {
 							html += '<tr>';
 							html += '	<td>' + userMileage.memberId + '</td>'; 
 							html += '	<td>' + userMileage.orderDetailCode + '</td>'; 
-							html += '	<td>' + userMileage.currentMileage + '</td>'; 
-							html += '	<td>' + userMileage.mileageDistinct + '</td>'; 
 							html += '	<td>' + userMileage.addedUsedMileage + '</td>'; 
+							html += '	<td>' + userMileage.mileageDistinct + '</td>'; 
+							html += '	<td>' + userMileage.currentMileage + '</td>'; 
 							html += '	<td>' + userMileage.mUpdateDatetime + '</td>';
 							html += '</tr>';
 						 }

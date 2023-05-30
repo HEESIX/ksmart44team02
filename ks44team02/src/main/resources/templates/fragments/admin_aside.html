@@ -16,9 +16,7 @@
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/login/memberListAdmin}"><i
 								class="icon-arrow-right"></i>#회원 조회/검색</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/mileageManage/mileageManagement}"><i
-								class="icon-arrow-right"></i>#회원 적립금 조회</a></li>
-						<li><a class="waves-effect waves-dark" href="#"><i
-								class="icon-arrow-right"></i>#회원 적립금 적립/소멸</a></li>		
+								class="icon-arrow-right"></i>#회원 적립금 관리</a></li>	
 								
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/gradeDetails/buyerGradeList}"><i	
 								class="icon-arrow-right"></i>#등급관리</a></li>
@@ -119,8 +117,8 @@
 						class="icon-arrow-down"></i>
 				</a>
 					<ul class="treeview-menu">
-						<li><a class="waves-effect waves-dark" href="#"><i
-								class="icon-arrow-right"></i>#QnA</a></li>
+						<li><a class="waves-effect waves-dark" th:href="@{/admin/qnaManage/qna_list}"><i
+								class="icon-arrow-right"></i>QnA 관리</a></li>
 						<li><a class="waves-effect waves-dark" th:href="@{/admin/complainManage/complainList}"><i
 								class="icon-arrow-right"></i>신고관리</a></li>
 					</ul></li>
@@ -138,23 +136,9 @@
 					</ul></li>	
 					
 				<li class="treeview"><a class="waves-effect waves-dark"
-					href="#"> <i class="icon-list"></i><span>#상품 리뷰 관리</span>
-				<i class="icon-arrow-down"></i></a>
-					<ul class="treeview-menu">
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/reviewManage/watchReviewByGcode}"><i
-								class="icon-arrow-right"></i>#상품별 리뷰관리</a></li>
-						<li><a class="waves-effect waves-dark" th:href="@{/admin/reviewManage/watchReviewById}">
-						<i class="icon-arrow-right"></i>회원별 리뷰관리</a></li>
-					</ul>
-				
-				
-				</li>
-				<li class="treeview"><a class="waves-effect waves-dark"
-					th:href="@{/admin/mileageManage/mileageManagement}"> <i class="icon-list"></i><span>#적립금 관리</span>
+					th:href="@{/admin/reviewManage/watchReviewById}"> <i class="icon-list"></i><span>#상품 리뷰 관리</span>
 				</a>
-				
 				</li>
-			</ul>
 		</section>
 	</aside>
 </div>

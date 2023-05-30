@@ -1,10 +1,159 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-		관리자 QnA 조회
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+
+<th:block layout:fragment="customCss">
+	<style>
+		html,
+body,
+.intro {
+  height: 100%;
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+thead th {
+  color: #fff;
+}
+
+.card {
+  border-radius: .5rem;
+}
+
+.table-scroll {
+  border-radius: .5rem;
+}
+
+.table-scroll table thead th {
+  font-size: 1.25rem;
+}
+thead {
+  top: 0;
+  position: sticky;
+}
+	</style>
+</th:block>
+
+<!-- 사용자 정의 contents  -->
+<th:block layout:fragment="customContents">
+	<h1>회원 QnA 조회/관리</h1>
+
+	<form action="/admin/mileageManage/mileageManagement" method="post">
+		<div class="position-relative">
+			<div class="col-xs-3">
+
+				<input class="form-control" id="memberId" type="text"
+					name="memberId" placeholder="회원아이디검색">
+
+			</div>
+			<button type="button" id="searchBtn" >검색</button>
+			
+			<!-- <button type="button" id="mSearch" class="btn btn-primary">검색</button> -->
+		</div>
+	</form>
+				
+	<br>
+	
+					
+<section class="intro">
+  <div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72;">
+    			<tr>
+    				<th scope="col">회원 아이디</th>
+    				<th scope="col">상품코드</th>
+    				<th scope="col">문의구분</th>
+    				<th scope="col">문의제목</th>
+    				<th scope="col">문의내용</th>
+    				<th scope="col">문의 작성일</th>
+    			</tr>
+    		</thead>
+    		<tbody id="tBody">
+    			<tr th:if="${not #lists.isEmpty(qnaList)}"
+    				th:each="ml : ${qnaList}">
+    				<td th:text="${ml.memberId}"></td>
+    				<td th:text="${ml.gCode}"></td>
+    				<td th:text="${ml.qnaCategory}"></td>
+    				<td th:text="${ml.qnaTitle}"></td>
+    				<td th:text="${ml.qnaContents}"></td>
+    				<td th:text="${#temporals.format(ml.qnaRegDatetime, 'yyyy-MM-dd')}"></td>
+
+    			</tr>
+    			<tr th:unless="${not #lists.isEmpty(mileageList)}">
+    				<td colspan="6" style="text-align: center;">마일리지 내역이 존재하지 않습니다.</td>
+    			</tr>
+    	      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+	</th:block>
+
+<!-- 사용자 정의 js 하단  -->
+<th:block layout:fragment="customFootJs">
+	 <script>
+	 
+	 
+	 $(function(){
+			 
+			 $(document).on('click', '#searchBtn', function(){
+				 var memberId = $('#memberId').val();
+				 
+				 // ajax 선언      
+				 var request = $.ajax({          
+					 type: "GET",   // 요청 메소드 타입          
+					 url: "/admin/qnaManage/qnaList", // 접속 url
+					 data: {'memberId' : memberId},
+					 dataType: 'json' // 응답 메시지의 타입       
+					 });        
+				 // 결과        
+				 request.done(function(data){
+					 console.log("good");
+					 var qnaList = data;
+					 var tBody = $('#tBody');					 
+					 var html = '';
+
+					 if(typeof qnaList != 'undefined' && qnaList != null){
+						 for(let userQnA of qnaList){
+							html += '<tr>';
+							html += '	<td>' + userQnA.memberId + '</td>'; 
+							html += '	<td>' + userQnA.gCode + '</td>'; 
+							html += '	<td>' + userQnA.qnaCategory + '</td>'; 
+							html += '	<td>' + userQnA.qnaTitle + '</td>'; 
+							html += '	<td>' + userQnA.qnaContents + '</td>'; 
+							html += '	<td>' + userQnA.qnaRegDatetime + '</td>';
+							html += '</tr>';
+						 }
+					 }
+					 
+					 tBody.html(html);
+				 });     
+			 });
+			 
+		});    
+	 </script>
+</th:block>
+
 </html>
