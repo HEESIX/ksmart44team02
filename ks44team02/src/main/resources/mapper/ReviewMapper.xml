@@ -52,6 +52,11 @@
 		,enter_code
 	FROM 
 		tb_review
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="membeId != null and memberId != ''">
+				g_code = #{gCode}
+			</if>
+		</trim>
 				
 	</select>
 	
@@ -70,11 +75,11 @@
 		,enter_code
 	FROM 
 		tb_review		
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="membeId != null and memberId != ''">
-				member_id = #{memberId};
-			</if>
-		</trim>
+	WHERE	
+		member_id = #{memberId}
+		OR
+		g_code = #{gCode}
+		
 				
 	</select>
 	

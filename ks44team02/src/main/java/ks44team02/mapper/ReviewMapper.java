@@ -52,7 +52,7 @@ public interface ReviewMapper {
 
 		
 		//회원 아이디별, 상품코드별 리뷰 조회
-		public List<Review> getReviewListSearch(String memberId);
+		public List<Review> getReviewListSearch(String memberId, String gCode);
 
 		public List<Review> getReviewListSearchGcode(String gCode);
 

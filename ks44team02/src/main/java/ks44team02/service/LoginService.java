@@ -16,9 +16,6 @@ public class LoginService {
 	public LoginService(LoginMapper loginMapper) {
 		this.loginMapper = loginMapper;
 	}
-			
-		
-	
 
 	//구매자 로그인
 	public String buyerLogin () {

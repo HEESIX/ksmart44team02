@@ -188,7 +188,7 @@ li {
                         <ul>
                             <li>Subtotal <span class="subtotal"></span></li>
                         </ul>
-                        <a id="submitBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a th:href="@{/buyer/order/order}" id="submitBtn" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -255,10 +255,7 @@ li {
 				else $("#cbx_chkAll").prop("checked", true); 
 			});
 		});
-		//선택한 상품 주문화면으로 이동
-		$(document).on('click', '#submitBtn', function() {
-			
-		});
+		
 	});
 
 </script>

@@ -30,7 +30,7 @@ public class BuyerMileageController {
 	public void buyerMileageControllerInit() {
 		log.info("adminMileageControllerInit bean 생성");
 	}
-	
+	/*
 	//회원 적립금 조회
 	@GetMapping("/mileageList")
 	public String getBuyerMileageList(Model model) {
@@ -42,4 +42,5 @@ public class BuyerMileageController {
 		model.addAttribute("mileageList", mileageList);
 		return "/buyer/Mileage/mileageList";
 	}
+	*/
 }

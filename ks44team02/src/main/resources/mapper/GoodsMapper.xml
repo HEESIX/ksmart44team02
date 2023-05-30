@@ -1331,9 +1331,9 @@
 			,gc.cate_name					as gc_cate_name
 			,g.g_name
 			,g.g_price
-			,gdm.discount_price				as gdm_discount_price
-			,gdm.discount_rate				as gdm_discount_rate
-			,gdm.discount_name				as gdm_discount_name
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_price)				as gdm_discount_price
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_rate)				as gdm_discount_rate
+			,if(gdm.discount_expiration_date <![CDATA[<]]> NOW(), NULL, gdm.discount_name)				as gdm_discount_name
 			,g.g_discount
 			,g.g_netweight
 			,g.g_netweightunit
