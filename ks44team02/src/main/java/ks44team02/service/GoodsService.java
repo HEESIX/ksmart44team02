@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ks44team02.dto.Cart;
+import groovyjarjarantlr4.v4.parse.ANTLRParser.parserRule_return;
 import ks44team02.dto.Goods;
 import ks44team02.dto.GoodsApply;
 import ks44team02.dto.GoodsCategory;
@@ -27,7 +27,6 @@ import ks44team02.dto.GoodsMainImage;
 import ks44team02.dto.Ingredient;
 import ks44team02.dto.MenuOrganize;
 import ks44team02.dto.MenuInformation;
-import ks44team02.mapper.CartMapper;
 import ks44team02.mapper.CommonMapper;
 import ks44team02.mapper.GoodsMapper;
 
@@ -39,65 +38,10 @@ public class GoodsService {
 
 	private final GoodsMapper goodsMapper;
 	private final CommonMapper commonMapper;
-	private final CartMapper cartMapper;
 
-	public GoodsService(GoodsMapper goodsMapper, CommonMapper commonMapper, CartMapper cartMapper) {
+	public GoodsService(GoodsMapper goodsMapper, CommonMapper commonMapper) {
 		this.goodsMapper = goodsMapper;
 		this.commonMapper = commonMapper;
-		this.cartMapper = cartMapper;
-	}
-	
-	//식단 장바구니에 추가
-	public boolean addMenuToCart(String menuCode, int orderAmount, String memberId) {
-		
-		boolean result = true;
-		
-		List<MenuOrganize> menuOrganizeList = goodsMapper.getMenuOrganizeList(menuCode);
-		
-		for(MenuOrganize menuOrganize : menuOrganizeList) {
-			String goodsCode = menuOrganize.getGoodsOfMenuCode();
-			
-			int goodsAmount = menuOrganize.getMenuGoodsAmount();
-			
-			int cartAmount = goodsAmount * orderAmount;
-			
-			Goods goods = goodsMapper.getGoodsInfo(goodsCode);
-			
-			int discountedPrice = goods.getGoodsDiscountedPrice();
-			
-			Cart cart = new Cart();
-			
-			cart.setMemberId(memberId);
-			cart.setGoodsCode(goodsCode);
-			cart.setOrderAmount(cartAmount);
-			cart.setPriceSubtotal((cartAmount * discountedPrice));
-			
-			int overlapCheck = cartMapper.cartOverlapCheck(cart);
-			
-			//update처리
-			if(overlapCheck > 0) {
-				
-				cartMapper.plusCartOrderAmount(cart);
-			}else {
-				
-				String cartCode = commonMapper.getNewCode("tb_cart_list");
-				
-				cart.setCartListCode(cartCode);
-				cart.setRegularPrice(goods.getGoodsPrice());
-				cart.setDiscountPrice(discountedPrice);
-				cart.setEnterCode(goods.getEnterCode());
-				
-				boolean addCartResult = cartMapper.addCart(cart);
-				if(!addCartResult) {
-					result = false;
-					break;
-				}
-			}
-			
-			
-		}
-		
-		return result;
 	}
 	
 	// 상품 등록 신청 리스트

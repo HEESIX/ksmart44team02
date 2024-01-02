@@ -29,42 +29,41 @@ public class BuyerLoginController {
 	}
 	
 	//구매자 로그인
-	@PostMapping("/buyerLogin")
-	public String login(@RequestParam(name="memberId") String memberId
-					   ,@RequestParam(name="memberPw") String memberPw
-					   ,RedirectAttributes reAttr
-					   ,HttpSession session) {
-	
-		log.info("로그인 memberId ::: {}", memberId);
-		log.info("로그인 memberPw ::: {}", memberPw);
+		@PostMapping("/buyerLogin")
+		public String login(@RequestParam(name="memberId") String memberId
+						   ,@RequestParam(name="memberPw") String memberPw
+						   ,RedirectAttributes reAttr
+						   ,HttpSession session) {
 		
-		Member member = loginService.getMemberInfoById(memberId);
-		log.info("member {}");
-		if(member != null) {
-			String checkPw = member.getMemberPw();
+			log.info("로그인 memberId ::: {}", memberId);
+			log.info("로그인 memberPw ::: {}", memberPw);
 			
-			if(memberPw != null && checkPw.equals(memberPw)) {
-				session.setAttribute("SID", memberId);
-				session.setAttribute("SNAME", member.getMemberName());
-				session.setAttribute("SLEVEL", member.getMemberLevelCode());
-				// 회원의 정보가 일치하면
-				return "redirect:/buyer";
-			}
-		}	
-		reAttr.addAttribute("msg", "회원의 정보가 일치하지 않습니다.");
-		return "redirect:/buyer/login/buyerLogin";
-	}
+			Member member = loginService.getMemberInfoById(memberId);
+			log.info("member {}");
+			if(member != null) {
+				String checkPw = member.getMemberPw();
+				
+				if(memberPw != null && checkPw.equals(memberPw)) {
+					session.setAttribute("SID", memberId);
+					session.setAttribute("SNAME", member.getMemberName());
+					session.setAttribute("SLEVEL", member.getMemberLevelCode());
+					// 회원의 정보가 일치하면
+					return "redirect:/buyer";
+				}
+			}	
+			reAttr.addAttribute("msg", "회원의 정보가 일치하지 않습니다.");
+			return "redirect:/buyer/login/buyerLogin";
+		}
 
-	@GetMapping("/buyerLogin")
-	public String login(Model model
-					   ,@RequestParam(value="msg", required = false) String msg) {
-			
-		model.addAttribute("title", "로그인 화면");
-		if(msg != null) model.addAttribute("msg", msg);
-			
-		return "buyer/login/buyerLogin";
-	}
-	
+		@GetMapping("/buyerLogin")
+		public String login(Model model
+						   ,@RequestParam(value="msg", required = false) String msg) {
+				
+			model.addAttribute("title", "로그인 화면");
+			if(msg != null) model.addAttribute("msg", msg);
+				
+			return "/buyer/login/buyerLogin";
+		}
 	//구매자 로그아웃
 	public String buyerLogout() {
 		return "redirect:buyer/login/buerLoginList";

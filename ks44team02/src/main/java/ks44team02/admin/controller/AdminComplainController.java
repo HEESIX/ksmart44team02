@@ -57,6 +57,8 @@ public class AdminComplainController {
 	public String getComplainList(Model model) {
 		log.info("/complainManage/complainList getComplainList AdminComplainController");
 		System.out.println("/complainManage/complainList getComplainList AdminComplainController");
+		
+		
 		List<Complain> complainList = complainService.getComplainList();
 		System.out.println(complainList.toString());
 		model.addAttribute("title", "회원 신고내역 현황");

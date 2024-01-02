@@ -19,8 +19,9 @@ import ks44team02.mapper.QnAmapper;
 		}
 		
 		//회원 QnA 데이터 조회(QnA내역 조회)
-		public List<QnA> getqnaList() {
-			return null;
+		public QnA getqnaList() {
+			QnA qnaList = qnaMapper.getqnaList();
+			return qnaList;
 		}
 		
 		//회원 QnA 답글 등록
@@ -85,6 +86,18 @@ import ks44team02.mapper.QnAmapper;
 						return result;
 						
 					}
+
+					public List<MemberMileageAcc> getMileageListSearch1(String memberId) {
+						List<MemberMileageAcc> list = getMileageListSearch1(memberId);
+						return list;
+					}
+
+					public QnA getQnAListSearch(String memberId) {
+						QnA qnaList = qnaMapper.getQnAListSearch(memberId);
+						return qnaList;
+					}
+
+				
 
 				
 

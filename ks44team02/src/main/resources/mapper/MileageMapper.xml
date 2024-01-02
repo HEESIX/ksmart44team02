@@ -27,6 +27,9 @@
 			,mileage_update_datetime
 		FROM
 			tb_member_mileage_acc
+		ORDER BY
+		member_id,
+			mileage_update_datetime ASC
 				
 	</select>
 	
@@ -46,13 +49,16 @@
 				member_id = #{memberId};
 			</if>
 		</trim>
+		ORDER BY
+		member_id,
+			mileage_update_datetime DESC
 				
 	</select>
 	
 	
 	
-	<!-- 회뤈 마일리지 적립 -->
-	<insert id="giveMileageForm" parameterType="MemberMileageAcc">
+	<!-- 회원 마일리지 적립 -->
+	<insert id="addMileage" parameterType="MemberMileageAcc">
 		INSERT INTO tb_member_mileage_acc
 		(m_mileage_acc_code
 		,member_id
@@ -60,17 +66,38 @@
 		,present_mileage
 		,mileage_distinct
 		,added_used_mileage
-		,mileage_subtotal
 		,mileage_update_datetime
 		,order_group_code)
 		VALUES
 		(#{mMileageCode}
-		,#{memberId}
+		,#{member_Id}
 		,#{orderDetailCode}
-		,#{currentMileage}
+		,#{currentMileage} + #{addedUsedMileage}
 		,#{mileageDistinct}
 		,#{addedUsedMileage}
-		,#{mileageSubtotal}
+		,NOW()
+		,#{orderGroupCode});
+		
+		</insert>
+		
+		<!-- 회원 마일리지 차감 -->
+	<insert id="useMileage" parameterType="MemberMileageAcc">
+		INSERT INTO tb_member_mileage_acc
+		(m_mileage_acc_code
+		,member_id
+		,order_detail_code
+		,present_mileage
+		,mileage_distinct
+		,added_used_mileage
+		,mileage_update_datetime
+		,order_group_code)
+		VALUES
+		(#{mMileageCode}
+		,#{member_Id}
+		,#{orderDetailCode}
+		,#{currentMileage} - #{addedUsedMileage}
+		,#{mileageDistinct}
+		,#{addedUsedMileage}
 		,NOW()
 		,#{orderGroupCode});
 		

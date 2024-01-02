@@ -132,7 +132,7 @@ public interface GoodsMapper {
 	//소개 이미지 정보
 	public GoodsInfoImage getGoodsInfoImage(String goodsCode, int isLocal);
 	
-	//개별 식단 정보
+	//개별 식단 정보 
 	public Goods getMenuInfo(String menuCode);
 	
 	//상품별 할인 혜택 등록

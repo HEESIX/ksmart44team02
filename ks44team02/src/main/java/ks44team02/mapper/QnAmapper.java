@@ -1,14 +1,17 @@
 package ks44team02.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import ks44team02.dto.MemberMileageAcc;
 import ks44team02.dto.QnA;
 
 @Mapper
 public interface QnAmapper {
 
 	//회원 QnA 내역 조회(관리자)
-	public String getqnaList();
+	public QnA getqnaList();
 	
 	//회원 QnA 답글 등록(관리자)
 	public int qnaAnswer();
@@ -36,5 +39,7 @@ public interface QnAmapper {
 		public boolean modifyBuyerInquery(QnA qna);
 
 		public boolean deleteBuyerInquery(String qnaCode);
+
+		public QnA getQnAListSearch(String memberId);
 
 }

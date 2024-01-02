@@ -209,7 +209,7 @@ table td, th {
 		$(function(){
 			
 			$('#addCartBtn').click(function(){
-				var menuCode = [[${menuInfo.menuInformation.menuCode}]];
+				var goodsCode = [[${menuInfo.goodsCode}]];
 				var goodsAmount = $('#goodsAmount').val();
 				
 				var left = $(this).offset().left;
@@ -224,9 +224,9 @@ table td, th {
 				$('.cartInfo').css('top', startY);
 				 
 				var request = $.ajax({
-					  url: "/buyer/goods/menu/addCart",
+					  url: "/buyer/mypage/cart/addCart",
 					  method: "POST",
-					  data: { 'menuCode' : menuCode,
+					  data: { 'goodsCode' : goodsCode,
 						  	  'orderAmount' : goodsAmount},
 					  dataType: "json"
 					});

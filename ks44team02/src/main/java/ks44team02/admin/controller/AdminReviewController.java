@@ -45,21 +45,26 @@ public class AdminReviewController {
 		log.info("adminqnaControllerInit bean 생성");
 	}
 	
-	//회원 아이디로 리뷰검색
+	//회원 아이디,상품 코드로 리뷰검색
 	@GetMapping("/reviewManage/reviewList")
 	@ResponseBody
-	public List<Review> getReviewListById(@RequestParam(name="memberId") String memberId){
-		List<Review> reviewList = reviewService.getReviewListSearch(memberId);
+	public List<Review> getReviewListById(@RequestParam(name="memberId") String memberId
+										,@RequestParam(name="gCode") String gCode){
+		List<Review> reviewList = reviewService.getReviewListSearch(memberId,gCode);
+		
+		
 		return reviewList;
 	}
-	
+	/*
 	//상품 코드로 리뷰검색
-	@PostMapping("/reviewManage/reviewListByGcode")
+	@PostMapping("/reviewManage/watchReviewByGcode")
 	@ResponseBody
 	public List<Review> getReviewListByGcode(@RequestParam(name="gCode") String gCode){
 		List<Review> reviewListByGcode = reviewService.getReviewListSearchGcode(gCode);
 		return reviewListByGcode;
 	}
+	
+	*/
 	
 	
 	//회원 리뷰 목록 조회(아이디)
@@ -68,24 +73,26 @@ public class AdminReviewController {
 		List<Review> reviewList = reviewService.getReviewListById();
 		model.addAttribute("title", "회원 리뷰 목록");
 		model.addAttribute("reviewList", reviewList);
-		return "admin/reviewManage/watchReviewById";
+		return "/admin/reviewManage/watchReviewById";
 	}
 	
-	//회원 리뷰 목록 조회(상품)
+	
+	  //회원 리뷰 목록 조회(상품)
+	  
 	@GetMapping("/reviewManage/watchReviewByGcode")
 	public String getReviewListByGcode(Model model) {
 		List<Review> reviewListByGcode = reviewService.getReviewListByGcode();
 		model.addAttribute("title", "회원 리뷰 목록");
 		model.addAttribute("reviewList", reviewListByGcode);
-		return "admin/reviewManage/watchReviewByGcode";
+		return "/admin/reviewManage/watchReviewByGcode";
 	}
-	
 	
 	
 	//회원 아이디로 리뷰 검색
 	@PostMapping("/reviewManage/watchReviewById")
 	public String getReviewListSearch(Model model
-									  ,@RequestParam(value = "memberId") String memberId) throws ParseException {
+									  ,@RequestParam(value = "memberId") String memberId
+									  ,@RequestParam(value = "gCode") String gCode) throws ParseException {
 		log.info("PostMapping /watchReview getMileageListSearch AdminReviewController");
 		List<Review> reviewList = null;
 		
@@ -93,7 +100,7 @@ public class AdminReviewController {
 			reviewList = reviewService.getReviewListById();
 
 		}else {
-			reviewList = reviewService.getReviewListSearch(memberId);
+			reviewList = reviewService.getReviewListSearch(memberId,gCode);
 		}
 			
 
