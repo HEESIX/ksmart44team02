@@ -40,40 +40,41 @@ public class AdminMileageAddExtinctionController {
 
 	// 적립금 적립 폼
 	/* @GetMapping("/mileage_give/{currentMileage}") */
-	@GetMapping("/mileageGiveExtinct")
-	public String giveMileageForm(Model model, MemberMileageAcc memberMileageAcc, OrderDetail orderDetail) {
-
-		String memberId 	= memberMileageAcc.getMemberId();
-		String mMileageCode = memberMileageAcc.getmMileageCode();
-		int currentMileage 	= memberMileageAcc.getCurrentMileage();
-		String orderDetailCode = memberMileageAcc.getOrderDetailCode();
-		String mileageDistinct = memberMileageAcc.getMileageDistinct();
-		int addedUsedMileage = memberMileageAcc.getAddedUsedMileage();
-		int mileageSubtotal = memberMileageAcc.getMileageSubtotal();
-		String mUpdateDatetime = memberMileageAcc.getmUpdateDatetime();
-		String orderGroupCode = memberMileageAcc.getOrderGroupCode();
-		log.info("get mileageGiveExtinct giveMileageForm AdminMileageAddExtinctionController.java");
-		log.info(memberId + "<- memberId");
-		log.info(mMileageCode + "<- mMileageCode");
-		log.info(currentMileage + "<- currentMileage");
-		log.info(orderDetailCode + "<- orderDetailCode");
-		log.info(mileageDistinct + "<- mileageDistinct");
-		log.info(addedUsedMileage + "<- addedUsedMileage");
-		log.info(mileageSubtotal + "<- mileageSubtotal");
-		log.info(mUpdateDatetime + "<- mUpdateDatetime");
-		log.info(orderGroupCode + "<- orderGroupCode");
+	@PostMapping("/giveMileageForm")	
+	@ResponseBody
+	public String giveMileageForm(HttpServletRequest request, @RequestParam(name="mMileageCode") String mMileageCode,
+			@RequestParam(name="member_Id") String member_Id,
+			@RequestParam(name="orderDetailCode") String orderDetailCode,
+			@RequestParam(name="mileageDistinct") String mileageDistinct,
+			@RequestParam(name="addedUsedMileage") int addedUsedMileage,
+			@RequestParam(name="currentMileage") int currentMileage,
+			@RequestParam(name="orderGroupCode") String orderGroupCode) {
+		System.out.println(mMileageCode);
+		System.out.println(member_Id);
+		System.out.println(orderDetailCode);
+		System.out.println(mileageDistinct);
+		System.out.println(addedUsedMileage);
+		System.out.println(currentMileage);
+		System.out.println(orderGroupCode);
+		
+		
+		if(mileageDistinct.equals("적립")) {
+				mileageService.addMileage(mMileageCode,member_Id,orderDetailCode
+						,mileageDistinct,addedUsedMileage,currentMileage,orderGroupCode);
+		}else {
+			mileageService.useMileage(mMileageCode,member_Id,orderDetailCode
+					,mileageDistinct,addedUsedMileage,currentMileage,orderGroupCode);
+		}
+			
 	
 		
-		MemberMileageAcc memberMileageAccInfo = mileageService.getMileageInfo(memberMileageAcc);
-		System.out.println(memberMileageAccInfo.toString());
-		model.addAttribute("title", "회원 적립금 적립 폼");
-		model.addAttribute("memberMileageAccInfo", memberMileageAccInfo);
-		return "admin/mileageManage/mileageGiveExtinct";
+		
+		return "admin/mileageManage/mileageManagement";
 	}
 
 
 	
- 
+ /*
 	// 적립금 적립 처리
 	@PostMapping("/mileageGiveExtinct")
 	public String giveMileage(MemberMileageAcc memberMileageAcc,OrderDetail orderDetail, RedirectAttributes reAttr) {
