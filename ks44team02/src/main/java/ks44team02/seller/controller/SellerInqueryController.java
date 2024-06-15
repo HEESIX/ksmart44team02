@@ -33,20 +33,20 @@ import ks44team02.service.QnAservice;
 		//문의 조회
 		@GetMapping("/inqueryRefer")
 		public String getSellerInqueryList() {
-			return "seller/inquery/inqueryRefer";
+			return "/seller/inquery/inqueryRefer";
 		}
 		
 		
 		//문의 답변 폼
 		@GetMapping("/inqueryAnswer")
 		public String answerInquerForm() {
-			return "seller/inquery/inqueryAnswer";
+			return "/seller/inquery/inqueryAnswer";
 		}
 		
 		//문의 답변 처리
 		@PostMapping("/inqueryAnswer")
 		public String answerInquer() {
-			return "seller/inquery/inqueryAnswer";
+			return "/seller/inquery/inqueryAnswer";
 		}
 		
 		

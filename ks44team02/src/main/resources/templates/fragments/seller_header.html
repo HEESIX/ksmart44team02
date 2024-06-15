@@ -63,13 +63,12 @@
 							<div class="header__top__right__auth">
 								<nav class="header__menu" style="padding: 0 0 0 0;">
 									<ul>
-										<li><a th:href="@{/seller/login/sellerLogin}"><i class="fa fa-user"></i>#마이페이지</a>
+										<li><a a th:href="@{/seller/login/sellerLogin}"><i class="fa fa-user"></i>#마이페이지</a>
 											<ul class="header__menu__dropdown">
 												<li><a th:href="@{/seller/companypage/companyInsert}">#입점신청</a></li>
 												<li><a th:href="@{/seller/companypage/companyModify}">#회사정보</a></li>
 												<li><a th:href="@{/seller/login/sellerLoginList}">#회원정보</a></li>
 												<li><a th:href="@{/seller/companypage/companyDelete}">#탈퇴신청</a></li>
-												
 											</ul></li>
 									</ul>
 								</nav>
@@ -83,7 +82,7 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="header__logo">
-						<a th:href="@{/seller}"><img
+						<a th:href="@{//localhost:8088/seller}"><img
 							th:src="@{/user/img/logo.png}" alt="User Image"></a>
 					</div>
 				</div>
@@ -130,6 +129,6 @@
 		</div>
 	</header>
 	<!-- Header Section End -->
- <!-- 수정완료 -->
+
 </div>
 </html>

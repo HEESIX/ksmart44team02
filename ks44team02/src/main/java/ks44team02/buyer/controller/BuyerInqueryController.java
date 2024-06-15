@@ -50,7 +50,7 @@ public class BuyerInqueryController {
 		System.out.println(qnaList.toString());
 		model.addAttribute("title", "회원 적립금 현황");
 		model.addAttribute("mileageList", qnaList);
-		return "buyer/inquery/inqueryList";
+		return "/buyer/inquery/inqueryList";
 		
 	}
 	
@@ -75,7 +75,7 @@ public class BuyerInqueryController {
 
 	QnA	qnaInfo = qnaService.getQnAInfo(qnaContents, qnaTitle);
 System.out.println(qnaInfo.toString());
-			return "buyer/inquery/regInquery";
+			return "/buyer/inquery/regInquery";
 		}
 	
 	
@@ -105,7 +105,7 @@ System.out.println(qnaInfo.toString());
 				,Model model1) {
 			QnA qnaInfo = qnaService.getQnAInfo(qnaContents, qnaTitle);
 			System.out.println(qnaInfo.toString());
-			return "buyer/inquery/modifyInquery";
+			return "/buyer/inquery/modifyInquery";
 		}
 		
 		//구매자 문의 수정 처리
@@ -131,7 +131,7 @@ System.out.println(qnaInfo.toString());
 ,Model model
 ,Model model1) {
 QnA qnaDelete = qnaService.getQnAInfo(qnaContents, qnaCode);
-			return "buyer/inquery/deleteInquery";
+			return "/buyer/inquery/deleteInquery";
 		}	
 		 
 		 //구매자 문의 삭제 처리
@@ -148,6 +148,6 @@ QnA qnaDelete = qnaService.getQnAInfo(qnaContents, qnaCode);
 				//코드불일치
 				reAttr.addAttribute("msg", "삭제 실패: 문의가 존재하지 않습니다.");
 			}
-				return "buyer/inquery/deleteInquery";
+				return "/buyer/inquery/deleteInquery";
 			}	
 }
