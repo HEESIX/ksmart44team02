@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team02.mapper.QnAmapper">
+
+	<resultMap type="QnA" id="qnaResultMap">
+		<id column="QnA_code" property="qnaCode"/>
+		<result column="member_id" property="memberId"/>
+		<result column="g_code" property="gCode"/>
+		<result column="QnA_Category" property="qnaCategory"/>
+		<result column="enter_code" property="enterCode"/>
+		<result column="QnA_image" property="qnaImage"/>
+		<result column="QnA_title" property="qnaTitle"/>
+		<result column="QnA_content" property="qnaContents"/>
+		<result column="QnA_reg_datetime" property="qnaRegDatetime"/>
+		<result column="QnA_Answer_confirm" property="qnaAnswerConfirm"/>		
+		<result column="QnA_Answer_datetime" property="qnaRegDate"/>
+	</resultMap>
+
+	
+	<!-- 회원 마일리지 조회 -->
+	<select id="getqnaList" parameterType="String" resultMap="qnaResultMap">
+		SELECT 
+			member_id,
+			g_code,
+			QnA_Category,
+			QnA_title,
+			QnA_content,
+			QnA_reg_datetime
+		FROM
+			tb_qna 
+	
+		ORDER BY
+			member_id, 
+			QnA_reg_datetime DESC
+				
+	</select>
+	
+	<select id="getQnAListSearch" parameterType="String" resultMap="qnaResultMap">
+	SELECT
+			member_id,
+			g_code,
+			QnA_Category,
+			QnA_title,
+			QnA_content,
+			QnA_reg_datetime
+		FROM
+			tb_member_mileage_acc			
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="membeId != null and memberId != ''">
+				member_id = #{memberId};
+			</if>
+		</trim>
+		ORDER BY
+		member_id,
+			QnA_reg_datetime DESC
+	</select>
+	
+	</mapper>

@@ -359,7 +359,7 @@
 		SET
 			cate_isdel = 1
 		WHERE 
-			g_cate_code = #{goodsCategoryCode};
+			gc.g_cate_code = #{goodsCategoryCode};
 	</update>
 	<!-- 상품별 할인혜택 리스트(admin)   -->
 	<select id="getGoodsDiscountListForReg" resultMap="goodsDiscountResultMap">
@@ -459,6 +459,9 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
 				<if test="sk != null and sv != ''">
 					AND ${sk} LIKE CONCAT('%', #{sv}, '%')
 				</if>
@@ -529,6 +532,9 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
 				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 					AND g.g_cate_code = #{goodsCategoryCode}
 				</if>
@@ -567,6 +573,9 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
 				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 					AND g.g_cate_code = #{goodsCategoryCode}
 				</if>
@@ -598,6 +607,9 @@
 			ON 
 			gmi.main_image_idx = g.g_main_image
 		<trim prefix="WHERE " prefixOverrides="AND |OR ">
+			<if test="isLocalhost != null and isLocalhost != ''">
+				gmi.main_image_islocal = ${isLocalhost}
+			</if>
 			<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 				AND g.g_cate_code = #{goodsCategoryCode}
 			</if>
@@ -974,6 +986,9 @@
 			gdm.goods_discount_code = ga.goods_discount_code
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			ga.ga_approve_refuse = '검토중'
+			<if test="isLocalhost != null">
+				AND gmi.main_image_islocal = ${isLocalhost}
+			</if>
 			<if test="sk != null and sv != ''">
 				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
 			</if>
@@ -1051,6 +1066,9 @@
 			on
 			gdm.goods_discount_code = ga.goods_discount_code
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="isLocalhost != null">
+				AND gmi.main_image_islocal = ${isLocalhost}
+			</if>
 			<if test="sk != null and sv != ''">
 				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
 			</if>
@@ -1274,6 +1292,9 @@
 			ON 
 			gdm.goods_discount_code = g.goods_discount_code
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="isLocalhost != null">
+				gmi.main_image_islocal = ${isLocalhost}
+			</if>
 			<if test="sk != null and sv != ''">
 				AND ${sk} LIKE CONCAT('%', #{sv}, '%')
 			</if>
@@ -1341,6 +1362,9 @@
 			ON 
 			mi.g_code = g.g_code
 			<trim prefix="WHERE " prefixOverrides="AND |OR ">
+				<if test="isLocalhost != null and isLocalhost != ''">
+					gmi.main_image_islocal = ${isLocalhost}
+				</if>
 				<if test="goodsCategoryCode != null and goodsCategoryCode != ''">
 					AND g.g_cate_code = #{goodsCategoryCode}
 				</if>
@@ -1575,7 +1599,7 @@
 			gdm.goods_discount_code = #{goodsDiscountCode}
 	</update>
 	<update id="removeGoodsDiscount" parameterType="String">
-		UPDATE tb_goods_discount_management
+		UPDAET tb_goods_discount_management
 		SET
 			discount_isdel = 1
 		WHERE 

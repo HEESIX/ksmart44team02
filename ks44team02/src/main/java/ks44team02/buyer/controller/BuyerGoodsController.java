@@ -314,23 +314,6 @@ public class BuyerGoodsController {
 		
 		return "buyer/goods/menu/menuDetail";
 	}
-	
-	//구매자 식단 상품으로 장바구니에 상품 넣기
-	@PostMapping("/menu/addCart")
-	@ResponseBody
-	public boolean addMenuToCart(@RequestParam(value = "menuCode") String menuCode
-								,@RequestParam(value = "orderAmount") String orderAmount
-								,HttpSession session) {
-		String memberId = (String) session.getAttribute("SID");
-		if(memberId == null) memberId = "id002";
-		
-		log.info("addMenuToCart 실행");
-		
-		int amount = Integer.parseInt(orderAmount);
-		
-		boolean result = goodsService.addMenuToCart(menuCode, amount, memberId);
-		return result;
-	}
 
 	// 개별 상품 정보
 	@GetMapping("/goodsDetail/{goodsCode}")

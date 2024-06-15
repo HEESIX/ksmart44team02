@@ -99,8 +99,8 @@ public class ReviewService {
 			return null;
 		}
 
-		public List<Review> getReviewListSearch(String memberId) {
-			List<Review> reviewList = reviewMapper.getReviewListSearch(memberId);
+		public List<Review> getReviewListSearch(String memberId, String gCode) {
+			List<Review> reviewList = reviewMapper.getReviewListSearch(memberId,gCode);
 			return reviewList;
 		}
 

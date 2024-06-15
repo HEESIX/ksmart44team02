@@ -102,7 +102,7 @@ public class BuyerReviewController {
 		,Model model
 		,Model model1) {
 		Review reviewDelete = reviewService.getReviewInfo(revCode, reviewContents);
-			return "buyer/review/deleteReview";
+			return "/buyer/review/deleteReview";
 		}
 		
 	//구매자 리뷰 삭제 처리
