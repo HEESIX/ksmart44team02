@@ -76,9 +76,6 @@ public class AdminMileageAddExtinctionController {
 		return "admin/mileageManage/mileageManagement";
 	}
 
-
-	/*
- 
 	// 적립금 적립 처리
 	@PostMapping("/mileageGiveExtinct")
 	public String giveMileage(MemberMileageAcc memberMileageAcc,OrderDetail orderDetail, RedirectAttributes reAttr) {
